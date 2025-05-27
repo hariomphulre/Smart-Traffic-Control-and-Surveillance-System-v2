@@ -59,7 +59,7 @@ All data is processed in real-time, securely stored on Google Cloud, and made ac
 
 ---
 ## System Architecture
-[Architecture](screenshots/architecture.png) 
+![Architecture](screenshots/architecture.png) 
 ## 🖼️ Screenshots
 
 > *(Include your actual screenshots in your repo’s `/screenshots` folder and reference them here)*
