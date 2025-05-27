@@ -218,6 +218,7 @@ io.on('connection', (socket) => {
   });
 });
 
+app.get('/keep-alive', (_, res) => res.send('Still alive'));
 
 
 // Start server
