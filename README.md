@@ -32,17 +32,17 @@ All data is processed in real-time, securely stored on Google Cloud, and made ac
 
 ## ✨ Features
 
-- 🚦 **Dynamic traffic signal control** based on real-time vehicle density  
-- 🚑 **Automatic emergency vehicle prioritization**  
-- 📸 **Vehicle detection with classification (bike, car, truck, etc.)**  
-- 🪖 **Helmet detection**  
-- 🛑 **Red light violation detection**  
-- 🚓 **Speed detection & automatic number plate recognition (ANPR)**  
-- 📡 **Real-time data sync via RESTful APIs to cloud and web dashboard**  
-- 🔍 **Searchable logs by license number, location, date, etc.**  
-- 📊 **Live maps, heatmaps, analytics graphs for traffic & violations**  
-- 🧾 **Automatic challan generation with violation proof**  
-- 🔐 **Advanced 3-level authentication for government users**  
+-  **Dynamic traffic signal control** based on real-time vehicle density  
+-  **Automatic emergency vehicle prioritization**  
+-  **Vehicle detection with classification (bike, car, truck, etc.)**  
+-  **Helmet detection**  
+-  **Red light violation detection**  
+-  **Speed detection & automatic number plate recognition (ANPR)**  
+-  **Real-time data sync via RESTful APIs to cloud and web dashboard**  
+-  **Searchable logs by license number, location, date, etc.**  
+-  **Live maps, heatmaps, analytics graphs for traffic & violations**  
+-  **Automatic challan generation with violation proof**  
+-  **Advanced 3-level authentication for government users**  
 
 ---
 
