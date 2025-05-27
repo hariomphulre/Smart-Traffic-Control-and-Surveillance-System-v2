@@ -1,6 +1,6 @@
 # 🚦 Smart Traffic Control & Surveillance System
 
-A real-time, AI-powered traffic control and surveillance platform integrating Computer Vision, Edge Computing, and Cloud Technology to solve modern urban traffic challenges.
+An AI-powered intelligent, real-time traffic surveillance and signal management system that leverages advanced machine learning and computer vision to optimize urban traffic flow and enhance road safety. Using Raspberry Pi and camera modules at the edge, it detects and classifies vehicles (bike, car, bus, truck), monitors helmet usage, measures speed, identifies number plates through OCR, and recognizes emergency vehicles like ambulances and fire brigades. The system dynamically adjusts traffic signals based on real-time traffic density and prioritizes emergency vehicles by instantly granting them green signals. All surveillance data—including vehicle images, license plates, speed, location, and violations like red light jumping—is securely uploaded to cloud storage and a dedicated web platform using RESTful APIs. The platform provides live analytics, vehicle search by license number, violation logs, and an automatic challan generation system. Designed for government use, it ensures real-time updates, advanced authentication, and robust data privacy.
 
 ---
 
