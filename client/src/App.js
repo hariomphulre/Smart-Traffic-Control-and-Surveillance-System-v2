@@ -13,7 +13,7 @@ import VehicleTypeDistribution from './components/VehicleTypeDistribution';
 import HelmetComplianceChart from './components/HelmetComplianceChart';
 import TrafficVolumeChart, { TimeFrameSelector } from './components/TrafficVolumeChart';
 import LicensePlateRegionChart from './components/LicensePlateRegionChart';
-const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:8000';
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
 
 // Create socket connection
 const socket = io();
