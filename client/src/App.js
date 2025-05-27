@@ -13,6 +13,7 @@ import VehicleTypeDistribution from './components/VehicleTypeDistribution';
 import HelmetComplianceChart from './components/HelmetComplianceChart';
 import TrafficVolumeChart, { TimeFrameSelector } from './components/TrafficVolumeChart';
 import LicensePlateRegionChart from './components/LicensePlateRegionChart';
+const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:8000';
 
 // Create socket connection
 const socket = io();
@@ -41,7 +42,7 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/api/data');
+        const response = await axios.get(`${BACKEND_URL}/api/data`);
         const { speedData, licenseData, helmetData, vehicleImages, licensePlateImages } = response.data;
         
         setSpeedData(speedData);
@@ -268,7 +269,7 @@ function App() {
   // Upload data handler
   const handleDataUpload = async (type, data) => {
     try {
-      await axios.post('/api/upload/data', { type, data });
+      await axios.post(`${BACKEND_URL}/api/upload/data`, { type, data });
       showNotification(`${type} data uploaded successfully`);
     } catch (err) {
       console.error('Error uploading data:', err);
@@ -293,7 +294,7 @@ function App() {
         });
       }
       
-      await axios.post('/api/upload/images', formData);
+      await axios.post(`${BACKEND_URL}/api/upload/images`, formData);
       showNotification('Images uploaded successfully');
     } catch (err) {
       console.error('Error uploading images:', err);
