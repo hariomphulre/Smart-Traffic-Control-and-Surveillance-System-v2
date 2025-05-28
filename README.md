@@ -83,7 +83,7 @@ An **AI**-powered real-time multitasking system using advanced **machine learnin
 
 | Dashboard | Live Map |
 |----------|----------|
-| ![Dashboard](screenshots/analytics_dashboard.png)| ![Map](screenshots/map.png) |
+| ![Dashboard](screenshots/analytics_dashboard.png) ![Graphs](screenshots/graphs.png) | ![Map](screenshots/map.png) |
 
 | Violation Detection | License Plate Logs |
 |---------------------|--------------------|
