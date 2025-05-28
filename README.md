@@ -85,9 +85,9 @@ An **AI**-powered real-time multitasking system using advanced **machine learnin
 |----------|----------|
 | ![Dashboard](screenshots/analytics_dashboard.png) ![Graphs](screenshots/graphs.png) | ![Map](screenshots/map.png) |
 
-| Violation Detection | License Plate Logs |
+| Violation Detection | License Plate Logs | Vehicle info |
 |---------------------|--------------------|
-| ![Detection](screenshots/violation_detection.png) | ![Logs](screenshots/vehicle_data_logs.jpg) |
+| ![Detection](screenshots/violation_detection.png) | ![Logs](screenshots/vehicle_data_logs.jpg) | ![vehicle_info](screenshots/vehicle_info.jpg)
 
 ---
 ## 🌍 Applications
