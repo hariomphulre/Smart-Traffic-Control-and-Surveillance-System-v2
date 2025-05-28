@@ -17,6 +17,14 @@ An **AI**-powered real-time multitasking system using advanced **machine learnin
     <img src="https://img.shields.io/badge/▶_Demonstration_video-%23326ce5.svg?style=for-the-badge" alt="Demonstration video" />
   </a>
 
+  <a href="#">
+    <img src="https://img.shields.io/badge/Prototype-%23326ce5.svg?style=for-the-badge" alt="Prototype" />
+  </a>
+
+  <a href="#">
+    <img src="https://img.shields.io/badge/Patent-%23326ce5.svg?style=for-the-badge" alt="Patent" />
+  </a>
+
 </div>
 
 ---
