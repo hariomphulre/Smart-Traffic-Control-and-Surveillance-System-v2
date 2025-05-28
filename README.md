@@ -1,6 +1,6 @@
 # 🚦 Smart Traffic Control & Surveillance System
 
-An <u>**AI**-powered</u> real-time multitasking system using advanced **machine learning** and **computer vision** to optimize urban traffic flow and enhance road safety. Using **Raspberry Pi** and camera modules for edge computing, it detects and classifies vehicles (**bike, car, bus, truck**), monitors **helmet usage**, **measures speed**, **number plates recognition** using (**OCR & Google Cloud Vision API**), and detect **emergency vehicles** like ambulances and fire brigades. The system dynamically adjusts traffic signals based on real-time traffic density and **prioritizes emergency vehicles** by instantly granting them green signals. All surveillance data including vehicle images, license plates, speed, location, and violations like red light jumping is securely uploaded to **cloud storage** and **web platform** using **RESTful APIs**. The platform provides **live analytics, vehicle info. search by license number, violation logs, Live map, and an automatic challan generation system**. Designed for government use, it ensures real-time updates, advanced 3 layer **authentication**, with security & privacy.
+An **AI**-powered real-time multitasking system using advanced **machine learning** and **computer vision** to optimize urban traffic flow and enhance road safety. Using **Raspberry Pi** and camera modules for edge computing, it detects and classifies vehicles (**bike, car, bus, truck**), monitors **helmet usage**, **measures speed**, **number plates recognition** using (**OCR & Google Cloud Vision API**), and detect **emergency vehicles** like ambulances and fire brigades. The system dynamically adjusts traffic signals based on real-time traffic density and **prioritizes emergency vehicles** by instantly granting them green signals. All surveillance data including vehicle images, license plates, speed, location, and violations like red light jumping is securely uploaded to **cloud storage** and **web platform** using **RESTful APIs**. The platform provides **live analytics, vehicle info. search by license number, violation logs, Live map, and an automatic challan generation system**. Designed for government use, it ensures real-time updates, advanced 3 layer **authentication**, with security & privacy.
 
 ---
 
@@ -18,18 +18,35 @@ An <u>**AI**-powered</u> real-time multitasking system using advanced **machine 
 
 ## ✅ Approach & Solution
 
-We propose an **intelligent traffic control and surveillance system** using:
-- **Edge computing** on Raspberry Pi with live camera feeds  
-- **Custom YOLO11 ML model** for vehicle detection, **helmet, speed, ANPR, red light violation, emergency vehicle detection**  
-- **Automatic signal control based on traffic density and prioritizes emergency vehicles**  
-- **Cloud storage** of surveillance data (images, license plates, logs) 
-- **Web-based dashboard** for real-time analytics, live map and enforcement  
+➢ Deploy Raspberry Pi with camera modules at traffic signals to capture real-time video using edge computing.  
 
-All data is processed in real-time, securely stored on Google Cloud, and made accessible to authorities through an advanced, role-based authentication system.
+➢ Use custom-trained YOLOv11 model for vehicle detection and classification (bike, car, bus, truck), directly on edge devices.  
 
+  - Helmet, Speed, Emergency vehicle, Red light violation detection.  
+  - Automatic Number Plate Recognition (ANPR) with EasyOCR and Google Cloud Vision API.  
+
+➢ Develop an algorithm to control traffic signals dynamically by:
+
+  - Prioritizing high density traffic with dynamic countdown.
+  - Prioritizing emergency vehicles by granting immediate green signals.
+
+➢ Securely upload all surveillance data including vehicle images, license plates, speed, helmet status, and violations to cloud storage and a web platform in real-time via RESTful APIs.
+
+➢ Build a web platform with features like:
+
+  - Real-time analytics and filteration option by state and city.
+
+  - Vehicle number plate search bar for detailed info. (logs, images, and top recorded stats).
+
+  - Automated challan (fine) generation system for violations.
+
+  - Live map displaying traffic signals, traffic density, and countdown timers.
+
+  - Advanced authentication and strict data privacy, for government access only.
+    
 ---
 
-## ✨ Features
+## ⚡ Features
 
 -  **Dynamic traffic signal control** based on real-time vehicle density  
 -  **Automatic emergency vehicle prioritization**  
