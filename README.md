@@ -110,7 +110,7 @@ Note: Prototype & Patent are in progress...
 | ![Dashboard](screenshots/analytics_dashboard.png) ![Graphs](screenshots/graphs.png) | ![Map](screenshots/map.png) |
 
 | License Plate Logs | Vehicle info |
-|--------------------|--------------|
+|-----------------------------|--------------|
 | ![Logs](screenshots/vehicle_data_logs.jpg) | ![vehicle_info](screenshots/vehicle_info.jpg)
 
 | Violation Detection |
