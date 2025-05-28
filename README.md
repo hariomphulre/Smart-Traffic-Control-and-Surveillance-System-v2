@@ -6,11 +6,12 @@ An **AI**-powered real-time multitasking system using advanced **machine learnin
 ⭐ **`Demonstration video:`**
 ⭐ **`Prototype in final stage...`**
 ⭐ **`Patent in process...`**
-```
+<p align="center">
+
 [![Web platform](https://img.shields.io/badge/🌐_Web_platform-%23326ce5.svg?style=for-the-badge)](https://smart-traffic-control.vercel.app/)
 [![Demonstration video](https://img.shields.io/badge/▶_Demonstration_video-%23326ce5.svg?style=for-the-badge)]()
-```
 
+</p>
 ---
 
 ## 🧠 Problem Statement
