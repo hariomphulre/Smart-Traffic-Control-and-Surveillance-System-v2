@@ -105,8 +105,8 @@ Note: Prototype & Patent are in progress...
 ![Architecture](screenshots/architecture.png) 
 ## 🖼️ Screenshots
 
-| Dashboard | Live Map |
-|----------|----------|
+| Dashboard |
+|----------|
 | ![Dashboard](screenshots/analytics_dashboard.png) ![Graphs](screenshots/graphs.png) | ![Map](screenshots/map.png) |
 
 | Violation Detection | License Plate Logs | Vehicle info |
