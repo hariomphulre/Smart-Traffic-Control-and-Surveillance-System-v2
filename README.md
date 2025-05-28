@@ -4,7 +4,7 @@ An **AI**-powered real-time multitasking system using advanced **machine learnin
 
 <div align="center">
 
-  **Quick Links**: 
+  <a **`Quick Links`**: </a> 
   <a href="https://smart-traffic-control.vercel.app/">
     <img src="https://img.shields.io/badge/🌐 Web Platform-%23326ce5.svg?style=for-the-badge" alt="Web platform" />
   </a>
