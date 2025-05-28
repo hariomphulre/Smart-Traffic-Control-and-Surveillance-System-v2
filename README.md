@@ -51,10 +51,10 @@ An **AI**-powered real-time multitasking system using advanced **machine learnin
 -  **Dynamic traffic signal control** based on real-time vehicle density  
 -  **Automatic emergency vehicle prioritization**  
 -  **Vehicle detection with classification (bike, car, bus, truck, etc.)**  
--  **Helmet detection**  
--  **Red light violation detection**  
--  **Speed detection & automatic number plate recognition (ANPR)**  
--  **Real-time data sync via RESTful APIs to cloud and web dashboard**  
+-  **Helmet , speed, red light violation detection**
+-  **Automatic number plate recognition (ANPR)**  
+-  **Real-time data sync via RESTful APIs to cloud and web dashboard**
+-  **Real-time analytics dashboard with filterations according to state & cities** 
 -  **Searchable logs by license number, location, date, etc.**  
 -  **Live maps, heatmaps, analytics graphs for traffic & violations**  
 -  **Automatic challan generation with violation proof**  
