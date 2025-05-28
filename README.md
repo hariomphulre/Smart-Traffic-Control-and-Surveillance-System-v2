@@ -1,44 +1,63 @@
 # 🚦 Smart Traffic Control & Surveillance System
 
-An AI-powered real-time multitasking system using advanced machine learning and computer vision to optimize urban traffic flow and enhance road safety. Using Raspberry Pi and camera modules for edge computing, it detects and classifies vehicles (bike, car, bus, truck), monitors helmet usage, measures speed, identifies number plates through (OCR & Google Cloud Vision API), and recognizes emergency vehicles like ambulances and fire brigades. The system dynamically adjusts traffic signals based on real-time traffic density and prioritizes emergency vehicles by instantly granting them green signals. All surveillance data including vehicle images, license plates, speed, location, and violations like red light jumping is securely uploaded to cloud storage and web platform using RESTful APIs. The platform provides live analytics, vehicle info. search by license number, violation logs, Live map, and an automatic challan generation system . Designed for government use, it ensures real-time updates, advanced 3 layer authentication, with security & privacy.
+An **AI**-powered real-time multitasking system using advanced **machine learning** and **computer vision** to optimize urban traffic flow and enhance road safety. Using **Raspberry Pi** and camera modules for edge computing, it detects and classifies vehicles (**bike, car, bus, truck**), monitors **helmet usage**, **measures speed**, **number plates recognition** using (**OCR & Google Cloud Vision API**), and detect **emergency vehicles** like ambulances and fire brigades. The system dynamically adjusts traffic signals based on real-time traffic density and **prioritizes emergency vehicles** by instantly granting them green signals. All surveillance data including vehicle images, license plates, speed, location, and violations like red light jumping is securely uploaded to **cloud storage** and **web platform** using **RESTful APIs**. The platform provides **live analytics, vehicle info. search by license number, violation logs, Live map, and an automatic challan generation system**. Designed for government use, it ensures real-time updates, advanced 3 layer **authentication**, with security & privacy.  
+
+🌐 **`web platform:`**   [smart-traffic-control.vercel.app/](https://smart-traffic-control.vercel.app/) 
+🔴 **`Demonstration:`**
 
 ---
 
 ## 🧠 Problem Statement
 
-Urban areas today suffer from:
-- Severe traffic congestion
-- Frequent traffic violations (helmet-less riding, red light jumping, overspeeding)
-- Delayed emergency response
-- Ineffective and outdated traffic control systems
+➔ **Real world traffic problem:** Due to exponential growth of vehicles, traffic increasing day by day and  Conventional traffic signal systems rely on fixed timers or rudimentary sensors, leading to inefficiencies such as prolonged congestion, fuel waste, and increased emissions.
 
-Traditional traffic systems use static timers and lack the intelligence to adapt in real-time. Manual enforcement is inefficient and resource-intensive, while the absence of centralized violation data makes tracking offenders difficult.
+➔ **Raising Traffic Violations:** Helmet-less riding, signal jumping, and triple riding are rampant in many cities. Manual enforcement is ineffective and resource-intensive. Our system automatically detects violations using machine learning (YOLO model), improving enforcement efficiency.
+
+➔ **Emergency Response Delays:** Congestion and poor traffic flow slow down emergency vehicles. By monitoring real-time traffic, the system can be scaled to prioritize emergency vehicle movement and dynamically manage signals.
+
+➔ **Lack of Centralized Data:** Current systems don’t store violation data for easy access or reporting. Our solution uploads detected violations to the cloud, enabling officials to track offenders via license plate recognition and access reports through a web interface.
 
 ---
 
 ## ✅ Approach & Solution
 
-We propose an **intelligent traffic control and surveillance system** using:
-- **Edge computing** on Raspberry Pi with live camera feeds
-- **YOLO11 ML model** for vehicle detection and classification
-- **Helmet, speed, ANPR, and red light violation detection**
-- **Emergency vehicle detection and automatic signal prioritization**
-- **Cloud storage** of surveillance data (images, license plates, logs)
-- **Web-based dashboard** for real-time analytics and enforcement
+➢ Deploy Raspberry Pi with camera modules at traffic signals to capture real-time video using edge computing.  
 
-All data is processed in real-time, securely stored on Google Cloud, and made accessible to authorities through an advanced, role-based authentication system.
+➢ Use custom-trained YOLOv11 model for vehicle detection and classification (bike, car, bus, truck), directly on edge devices.  
 
+  - Helmet, Speed, Emergency vehicle, Red light violation detection.  
+  - Automatic Number Plate Recognition (ANPR) with EasyOCR and Google Cloud Vision API.  
+
+➢ Develop an algorithm to control traffic signals dynamically by:
+
+  - Prioritizing high density traffic with dynamic countdown.
+  - Prioritizing emergency vehicles by granting immediate green signals.
+
+➢ Securely upload all surveillance data including vehicle images, license plates, speed, helmet status, and violations to cloud storage and a web platform in real-time via RESTful APIs.
+
+➢ Build a web platform with features like:
+
+  - Real-time analytics and filteration option by state and city.
+
+  - Vehicle number plate search bar for detailed info. (logs, images, and top recorded stats).
+
+  - Automated challan (fine) generation system for violations.
+
+  - Live map displaying traffic signals, traffic density, and countdown timers.
+
+  - Advanced authentication and strict data privacy, for government access only.
+    
 ---
 
-## ✨ Features
+## ⚡ Features
 
 -  **Dynamic traffic signal control** based on real-time vehicle density  
 -  **Automatic emergency vehicle prioritization**  
 -  **Vehicle detection with classification (bike, car, bus, truck, etc.)**  
--  **Helmet detection**  
--  **Red light violation detection**  
--  **Speed detection & automatic number plate recognition (ANPR)**  
--  **Real-time data sync via RESTful APIs to cloud and web dashboard**  
+-  **Helmet , speed, red light violation detection**
+-  **Automatic number plate recognition (ANPR)**  
+-  **Real-time data sync via RESTful APIs to cloud and web dashboard**
+-  **Real-time analytics dashboard with filterations according to state & cities** 
 -  **Searchable logs by license number, location, date, etc.**  
 -  **Live maps, heatmaps, analytics graphs for traffic & violations**  
 -  **Automatic challan generation with violation proof**  
