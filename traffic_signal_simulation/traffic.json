@@ -1,0 +1,23 @@
+{
+    "R1": true,
+    "R2": true,
+    "R3": false,
+    "R4": true,
+    "G1": false,
+    "G2": false,
+    "G3": true,
+    "G4": false,
+    "Y1": false,
+    "Y2": false,
+    "Y3": false,
+    "Y4": false,
+    "T1": 1,
+    "T2": 3,
+    "T3": 10,
+    "T4": 9,
+    "A1": false,
+    "A2": false,
+    "A3": false,
+    "A4": false,
+    "C": 20
+}
