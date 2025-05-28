@@ -6,9 +6,12 @@ An <u>**AI**-powered</u> real-time multitasking system using advanced **machine 
 
 ## 🧠 Problem Statement
 
-➔ **Real world traffic problem:** Due to exponential growth of vehicles, traffic increasing day by day and  Conventional traffic signal systems rely on fixed timers or rudimentary sensors, leading to inefficiencies such as prolonged congestion, fuel waste, and increased emissions. 
+➔ **Real world traffic problem:** Due to exponential growth of vehicles, traffic increasing day by day and  Conventional traffic signal systems rely on fixed timers or rudimentary sensors, leading to inefficiencies such as prolonged congestion, fuel waste, and increased emissions.
+
 ➔ **Raising Traffic Violations:** Helmet-less riding, signal jumping, and triple riding are rampant in many cities. Manual enforcement is ineffective and resource-intensive. Our system automatically detects violations using machine learning (YOLO model), improving enforcement efficiency.
+
 ➔ **Emergency Response Delays:** Congestion and poor traffic flow slow down emergency vehicles. By monitoring real-time traffic, the system can be scaled to prioritize emergency vehicle movement and dynamically manage signals.
+
 ➔ **Lack of Centralized Data:** Current systems don’t store violation data for easy access or reporting. Our solution uploads detected violations to the cloud, enabling officials to track offenders via license plate recognition and access reports through a web interface.
 
 ---
