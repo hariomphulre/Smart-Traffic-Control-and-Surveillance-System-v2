@@ -19,12 +19,12 @@ An <u>**AI**-powered</u> real-time multitasking system using advanced **machine 
 ## ✅ Approach & Solution
 
 We propose an **intelligent traffic control and surveillance system** using:
-- **Edge computing** on Raspberry Pi with live camera feeds
-- **YOLO11 ML model** for vehicle detection and classification
-- **Helmet, speed, ANPR, and red light violation detection**
-- **Emergency vehicle detection and automatic signal prioritization**
-- **Cloud storage** of surveillance data (images, license plates, logs)
-- **Web-based dashboard** for real-time analytics and enforcement
+- **Edge computing** on Raspberry Pi with live camera feeds  
+- **Custom YOLO11 ML model** for vehicle detection and classification, **Helmet, Speed, ANPR, Red light violation, Emergency vehicle detection  
+- **Automatic signal control based on traffic density and prioritizes emergency vehicles**  
+- **Cloud storage** of surveillance data (images, license plates, logs) 
+- **Web-based dashboard** for real-time analytics, live map and enforcement  
+- **Avanced 3 layer authentication**   
 
 All data is processed in real-time, securely stored on Google Cloud, and made accessible to authorities through an advanced, role-based authentication system.
 
