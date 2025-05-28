@@ -1,4 +1,4 @@
-<h2 align="center"> # 🚦 Smart Traffic Control & Surveillance System </h2>
+# 🚦 Smart Traffic Control & Surveillance System </h2>
 
 An **AI**-powered real-time multitasking system using advanced **machine learning** and **computer vision** to optimize urban traffic flow and enhance road safety. Using **Raspberry Pi** and camera modules for edge computing, it detects and classifies vehicles (**bike, car, bus, truck**), monitors **helmet usage**, **measures speed**, **number plates recognition** using (**OCR & Google Cloud Vision API**), and detect **emergency vehicles** like ambulances and fire brigades. The system dynamically adjusts traffic signals based on real-time traffic density and **prioritizes emergency vehicles** by instantly granting them green signals. All surveillance data including vehicle images, license plates, speed, location, and violations like red light jumping is securely uploaded to **cloud storage** and **web platform** using **RESTful APIs**. The platform provides **live analytics, vehicle info. search by license number, violation logs, Live map, and an automatic challan generation system**. Designed for government use, it ensures real-time updates, advanced 3 layer **authentication**, with security & privacy.  
 
@@ -6,13 +6,22 @@ An **AI**-powered real-time multitasking system using advanced **machine learnin
 ⭐ **`Demonstration video:`**
 ⭐ **`Prototype in final stage...`**
 ⭐ **`Patent in process...`**
-<p align="center">
+
 
 [![Web platform](https://img.shields.io/badge/🌐_Web_platform-%23326ce5.svg?style=for-the-badge)](https://smart-traffic-control.vercel.app/)
 [![Demonstration video](https://img.shields.io/badge/▶_Demonstration_video-%23326ce5.svg?style=for-the-badge)]()
 
-</p>
+<div align="center">
 
+  <a href="https://smart-traffic-control.vercel.app/">
+    <img src="https://img.shields.io/badge/🌐_Web_platform-%23326ce5.svg?style=for-the-badge" alt="Web platform" />
+  </a>
+  
+  <a href="#">
+    <img src="https://img.shields.io/badge/▶_Demonstration_video-%23326ce5.svg?style=for-the-badge" alt="Demonstration video" />
+  </a>
+
+</div>
 ---
 
 ## 🧠 Problem Statement
