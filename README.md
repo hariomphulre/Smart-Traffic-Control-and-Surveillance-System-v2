@@ -24,7 +24,8 @@ An **AI**-powered real-time multitasking system using advanced **machine learnin
     <img src="https://img.shields.io/badge/📄_Patent-%23326ce5.svg?style=for-the-badge" alt="Patent" />
   </a>
 
-</div>
+</div>  
+
 
 
 `Note: Prototype & Patent are in process...`
