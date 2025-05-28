@@ -73,40 +73,6 @@ An **AI**-powered real-time multitasking system using advanced **machine learnin
 | **Cloud**     | Google Cloud Platform (GCP), Google Cloud Storage, Compute Engine |
 | **Dev Tools** | Docker, Google Colab, SQL |
 
-<table>
-  <tr>
-    <td align="center"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg" width="40"/><br>React</td>
-    <td align="center"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nextjs/nextjs-original.svg" width="40"/><br>Next.js</td>
-    <td align="center"><img src="https://angular.io/assets/images/logos/angular/angular.svg" width="40"/><br>Angular</td>
-    <td align="center"><img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Map_marker.svg" width="30"/><br>Google Maps API</td>
-  </tr>
-  <tr>
-    <td align="center"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original.svg" width="40"/><br>Node.js</td>
-    <td align="center"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original.svg" width="40"/><br>Express.js</td>
-    <td align="center"><img src="https://cdn-icons-png.flaticon.com/512/1146/1146869.png" width="30"/><br>REST API</td>
-  </tr>
-  <tr>
-    <td align="center"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/OpenCV_Logo_with_text.png" width="40"/><br>OpenCV</td>
-    <td align="center"><img src="https://github.com/pytorch/hub/raw/master/images/yolo_logo.png" width="40"/><br>YOLOv11</td>
-    <td align="center"><img src="https://avatars.githubusercontent.com/u/57645388?s=200&v=4" width="40"/><br>EasyOCR</td>
-    <td align="center"><img src="https://cloud.google.com/images/social-icon-google-cloud-1200-630.png" width="40"/><br>Vision API</td>
-  </tr>
-  <tr>
-    <td align="center"><img src="https://upload.wikimedia.org/wikipedia/commons/3/31/Raspberry_Pi_Logo.svg" width="40"/><br>Raspberry Pi</td>
-    <td align="center"><img src="https://cdn-icons-png.flaticon.com/512/679/679720.png" width="40"/><br>Camera Module</td>
-  </tr>
-  <tr>
-    <td align="center"><img src="https://www.gstatic.com/devrel-devsite/prod/v9e40a2d3e8fc3bc7a353c9ae52ea1a9b9fc347a187bc7cf93b9e7a570c5a8c26/cloud/images/favicons/onecloud/apple-icon.png" width="40"/><br>GCP</td>
-    <td align="center"><img src="https://cdn.iconscout.com/icon/free/png-256/free-google-cloud-storage-2038785-1721676.png" width="40"/><br>Cloud Storage</td>
-    <td align="center"><img src="https://cloud.google.com/_static/cloud/images/social-icon-google-cloud-1200-630.png" width="40"/><br>Compute Engine</td>
-  </tr>
-  <tr>
-    <td align="center"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg" width="40"/><br>Docker</td>
-    <td align="center"><img src="https://colab.research.google.com/img/colab_favicon_256px.png" width="40"/><br>Colab</td>
-    <td align="center"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original.svg" width="40"/><br>SQL</td>
-  </tr>
-</table>
-
 ---
 ## System Architecture
 ![Architecture](screenshots/architecture.png) 
