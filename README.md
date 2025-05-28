@@ -113,7 +113,7 @@ Note: Prototype & Patent are in progress...
 |--------------------|--------------|
 | ![Logs](screenshots/vehicle_data_logs.jpg) | ![vehicle_info](screenshots/vehicle_info.jpg)
 
-| Detection |
+| Detection demo 1 | Detection Demo 2 |
 |---------------------|----------------------------|
 | ![Detection](screenshots/detection_demo1.png) | ![Detection](screenshots/detection_demo2.png) |
 
