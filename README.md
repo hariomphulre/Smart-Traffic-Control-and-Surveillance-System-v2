@@ -1,16 +1,9 @@
 # 🚦 Smart Traffic Control & Surveillance System </h2>
 
 An **AI**-powered real-time multitasking system using advanced **machine learning** and **computer vision** to optimize urban traffic flow and enhance road safety. Using **Raspberry Pi** and camera modules for edge computing, it detects and classifies vehicles (**bike, car, bus, truck**), monitors **helmet usage**, **measures speed**, **number plates recognition** using (**OCR & Google Cloud Vision API**), and detect **emergency vehicles** like ambulances and fire brigades. The system dynamically adjusts traffic signals based on real-time traffic density and **prioritizes emergency vehicles** by instantly granting them green signals. All surveillance data including vehicle images, license plates, speed, location, and violations like red light jumping is securely uploaded to **cloud storage** and **web platform** using **RESTful APIs**. The platform provides **live analytics, vehicle info. search by license number, violation logs, Live map, and an automatic challan generation system**. Designed for government use, it ensures real-time updates, advanced 3 layer **authentication**, with security & privacy.  
+
 <!-- 🔗 Quick Links (Top-left) -->
 <h4 align="left">🔗 Quick Links</h4>
-
-<ul align="left">
-  <li><a href="#features">⭐ Features</a></li>
-  <li><a href="#tech-stack">🧰 Tech Stack</a></li>
-  <li><a href="#flow-chart">🔄 Flow Chart</a></li>
-  <li><a href="#approach--solution">🚀 Approach & Solution</a></li>
-  <li><a href="#live-demo">🎥 Live Demo</a></li>
-</ul>
 
 <!-- 🔘 Centered Badges -->
 <div align="center">
@@ -21,26 +14,6 @@ An **AI**-powered real-time multitasking system using advanced **machine learnin
   
   <a href="#">
     <img src="https://img.shields.io/badge/▶%20Demonstration%20Video-%23326ce5.svg?style=for-the-badge" alt="Demonstration video" />
-  </a>
-
-  <a href="#">
-    <img src="https://img.shields.io/badge/Prototype-%23326ce5.svg?style=for-the-badge" alt="Prototype" />
-  </a>
-
-  <a href="#">
-    <img src="https://img.shields.io/badge/Patent-%23326ce5.svg?style=for-the-badge" alt="Patent" />
-  </a>
-
-</div>
-
-<div align="center">
-
-  <a href="https://smart-traffic-control.vercel.app/">
-    <img src="https://img.shields.io/badge/🌐 Web Platform-%23326ce5.svg?style=for-the-badge" alt="Web platform" />
-  </a>
-  
-  <a href="#">
-    <img src="https://img.shields.io/badge/▶ Demonstration Video-%23326ce5.svg?style=for-the-badge" alt="Demonstration video" />
   </a>
 
   <a href="#">
