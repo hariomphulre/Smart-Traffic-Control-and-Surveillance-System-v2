@@ -113,9 +113,9 @@ Note: Prototype & Patent are in progress...
 |--------------------|--------------|
 | ![Logs](screenshots/vehicle_data_logs.jpg) | ![vehicle_info](screenshots/vehicle_info.jpg)
 
-| Violation Detection |
-|---------------------|
-| ![Detection](screenshots/violation_detection.png) |
+| Detection |
+|---------------------|----------------------------|
+| ![Detection](screenshots/detection_demo1.png) | ![Detection](screenshots/detection_demo2.png) |
 
 ---
 ## 🌍 Applications
