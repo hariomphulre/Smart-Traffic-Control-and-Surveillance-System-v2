@@ -26,7 +26,7 @@ An **AI**-powered real-time multitasking system using advanced **machine learnin
 
 </div>
 
-Note: Patent & Prototype are in process...
+<h5 Note: Patent & Prototype are in process... </h5>
 ---
 
 ## 🧠 Problem Statement
