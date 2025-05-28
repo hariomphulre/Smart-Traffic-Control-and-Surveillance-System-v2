@@ -4,8 +4,6 @@ An **AI**-powered real-time multitasking system using advanced **machine learnin
 
 <!-- 🔗 Quick Links (Top-left) -->
 <h4 align="left">🔗 Quick Links</h4>
-
-<!-- 🔘 Centered Badges -->
 <div align="center">
 
   <a href="https://smart-traffic-control.vercel.app/">
