@@ -6,11 +6,11 @@ An **AI**-powered real-time multitasking system using advanced **machine learnin
 <div align="center">
 
   <a href="https://smart-traffic-control.vercel.app/">
-    <img src="https://img.shields.io/badge/🌐_Web_platform-%23326ce5.svg?style=for-the-badge" alt="Web platform" />
+    <img src="https://img.shields.io/badge/🌐 Web Platform-%23326ce5.svg?style=for-the-badge" alt="Web platform" />
   </a>
   
   <a href="#">
-    <img src="https://img.shields.io/badge/▶_Demonstration_video-%23326ce5.svg?style=for-the-badge" alt="Demonstration video" />
+    <img src="https://img.shields.io/badge/▶ Demonstration Video-%23326ce5.svg?style=for-the-badge" alt="Demonstration video" />
   </a>
 
   <a href="#">
