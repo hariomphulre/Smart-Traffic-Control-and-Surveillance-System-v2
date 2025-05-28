@@ -29,7 +29,6 @@ An **AI**-powered real-time multitasking system using advanced **machine learnin
 ```
 
 `Note: Prototype & Patent are in process...`
-
 ```
 
 ---
