@@ -18,7 +18,6 @@ from filelock import FileLock
 
 # import matplotlib.pyplot as plt
 # import easyocr
-
 # Define and parse user input arguments
 
 parser = argparse.ArgumentParser()
@@ -189,17 +188,17 @@ line1_y2=490
 # line2_y2=451
 
 ###################### store all detected images ###################
-output_dir="vehicle_data_with_helmet/all_vehicle_detected_img"
+output_dir="local_data/all_vehicle_detected_img"
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 
 ################# store license img with its vehicle track_id
-output_dir3="vehicle_data_with_helmet/all_license_plate_img"
+output_dir3="local_data/all_license_plate_img"
 if not os.path.exists(output_dir3):
     os.makedirs(output_dir3)
 
 ##################### store sort detected license plate image ##################
-output_dir2="vehicle_data_with_helmet/new_sort_license_plate_img"
+output_dir2="local_data/new_sort_license_plate_img"
 if not os.path.exists(output_dir2):
     os.makedirs(output_dir2)
 # track sort detected conf 
@@ -276,7 +275,7 @@ while True:
     #############################
 
     ############## json file to store helmet data with vehicle track id #############
-    FILE_PATH = r"/home/pi/Desktop/stcnss/Smart-Traffic-Control-and-Surveillance-System/vehicle_data_with_helmet/helmet_data.json"
+    FILE_PATH = r"/home/pi/Desktop/stcnss/Smart-Traffic-Control-and-Surveillance-System/local_data/helmet_data.json"
     # Load existing dictionary (if available)
     def load_dict():
         try:
@@ -293,7 +292,7 @@ while True:
     helmet_dict=load_dict()
 
     #################### json file to store speed data #############################
-    FILE_PATH2= r"/home/pi/Desktop/stcnss/Smart-Traffic-Control-and-Surveillance-System/vehicle_data_with_helmet/speed_data.json"
+    FILE_PATH2= r"/home/pi/Desktop/stcnss/Smart-Traffic-Control-and-Surveillance-System/local_data/speed_data.json"
     def load_dict2():
         try:
             with open(FILE_PATH2, "r") as file2:

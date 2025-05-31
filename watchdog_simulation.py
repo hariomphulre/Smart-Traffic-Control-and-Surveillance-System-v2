@@ -7,10 +7,10 @@ import json
 
 # client = vision.ImageAnnotatorClient.from_service_account_file('service-account-key')
 
-WATCH_FOLDER = 'vehicle_data_with_helmet/all_license_plate_img'
+WATCH_FOLDER = 'local_data/all_license_plate_img'
 
 ############### json file to store license plate with track_id #############
-FILE_PATH = "vehicle_data_with_helmet/new_license_data.json"
+FILE_PATH = "local_data/new_license_data.json"
 # Load existing dictionary (if available)
 def load_dict():
     try:
