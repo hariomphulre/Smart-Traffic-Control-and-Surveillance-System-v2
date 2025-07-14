@@ -185,7 +185,7 @@ cd client
 npm install
 npm start
 ```
-### 3. Raspberry Pi & I2C Setup
+### 3. Raspberry Pi & I2C LCD Setup
 
 - Connect Raspberry Pi via SSH using IP address to RealVNC or VS code
 - Make sure you Enable I2C, SSH, VNC in ```sudo raspi-config```.
