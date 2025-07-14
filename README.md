@@ -33,11 +33,11 @@ Note: Prototype & Patent are in progress...
 
 ## 🧠 Problem Statement
 
-➔ **Real world traffic problem**: Due to exponential growth of vehicles, traffic increasing day by day and Conventional traffic signal systems rely on fixed timers, leading to traffic congestion, fuel waste, and increased emissions.
+➔ **Real world traffic problem:** Due to exponential growth of vehicles, traffic increasing day by day and Conventional traffic signal systems rely on fixed timers, leading to traffic congestion, fuel waste, and increased emissions.
 
-➔ **Raising Traffic Violations**: Helmet-less riding, red signal jumping, and triple riding are violate traffic rules & increases accidents. Manual enforcement is ineffective and require ground team.
+➔ **Raising Traffic Violations:** Helmet-less riding, red signal jumping, and triple riding are violate traffic rules & increases accidents. Manual enforcement is ineffective and require ground team.
 
-➔ **Emergency Response Delays**: Congestion and poor traffic flow slow down emergency vehicles.
+➔ **Emergency Response Delays:** Congestion and poor traffic flow slow down emergency vehicles.
 
 
 ---
