@@ -44,31 +44,17 @@ Note: Prototype & Patent are in progress...
 
 ## ✅ Approach & Solution
 
-➢ Deploy Raspberry Pi with camera modules at traffic signals to capture real-time video using edge computing.  
+➢ Deploy Raspberry Pi with camera modules at traffic signals to capture real-time video using edge computing.
 
-➢ Use custom-trained YOLOv11 model for vehicle detection and classification (bike, car, bus, truck), directly on edge devices.  
+➢ Use custom-trained YOLOv11 model for vehicle detection and classification (bike, car, bus, truck), directly on edge devices.
+     - Helmet, Speed, Emergency vehicle, Red light violation detection.
+     - Automatic Number Plate Recognition (ANPR) with EasyOCR and Google Cloud Vision API.
 
-  - Helmet, Speed, Emergency vehicle, Red light violation detection.  
-  - Automatic Number Plate Recognition (ANPR) with EasyOCR and Google Cloud Vision API.  
-
-➢ Develop an algorithm to control traffic signals dynamically by:
-
-  - Prioritizing high density traffic with dynamic countdown.
-  - Prioritizing emergency vehicles by granting immediate green signals.
+➢ Develop an algorithm to control traffic signals dynamically by prioritizing high density traffic with dynamic countdown & Emergency vehicles by granting immediate green signals.
 
 ➢ Securely upload all surveillance data including vehicle images, license plates, speed, helmet status, and violations to cloud storage and a web platform in real-time via RESTful APIs.
 
-➢ Build a web platform with features like:
-
-  - Real-time analytics and filteration option by state and city.
-
-  - Vehicle number plate search bar for detailed info. (logs, images, and top recorded stats).
-
-  - Automated challan (fine) generation system for violations.
-
-  - Live map displaying traffic signals, traffic density, and countdown timers.
-
-  - Advanced authentication and strict data privacy, for government access only.
+➢ Build a web platform with features like: Real time Analytics, Detections logs with images, Automatic challan system, real time traffic on Live map, Authentication, etc.
     
 ---
 
