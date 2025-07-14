@@ -164,14 +164,31 @@ Note: Prototype & Patent are in progress...
 ## 🚀 Run Instructions
 
 ### ⚙️ Prerequisites
-- Node.js
+- Node.js & npm
 - Python 3.x
-- Raspberry Pi (for hardware-side setup)
+- Raspberry Pi, I2C LCD (for hardware-side setup)
+- I2C LCD library (https://github.com/the-raspberry-pi-guy/lcd)
 - Google Cloud credentials & API access (Vision API, GCP bucket)
+- Ultralytics
 
-### 🖥️ Backend Setup
+### 1. Backend Setup
 
 ```bash
-cd backend
+cd server
 npm install
 npm start
+```
+### 2. Frontend Setup
+
+```bash
+cd client
+npm install
+npm start
+```
+### 3. Raspberry Pi Configration
+
+```bash
+sudo apt update
+sudo raspi-config
+```
+select interference
