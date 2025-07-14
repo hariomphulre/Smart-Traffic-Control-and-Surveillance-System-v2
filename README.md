@@ -210,57 +210,59 @@ pip install lgpio
 ```
 ### 4. Run the System on Raspberry Pi (Warning! heating issue with Raspberry Pi, Plz use cooling fan)
 To run full system, it requires 8 terminals running simultaneously
+
+#Terminal 1:
 ```
-Terminal 1:
 cd Smart-Traffic-Control-and-Surveillance-System-v2/traffic_signal_simulation
 source traffic2/bin/activate
 python watch_signals3.py
 ```
+#Terminal 2:
 ```
-Terminal 2:
 cd Smart-Traffic-Control-and-Surveillance-System-v2/traffic_signal_simulation
 source traffic2/bin/activate
 cd ..
 cd lcd
 python watch_count_lcd.py
 ```
+#Terminal 3:
 ```
-Terminal 3:
 cd Smart-Traffic-Control-and-Surveillance-System-v2/traffic_signal_simulation
 source traffic2/bin/activate
 cd ..
 python watchdog_simulation2.py
 ```
+#Terminal 4:
 ```
-Terminal 4:
 cd Smart-Traffic-Control-and-Surveillance-System-v2/traffic_signal_simulation
 source traffic2/bin/activate
 python simulation3.py
 ```
 Note: Below Terminals must run on RealVNC
+
+#Terminal 5:
 ```
-Terminal 5:
 cd Smart-Traffic-Control-and-Surveillance-System-v2/traffic_signal_simulation
 source traffic2/bin/activate
 cd ..
 python R1.py --model=custom_yolo11.pt --source=video4.mp4 --resolution=480x480
 ```
+#Terminal 6:
 ```
-Terminal 6:
 cd Smart-Traffic-Control-and-Surveillance-System-v2/traffic_signal_simulation
 source traffic2/bin/activate
 cd ..
 python R2.py --model=custom_yolo11.pt --source=video2.mp4 --resolution=480x480
 ```
+#Terminal 7:
 ```
-Terminal 7:
 cd Smart-Traffic-Control-and-Surveillance-System-v2/traffic_signal_simulation
 source traffic2/bin/activate
 cd ..
 python R3.py --model=custom_yolo11.pt --source=video3.mp4 --resolution=480x480
 ```
+#Terminal 8:
 ```
-Terminal 8:
 cd Smart-Traffic-Control-and-Surveillance-System-v2/traffic_signal_simulation
 source traffic2/bin/activate
 cd ..
