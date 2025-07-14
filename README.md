@@ -60,15 +60,14 @@ Note: Prototype & Patent are in progress...
 
 ## ⚡ Features
 
--  **Dynamic traffic signal & countdown control** based on real-time vehicle density  
+-  **Dynamic traffic signal & countdown control** based on real-time traffic density  
 -  **Automatic emergency vehicle prioritization**  
 -  **Vehicle detection with classification (bike, car, bus, truck, etc.)**  
 -  **Helmet , speed, red light violation detection**
 -  **Automatic number plate recognition (ANPR)**  
 -  **Real-time data sync via RESTful APIs to cloud and web dashboard**
--  **Real-time analytics dashboard with filterations according to state & cities** 
--  **Searchable logs by license number, location, date, etc.**  
--  **Live maps, heatmaps, analytics graphs for traffic & violations**  
+-  **Real-time analytics dashboard with graphs** 
+-  **Searchable detection logs by license number, location, date, time, etc.**  
 -  **Automatic challan generation with violation proof**  
 -  **Advanced 3-level authentication for government users**  
 
@@ -78,12 +77,11 @@ Note: Prototype & Patent are in progress...
 
 | Layer         | Tools/Technologies Used |
 |---------------|-------------------------|
-| **Frontend**  | React, Next.js, Angular, Google Maps API |
-| **Backend**   | Node.js, Express.js, RESTful APIs |
-| **AI/ML**     | Custom YOLOv11, OpenCV, EasyOCR, Google Vision API |
-| **Hardware**  | Raspberry Pi, Camera Modules |
-| **Cloud**     | Google Cloud Platform (GCP), Google Cloud Storage, Compute Engine |
-| **Dev Tools** | Docker, Google Colab, SQL |
+| **Frontend**  | React, Next.js, Google Maps API |
+| **Backend**   | Node.js, Express.js, RESTful APIs, socket.io |
+| **AI/ML**     | Custom YOLOv11, OpenCV, EasyOCR, Google Cloud Vision API |
+| **Hardware**  | Raspberry Pi, Camera Modules, I2C LCD |
+| **Dev Tools** | Google Cloud Platform (GCP), Google Colab, MongoDB, OAuth 2.O |
 
 ---
 ## System Architecture
