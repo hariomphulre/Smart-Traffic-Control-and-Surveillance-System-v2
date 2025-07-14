@@ -208,8 +208,9 @@ pip install google.cloud.vision
 pip install ultralytics
 pip install lgpio
 ```
-### 4. Run the System on Raspberry Pi (Warning! heating issue with Raspberry Pi, Plz use cooling fan)
+### 4. Run the System on Raspberry Pi 
 To run full system, it requires 8 terminals running simultaneously
+⚠️ Warning! heating issue with Raspberry Pi, Plz use cooling fan.
 
 #Terminal 1:
 ```
