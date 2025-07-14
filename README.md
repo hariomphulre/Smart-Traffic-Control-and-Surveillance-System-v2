@@ -60,7 +60,7 @@ Note: Prototype & Patent are in progress...
 
 ## ⚡ Features
 
--  **Dynamic traffic signal control** based on real-time vehicle density  
+-  **Dynamic traffic signal & countdown control** based on real-time vehicle density  
 -  **Automatic emergency vehicle prioritization**  
 -  **Vehicle detection with classification (bike, car, bus, truck, etc.)**  
 -  **Helmet , speed, red light violation detection**
