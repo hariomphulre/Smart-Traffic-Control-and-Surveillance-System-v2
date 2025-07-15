@@ -5,6 +5,11 @@ An **AI**-powered real-time multitasking system using advanced **custom trained*
 | Web platfrom | Demonstration video | Prototype |
 |--------------|---------------------|-----------|
 
+
+| 🌐 [Web Platform](https://your-web-url.com) | 🎥 [Demonstration Video](https://youtube.com/your-demo-link) | 🧪 [Prototype](https://your-prototype-link.com) |
+|--------------------------------------------|---------------------------------------------------------------|--------------------------------------------------|
+
+
 <!-- 🔗 Quick Links (Top-left) -->
 <h4 align="left">🔗 Quick Links</h4>
 <div align="center">
