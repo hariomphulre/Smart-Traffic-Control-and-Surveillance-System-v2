@@ -37,10 +37,6 @@ An **AI**-powered real-time multitasking system using advanced **custom trained*
 
 </div>  
 
-```
-
-Note: Prototype & Patent are in progress...
-```
 
 ---
 
