@@ -12,22 +12,6 @@ An **AI**-powered real-time multitasking system using advanced **custom trained*
   [![Web Platform](https://img.shields.io/badge/Web%20Platform-%230F02FA?style=for-the-badge&logo=google-chrome&logoColor=white)](https://your-web-url.com)
   [![Demo Video](https://img.shields.io/badge/Demo-%230F02FA?style=for-the-badge&logo=google-drive&logoColor=white)](https://drive.google.com/your-drive-video-link)
   [![🤖 Prototype](https://img.shields.io/badge/🤖_Prototype-%230F02FA?style=for-the-badge)](https://your-prototype-link.com)
-  
-  <a href="https://smart-traffic-control-and-surveilla.vercel.app">
-    <img src="https://img.shields.io/badge/🌐%20live_Web%20Platform-%23326ce5.svg?style=for-the-badge" alt="Web platform" />
-  </a>
-  
-  <a href="#">
-    <img src="https://img.shields.io/badge/▶%20Demonstration%20Video-%23326ce5.svg?style=for-the-badge" alt="Demonstration video" />
-  </a>
-
-  <a href="#">
-    <img src="https://img.shields.io/badge/🛠️_Prototype-%23326ce5.svg?style=for-the-badge" alt="Prototype" />
-  </a>
-
-  <a href="#">
-    <img src="https://img.shields.io/badge/📄_Patent-%23326ce5.svg?style=for-the-badge" alt="Patent" />
-  </a>
 
 </div>  
 
