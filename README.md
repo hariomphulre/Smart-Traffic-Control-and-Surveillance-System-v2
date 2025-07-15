@@ -12,12 +12,6 @@ An **AI**-powered real-time multitasking system using advanced **custom trained*
 [![🤖 Prototype](https://img.shields.io/badge/🤖_Prototype-%230F02FA?style=for-the-badge)](https://your-prototype-link.com)
 
 
-[![🤖 Prototype](https://img.shields.io/badge/🤖_Prototype-gray?style=for-the-badge)](https://your-prototype-link.com)
-
-[![Prototype](https://img.shields.io/badge/Prototype-gray?style=for-the-badge&logo=gear&logoColor=white)](https://your-prototype-link.com)
-
-
-
 <!-- 🔗 Quick Links (Top-left) -->
 <h4 align="left">🔗 Quick Links</h4>
 <div align="center">
