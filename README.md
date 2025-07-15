@@ -1,8 +1,13 @@
 # 🚦 Smart Traffic Control & Surveillance System </h2>
 
-![Python](https://img.shields.io/badge/Python-3.9-blue?style=flat&logo=python)
+![Python](https://img.shields.io/badge/Python-3.9-blue?style=flat-square&logo=python)
+![Python](https://img.shields.io/badge/Python-3.9-blue?style=plastic&logo=python)
+![Python](https://img.shields.io/badge/Python-3.9-blue?style=for-the-badge&logo=python)
+![GitHub Repo stars](https://img.shields.io/github/stars/yourusername/yourrepo?style=social)
+![GitHub forks](https://img.shields.io/github/forks/yourusername/yourrepo?style=social)
 
-![Stars](https://img.shields.io/github/stars/yourusername/yourrepo?style=social)
+
+![Stars](https://img.shields.io/github/stars/hariomphulre/Smart-Traffic-Control-and-Surveillance-System-v2?style=social)
 
 An **AI**-powered real-time multitasking system using advanced **custom trained** machine learning model (**YOLOv11**) and **OpenCV**. **Raspberry Pi** and camera modules for edge computing, It detects and classifies vehicles such as (**bike, car, bus, truck**), monitors **helmet usage, measures speed**, automatic number plate recognition (**ANPR via OCR & Google Cloud Vision API**), detects **emergency vehicles like ambulance and fire brigade**. The system dynamically adjusts traffic signals based on real-time traffic density and **prioritize emergency vehicles** by green signal and speakers announcement. All capture data including vehicle images, license plate, speed, location, helmet status and red signal break. are securely uploaded on **cloud** and **web platform** on real-time using **web socket** and **Rest API**, The web platfrom is specially designed for **government** use. It provides real-time analytics, detailed vehicle logs, automatic **challan generation** system with proof like detected vehicle image, speed, helmet status, license plate.
 
