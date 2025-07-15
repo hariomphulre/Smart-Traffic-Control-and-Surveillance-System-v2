@@ -1,19 +1,8 @@
 # 🚦 Smart Traffic Control & Surveillance System </h2>
 
-[![Web Platform](https://img.shields.io/badge/Web%20Platform-Available-brightgreen?style=for-the-badge&logo=google-chrome)](https://your-web-url.com)
-
-[![Demo Video](https://img.shields.io/badge/Demo-YouTube-red?style=for-the-badge&logo=youtube)](https://youtube.com/your-demo-link)
-
-[![Prototype](https://img.shields.io/badge/Prototype-Working-blue?style=for-the-badge&logo=vercel)](https://your-prototype-link.com)
-
-[![🌐 Web Platform](https://img.shields.io/badge/🌐%20Web%20Platform-Online-0e76a8?style=for-the-badge&logo=google-chrome&logoColor=white)](https://your-web-url.com)
-[![🎬 Demo Video](https://img.shields.io/badge/🎬%20Demo-Available%20on%20YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtube.com/your-demo-link)
-[![🚧 Prototype](https://img.shields.io/badge/🚧%20Live%20Prototype-Tested%20&%20Deployed-6f42c1?style=for-the-badge&logo=vercel&logoColor=white)](https://your-prototype-link.com)
-
-[![Web Dashboard](https://img.shields.io/badge/Gov%20Dashboard-Live%20Now-0a66c2?style=for-the-badge&logo=gov.uk&logoColor=white)](https://your-web-url.com)
-
-
 An **AI**-powered real-time multitasking system using advanced **custom trained** machine learning model (**YOLOv11**) and **OpenCV**. **Raspberry Pi** and camera modules for edge computing, It detects and classifies vehicles such as (**bike, car, bus, truck**), monitors **helmet usage, measures speed**, automatic number plate recognition (**ANPR via OCR & Google Cloud Vision API**), detects **emergency vehicles like ambulance and fire brigade**. The system dynamically adjusts traffic signals based on real-time traffic density and **prioritize emergency vehicles** by green signal and speakers announcement. All capture data including vehicle images, license plate, speed, location, helmet status and red signal break. are securely uploaded on **cloud** and **web platform** on real-time using **web socket** and **Rest API**, The web platfrom is specially designed for **government** use. It provides real-time analytics, detailed vehicle logs, automatic **challan generation** system with proof like detected vehicle image, speed, helmet status, license plate.
+
+https://img.shields.io/badge/?style=for-the-badge&logo=WEB-PLATFROM&logoColor=white
 
 <!-- 🔗 Quick Links (Top-left) -->
 <h4 align="left">🔗 Quick Links</h4>
