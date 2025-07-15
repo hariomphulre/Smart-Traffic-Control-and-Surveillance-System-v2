@@ -4,7 +4,7 @@
 ![Python](https://img.shields.io/badge/Python-3.9-blue?style=plastic&logo=python)
 ![Python](https://img.shields.io/badge/Python-3.9-blue?style=for-the-badge&logo=python)
 ![GitHub Repo stars](https://img.shields.io/github/stars/yourusername/yourrepo?style=social)
-![GitHub forks](https://img.shields.io/github/forks/yourusername/yourrepo?style=social)
+![GitHub forks](https://img.shields.io/github/forks/hariomphulre/Smart-Traffic-Control-and-Surveillance-System-v2?style=social)
 
 
 ![Stars](https://img.shields.io/github/stars/hariomphulre/Smart-Traffic-Control-and-Surveillance-System-v2?style=social)
