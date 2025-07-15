@@ -1,5 +1,17 @@
 # 🚦 Smart Traffic Control & Surveillance System </h2>
 
+![Python](https://img.shields.io/badge/Python-3.9-blue?logo=python)
+![OpenCV](https://img.shields.io/badge/OpenCV-4.x-blue?logo=opencv)
+![YOLOv11](https://img.shields.io/badge/Model-YOLOv11-red)
+![Raspberry Pi](https://img.shields.io/badge/Hardware-Raspberry%20Pi-brightgreen?logo=raspberry-pi)
+![Real-time](https://img.shields.io/badge/Real--Time-Enabled-success)
+![Cloud Upload](https://img.shields.io/badge/Cloud-Google%20Cloud-blue?logo=googlecloud)
+![WebSocket](https://img.shields.io/badge/API-WebSocket-orange)
+![REST API](https://img.shields.io/badge/API-REST-ff69b4)
+![License](https://img.shields.io/github/license/yourusername/yourrepo)
+![Issues](https://img.shields.io/github/issues/yourusername/yourrepo)
+![Stars](https://img.shields.io/github/stars/yourusername/yourrepo?style=social)
+
 An **AI**-powered real-time multitasking system using advanced **custom trained** machine learning model (**YOLOv11**) and **OpenCV**. **Raspberry Pi** and camera modules for edge computing, It detects and classifies vehicles such as (**bike, car, bus, truck**), monitors **helmet usage, measures speed**, automatic number plate recognition (**ANPR via OCR & Google Cloud Vision API**), detects **emergency vehicles like ambulance and fire brigade**. The system dynamically adjusts traffic signals based on real-time traffic density and **prioritize emergency vehicles** by green signal and speakers announcement. All capture data including vehicle images, license plate, speed, location, helmet status and red signal break. are securely uploaded on **cloud** and **web platform** on real-time using **web socket** and **Rest API**, The web platfrom is specially designed for **government** use. It provides real-time analytics, detailed vehicle logs, automatic **challan generation** system with proof like detected vehicle image, speed, helmet status, license plate.
 
 <!-- 🔗 Quick Links (Top-left) -->
