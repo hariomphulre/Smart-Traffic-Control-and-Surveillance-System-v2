@@ -7,7 +7,7 @@ An **AI**-powered real-time multitasking system using advanced **custom trained*
 [![🤖 Prototype](https://img.shields.io/badge/🤖_Prototype-AI%20Powered-blueviolet?style=for-the-badge)](https://your-prototype-link.com)
 
 
-| 🌐 [Web Platform](https://your-web-url.com) | 🎬 [Demo Video (Drive)](https://drive.google.com/your-drive-video-link) | 🤖 [Prototype](https://your-prototype-link.com) |
+| [Web Platform](https://your-web-url.com) | [Demo Video (Drive)](https://drive.google.com/your-drive-video-link) | 🤖 [Prototype](https://your-prototype-link.com) |
 |---------------------------------------------|-------------------------------------------------------------------------|--------------------------------------------------|
 
 
