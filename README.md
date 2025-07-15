@@ -2,9 +2,10 @@
 
 An **AI**-powered real-time multitasking system using advanced **custom trained** machine learning model (**YOLOv11**) and **OpenCV**. **Raspberry Pi** and camera modules for edge computing, It detects and classifies vehicles such as (**bike, car, bus, truck**), monitors **helmet usage, measures speed**, automatic number plate recognition (**ANPR via OCR & Google Cloud Vision API**), detects **emergency vehicles like ambulance and fire brigade**. The system dynamically adjusts traffic signals based on real-time traffic density and **prioritize emergency vehicles** by green signal and speakers announcement. All capture data including vehicle images, license plate, speed, location, helmet status and red signal break. are securely uploaded on **cloud** and **web platform** on real-time using **web socket** and **Rest API**, The web platfrom is specially designed for **government** use. It provides real-time analytics, detailed vehicle logs, automatic **challan generation** system with proof like detected vehicle image, speed, helmet status, license plate.
 
-[![Web platfrom](https://img.shields.io/badge/Web--Platform-Live-0a66c2?logo=google-chrome&style=flat-square)](https://your-web-url.com)
-[![Demo](https://img.shields.io/badge/Demo-YouTube-red?logo=youtube&style=flat-square)](https://youtube.com/your-demo-link)
-[![Prototype](https://img.shields.io/badge/Prototype-Working-blue?logo=vercel&style=flat-square)](https://your-prototype-link.com)
+[![🌐 Web Platform](https://img.shields.io/badge/🌐%20Web%20Platform-Online-0a66c2?style=for-the-badge&logo=google-chrome&logoColor=white)](https://your-web-url.com)
+[![🎬 Demo Video](https://img.shields.io/badge/🎬_Demo-Google_Drive-4caf50?style=for-the-badge&logo=google-drive&logoColor=white)](https://drive.google.com/your-drive-video-link)
+[![🤖 Prototype](https://img.shields.io/badge/🤖_Prototype-AI%20Powered-blueviolet?style=for-the-badge)](https://your-prototype-link.com)
+
 
 | 🌐 [Web Platform](https://your-web-url.com) | 🎬 [Demo Video (Drive)](https://drive.google.com/your-drive-video-link) | 🤖 [Prototype](https://your-prototype-link.com) |
 |---------------------------------------------|-------------------------------------------------------------------------|--------------------------------------------------|
