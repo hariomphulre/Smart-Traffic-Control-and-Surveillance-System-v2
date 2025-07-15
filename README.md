@@ -2,20 +2,17 @@
 
 An **AI**-powered real-time multitasking system using advanced **custom trained** machine learning model (**YOLOv11**) and **OpenCV**. **Raspberry Pi** and camera modules for edge computing, It detects and classifies vehicles such as (**bike, car, bus, truck**), monitors **helmet usage, measures speed**, automatic number plate recognition (**ANPR via OCR & Google Cloud Vision API**), detects **emergency vehicles like ambulance and fire brigade**. The system dynamically adjusts traffic signals based on real-time traffic density and **prioritize emergency vehicles** by green signal and speakers announcement. All capture data including vehicle images, license plate, speed, location, helmet status and red signal break. are securely uploaded on **cloud** and **web platform** on real-time using **web socket** and **Rest API**, The web platfrom is specially designed for **government** use. It provides real-time analytics, detailed vehicle logs, automatic **challan generation** system with proof like detected vehicle image, speed, helmet status, license plate.
 
-[![Web Platform](https://img.shields.io/badge/Web%20Platform-gray?style=for-the-badge&logo=google-chrome&logoColor=white)](https://your-web-url.com)
-[![Demo Video](https://img.shields.io/badge/Demo-gray?style=for-the-badge&logo=google-drive&logoColor=white)](https://drive.google.com/your-drive-video-link)
-[![🤖 Prototype](https://img.shields.io/badge/🤖_Prototype-gray?style=for-the-badge)](https://your-prototype-link.com)
 
-
-[![Web Platform](https://img.shields.io/badge/Web%20Platform-%230F02FA?style=for-the-badge&logo=google-chrome&logoColor=white)](https://your-web-url.com)
-[![Demo Video](https://img.shields.io/badge/Demo-%230F02FA?style=for-the-badge&logo=google-drive&logoColor=white)](https://drive.google.com/your-drive-video-link)
-[![🤖 Prototype](https://img.shields.io/badge/🤖_Prototype-%230F02FA?style=for-the-badge)](https://your-prototype-link.com)
 
 
 <!-- 🔗 Quick Links (Top-left) -->
 <h4 align="left">🔗 Quick Links</h4>
 <div align="center">
 
+  [![Web Platform](https://img.shields.io/badge/Web%20Platform-%230F02FA?style=for-the-badge&logo=google-chrome&logoColor=white)](https://your-web-url.com)
+  [![Demo Video](https://img.shields.io/badge/Demo-%230F02FA?style=for-the-badge&logo=google-drive&logoColor=white)](https://drive.google.com/your-drive-video-link)
+  [![🤖 Prototype](https://img.shields.io/badge/🤖_Prototype-%230F02FA?style=for-the-badge)](https://your-prototype-link.com)
+  
   <a href="https://smart-traffic-control-and-surveilla.vercel.app">
     <img src="https://img.shields.io/badge/🌐%20live_Web%20Platform-%23326ce5.svg?style=for-the-badge" alt="Web platform" />
   </a>
