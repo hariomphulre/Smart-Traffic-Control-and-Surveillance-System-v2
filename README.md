@@ -6,8 +6,13 @@ An **AI**-powered real-time multitasking system using advanced **custom trained*
 |--------------|---------------------|-----------|
 
 
-| 🌐 [Web Platform](https://your-web-url.com) | 🎥 [Demonstration Video](https://youtube.com/your-demo-link) | 🧪 [Prototype](https://your-prototype-link.com) |
+| 🌐 [Live Web Platform](https://your-web-url.com) | ▶️ [Demonstration Video](https://youtube.com/your-demo-link) | 🤖 [Prototype](https://your-prototype-link.com) |
 |--------------------------------------------|---------------------------------------------------------------|--------------------------------------------------|
+
+| [![Web](https://img.shields.io/badge/Web--Platform-Live-0a66c2?logo=google-chrome&style=flat-square)](https://your-web-url.com) | 
+[![Demo](https://img.shields.io/badge/Demo-YouTube-red?logo=youtube&style=flat-square)](https://youtube.com/your-demo-link) | 
+[![Prototype](https://img.shields.io/badge/Prototype-Working-blue?logo=vercel&style=flat-square)](https://your-prototype-link.com) |
+|---|---|---|
 
 
 <!-- 🔗 Quick Links (Top-left) -->
