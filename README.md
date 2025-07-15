@@ -9,7 +9,13 @@ An **AI**-powered real-time multitasking system using advanced **custom trained*
 
 [![Web Platform](https://img.shields.io/badge/Web%20Platform-%230F02FA?style=for-the-badge&logo=google-chrome&logoColor=white)](https://your-web-url.com)
 [![Demo Video](https://img.shields.io/badge/Demo-%230F02FA?style=for-the-badge&logo=google-drive&logoColor=white)](https://drive.google.com/your-drive-video-link)
-[![🤖 Prototype](https://img.shields.io/badge/Prototype-%230F02FA?style=for-the-badge)](https://your-prototype-link.com)
+[![🤖 Prototype](https://img.shields.io/badge/🤖_Prototype-%230F02FA?style=for-the-badge)](https://your-prototype-link.com)
+
+
+[![🤖 Prototype](https://img.shields.io/badge/🤖_Prototype-gray?style=for-the-badge)](https://your-prototype-link.com)
+
+[![Prototype](https://img.shields.io/badge/Prototype-gray?style=for-the-badge&logo=gear&logoColor=white)](https://your-prototype-link.com)
+
 
 
 <!-- 🔗 Quick Links (Top-left) -->
