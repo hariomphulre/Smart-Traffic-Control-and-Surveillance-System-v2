@@ -9,7 +9,7 @@ An **AI**-powered real-time multitasking system using advanced **custom trained*
 <h4 align="left">🔗 Quick Links</h4>
 <div align="center">
 
-  [![Web Platform](https://img.shields.io/badge/Web%20Platform-%230F02FA?style=for-the-badge&logo=google-chrome&logoColor=white)](https://your-web-url.com)
+  [![Web Platform](https://img.shields.io/badge/Web%20Platform-%230F02FA?style=for-the-badge&logo=google-chrome&logoColor=white)](https://smart-traffic-management-coral.vercel.app/)
   [![Demo Video](https://img.shields.io/badge/Demo%20Video-%230F02FA?style=for-the-badge&logo=google-drive&logoColor=white)](https://drive.google.com/your-drive-video-link)
   [![🤖 Prototype](https://img.shields.io/badge/🤖_Prototype-%230F02FA?style=for-the-badge)](https://your-prototype-link.com)
 
