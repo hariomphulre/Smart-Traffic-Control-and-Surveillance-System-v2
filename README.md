@@ -226,7 +226,7 @@ cd Smart-Traffic-Control-and-Surveillance-System-v2/traffic_signal_simulation
 source traffic2/bin/activate
 python simulation3.py
 ```
-Note: Below Terminals must run on RealVNC
+Note: Below Terminals must run via RealVNC
 
 #Terminal 5:
 ```
