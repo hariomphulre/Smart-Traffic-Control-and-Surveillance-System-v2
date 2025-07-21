@@ -156,7 +156,7 @@ An **AI**-powered real-time multitasking system using advanced **custom trained*
 - Raspberry Pi, I2C LCD (for hardware-side setup)
 - I2C LCD library (https://github.com/the-raspberry-pi-guy/lcd)
 - Google Cloud credentials & API access (Vision API, GCP bucket)
-- Google Cloud Serive Account KEY
+- Google Cloud Service Account KEY
 - Ultralytics
 
 ### 1. Backend Setup
