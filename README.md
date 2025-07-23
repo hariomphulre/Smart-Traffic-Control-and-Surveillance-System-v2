@@ -79,7 +79,7 @@ An **AI**-powered real-time multitasking system using advanced **custom trained*
 |----------|
 | ![Dashboard](screenshots/web_dashboard.png) ![Graphs](screenshots/dashboard_graph.png) | ![Map](screenshots/map.png) |
 
-| License Plate Logs | Vehicle info |
+| Detection Logs | Vehicle info |
 |--------------------|--------------|
 | ![Logs](screenshots/vehicle_data_logs.jpg) | ![vehicle_info](screenshots/vehicle_info.jpg)
 
