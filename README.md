@@ -152,89 +152,95 @@ An **AI**-powered real-time multitasking system using advanced **custom trained*
 ## Directory Structure
 
 The project is organized as follows:
+
 <div style="white-space: pre;">
-Smart-Traffic-Control-and-Surveillance-System-v3.0/  
-├── c1_watch_count2.py  
-├── client/  
-│   ├── package.json  
-│   ├── package-lock.json  
-│   ├── public/  
-│   │   ├── index.html  
-│   │   └── manifest.json  
-│   └── src/  
-│       ├── App.js  
-│       ├── components/  
-│       │   ├── DashboardStats.js  
-│       │   ├── DataLogs.js  
-│       │   ├── Footer.js  
-│       │   ├── Header.js  
-│       │   ├── HelmetComplianceChart.js  
-│       │   ├── ImageGallery.js  
-│       │   ├── LicensePlateRegionChart.js  
-│       │   ├── SpeedDistributionChart.js  
-│       │   ├── SystemStatusBar.js  
-│       │   ├── TrafficVolumeChart.js  
-│       │   ├── UploadForm.js  
-│       │   ├── VehicleDataDisplay.js  
-│       │   └── VehicleTypeDistribution.js  
-│       ├── index.css  
-│       ├── index.js  
-│       ├── reportWebVitals.js  
-│       └── styles/  
-│           ├── DarkMode.css  
-│           ├── Dashboard.css  
-│           ├── DashboardStats.css  
-│           ├── Footer.css  
-│           ├── Header.css  
-│           ├── Navbar.css  
-│           ├── SystemStatusBar.css  
-│           ├── TrafficVolumeChart.css  
-│           ├── VehicleDataDisplay.css  
-│           └── VehicleTypeDistribution.css  
-├── custom_yolo11.pt  
-├── detection_simulation.py  
-├── R1.py  
-├── R2.py  
-├── R3.py  
-├── R4.py  
-├── README.md  
-├── server/ 
-│   ├── package.json  
-│   ├── package-lock.json  
-│   ├── README.md  
-│   ├── server.js  
-│   └── vehicle_data_with_helmet/  
-│       ├── all_license_plate_img/  
-│       ├── all_vehicle_detected_img/  
-│       ├── helmet_data.json  
-│       ├── new_license_data.json  
-│       ├── new_sort_license_plate_img/  
-│       ├── speed_data.json  
-│       └── vehicle_types.json  
-├── traffic_signal_simulation/  
-│   ├── de.py  
-│   ├── simulation.py  
-│   ├── simulation2.py  
-│   ├── simulation3.py  
-│   ├── test.py  
-│   ├── traffic.json  
-│   ├── traffic.json.lock  
-│   ├── traffic2.json  
-│   ├── traffic2.json.lock  
-│   ├── watch_signals.py  
-│   ├── watch_signals2.py  
-│   └── watch_signals3.py  
-├── watchdog_simulation.py  
-├── watchdog_simulation2.py  
-├── yolo_detect.py  
-├── yolo11n_ncnn_model/  
-│   ├── metadata.yaml  
-│   ├── model_ncnn.py  
-│   ├── model.ncnn.bin  
-│   └── model.ncnn.param  
-└── yolo11n.pt  
+
+Smart-Traffic-Control-and-Surveillance-System-v3.0/
+├── c1_watch_count2.py
+├── custom_yolo11.pt
+├── detection_simulation.py
+├── R1.py
+├── R2.py
+├── R3.py
+├── R4.py
+├── README.md
+├── watchdog_simulation.py
+├── watchdog_simulation2.py
+├── yolo_detect.py
+├── yolo11n.pt
+├── yolo11n_ncnn_model/
+│   ├── metadata.yaml
+│   ├── model_ncnn.py
+│   ├── model.ncnn.bin
+│   └── model.ncnn.param
+│
+├── client/
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── public/
+│   │   ├── index.html
+│   │   └── manifest.json
+│   └── src/
+│       ├── App.js
+│       ├── index.css
+│       ├── index.js
+│       ├── reportWebVitals.js
+│       ├── components/
+│       │   ├── DashboardStats.js
+│       │   ├── DataLogs.js
+│       │   ├── Footer.js
+│       │   ├── Header.js
+│       │   ├── HelmetComplianceChart.js
+│       │   ├── ImageGallery.js
+│       │   ├── LicensePlateRegionChart.js
+│       │   ├── SpeedDistributionChart.js
+│       │   ├── SystemStatusBar.js
+│       │   ├── TrafficVolumeChart.js
+│       │   ├── UploadForm.js
+│       │   ├── VehicleDataDisplay.js
+│       │   └── VehicleTypeDistribution.js
+│       └── styles/
+│           ├── DarkMode.css
+│           ├── Dashboard.css
+│           ├── DashboardStats.css
+│           ├── Footer.css
+│           ├── Header.css
+│           ├── Navbar.css
+│           ├── SystemStatusBar.css
+│           ├── TrafficVolumeChart.css
+│           ├── VehicleDataDisplay.css
+│           └── VehicleTypeDistribution.css
+│
+├── server/
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── README.md
+│   ├── server.js
+│   └── vehicle_data_with_helmet/
+│       ├── all_license_plate_img/
+│       ├── all_vehicle_detected_img/
+│       ├── helmet_data.json
+│       ├── new_license_data.json
+│       ├── new_sort_license_plate_img/
+│       ├── speed_data.json
+│       └── vehicle_types.json
+│
+└── traffic_signal_simulation/
+    ├── de.py
+    ├── simulation.py
+    ├── simulation2.py
+    ├── simulation3.py
+    ├── test.py
+    ├── traffic.json
+    ├── traffic.json.lock
+    ├── traffic2.json
+    ├── traffic2.json.lock
+    ├── watch_signals.py
+    ├── watch_signals2.py
+    └── watch_signals3.py
+
 </div>
----
+
 
 ## 🚀 Run Instructions
 
