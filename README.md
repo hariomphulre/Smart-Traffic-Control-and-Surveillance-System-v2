@@ -153,19 +153,19 @@ An **AI**-powered real-time multitasking system using advanced **custom trained*
 
 The project is organized as follows:
 
-Smart-Traffic-Control-and-Surveillance-System-v3.0/
-├── c1_watch_count2.py
-├── client/
-│   ├── package.json
-│   ├── package-lock.json
-│   ├── public/
-│   │   ├── index.html
-│   │   └── manifest.json
-│   └── src/
-│       ├── App.js
-│       ├── components/
-│       │   ├── DashboardStats.js
-│       │   ├── DataLogs.js
+Smart-Traffic-Control-and-Surveillance-System-v3.0/  
+├── c1_watch_count2.py  
+├── client/  
+│   ├── package.json  
+│   ├── package-lock.json  
+│   ├── public/  
+│   │   ├── index.html  
+│   │   └── manifest.json  
+│   └── src/  
+│       ├── App.js  
+│       ├── components/  
+│       │   ├── DashboardStats.js  
+│       │   ├── DataLogs.js  
 │       │   ├── Footer.js
 │       │   ├── Header.js
 │       │   ├── HelmetComplianceChart.js
