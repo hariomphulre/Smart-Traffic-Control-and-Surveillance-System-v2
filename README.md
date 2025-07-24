@@ -152,11 +152,11 @@ An **AI**-powered real-time multitasking system using advanced **custom trained*
 ## Directory Structure
 
 The project is organized as follows:
-
+<div style="white-space: pre;">
 Smart-Traffic-Control-and-Surveillance-System-v3.0/  
 ├── c1_watch_count2.py  
 ├── client/  
-│     ├── package.json  
+│   ├── package.json  
 │   ├── package-lock.json  
 │   ├── public/  
 │   │   ├── index.html  
@@ -233,7 +233,7 @@ Smart-Traffic-Control-and-Surveillance-System-v3.0/
 │   ├── model.ncnn.bin  
 │   └── model.ncnn.param  
 └── yolo11n.pt  
-
+</div>
 ---
 
 ## 🚀 Run Instructions
