@@ -151,10 +151,7 @@ An **AI**-powered real-time multitasking system using advanced **custom trained*
 
 ## Directory Structure
 
-The project is organized as follows:
-
-<div style="white-space: pre;">
-
+```text
 Smart-Traffic-Control-and-Surveillance-System-v3.0/
 ├── c1_watch_count2.py
 ├── custom_yolo11.pt
@@ -238,9 +235,7 @@ Smart-Traffic-Control-and-Surveillance-System-v3.0/
     ├── watch_signals.py
     ├── watch_signals2.py
     └── watch_signals3.py
-
-</div>
-
+```
 
 ## 🚀 Run Instructions
 
