@@ -34,8 +34,8 @@ An **AI**-powered real-time multitasking system using advanced **custom trained*
   ➢ Deploy Raspberry Pi with camera modules at traffic signals to capture real-time video using edge computing.
   
   ➢ Use custom-trained YOLOv11 model for vehicle detection and classification (bike, car, bus, truck), directly on edge devices.</br>
-    - Helmet, Speed, Emergency vehicle, Red light violation detection.</br>
-    - Automatic Number Plate Recognition (ANPR) with EasyOCR and Google Cloud Vision API.
+  - Helmet, Speed, Emergency vehicle, Red light violation detection.</br>
+  - Automatic Number Plate Recognition (ANPR) with EasyOCR and Google Cloud Vision API.
   
   ➢ Develop an algorithm to control traffic signals dynamically by prioritizing high density traffic with dynamic countdown & Emergency vehicles by granting immediate green signals.
   
