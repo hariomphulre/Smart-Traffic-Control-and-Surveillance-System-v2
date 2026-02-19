@@ -103,96 +103,96 @@ export default function ChallanRecords() {
   }, [allChallans]);
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="max-w-full px-4 py-8">
       <div className="mb-6">
-        <h1 className="text-4xl font-bold mb-2 text-black dark:text-white">Challan Records</h1>
-        <p className="text-gray-600 dark:text-gray-400">Traffic violation fines and payment tracking</p>
+        <h1 className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed] mb-2">Challan Records</h1>
+        <p className="text-sm text-[#5f6368] dark:text-[#9aa0a6]">Traffic violation challans and payment tracking</p>
       </div>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
-        <div className="bg-white dark:bg-gray-900 p-4 border border-gray-200 dark:border-gray-800">
-          <h3 className="text-gray-500 dark:text-gray-400 text-xs font-semibold mb-1 uppercase">Total Challans</h3>
-          <p className="text-2xl font-bold text-black dark:text-white">{allChallans.length}</p>
+        <div className="gcloud-card p-4">
+          <h3 className="text-[#5f6368] dark:text-[#9aa0a6] text-xs font-medium mb-1 uppercase">Total Challans</h3>
+          <p className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed]">{allChallans.length}</p>
         </div>
-        <div className="bg-white dark:bg-gray-900 p-4 border border-gray-200 dark:border-gray-800">
-          <h3 className="text-gray-500 dark:text-gray-400 text-xs font-semibold mb-1 uppercase">Pending</h3>
-          <p className="text-2xl font-bold text-black dark:text-white">{stats.pending}</p>
+        <div className="gcloud-card p-4">
+          <h3 className="text-[#5f6368] dark:text-[#9aa0a6] text-xs font-medium mb-1 uppercase">Pending</h3>
+          <p className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed]">{stats.pending}</p>
         </div>
-        <div className="bg-white dark:bg-gray-900 p-4 border border-gray-200 dark:border-gray-800">
-          <h3 className="text-gray-500 dark:text-gray-400 text-xs font-semibold mb-1 uppercase">Received</h3>
-          <p className="text-2xl font-bold text-black dark:text-white">{stats.received}</p>
+        <div className="gcloud-card p-4">
+          <h3 className="text-[#5f6368] dark:text-[#9aa0a6] text-xs font-medium mb-1 uppercase">Received</h3>
+          <p className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed]">{stats.received}</p>
         </div>
-        <div className="bg-white dark:bg-gray-900 p-4 border border-gray-200 dark:border-gray-800">
-          <h3 className="text-gray-500 dark:text-gray-400 text-xs font-semibold mb-1 uppercase">Total Fines</h3>
-          <p className="text-2xl font-bold text-black dark:text-white">₹{stats.totalFines.toLocaleString()}</p>
+        <div className="gcloud-card p-4">
+          <h3 className="text-[#5f6368] dark:text-[#9aa0a6] text-xs font-medium mb-1 uppercase">Total Fines</h3>
+          <p className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed]">₹{stats.totalFines.toLocaleString()}</p>
         </div>
-        <div className="bg-white dark:bg-gray-900 p-4 border border-gray-200 dark:border-gray-800">
-          <h3 className="text-gray-500 dark:text-gray-400 text-xs font-semibold mb-1 uppercase">Collected</h3>
-          <p className="text-2xl font-bold text-black dark:text-white">₹{stats.collectedFines.toLocaleString()}</p>
+        <div className="gcloud-card p-4">
+          <h3 className="text-[#5f6368] dark:text-[#9aa0a6] text-xs font-medium mb-1 uppercase">Collected</h3>
+          <p className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed]">₹{stats.collectedFines.toLocaleString()}</p>
         </div>
       </div>
 
       {/* Filters and Search */}
-      <div className="bg-white dark:bg-gray-900 p-4 border border-gray-200 dark:border-gray-800 mb-6">
+      <div className="gcloud-card p-4 mb-6">
         <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => setStatusFilter('all')}
-              className={`px-4 py-2 font-medium transition-colors border ${
+              className={`px-4 py-2 text-sm font-medium transition-colors rounded ${
                 statusFilter === 'all'
-                  ? 'bg-black dark:bg-white text-white dark:text-black border-black dark:border-white'
-                  : 'bg-white dark:bg-gray-900 text-black dark:text-white border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800'
+                  ? 'bg-[#1a73e8] dark:bg-[#8ab4f8] text-white dark:text-[#202124]'
+                  : 'bg-[#f1f3f4] dark:bg-[#3c4043] text-[#5f6368] dark:text-[#9aa0a6] hover:bg-[#e8eaed] dark:hover:bg-[#4d4e52]'
               }`}
             >
               All
             </button>
             <button
               onClick={() => setStatusFilter('pending')}
-              className={`px-4 py-2 font-medium transition-colors border ${
+              className={`px-4 py-2 text-sm font-medium transition-colors rounded ${
                 statusFilter === 'pending'
-                  ? 'bg-red-600 text-white border-red-600'
-                  : 'bg-white dark:bg-gray-900 text-black dark:text-white border-gray-300 dark:border-gray-700 hover:bg-red-50 dark:hover:bg-red-950'
+                  ? 'bg-[#fbbc04] dark:bg-[#fdd663] text-[#202124]'
+                  : 'bg-[#f1f3f4] dark:bg-[#3c4043] text-[#5f6368] dark:text-[#9aa0a6] hover:bg-[#fef7e0] dark:hover:bg-[#5f5317]'
               }`}
             >
               Pending ({stats.pending})
             </button>
             <button
               onClick={() => setStatusFilter('received')}
-              className={`px-4 py-2 font-medium transition-colors border ${
+              className={`px-4 py-2 text-sm font-medium transition-colors rounded ${
                 statusFilter === 'received'
-                  ? 'bg-green-600 text-white border-green-600'
-                  : 'bg-white dark:bg-gray-900 text-black dark:text-white border-gray-300 dark:border-gray-700 hover:bg-green-50 dark:hover:bg-green-950'
+                  ? 'bg-[#34a853] dark:bg-[#81c995] text-white dark:text-[#202124]'
+                  : 'bg-[#f1f3f4] dark:bg-[#3c4043] text-[#5f6368] dark:text-[#9aa0a6] hover:bg-[#e6f4ea] dark:hover:bg-[#1e4620]'
               }`}
             >
               Received ({stats.received})
             </button>
             <button
               onClick={() => setStatusFilter('rejected')}
-              className={`px-4 py-2 font-medium transition-colors border ${
+              className={`px-4 py-2 text-sm font-medium transition-colors rounded ${
                 statusFilter === 'rejected'
-                  ? 'bg-black dark:bg-white text-white dark:text-black border-black dark:border-white'
-                  : 'bg-white dark:bg-gray-900 text-black dark:text-white border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800'
+                  ? 'bg-[#5f6368] dark:bg-[#9aa0a6] text-white dark:text-[#202124]'
+                  : 'bg-[#f1f3f4] dark:bg-[#3c4043] text-[#5f6368] dark:text-[#9aa0a6] hover:bg-[#e8eaed] dark:hover:bg-[#4d4e52]'
               }`}
             >
               Rejected ({stats.rejected})
             </button>
           </div>
           <div className="relative w-full md:w-64">
-            <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#5f6368] dark:text-[#9aa0a6]" />
             <input
               type="text"
               placeholder="Search ID, License, Location..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-black dark:text-white focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 border border-[#dadce0] dark:border-[#3c4043] bg-white dark:bg-[#292a2d] text-[#202124] dark:text-[#e8eaed] rounded focus:ring-2 focus:ring-[#1a73e8] dark:focus:ring-[#8ab4f8] focus:border-transparent text-sm"
             />
           </div>
         </div>
       </div>
 
       {/* Results Count */}
-      <div className="mb-4 text-gray-600 dark:text-gray-400">
+      <div className="mb-4 text-sm text-[#5f6368] dark:text-[#9aa0a6]">
         Showing {filteredChallans.length} of {allChallans.length} challan records
       </div>
 

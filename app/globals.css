@@ -1,23 +1,91 @@
 @import 'leaflet/dist/leaflet.css';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 249, 250, 251;
-  --background-end-rgb: 255, 255, 255;
+  /* Google Cloud Light */
+  --gcloud-bg: #ffffff;
+  --gcloud-card: #ffffff;
+  --gcloud-border: #dadce0;
+  --gcloud-text: #202124;
+  --gcloud-text-secondary: #5f6368;
+  --gcloud-hover: #f8f9fa;
+}
+
+.dark {
+  /* Google Cloud Dark */
+  --gcloud-bg: #202124;
+  --gcloud-card: #292a2d;
+  --gcloud-border: #3c4043;
+  --gcloud-text: #e8eaed;
+  --gcloud-text-secondary: #9aa0a6;
+  --gcloud-hover: #35363a;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-start-rgb));
+  @apply bg-white dark:bg-[#202124] text-[#202124] dark:text-[#e8eaed];
   min-height: 100vh;
+  font-family: 'Roboto', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Google Cloud Scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-[#dadce0] dark:bg-[#5f6368] rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-[#bdc1c6] dark:bg-[#80868b];
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+@layer components {
+  /* Google Card */
+  .gcloud-card {
+    @apply bg-white dark:bg-[#292a2d] border border-[#dadce0] dark:border-[#3c4043] rounded-lg;
+  }
+  
+  /* Primary Button */
+  .btn-primary {
+    @apply bg-[#1a73e8] hover:bg-[#1765cc] active:bg-[#1557b0] text-white font-medium px-6 py-2 rounded transition-colors;
+  }
+  
+  /* Secondary Button */
+  .btn-secondary {
+    @apply bg-transparent border border-[#dadce0] dark:border-[#5f6368] text-[#1a73e8] dark:text-[#8ab4f8] hover:bg-[#f8f9fa] dark:hover:bg-[#35363a] font-medium px-6 py-2 rounded transition-colors;
+  }
+  
+  /* Table */
+  .gcloud-table thead {
+    @apply bg-[#f8f9fa] dark:bg-[#292a2d] border-b border-[#dadce0] dark:border-[#5f6368];
+  }
+  
+  .gcloud-table th {
+    @apply px-6 py-3 text-left text-xs font-medium text-[#5f6368] dark:text-[#9aa0a6] uppercase;
+  }
+  
+  .gcloud-table td {
+    @apply px-6 py-4 text-sm border-b border-[#e8eaed] dark:border-[#3c4043];
+  }
+  
+  .gcloud-table tr:hover {
+    @apply bg-[#f8f9fa] dark:bg-[#35363a];
   }
 }

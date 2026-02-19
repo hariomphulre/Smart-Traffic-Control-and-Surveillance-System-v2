@@ -18,17 +18,17 @@ export default function SecondaryNavbar({ items }: SecondaryNavbarProps) {
   if (items.length === 0) return null
 
   return (
-    <nav className="bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 transition-colors">
-      <div className="container mx-auto px-4">
-        <div className="flex space-x-1 overflow-x-auto py-3">
+    <nav className="bg-white dark:bg-[#292a2d] border-b border-[#dadce0] dark:border-[#3c4043]">
+      <div className="max-w-full px-4">
+        <div className="flex items-center gap-1 overflow-x-auto py-2">
           {items.map((item) => (
             <Link
               key={item.path}
               href={item.path}
-              className={`px-4 py-2 rounded-md whitespace-nowrap transition-all text-sm font-medium ${
+              className={`px-4 py-2 text-sm font-medium whitespace-nowrap rounded transition-colors ${
                 pathname === item.path
-                  ? 'bg-gray-900 dark:bg-white text-white dark:text-gray-900'
-                  : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
+                  ? 'text-[#1a73e8] dark:text-[#8ab4f8] bg-[#e8f0fe] dark:bg-[#1a73e8]/10'
+                  : 'text-[#5f6368] dark:text-[#9aa0a6] hover:bg-[#f8f9fa] dark:hover:bg-[#35363a]'
               }`}
             >
               {item.name}
