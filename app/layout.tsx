@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/Navbar'
 import SecondaryNavbar from '@/components/SecondaryNavbar'
+import { ThemeProvider } from '@/context/ThemeContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,13 +26,15 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <Navbar />
-        <SecondaryNavbar items={secondaryNavItems} />
-        <main className="min-h-screen bg-gray-50">
-          {children}
-        </main>
+        <ThemeProvider>
+          <Navbar />
+          <SecondaryNavbar items={secondaryNavItems} />
+          <main className="min-h-screen bg-white dark:bg-gray-950 transition-colors">
+            {children}
+          </main>
+        </ThemeProvider>
       </body>
     </html>
   )
