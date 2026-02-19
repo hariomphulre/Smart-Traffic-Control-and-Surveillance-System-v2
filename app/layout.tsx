@@ -31,7 +31,7 @@ export default function RootLayout({
         <ThemeProvider>
           <Navbar />
           <SecondaryNavbar items={secondaryNavItems} />
-          <main className="min-h-screen bg-white dark:bg-gray-950 transition-colors">
+          <main className="min-h-screen transition-colors">
             {children}
           </main>
         </ThemeProvider>

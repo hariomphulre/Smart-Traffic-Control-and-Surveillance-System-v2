@@ -79,71 +79,71 @@ export default function AccidentReports() {
   }, [allReports]);
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="max-w-full px-4 py-8">
       <div className="mb-6">
-        <h1 className="text-4xl font-bold mb-2 text-black dark:text-white">Accident & Fire Reports</h1>
-        <p className="text-gray-600 dark:text-gray-400">Incident detection and emergency response tracking</p>
+        <h1 className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed] mb-2">Accident & Fire Reports</h1>
+        <p className="text-sm text-[#5f6368] dark:text-[#9aa0a6]">Incident detection and emergency response tracking</p>
       </div>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <div className="bg-white dark:bg-gray-900 p-4 border border-gray-200 dark:border-gray-800">
-          <h3 className="text-gray-500 dark:text-gray-400 text-xs font-semibold mb-1 uppercase">Total Incidents</h3>
-          <p className="text-2xl font-bold text-black dark:text-white">{stats.total}</p>
+        <div className="gcloud-card p-4">
+          <h3 className="text-[#5f6368] dark:text-[#9aa0a6] text-xs font-medium mb-1 uppercase">Total Incidents</h3>
+          <p className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed]">{stats.total}</p>
         </div>
-        <div className="bg-red-50 dark:bg-red-950 p-4 border-2 border-red-500">
-          <h3 className="text-red-700 dark:text-red-300 text-xs font-semibold mb-1 uppercase">High Severity</h3>
-          <p className="text-2xl font-bold text-red-600 dark:text-red-400">{stats.high}</p>
+        <div className="gcloud-card p-4 bg-[#fce8e6] dark:bg-[#5f2120] border-2 border-[#ea4335] dark:border-[#f28b82]">
+          <h3 className="text-[#d93025] dark:text-[#f28b82] text-xs font-medium mb-1 uppercase">High Severity</h3>
+          <p className="text-2xl font-normal text-[#d93025] dark:text-[#f28b82]">{stats.high}</p>
         </div>
-        <div className="bg-orange-50 dark:bg-orange-950 p-4 border-2 border-orange-500">
-          <h3 className="text-orange-700 dark:text-orange-300 text-xs font-semibold mb-1 uppercase">Medium Severity</h3>
-          <p className="text-2xl font-bold text-orange-600 dark:text-orange-400">{stats.medium}</p>
+        <div className="gcloud-card p-4 bg-[#fef7e0] dark:bg-[#5f5317] border-2 border-[#fbbc04] dark:border-[#fdd663]">
+          <h3 className="text-[#ea8600] dark:text-[#fdd663] text-xs font-medium mb-1 uppercase">Medium Severity</h3>
+          <p className="text-2xl font-normal text-[#ea8600] dark:text-[#fdd663]">{stats.medium}</p>
         </div>
-        <div className="bg-yellow-50 dark:bg-yellow-950 p-4 border-2 border-yellow-500">
-          <h3 className="text-yellow-700 dark:text-yellow-300 text-xs font-semibold mb-1 uppercase">Low Severity</h3>
-          <p className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">{stats.low}</p>
+        <div className="gcloud-card p-4 bg-[#e6f4ea] dark:bg-[#1e4620] border-2 border-[#34a853] dark:border-[#81c995]">
+          <h3 className="text-[#188038] dark:text-[#81c995] text-xs font-medium mb-1 uppercase">Low Severity</h3>
+          <p className="text-2xl font-normal text-[#188038] dark:text-[#81c995]">{stats.low}</p>
         </div>
       </div>
 
       {/* Filters */}
-      <div className="bg-white dark:bg-gray-900 p-4 border border-gray-200 dark:border-gray-800 mb-6">
+      <div className="gcloud-card p-4 mb-6">
         <div className="flex flex-wrap gap-2">
           <button
             onClick={() => setSeverityFilter('all')}
-            className={`px-4 py-2 font-medium transition-colors border ${
+            className={`px-4 py-2 text-sm font-medium transition-colors rounded ${
               severityFilter === 'all'
-                ? 'bg-black dark:bg-white text-white dark:text-black border-black dark:border-white'
-                : 'bg-white dark:bg-gray-900 text-black dark:text-white border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800'
+                ? 'bg-[#1a73e8] dark:bg-[#8ab4f8] text-white dark:text-[#202124]'
+                : 'bg-[#f1f3f4] dark:bg-[#3c4043] text-[#5f6368] dark:text-[#9aa0a6] hover:bg-[#e8eaed] dark:hover:bg-[#4d4e52]'
             }`}
           >
             All Reports ({stats.total})
           </button>
           <button
             onClick={() => setSeverityFilter('high')}
-            className={`px-4 py-2 font-medium transition-colors border ${
+            className={`px-4 py-2 text-sm font-medium transition-colors rounded ${
               severityFilter === 'high'
-                ? 'bg-red-600 text-white border-red-600'
-                : 'bg-white dark:bg-gray-900 text-black dark:text-white border-gray-300 dark:border-gray-700 hover:bg-red-50 dark:hover:bg-red-950'
+                ? 'bg-[#ea4335] dark:bg-[#f28b82] text-white dark:text-[#202124]'
+                : 'bg-[#f1f3f4] dark:bg-[#3c4043] text-[#5f6368] dark:text-[#9aa0a6] hover:bg-[#fce8e6] dark:hover:bg-[#5f2120]'
             }`}
           >
             High Severity ({stats.high})
           </button>
           <button
             onClick={() => setSeverityFilter('medium')}
-            className={`px-4 py-2 font-medium transition-colors border ${
+            className={`px-4 py-2 text-sm font-medium transition-colors rounded ${
               severityFilter === 'medium'
-                ? 'bg-orange-600 text-white border-orange-600'
-                : 'bg-white dark:bg-gray-900 text-black dark:text-white border-gray-300 dark:border-gray-700 hover:bg-orange-50 dark:hover:bg-orange-950'
+                ? 'bg-[#fbbc04] dark:bg-[#fdd663] text-[#202124]'
+                : 'bg-[#f1f3f4] dark:bg-[#3c4043] text-[#5f6368] dark:text-[#9aa0a6] hover:bg-[#fef7e0] dark:hover:bg-[#5f5317]'
             }`}
           >
             Medium Severity ({stats.medium})
           </button>
           <button
             onClick={() => setSeverityFilter('low')}
-            className={`px-4 py-2 font-medium transition-colors border ${
+            className={`px-4 py-2 text-sm font-medium transition-colors rounded ${
               severityFilter === 'low'
-                ? 'bg-yellow-600 text-white border-yellow-600'
-                : 'bg-white dark:bg-gray-900 text-black dark:text-white border-gray-300 dark:border-gray-700 hover:bg-yellow-50 dark:hover:bg-yellow-950'
+                ? 'bg-[#34a853] dark:bg-[#81c995] text-white dark:text-[#202124]'
+                : 'bg-[#f1f3f4] dark:bg-[#3c4043] text-[#5f6368] dark:text-[#9aa0a6] hover:bg-[#e6f4ea] dark:hover:bg-[#1e4620]'
             }`}
           >
             Low Severity ({stats.low})
@@ -152,7 +152,7 @@ export default function AccidentReports() {
       </div>
 
       {/* Results Count */}
-      <div className="mb-4 text-gray-600 dark:text-gray-400">
+      <div className="mb-4 text-sm text-[#5f6368] dark:text-[#9aa0a6]">
         Showing {filteredReports.length} of {allReports.length} reports
       </div>
 
@@ -162,41 +162,41 @@ export default function AccidentReports() {
           <div
             key={report.id}
             onClick={() => setSelectedReport(report)}
-            className={`bg-white dark:bg-gray-900 border-l-4 p-5 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors ${
-              report.severity === 'high' ? 'border-red-500' :
-              report.severity === 'medium' ? 'border-orange-500' :
-              'border-yellow-500'
+            className={`gcloud-card p-5 cursor-pointer hover:border-[#1a73e8] dark:hover:border-[#8ab4f8] transition-colors border-l-4 ${
+              report.severity === 'high' ? 'border-l-[#ea4335]' :
+              report.severity === 'medium' ? 'border-l-[#fbbc04]' :
+              'border-l-[#34a853]'
             }`}
           >
             <div className="flex justify-between items-start mb-3">
               <div>
-                <h3 className="text-lg font-bold text-black dark:text-white">{report.id}</h3>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Click to view details</p>
+                <h3 className="text-base font-medium text-[#202124] dark:text-[#e8eaed]">{report.id}</h3>
+                <p className="text-xs text-[#5f6368] dark:text-[#9aa0a6] mt-1">Click to view details</p>
               </div>
-              <span className={`px-3 py-1 text-xs font-bold ${
-                report.severity === 'high' ? 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 border border-red-500' :
-                report.severity === 'medium' ? 'bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 border border-orange-500' :
-                'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 border border-yellow-500'
+              <span className={`px-3 py-1 text-xs font-medium rounded ${
+                report.severity === 'high' ? 'bg-[#fce8e6] dark:bg-[#5f2120] text-[#d93025] dark:text-[#f28b82]' :
+                report.severity === 'medium' ? 'bg-[#fef7e0] dark:bg-[#5f5317] text-[#ea8600] dark:text-[#fdd663]' :
+                'bg-[#e6f4ea] dark:bg-[#1e4620] text-[#188038] dark:text-[#81c995]'
               }`}>
                 {report.severity.toUpperCase()}
               </span>
             </div>
 
             <div className="space-y-2 mb-4">
-              <div className="flex items-start text-sm text-gray-700 dark:text-gray-300">
+              <div className="flex items-start text-sm text-[#5f6368] dark:text-[#9aa0a6]">
                 <FiMapPin className="mr-2 mt-0.5 flex-shrink-0" />
                 <span>{report.location}</span>
               </div>
-              <div className="flex items-start text-sm text-gray-700 dark:text-gray-300">
+              <div className="flex items-start text-sm text-[#5f6368] dark:text-[#9aa0a6]">
                 <FiClock className="mr-2 mt-0.5 flex-shrink-0" />
                 <span>{formatDateTime(report.dateTime)}</span>
               </div>
-              <div className="flex items-start text-sm text-gray-700 dark:text-gray-300">
+              <div className="flex items-start text-sm text-[#5f6368] dark:text-[#9aa0a6]">
                 <FiAlertTriangle className="mr-2 mt-0.5 flex-shrink-0" />
                 <span>{report.vehiclesInvolved.length} vehicle(s) involved</span>
               </div>
               {report.hasRecording && (
-                <div className="flex items-start text-sm text-gray-700 dark:text-gray-300">
+                <div className="flex items-start text-sm text-[#5f6368] dark:text-[#9aa0a6]">
                   <FiVideo className="mr-2 mt-0.5 flex-shrink-0" />
                   <span>Recording available</span>
                 </div>

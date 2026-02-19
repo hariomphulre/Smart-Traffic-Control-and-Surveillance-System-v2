@@ -101,10 +101,10 @@ export default function Images() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="max-w-full px-4 py-8">
       <div className="mb-6">
-        <h1 className="text-4xl font-bold mb-2 text-black dark:text-white">Traffic Camera Images</h1>
-        <p className="text-gray-600 dark:text-gray-400">Vehicle detection images and accident recordings</p>
+        <h1 className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed] mb-2">Traffic Camera Images</h1>
+        <p className="text-sm text-[#5f6368] dark:text-[#9aa0a6]">Vehicle detection images and accident recordings</p>
       </div>
 
       {/* Tab Navigation */}
@@ -114,10 +114,10 @@ export default function Images() {
             setActiveTab('vehicles');
             setSearchTerm('');
           }}
-          className={`flex items-center gap-2 px-6 py-3 font-semibold transition-colors border ${
+          className={`flex items-center gap-2 px-6 py-3 text-sm font-medium transition-colors rounded ${
             activeTab === 'vehicles'
-              ? 'bg-black dark:bg-white text-white dark:text-black border-black dark:border-white'
-              : 'bg-white dark:bg-gray-900 text-black dark:text-white border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800'
+              ? 'bg-[#1a73e8] dark:bg-[#8ab4f8] text-white dark:text-[#202124]'
+              : 'bg-[#f1f3f4] dark:bg-[#3c4043] text-[#5f6368] dark:text-[#9aa0a6] hover:bg-[#e8eaed] dark:hover:bg-[#4d4e52]'
           }`}
         >
           <FiImage size={20} />
@@ -128,10 +128,10 @@ export default function Images() {
             setActiveTab('accidents');
             setSearchTerm('');
           }}
-          className={`flex items-center gap-2 px-6 py-3 font-semibold transition-colors border ${
+          className={`flex items-center gap-2 px-6 py-3 text-sm font-medium transition-colors rounded ${
             activeTab === 'accidents'
-              ? 'bg-black dark:bg-white text-white dark:text-black border-black dark:border-white'
-              : 'bg-white dark:bg-gray-900 text-black dark:text-white border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800'
+              ? 'bg-[#1a73e8] dark:bg-[#8ab4f8] text-white dark:text-[#202124]'
+              : 'bg-[#f1f3f4] dark:bg-[#3c4043] text-[#5f6368] dark:text-[#9aa0a6] hover:bg-[#e8eaed] dark:hover:bg-[#4d4e52]'
           }`}
         >
           <FiVideo size={20} />
@@ -140,21 +140,21 @@ export default function Images() {
       </div>
 
       {/* Search Bar */}
-      <div className="bg-white dark:bg-gray-900 p-4 border border-gray-200 dark:border-gray-800 mb-6">
+      <div className="gcloud-card p-4 mb-6">
         <div className="relative max-w-md">
-          <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#5f6368] dark:text-[#9aa0a6]" />
           <input
             type="text"
             placeholder={activeTab === 'vehicles' ? 'Search by Vehicle ID, License, Type...' : 'Search by ID, Location, Severity...'}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-black dark:text-white focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent"
+            className="w-full pl-10 pr-4 py-2 border border-[#dadce0] dark:border-[#3c4043] bg-white dark:bg-[#292a2d] text-[#202124] dark:text-[#e8eaed] rounded focus:ring-2 focus:ring-[#1a73e8] dark:focus:ring-[#8ab4f8] focus:border-transparent text-sm"
           />
         </div>
       </div>
 
       {/* Results Count */}
-      <div className="mb-4 text-gray-600 dark:text-gray-400">
+      <div className="mb-4 text-sm text-[#5f6368] dark:text-[#9aa0a6]">
         {activeTab === 'vehicles' 
           ? `Showing ${filteredVehicleImages.length} of ${vehicleImages.length} vehicle images`
           : `Showing ${filteredAccidentMedia.length} of ${accidentMedia.length} accident media files`
@@ -168,16 +168,16 @@ export default function Images() {
             <div
               key={img.id}
               onClick={() => setSelectedImage(img)}
-              className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 overflow-hidden cursor-pointer hover:border-black dark:hover:border-white transition-colors"
+              className="gcloud-card overflow-hidden cursor-pointer hover:border-[#1a73e8] dark:hover:border-[#8ab4f8] transition-colors"
             >
-              <div className="bg-gray-800 dark:bg-gray-700 aspect-video flex items-center justify-center relative">
-                <FiImage size={48} className="text-gray-400" />
-                <div className="absolute top-2 right-2 bg-black dark:bg-white text-white dark:text-black text-xs px-2 py-1">
+              <div className="bg-[#f8f9fa] dark:bg-[#3c4043] aspect-video flex items-center justify-center relative">
+                <FiImage size={48} className="text-[#5f6368] dark:text-[#9aa0a6]" />
+                <div className="absolute top-2 right-2 bg-[#1a73e8] dark:bg-[#8ab4f8] text-white dark:text-[#202124] text-xs px-2 py-1 rounded">
                   {img.vehicleType}
                 </div>
               </div>
               <div className="p-4">
-                <h3 className="font-mono text-sm font-semibold text-black dark:text-white mb-2">{img.vehicleId}</h3>
+                <h3 className="font-mono text-sm font-medium text-[#202124] dark:text-[#e8eaed] mb-2">{img.vehicleId}</h3>
                 <div className="space-y-1 text-xs text-gray-600 dark:text-gray-400">
                   <p><span className="font-medium">License:</span> <span className="font-mono font-bold bg-yellow-100 dark:bg-yellow-900 text-yellow-900 dark:text-yellow-100 px-2 py-0.5">{img.licenseNo}</span></p>
                   <p><span className="font-medium">Captured:</span> {formatDateTime(img.timestamp)}</p>

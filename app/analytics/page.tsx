@@ -9,6 +9,18 @@ const TrafficHeatMap = dynamic(
   { ssr: false }
 );
 
+// Professional color palette for charts - Google Cloud style
+const CHART_COLORS = {
+  primary: '#1a73e8',
+  success: '#34a853',
+  warning: '#fbbc04',
+  danger: '#ea4335',
+  gray: '#5f6368',
+};
+
+const VIOLATION_COLORS = ['#ea4335', '#fbbc04', '#34a853', '#1a73e8'];
+const VEHICLE_COLORS = ['#1a73e8', '#34a853', '#fbbc04', '#ea4335', '#8ab4f8'];
+
 // Mock data
 const violationsData = [
   { name: 'Helmet-less', count: 145 },
@@ -50,64 +62,64 @@ export default function Analytics() {
   const totalViolations = violationsData.reduce((sum, item) => sum + item.count, 0);
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="max-w-full px-4 py-8">
       <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-2 text-black dark:text-white">
+        <h1 className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed] mb-2">
           Analytics Dashboard
         </h1>
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-sm text-[#5f6368] dark:text-[#9aa0a6]">
           Comprehensive traffic data analysis and insights
         </p>
       </div>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
-        <div className="bg-white dark:bg-gray-900 p-6 border border-gray-200 dark:border-gray-800">
-          <h3 className="text-gray-500 dark:text-gray-400 text-xs font-semibold mb-2 uppercase">
+        <div className="gcloud-card p-5">
+          <h3 className="text-[#5f6368] dark:text-[#9aa0a6] text-xs font-medium mb-2 uppercase">
             Total Vehicles
           </h3>
-          <p className="text-3xl font-bold text-black dark:text-white">{totalVehicles.toLocaleString()}</p>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">↑ 12% from last week</p>
+          <p className="text-3xl font-normal text-[#202124] dark:text-[#e8eaed]">{totalVehicles.toLocaleString()}</p>
+          <p className="text-sm text-[#34a853] mt-2">↑ 12% from last week</p>
         </div>
 
-        <div className="bg-white dark:bg-gray-900 p-6 border border-gray-200 dark:border-gray-800">
-          <h3 className="text-gray-500 dark:text-gray-400 text-xs font-semibold mb-2 uppercase">
+        <div className="gcloud-card p-5">
+          <h3 className="text-[#5f6368] dark:text-[#9aa0a6] text-xs font-medium mb-2 uppercase">
             Total Violations
           </h3>
-          <p className="text-3xl font-bold text-black dark:text-white">{totalViolations}</p>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">{violationsData[0].count} helmet-less</p>
+          <p className="text-3xl font-normal text-[#202124] dark:text-[#e8eaed]">{totalViolations}</p>
+          <p className="text-sm text-[#5f6368] dark:text-[#9aa0a6] mt-2">{violationsData[0].count} helmet-less</p>
         </div>
 
-        <div className="bg-white dark:bg-gray-900 p-6 border border-gray-200 dark:border-gray-800">
-          <h3 className="text-gray-500 dark:text-gray-400 text-xs font-semibold mb-2 uppercase">
+        <div className="gcloud-card p-5">
+          <h3 className="text-[#5f6368] dark:text-[#9aa0a6] text-xs font-medium mb-2 uppercase">
             Helmet-less
           </h3>
-          <p className="text-3xl font-bold text-black dark:text-white">{violationsData[0].count}</p>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">Bike riders</p>
+          <p className="text-3xl font-normal text-[#202124] dark:text-[#e8eaed]">{violationsData[0].count}</p>
+          <p className="text-sm text-[#5f6368] dark:text-[#9aa0a6] mt-2">Bike riders</p>
         </div>
 
-        <div className="bg-white dark:bg-gray-900 p-6 border border-gray-200 dark:border-gray-800">
-          <h3 className="text-gray-500 dark:text-gray-400 text-xs font-semibold mb-2 uppercase">
+        <div className="gcloud-card p-5">
+          <h3 className="text-[#5f6368] dark:text-[#9aa0a6] text-xs font-medium mb-2 uppercase">
             Tripling
           </h3>
-          <p className="text-3xl font-bold text-black dark:text-white">{violationsData[1].count}</p>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">Triple riding</p>
+          <p className="text-3xl font-normal text-[#202124] dark:text-[#e8eaed]">{violationsData[1].count}</p>
+          <p className="text-sm text-[#5f6368] dark:text-[#9aa0a6] mt-2">Triple riding</p>
         </div>
 
-        <div className="bg-white dark:bg-gray-900 p-6 border border-gray-200 dark:border-gray-800">
-          <h3 className="text-gray-500 dark:text-gray-400 text-xs font-semibold mb-2 uppercase">
+        <div className="gcloud-card p-5">
+          <h3 className="text-[#5f6368] dark:text-[#9aa0a6] text-xs font-medium mb-2 uppercase">
             Red Light Cross
           </h3>
-          <p className="text-3xl font-bold text-black dark:text-white">{violationsData[2].count}</p>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">Signal violations</p>
+          <p className="text-3xl font-normal text-[#202124] dark:text-[#e8eaed]">{violationsData[2].count}</p>
+          <p className="text-sm text-[#5f6368] dark:text-[#9aa0a6] mt-2">Signal violations</p>
         </div>
       </div>
 
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
         {/* Violations by Type */}
-        <div className="bg-white dark:bg-gray-900 p-6 border border-gray-200 dark:border-gray-800">
-          <h2 className="text-xl font-semibold mb-4 text-black dark:text-white">Violations by Type</h2>
+        <div className="gcloud-card p-6">
+          <h2 className="text-base font-medium mb-4 text-[#202124] dark:text-[#e8eaed]">Violations by Type</h2>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
@@ -117,29 +129,44 @@ export default function Analytics() {
                 labelLine={false}
                 label={({ name, percent }) => `${name}: ${((percent || 0) * 100).toFixed(0)}%`}
                 outerRadius={100}
-                fill="#000000"
+                fill="#1a73e8"
                 dataKey="count"
               >
                 {violationsData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={['#000000', '#333333', '#666666', '#999999'][index % 4]} />
+                  <Cell key={`cell-${index}`} fill={VIOLATION_COLORS[index % VIOLATION_COLORS.length]} />
                 ))}
               </Pie>
-              <Tooltip contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb' }} />
+              <Tooltip 
+                contentStyle={{ 
+                  backgroundColor: 'var(--card-bg)', 
+                  border: '1px solid var(--border-color)',
+                  color: 'var(--text-primary)',
+                }} 
+              />
             </PieChart>
           </ResponsiveContainer>
         </div>
 
         {/* Vehicle Type Distribution */}
-        <div className="bg-white dark:bg-gray-900 p-6 border border-gray-200 dark:border-gray-800">
-          <h2 className="text-xl font-semibold mb-4 text-black dark:text-white">Vehicle Type Distribution</h2>
+        <div className="gcloud-card p-6">
+          <h2 className="text-base font-medium mb-4 text-[#202124] dark:text-[#e8eaed]">Vehicle Type Distribution</h2>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={vehicleTypeData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-              <XAxis dataKey="name" stroke="#6b7280" />
-              <YAxis stroke="#6b7280" />
-              <Tooltip contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb' }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" opacity={0.3} />
+              <XAxis dataKey="name" stroke="var(--text-secondary)" />
+              <YAxis stroke="var(--text-secondary)" />
+              <Tooltip 
+                contentStyle={{ 
+                  backgroundColor: 'var(--card-bg)', 
+                  border: '1px solid var(--border-color)',
+                }} 
+              />
               <Legend />
-              <Bar dataKey="count" fill="#000000" />
+              <Bar dataKey="count" fill={CHART_COLORS.primary}>
+                {vehicleTypeData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={VEHICLE_COLORS[index % VEHICLE_COLORS.length]} />
+                ))}
+              </Bar>
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -147,41 +174,60 @@ export default function Analytics() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
         {/* Hourly Traffic */}
-        <div className="bg-white dark:bg-gray-900 p-6 border border-gray-200 dark:border-gray-800">
-          <h2 className="text-xl font-semibold mb-4 text-black dark:text-white">Traffic Flow (24h)</h2>
+        <div className="gcloud-card p-6">
+          <h2 className="text-base font-medium mb-4 text-[#202124] dark:text-[#e8eaed]">Traffic Flow (24h)</h2>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={hourlyTraffic}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-              <XAxis dataKey="hour" stroke="#6b7280" />
-              <YAxis stroke="#6b7280" />
-              <Tooltip contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb' }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" opacity={0.3} />
+              <XAxis dataKey="hour" stroke="var(--text-secondary)" />
+              <YAxis stroke="var(--text-secondary)" />
+              <Tooltip 
+                contentStyle={{ 
+                  backgroundColor: 'var(--card-bg)', 
+                  border: '1px solid var(--border-color)',
+                  color: 'var(--text-primary)',
+                }} 
+              />
               <Legend />
-              <Line type="monotone" dataKey="vehicles" stroke="#000000" strokeWidth={2} />
-              <Line type="monotone" dataKey="violations" stroke="#666666" strokeWidth={2} />
+              <Line type="monotone" dataKey="vehicles" stroke={CHART_COLORS.primary} strokeWidth={2} />
+              <Line type="monotone" dataKey="violations" stroke={CHART_COLORS.danger} strokeWidth={2} />
             </LineChart>
           </ResponsiveContainer>
         </div>
 
         {/* Speed Distribution */}
-        <div className="bg-white dark:bg-gray-900 p-6 border border-gray-200 dark:border-gray-800">
-          <h2 className="text-xl font-semibold mb-4 text-black dark:text-white">Speed Distribution (km/h)</h2>
+        <div className="gcloud-card p-6">
+          <h2 className="text-base font-medium mb-4 text-[#202124] dark:text-[#e8eaed]">Speed Distribution (km/h)</h2>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={speedDistribution}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-              <XAxis dataKey="range" stroke="#6b7280" />
-              <YAxis stroke="#6b7280" />
-              <Tooltip contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb' }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" opacity={0.3} />
+              <XAxis dataKey="range" stroke="var(--text-secondary)" />
+              <YAxis stroke="var(--text-secondary)" />
+              <Tooltip 
+                contentStyle={{ 
+                  backgroundColor: 'var(--card-bg)', 
+                  border: '1px solid var(--border-color)',
+                  color: 'var(--text-primary)',
+                }} 
+              />
               <Legend />
-              <Bar dataKey="count" fill="#000000" />
+              <Bar dataKey="count">
+                {speedDistribution.map((entry, index) => {
+                  let color = CHART_COLORS.success;
+                  if (entry.range === '61-80') color = CHART_COLORS.warning;
+                  if (entry.range === '81-100' || entry.range === '100+') color = CHART_COLORS.danger;
+                  return <Cell key={`cell-${index}`} fill={color} />;
+                })}
+              </Bar>
             </BarChart>
           </ResponsiveContainer>
         </div>
       </div>
 
       {/* Traffic Heat Map */}
-      <div className="bg-white dark:bg-gray-900 p-6 border border-gray-200 dark:border-gray-800">
-        <h2 className="text-xl font-semibold mb-4 text-black dark:text-white">Traffic Violation Heat Map - City Overview</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+      <div className="gcloud-card p-6">
+        <h2 className="text-base font-medium mb-4 text-[#202124] dark:text-[#e8eaed]">Traffic Violation Heat Map - City Overview</h2>
+        <p className="text-sm text-[#5f6368] dark:text-[#9aa0a6] mb-4">
           Click on the markers to see detailed violation information for each zone. Larger markers indicate higher violation counts.
         </p>
         <TrafficHeatMap />
