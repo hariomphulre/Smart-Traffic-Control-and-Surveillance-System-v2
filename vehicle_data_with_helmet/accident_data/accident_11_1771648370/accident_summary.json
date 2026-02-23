@@ -1,0 +1,14 @@
+{
+    "accident_id": "accident_11_1771648370",
+    "first_detected_frame": 760,
+    "last_updated": "2026-02-21 10:02:51",
+    "total_frames": 2,
+    "confidence": 0.8535856604576111,
+    "status": "completed",
+    "total_vehicles": 1,
+    "vehicle_ids": [
+        99
+    ],
+    "completed_at": "2026-02-21 10:03:07",
+    "duration_frames": 2
+}
