@@ -5,12 +5,12 @@ from google.cloud import vision
 import io
 import json
 
-# client = vision.ImageAnnotatorClient.from_service_account_file('service-account-key')
+client = vision.ImageAnnotatorClient.from_service_account_file('linen-marking-452309-e9-ae091aaff0b0.json')
 
-WATCH_FOLDER = 'local_data/all_license_plate_img'
+WATCH_FOLDER = 'vehicle_data_with_helmet/all_license_plate_img'
 
 ############### json file to store license plate with track_id #############
-FILE_PATH = "local_data/new_license_data.json"
+FILE_PATH = "vehicle_data_with_helmet/new_license_data.json"
 # Load existing dictionary (if available)
 def load_dict():
     try:
@@ -65,7 +65,6 @@ def process_image(file_path, track_id):
             print(f"No text detected in image: {file_path}")
     except Exception as e:
         print(f"Error processing {file_path}: {e}")
-
 
 
 class detected_image_handler(FileSystemEventHandler):

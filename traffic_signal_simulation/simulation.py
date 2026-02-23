@@ -1,238 +1,448 @@
+############### with out ambulance ########################
+
+# import json
+# import time
+
+# FILE_PATH = "/home/pi/Desktop/Smart-Traffic-Control-and-Surveillance-System-v3.0/traffic_signal_simulation/traffic2.json"
+# YELLOW_DURATION = 3
+# GREEN_UNIT = 2
+# GREEN_MAX = 30
+
+# def load_data():
+#     with open(FILE_PATH, "r") as file:
+#         return json.load(file)
+
+# def save_data(data):
+#     with open(FILE_PATH, "w") as file:
+#         json.dump(data, file, indent=4)
+
+# def reset_lights(data):
+#     for i in range(1, 5):
+#         data[f"R{i}"] = True
+#         data[f"G{i}"] = False
+#         data[f"Y{i}"] = False
+#         data[f"C{i}"] = 0
+
+# def print_all_countdowns(data):
+#     print("Countdowns -> ", end="")
+#     for i in range(1, 5):
+#         print(f"C{i}: {data[f'C{i}']} ", end="")
+#     print()
+
+# def get_sorted_lanes_by_traffic(data):
+#     traffic = [(i, data[f"T{i}"]) for i in range(1, 5)]
+#     return [lane for lane, _ in sorted(traffic, key=lambda x: x[1], reverse=True)]
+
+
+# def traffic_controller():
+#     while True:
+#         data = load_data()
+#         lane_order = get_sorted_lanes_by_traffic(data)
+
+#         green_durations = {}
+#         for lane in lane_order:
+#             green_durations[lane] = min(data[f"T{lane}"] * GREEN_UNIT, GREEN_MAX)
+
+#         for current_idx in range(4):
+#             current_lane = lane_order[current_idx]
+#             next_lane = lane_order[(current_idx + 1) % 4]
+
+#             green_time = green_durations[current_lane]
+
+#             reset_lights(data)
+#             data[f"G{current_lane}"] = True
+#             data[f"R{current_lane}"] = False
+#             save_data(data)
+
+#             for t in range(green_time, 0, -1):
+#                 data = load_data()
+#                 elapsed_green = green_time - t
+
+#                 wait_times = {}
+
+#                 for i in range(4):
+#                     lane = lane_order[i]
+
+#                     if lane == current_lane or lane == next_lane:
+#                         wait_times[lane] = t
+#                     else:
+#                         idx_current = current_idx
+#                         idx_lane = i
+#                         steps = (idx_lane - idx_current) % 4
+#                         if steps == 1:  
+#                             wait_times[lane] = 0
+#                         else:
+#                             total_wait = 0
+#                             for step in range(1, steps + 1):
+#                                 lane_idx = (idx_current + step) % 4
+#                                 lane_in_path = lane_order[lane_idx]
+#                                 total_wait += green_durations[lane_in_path] + YELLOW_DURATION
+#                             total_wait -= elapsed_green
+#                             wait_times[lane] = max(total_wait, 0)
+
+#                 for lane_num in range(1, 5):
+#                     data[f"C{lane_num}"] = wait_times.get(lane_num, 0)
+
+#                 for lane_num in range(1, 5):
+#                     data[f"G{lane_num}"] = False
+#                     data[f"Y{lane_num}"] = False
+#                     data[f"R{lane_num}"] = True
+
+#                 if t <= YELLOW_DURATION:
+#                     data[f"Y{current_lane}"] = True
+#                     data[f"R{current_lane}"] = False
+#                     data[f"Y{next_lane}"] = True
+#                     data[f"R{next_lane}"] = False
+#                 else:
+#                     data[f"G{current_lane}"] = True
+#                     data[f"R{current_lane}"] = False
+
+#                 save_data(data)
+#                 print_all_countdowns(data)
+#                 time.sleep(1)
+
+#             # After green ends, turn current lane red and remove yellows
+#             data = load_data()
+#             data[f"Y{current_lane}"] = False
+#             data[f"R{current_lane}"] = True
+#             data[f"C{current_lane}"] = 0
+#             data[f"Y{next_lane}"] = False
+#             save_data(data)
+#             print_all_countdowns(data)
+#             time.sleep(1)
+
+# if __name__ == "__main__":
+#     traffic_controller()
+
+
+#########################   With Ambulance    ########################
+
+# import json
+# import time
+
+# FILE_PATH = "/home/pi/Desktop/Smart-Traffic-Control-and-Surveillance-System-v3.0/traffic_signal_simulation/traffic2.json"
+# YELLOW_DURATION = 3
+# GREEN_UNIT = 2
+# GREEN_MAX = 30
+
+# def load_data():
+#     with open(FILE_PATH, "r") as file:
+#         return json.load(file)
+
+# def save_data(data):
+#     with open(FILE_PATH, "w") as file:
+#         json.dump(data, file, indent=4)
+
+# def reset_lights(data):
+#     for i in range(1, 5):
+#         data[f"R{i}"] = True
+#         data[f"G{i}"] = False
+#         data[f"Y{i}"] = False
+#         data[f"C{i}"] = 0
+
+# def print_all_countdowns(data):
+#     print("Countdowns -> ", end="")
+#     for i in range(1, 5):
+#         print(f"C{i}: {data[f'C{i}']} ", end="")
+#     print()
+
+# def get_sorted_lanes_by_traffic(data):
+#     traffic = [(i, data[f"T{i}"]) for i in range(1, 5)]
+#     return [lane for lane, _ in sorted(traffic, key=lambda x: x[1], reverse=True)]
+
+# def get_ambulance_lane(data):
+#     for i in range(1, 5):
+#         if data.get(f"A{i}", False):
+#             return i
+#     return None
+
+# def traffic_controller():
+#     while True:
+#         data = load_data()
+
+#         ambulance_lane = get_ambulance_lane(data)
+#         if ambulance_lane:
+#             reset_lights(data)
+#             data[f"G{ambulance_lane}"] = True
+#             data[f"R{ambulance_lane}"] = False
+#             save_data(data)
+
+#             fixed_green_time = 10
+#             for t in range(fixed_green_time, 0, -1):
+#                 data = load_data()
+
+#                 for i in range(1, 5):
+#                     data[f"C{i}"] = t if i == ambulance_lane else 0
+
+#                 if t <= YELLOW_DURATION:
+#                     data[f"G{ambulance_lane}"] = False
+#                     data[f"Y{ambulance_lane}"] = True
+
+#                 save_data(data)
+#                 print_all_countdowns(data)
+#                 time.sleep(1)
+
+#                 if not data.get(f"A{ambulance_lane}", False):
+#                     break
+
+#             data = load_data()
+#             data[f"Y{ambulance_lane}"] = False
+#             data[f"R{ambulance_lane}"] = True
+#             data[f"C{ambulance_lane}"] = 0
+#             save_data(data)
+#             print_all_countdowns(data)
+#             time.sleep(1)
+#             continue  # go to next loop to recheck
+
+#         #Normal traffic flow
+#         data = load_data()
+#         lane_order = get_sorted_lanes_by_traffic(data)
+
+#         green_durations = {}
+#         for lane in lane_order:
+#             green_durations[lane] = min(data[f"T{lane}"] * GREEN_UNIT, GREEN_MAX)
+
+#         for current_idx in range(4):
+#             if get_ambulance_lane(load_data()):
+#                 break  # break to handle ambulance in next outer loop
+
+#             current_lane = lane_order[current_idx]
+#             next_lane = lane_order[(current_idx + 1) % 4]
+#             green_time = green_durations[current_lane]
+
+#             reset_lights(data)
+#             data[f"G{current_lane}"] = True
+#             data[f"R{current_lane}"] = False
+#             save_data(data)
+
+#             for t in range(green_time, 0, -1):
+#                 data = load_data()
+
+#                 ambulance_now = get_ambulance_lane(data)
+#                 if ambulance_now:
+#                     break
+
+#                 elapsed_green = green_time - t
+#                 wait_times = {}
+
+#                 for i in range(4):
+#                     lane = lane_order[i]
+#                     if lane == current_lane or lane == next_lane:
+#                         wait_times[lane] = t
+#                     else:
+#                         idx_current = current_idx
+#                         idx_lane = i
+#                         steps = (idx_lane - idx_current) % 4
+#                         if steps == 1:
+#                             wait_times[lane] = 0
+#                         else:
+#                             total_wait = 0
+#                             for step in range(1, steps + 1):
+#                                 lane_idx = (idx_current + step) % 4
+#                                 lane_in_path = lane_order[lane_idx]
+#                                 total_wait += green_durations[lane_in_path] + YELLOW_DURATION
+#                             total_wait -= elapsed_green
+#                             wait_times[lane] = max(total_wait, 0)
+
+#                 for lane_num in range(1, 5):
+#                     data[f"C{lane_num}"] = wait_times.get(lane_num, 0)
+
+#                 for lane_num in range(1, 5):
+#                     data[f"G{lane_num}"] = False
+#                     data[f"Y{lane_num}"] = False
+#                     data[f"R{lane_num}"] = True
+
+#                 if t <= YELLOW_DURATION:
+#                     data[f"Y{current_lane}"] = True
+#                     data[f"R{current_lane}"] = False
+#                     data[f"Y{next_lane}"] = True
+#                     data[f"R{next_lane}"] = False
+#                 else:
+#                     data[f"G{current_lane}"] = True
+#                     data[f"R{current_lane}"] = False
+
+#                 save_data(data)
+#                 print_all_countdowns(data)
+#                 time.sleep(1)
+
+#             data = load_data()
+#             data[f"Y{current_lane}"] = False
+#             data[f"R{current_lane}"] = True
+#             data[f"C{current_lane}"] = 0
+#             data[f"Y{next_lane}"] = False
+#             save_data(data)
+#             print_all_countdowns(data)
+#             time.sleep(1)
+
+# if __name__ == "__main__":
+#     traffic_controller()
+
+
+
+
+
 import json
 import time
-import sys
-import lgpio
-FILE_PATH = "traffic.json"
-# Load existing dictionary (if available)
-def load_data():
-    try:
-        with open(FILE_PATH, "r") as file:
-            return json.load(file)
-    except (FileNotFoundError, json.JSONDecodeError):
-        return {}  # Default to empty dict if file doesn't exist or is corrupted
 
-# Save dictionary to file
+
+FILE_PATH = "./traffic_signal_simulation/traffic.json"
+
+YELLOW_DURATION = 3
+GREEN_UNIT = 2
+GREEN_MAX = 30
+
+def load_data():
+    with open(FILE_PATH, "r") as file:
+        return json.load(file)
+
 def save_data(data):
     with open(FILE_PATH, "w") as file:
         json.dump(data, file, indent=4)
 
-traffic=load_data()
-#####################################
+def reset_lights(data):
+    for i in range(1, 5):
+        data[f"R{i}"] = True
+        data[f"G{i}"] = False
+        data[f"Y{i}"] = False
+        data[f"C{i}"] = 0
 
-##################### raspberry pi #########################
-# H=lgpio.gpiochip_open(0)
+def print_all_countdowns(data):
+    print("Countdowns -> ", end="")
+    for i in range(1, 5):
+        print(f"C{i}: {data[f'C{i}']} ", end="")
+    print()
 
-# segments=[2,3,22,11,10,21,12]
-# numbers=[
-#     [0,0,0,0,0,0,1],
-#     [1,0,0,1,1,1,1], 
-#     [0,0,1,0,0,1,0],
-#     [0,0,0,0,1,1,0],  
-#     [1,0,0,1,1,0,0],  
-#     [0,1,0,0,1,0,0],  
-#     [0,1,0,0,0,0,0],   
-#     [0,0,0,1,1,1,1],  
-#     [0,0,0,0,0,0,0], 
-#     [0,0,0,0,1,0,0]   
-# ]
-# digits=[16,20]
+def get_sorted_lanes_by_traffic(data):
+    traffic = [(i, data[f"T{i}"]) for i in range(1, 5)]
+    return [lane for lane, _ in sorted(traffic, key=lambda x: x[1], reverse=True)]
 
-# lgpio.gpio_claim_output(H,digits[0])
-# lgpio.gpio_claim_output(H,digits[1])
+def get_ambulance_lane(data):
+    for i in range(1, 5):
+        if data.get(f"A{i}", False):
+            return i
+    return None
 
-# for segment in segments:
-#     lgpio.gpio_claim_output(H,segment)
+def traffic_controller():
+    while True:
+        data = load_data()
 
-###############################################################
+        ambulance_lane = get_ambulance_lane(data)
+        if ambulance_lane:
+            reset_lights(data)
+            data[f"G{ambulance_lane}"] = True
+            data[f"R{ambulance_lane}"] = False
+            save_data(data)
 
-try:
-    def start():
-        traffic=load_data()
-        traffic[f'R1']=True
-        traffic[f'R2']=True
-        traffic[f'R3']=True
-        traffic[f'R4']=True
+            # fixed_green_time = 10
+            # for t in range(fixed_green_time, 0, -1):
 
-        traffic[f'G1']=False
-        traffic[f'G2']=False
-        traffic[f'G3']=False
-        traffic[f'G4']=False
+            while(ambulance_lane):
+                data = load_data()
 
-        traffic[f'Y1']=False
-        traffic[f'Y2']=False
-        traffic[f'Y3']=False
-        traffic[f'Y4']=False
+                data[f"C{ambulance_lane}"] = 0
 
-        save_data(traffic)
+                # for i in range(1, 5):
+                #     data[f"C{i}"] = t if i == ambulance_lane else 0
 
-        def find_max():
-            traffic=load_data()
-            traffic_list=[traffic["T1"],traffic[f"T2"],traffic[f"T3"],traffic[f"T4"]]
-            tmax=max(traffic_list)
-            tmaxlan=traffic_list.index(tmax)+1
-            traffic_list.pop(tmaxlan-1)
-            tmaxlan2=(traffic_list.index(max(traffic_list)))+1
-            if(tmaxlan2>=tmaxlan):
-                tmaxlan2+=1
-            if(tmax==0):                
-                return [tmaxlan,0,tmaxlan2,True]
-            elif(tmax<=3):
-                return [tmaxlan,5,tmaxlan2,False]
-            elif(tmax<=5):
-                return [tmaxlan,10,tmaxlan2,False]
-            elif(tmax<=7):
-                return [tmaxlan,15,tmaxlan2,False]
-            return [tmaxlan,20,tmaxlan2,False]
-        
-        ###################### check any lane have traffic ##################
-        def check():
-            traffic=load_data()
-            traffic[f'R1']=True
-            traffic[f'R2']=True
-            traffic[f'R3']=True
-            traffic[f'R4']=True
-            traffic[f'Y1']=False
-            traffic[f'Y2']=False
-            traffic[f'Y3']=False
-            traffic[f'Y4']=False
-            traffic[f'G1']=False
-            traffic[f'G2']=False
-            traffic[f'G3']=False
-            traffic[f'G4']=False
-            save_data(traffic)
-            # for i in range(sys.maxsize):
-            #     traffic=load_data()
-            #     traffic_list=[traffic["T1"],traffic[f"T2"],traffic[f"T3"],traffic[f"T4"]]
-            #     if(max(traffic_list)!=0):
-            #         break
-            #     time.sleep(1)
-            traffic=load_data()
-            while(traffic["T1"]==0 and traffic["T2"]==0 and traffic["T3"]==0 and traffic["T4"]==0):
+                # if t <= YELLOW_DURATION:
+                #     data[f"G{ambulance_lane}"] = False
+                #     data[f"Y{ambulance_lane}"] = True
+
+                save_data(data)
+                print_all_countdowns(data)
                 time.sleep(1)
-                traffic=load_data()
-            return start()
-        ##################### Ambulance ############################
-        def emergency():
-            traffic=load_data()
-            lane=-1
-            for i in range(4):
-                if(traffic[f'A{(i+1)}']):
-                    lane=i+1
+
+                if not data.get(f"A{ambulance_lane}", False):
                     break
-            if(lane==-1): return start()    
 
-            traffic[f'R1']=True
-            traffic[f'R2']=True
-            traffic[f'R3']=True
-            traffic[f'R4']=True
-            traffic[f'Y1']=False
-            traffic[f'Y2']=False
-            traffic[f'Y3']=False
-            traffic[f'Y4']=False
-            traffic[f'G1']=False
-            traffic[f'G2']=False
-            traffic[f'G3']=False
-            traffic[f'G4']=False
-
-            traffic[f'R{lane}']=False
-            traffic[f'G{lane}']=True
-            save_data(traffic)
-            i=20
-            if(traffic[f'T{lane}']<=3):
-                i=5
-            elif(traffic[f'T{lane}']<=5):
-                i=10
-            elif(traffic[f'T{lane}']<=7):
-                i=15
-            traffic=load_data() ############
-            traffic["C"]=i ############
-            save_data(traffic) ############
-            while(i>=0):
-                print(i)
-                i-=1
-                time.sleep(1)
-            traffic=load_data()
-            if(traffic["A1"] or traffic["A2"] or traffic["A3"] or traffic["A4"]): return emergency()
-            return start()
-        ##############################################################
-
-        if(traffic["A1"] or traffic["A2"] or traffic["A3"] or traffic["A4"]): return emergency()
-
-        max_data=find_max()  
-        if(max_data[3]):
-            check()  
-        i=max_data[1]
-        traffic=load_data() ################
-        traffic["C"]=i ####################
-        save_data(traffic) ###########
-        j=max_data[0]
-        j1=0
-        j2=0
-        i1=0
-        repeat=0
-
-        traffic[f'R{j}']=False
-        traffic[f'G{j}']=True
-        save_data(traffic)
-        while(i>=0):
-            data=load_data()
-            print(i)
-            if(data["A1"] or data["A2"] or data["A3"] or data["A4"]): return emergency()
-            
-            if(i==3):
-                max_data=find_max()
-                # if(max_data[3]):
-                #     check()
-                i1=max_data[1]
-                j1=max_data[0]
-                j2=max_data[2]
-                data[f'Y{j}']=True
-                data[f'G{j}']=False
-                if(repeat!=0 and j1==repeat and j1==j and j2!=0):
-                    data[f'Y{(j2)}']=True
-                    data[f'R{(j2)}']=False
-                else:
-                    data[f'Y{(j1)}']=True
-                    data[f'R{(j1)}']=False
-                save_data(data)
-            if(i==0):
-                max_data=find_max()
-                if(max_data[3]):
-                    check()
-                # data[f'R{j}']=True
-                # data[f'Y{j}']=False
-                if(repeat!=0 and j1==repeat and j1==j and j2!=0):
-                    data[f'R{j}']=True
-                    data[f'Y{j}']=False
-                    j1=j2
-                    j=j1
-                    data[f'G{j}']=True
-                    data[f'Y{j}']=False
-
-                elif(repeat!=j and j1==j ):
-                    # data[f'R{j}']=True
-                    data[f'Y{j}']=False
-                    repeat=j
-                    # j=j1
-                    data[f'G{j}']=True
-                    # data[f'Y{j}']=False
-                else:
-                    data[f'R{j}']=True
-                    data[f'Y{j}']=False
-                    repeat=j
-                    j=j1
-                    data[f'G{j}']=True
-                    data[f'Y{j}']=False
-
-                # data[f'G{j}']=True
-                # data[f'Y{j}']=False
-                i=i1
-                data["C"]=i ###############
-                save_data(data)
-                # print(data)
-            else:
-                i-=1
+            data = load_data()
+            data[f"Y{ambulance_lane}"] = False
+            data[f"R{ambulance_lane}"] = True
+            data[f"C{ambulance_lane}"] = 0
+            save_data(data)
+            print_all_countdowns(data)
             time.sleep(1)
-    start()
-except KeyboardInterrupt:
-    print("Simulation is stop")
+            continue  # go to next loop to recheck
+
+        #Normal traffic flow
+        data = load_data()
+        lane_order = get_sorted_lanes_by_traffic(data)
+
+        green_durations = {}
+        for lane in lane_order:
+            green_durations[lane] = min(data[f"T{lane}"] * GREEN_UNIT, GREEN_MAX)
+
+        for current_idx in range(4):
+            if get_ambulance_lane(load_data()):
+                break 
+
+            current_lane = lane_order[current_idx]
+            next_lane = lane_order[(current_idx + 1) % 4]
+            green_time = green_durations[current_lane]
+
+            reset_lights(data)
+            data[f"G{current_lane}"] = True
+            data[f"R{current_lane}"] = False
+            save_data(data)
+
+            for t in range(green_time, 0, -1):
+                data = load_data()
+
+                ambulance_now = get_ambulance_lane(data)
+                if ambulance_now:
+                    break
+
+                elapsed_green = green_time - t
+                wait_times = {}
+
+                for i in range(4):
+                    lane = lane_order[i]
+                    if lane == current_lane or lane == next_lane:
+                        wait_times[lane] = t
+                    else:
+                        idx_current = current_idx
+                        idx_lane = i
+                        steps = (idx_lane - idx_current) % 4
+                        if steps == 1:
+                            wait_times[lane] = 0
+                        else:
+                            total_wait = 0
+                            for step in range(1, steps + 1):
+                                lane_idx = (idx_current + step) % 4
+                                lane_in_path = lane_order[lane_idx]
+                                total_wait += green_durations[lane_in_path] + YELLOW_DURATION
+                            total_wait -= elapsed_green
+                            wait_times[lane] = max(total_wait, 0)
+
+                for lane_num in range(1, 5):
+                    data[f"C{lane_num}"] = wait_times.get(lane_num, 0)
+
+                for lane_num in range(1, 5):
+                    data[f"G{lane_num}"] = False
+                    data[f"Y{lane_num}"] = False
+                    data[f"R{lane_num}"] = True
+
+                if t <= YELLOW_DURATION:
+                    data[f"Y{current_lane}"] = True
+                    data[f"R{current_lane}"] = False
+                    data[f"Y{next_lane}"] = True
+                    data[f"R{next_lane}"] = False
+                else:
+                    data[f"G{current_lane}"] = True
+                    data[f"R{current_lane}"] = False
+
+                save_data(data)
+                print_all_countdowns(data)
+                time.sleep(1)
+
+            data = load_data()
+            data[f"Y{current_lane}"] = False
+            data[f"R{current_lane}"] = True
+            data[f"C{current_lane}"] = 0
+            data[f"Y{next_lane}"] = False
+            save_data(data)
+            print_all_countdowns(data)
+            time.sleep(1)
+
+if __name__ == "__main__":
+    traffic_controller()
