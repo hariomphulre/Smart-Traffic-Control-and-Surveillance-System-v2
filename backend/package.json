@@ -1,32 +1,36 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "Traffic Management Platform API - TypeScript + Neon PostgreSQL",
-  "main": "dist/server.js",
+  "type": "module",
+  "description": "Traffic Management Platform API - Next.js + TypeScript + Neon PostgreSQL",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/server.js",
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "migrate": "ts-node src/scripts/migrate.ts",
-    "seed": "ts-node src/scripts/seed.ts",
-    "seed:data": "ts-node src/scripts/seedData.ts",
-    "sync": "ts-node src/scripts/syncData.ts"
+    "dev": "next dev -p 3001",
+    "build": "next build",
+    "start": "next start -p 3001",
+    "lint": "next lint",
+    "migrate": "tsx src/scripts/migrate.ts",
+    "seed": "tsx src/scripts/seed.ts",
+    "seed:data": "tsx src/scripts/seedData.ts",
+    "sync": "tsx src/scripts/syncData.ts"
   },
   "dependencies": {
-    "cors": "^2.8.5",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2",
     "ioredis": "^5.9.3",
+    "next": "^16.1.6",
     "pg": "^8.11.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "twilio": "^5.12.2"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.17",
-    "@types/express": "^4.17.21",
-    "@types/node": "^20.12.7",
     "@types/pg": "^8.11.5",
+    "eslint": "^8",
+    "eslint-config-next": "14.1.0",
     "ts-node": "^10.9.2",
-    "ts-node-dev": "^2.0.0",
-    "typescript": "^5.4.5"
+    "tsx": "^4.22.2",
+    "typescript": "^5"
   }
 }

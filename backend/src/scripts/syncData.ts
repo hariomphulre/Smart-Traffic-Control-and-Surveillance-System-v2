@@ -1,8 +1,12 @@
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import { watch } from 'fs';
 import pool from '../config/db';
 import { sendAccidentAlert } from '../services/sms.service';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const DATA_DIR = path.join(__dirname, '../../../vehicle_data_with_helmet');
 const DEBOUNCE_MS = 2000; // Wait 2s for file operations to complete
@@ -441,13 +445,11 @@ export async function runSync(): Promise<void> {
   }
 }
 
-// Run if called directly as sync command
-if (require.main === module) {
-  runSync()
-    .then(() => {
-      console.log('\n🚀 Starting automatic watchers...');
-      startWatchers();
-      console.log('ℹ️  Press Ctrl+C to stop\n');
-    })
-    .catch(() => process.exit(1));
-}
+// Run directly as sync command
+runSync()
+  .then(() => {
+    console.log('\n🚀 Starting automatic watchers...');
+    startWatchers();
+    console.log('ℹ️  Press Ctrl+C to stop\n');
+  })
+  .catch(() => process.exit(1));

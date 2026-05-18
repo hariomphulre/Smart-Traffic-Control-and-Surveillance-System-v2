@@ -1,6 +1,10 @@
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import pool from '../config/db';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const DATA_DIR = path.join(__dirname, '../../../vehicle_data_with_helmet');
 
@@ -461,11 +465,9 @@ async function runSeed(): Promise<void> {
   }
 }
 
-// Run if called directly
-if (require.main === module) {
-  runSeed()
-    .then(() => process.exit(0))
-    .catch(() => process.exit(1));
-}
+// Run directly
+runSeed()
+  .then(() => process.exit(0))
+  .catch(() => process.exit(1));
 
 export { seedAccidentData, seedVehicleData, seedImages };
