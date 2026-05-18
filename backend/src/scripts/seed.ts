@@ -67,14 +67,14 @@ const seed = async (): Promise<void> => {
     console.log('✅ Seeded vehicle_challan_details (10 records)');
 
     // ── 4. Accidents ──────────────────────────────────────────────────────────
-    const { rows: accRows } = await client.query<{ accident_id: number }>(`
-      INSERT INTO accidents (location, description, severity, has_recording, occurred_at)
+    const { rows: accRows } = await client.query<{ accident_id: string }>(`
+      INSERT INTO accidents (accident_id, location, description, severity, has_recording, occurred_at)
       VALUES
-        ('MG Road Junction',      '2-vehicle high severity collision. Multiple injuries reported. Emergency services dispatched.',  'high',   TRUE,  NOW()-INTERVAL  '2 days'),
-        ('NH-8 Toll Plaza',       'Minor rear-end collision. No injuries. Traffic briefly disrupted.',                              'low',    FALSE, NOW()-INTERVAL  '4 days'),
-        ('Airport Road',          'Medium severity collision between bus and car. One hospitalization reported.',                   'medium', TRUE,  NOW()-INTERVAL  '6 days'),
-        ('Sadar Bazaar',          'Bike skid accident. Rider injured. Single vehicle involved.',                                    'medium', TRUE,  NOW()-INTERVAL  '8 days'),
-        ('Industrial Area Gate 4','Fire detected in truck cabin. Fire brigade deployed immediately. No casualties.',                'high',   TRUE,  NOW()-INTERVAL '10 days')
+        ('accident_1_1771581117', 'MG Road Junction',      '2-vehicle high severity collision. Multiple injuries reported. Emergency services dispatched.',  'high',   TRUE,  NOW()-INTERVAL  '2 days'),
+        ('accident_2_1771596629', 'NH-8 Toll Plaza',       'Minor rear-end collision. No injuries. Traffic briefly disrupted.',                              'low',    FALSE, NOW()-INTERVAL  '4 days'),
+        ('accident_3_1771596642', 'Airport Road',          'Medium severity collision between bus and car. One hospitalization reported.',                   'medium', TRUE,  NOW()-INTERVAL  '6 days'),
+        ('accident_4_1771648024', 'Sadar Bazaar',          'Bike skid accident. Rider injured. Single vehicle involved.',                                    'medium', TRUE,  NOW()-INTERVAL  '8 days'),
+        ('accident_5_1771648048', 'Industrial Area Gate 4','Fire detected in truck cabin. Fire brigade deployed immediately. No casualties.',                'high',   TRUE,  NOW()-INTERVAL '10 days')
       RETURNING accident_id;
     `);
     const [a1, a2, a3, a4, a5] = accRows.map((r) => r.accident_id);
