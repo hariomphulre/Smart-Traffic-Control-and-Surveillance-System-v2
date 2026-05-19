@@ -285,7 +285,7 @@ import json
 import time
 
 
-FILE_PATH = "./traffic_signal_simulation/traffic.json"
+FILE_PATH = "./traffic.json"
 
 YELLOW_DURATION = 3
 GREEN_UNIT = 2

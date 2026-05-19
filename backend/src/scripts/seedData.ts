@@ -6,7 +6,7 @@ import pool from '../config/db';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const DATA_DIR = path.join(__dirname, '../../../vehicle_data_with_helmet');
+const DATA_DIR = path.join(__dirname, '../../../local_data');
 
 interface AccidentData {
   accident_id: string;

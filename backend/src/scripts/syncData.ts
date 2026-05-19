@@ -8,7 +8,7 @@ import { sendAccidentAlert } from '../services/sms.service';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const DATA_DIR = path.join(__dirname, '../../../vehicle_data_with_helmet');
+const DATA_DIR = path.join(__dirname, '../../../local_data');
 const DEBOUNCE_MS = 2000; // Wait 2s for file operations to complete
 const watchedAccidents = new Set<string>();
 let debounceTimers: Map<string, NodeJS.Timeout> = new Map();
