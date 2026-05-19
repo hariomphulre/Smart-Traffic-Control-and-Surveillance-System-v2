@@ -60,7 +60,7 @@ export class LogModel {
     return {
       data: dataResult.rows.map((r) => ({
         id:            formatId(r.log_id),
-        dateTime:      r.detected_at,
+        dateTime:      r.detected_at instanceof Date ? r.detected_at.toISOString() : r.detected_at,
         location:      r.location,
         licenseNo:     r.license_no,
         vehicleType:   r.vehicle_type,

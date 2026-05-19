@@ -60,7 +60,7 @@ export class AccidentModel {
       data: dataResult.rows.map((r) => ({
         id:               formatId(r.accident_id),
         location:         r.location,
-        dateTime:         r.occurred_at,
+        dateTime:         r.occurred_at instanceof Date ? r.occurred_at.toISOString() : r.occurred_at,
         description:      r.description,
         severity:         r.severity,
         hasRecording:     r.has_recording,

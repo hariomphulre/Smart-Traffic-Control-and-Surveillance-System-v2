@@ -223,7 +223,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$data$2f$ambulance$2e$
 ;
 ;
 ;
-const TRAFFIC_JSON_PATH = process.env.TRAFFIC_JSON_PATH || __TURBOPACK__imported__module__$5b$externals$5d2f$path__$5b$external$5d$__$28$path$2c$__cjs$29$__["default"].join(("TURBOPACK compile-time value", "/ROOT/src/controllers"), '..', '..', '..', 'traffic_signal_simulation', 'traffic.json');
+const TRAFFIC_JSON_PATH = process.env.TRAFFIC_JSON_PATH || __TURBOPACK__imported__module__$5b$externals$5d2f$path__$5b$external$5d$__$28$path$2c$__cjs$29$__["default"].join(process.cwd(), '..', 'traffic_signal_simulation', 'traffic.json');
 function loadTrafficJson() {
     try {
         const raw = __TURBOPACK__imported__module__$5b$externals$5d2f$fs__$5b$external$5d$__$28$fs$2c$__cjs$29$__["default"].readFileSync(TRAFFIC_JSON_PATH, 'utf-8');
@@ -348,9 +348,11 @@ async function handleRequest(request, handler) {
             params: {},
             headers: request.headers
         };
-        // Create a mock response object
+        // Create a mock response object with proper error handling
         let responseData = null;
         let statusCode = 200;
+        let errorOccurred = false;
+        let errorData = null;
         const mockRes = {
             status: (code)=>{
                 statusCode = code;
@@ -367,8 +369,37 @@ async function handleRequest(request, handler) {
             set: ()=>mockRes,
             setHeader: ()=>mockRes
         };
-        // Call the handler
-        await handler(mockReq, mockRes);
+        // next() callback to handle errors from Express handlers
+        const next = (error)=>{
+            if (error) {
+                errorOccurred = true;
+                errorData = error;
+                statusCode = 500;
+            }
+        };
+        // Call the handler with error handling
+        await handler(mockReq, mockRes, next);
+        // If error occurred via next(), return error response
+        if (errorOccurred) {
+            const errorMessage = errorData instanceof Error ? errorData.message : typeof errorData === 'string' ? errorData : 'Internal Server Error';
+            console.error('Handler error:', errorData);
+            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+                error: 'Internal Server Error',
+                message: errorMessage
+            }, {
+                status: statusCode
+            });
+        }
+        // Ensure responseData is not null
+        if (responseData === null || responseData === undefined) {
+            console.warn('Handler did not set response data');
+            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+                error: 'No response from handler',
+                message: 'The handler did not return any data'
+            }, {
+                status: 500
+            });
+        }
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(responseData, {
             status: statusCode
         });

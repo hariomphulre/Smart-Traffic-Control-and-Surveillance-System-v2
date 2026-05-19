@@ -5,7 +5,7 @@ import { HOSPITALS, TRAFFIC_SIGNALS } from '../data/ambulance.data';
 
 const TRAFFIC_JSON_PATH =
   process.env.TRAFFIC_JSON_PATH ||
-  path.join(__dirname, '..', '..', '..', 'traffic_signal_simulation', 'traffic.json');
+  path.join(process.cwd(), '..', 'traffic_signal_simulation', 'traffic.json');
 
 function loadTrafficJson(): Record<string, unknown> {
   try {

@@ -18,6 +18,8 @@ export default function AccidentReports() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const PAGE_SIZE = 50;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,9 +27,9 @@ export default function AccidentReports() {
         setLoading(true);
         setError(null);
         
-        const params: any = {
+        const params: Record<string, unknown> = {
           page,
-          limit: 100,
+          limit: PAGE_SIZE,
         };
 
         if (severityFilter !== 'all') params.severity = severityFilter;
@@ -38,6 +40,7 @@ export default function AccidentReports() {
         ]);
 
         setAllReports(accidentsResponse.data || []);
+        setTotal(accidentsResponse.total || 0);
         setStats(statsResponse);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to fetch accidents');
@@ -51,12 +54,8 @@ export default function AccidentReports() {
   }, [page, severityFilter]);
 
   useEffect(() => {
-    if (severityFilter === 'all') {
-      setFilteredReports(allReports);
-    } else {
-      setFilteredReports(allReports.filter(report => report.severity === severityFilter));
-    }
-  }, [allReports, severityFilter]);
+    setFilteredReports(allReports);
+  }, [allReports]);
 
   const formatDateTime = (isoString: string) => {
     const date = new Date(isoString);
@@ -222,9 +221,35 @@ export default function AccidentReports() {
               )}
             </div>
 
-            <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">{report.description}</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2\">{report.description || 'No description'}</p>
           </div>
         ))}
+      </div>
+
+      {/* Pagination Controls */}
+      <div className="flex items-center justify-between mt-6">
+        <div className="text-sm text-[#5f6368] dark:text-[#9aa0a6]">
+          Showing {total > 0 ? (page - 1) * PAGE_SIZE + 1 : 0}-{Math.min(page * PAGE_SIZE, total)} of {total} reports
+        </div>
+        <div className="flex gap-2">
+          <button
+            onClick={() => setPage(prev => Math.max(prev - 1, 1))}
+            disabled={page === 1}
+            className="px-4 py-2 rounded border border-[#dadce0] dark:border-[#5f6368] text-[#1a73e8] dark:text-[#8ab4f8] disabled:opacity-50 hover:bg-[#f8f9fa] dark:hover:bg-[#3c4043] transition-colors font-medium text-sm"
+          >
+            ← Previous
+          </button>
+          <span className="px-4 py-2 text-[#202124] dark:text-[#e8eaed] font-medium">
+            Page {page}
+          </span>
+          <button
+            onClick={() => setPage(prev => prev + 1)}
+            disabled={page * PAGE_SIZE >= total}
+            className="px-4 py-2 rounded border border-[#dadce0] dark:border-[#5f6368] text-[#1a73e8] dark:text-[#8ab4f8] disabled:opacity-50 hover:bg-[#f8f9fa] dark:hover:bg-[#3c4043] transition-colors font-medium text-sm"
+          >
+            Next →
+          </button>
+        </div>
       </div>
 
       {/* Detail Modal */}
@@ -268,7 +293,7 @@ export default function AccidentReports() {
                   </div>
                 </div>
                 <div className="mt-4">
-                  <p className="text-sm text-gray-700 dark:text-gray-300">{selectedReport.description}</p>
+                  <p className="text-sm text-gray-700 dark:text-gray-300\">{selectedReport.description || 'No description provided'}</p>
                 </div>
               </div>
 

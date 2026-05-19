@@ -23,14 +23,14 @@ export interface LogsResponse {
 export interface Challan {
   id: string;
   dateTime: string;
-  location: string;
+  location: string | null;
   licenseNo: string;
-  vehicleType: string;
+  vehicleType: string | null;
   violationType: string;
   fineAmount: number;
   status: 'pending' | 'received' | 'rejected';
   penaltyAmount: number;
-  paymentDate?: string;
+  paymentDate: string | null;
 }
 
 export interface ChallansResponse {
@@ -52,7 +52,7 @@ export interface Accident {
   id: string;
   location: string;
   dateTime: string;
-  description: string;
+  description: string | null;
   vehiclesInvolved: Array<{
     licenseNo: string;
     speed: number;
@@ -99,7 +99,7 @@ export interface AccidentMedia {
   timestamp: string;
   type: 'video' | 'image';
   path: string;
-  duration?: string;
+  duration: string | null;
   severity: 'low' | 'medium' | 'high';
 }
 
@@ -159,7 +159,12 @@ export const getLogs = async (params?: {
   redLight?: boolean;
   tripling?: boolean;
 }): Promise<LogsResponse> => {
-  const response = await axiosInstance.get('/api/logs', { params });
+  const finalParams = {
+    page: params?.page ?? 1,
+    limit: Math.min(params?.limit ?? 20, 100),
+    ...params,
+  };
+  const response = await axiosInstance.get('/api/logs', { params: finalParams });
   return response.data;
 };
 
@@ -170,7 +175,12 @@ export const getChallans = async (params?: {
   search?: string;
   status?: string;
 }): Promise<ChallansResponse> => {
-  const response = await axiosInstance.get('/api/challans', { params });
+  const finalParams = {
+    page: params?.page ?? 1,
+    limit: Math.min(params?.limit ?? 20, 100),
+    ...params,
+  };
+  const response = await axiosInstance.get('/api/challans', { params: finalParams });
   return response.data;
 };
 
@@ -185,7 +195,12 @@ export const getAccidents = async (params?: {
   limit?: number;
   severity?: string;
 }): Promise<AccidentsResponse> => {
-  const response = await axiosInstance.get('/api/accidents', { params });
+  const finalParams = {
+    page: params?.page ?? 1,
+    limit: Math.min(params?.limit ?? 20, 100),
+    ...params,
+  };
+  const response = await axiosInstance.get('/api/accidents', { params: finalParams });
   return response.data;
 };
 
@@ -200,7 +215,12 @@ export const getVehicleImages = async (params?: {
   limit?: number;
   search?: string;
 }): Promise<VehicleImagesResponse> => {
-  const response = await axiosInstance.get('/api/images/vehicles', { params });
+  const finalParams = {
+    page: params?.page ?? 1,
+    limit: Math.min(params?.limit ?? 20, 100),
+    ...params,
+  };
+  const response = await axiosInstance.get('/api/images/vehicles', { params: finalParams });
   return response.data;
 };
 
@@ -209,7 +229,12 @@ export const getAccidentMedia = async (params?: {
   limit?: number;
   search?: string;
 }): Promise<AccidentMediaResponse> => {
-  const response = await axiosInstance.get('/api/images/accidents', { params });
+  const finalParams = {
+    page: params?.page ?? 1,
+    limit: Math.min(params?.limit ?? 20, 100),
+    ...params,
+  };
+  const response = await axiosInstance.get('/api/images/accidents', { params: finalParams });
   return response.data;
 };
 
@@ -278,25 +303,32 @@ export const triggerSignal = async (signalId: string): Promise<{ success: boolea
 };
 
 // ── Image Path Helper ────────────────────────────────────────────────────────
-// Convert database image paths to frontend upload URLs
-export const getImageUrl = (path: string): string => {
-  if (!path) return '';
-  
-  // If path contains category folder names, extract and use them
-  const categories = ['all_vehicle_detected_img', 'all_license_plate_img', 'new_sort_license_plate_img'];
-  
+// Images are served from frontend/public/uploads (populated by backend seed scripts)
+export const getImageUrl = (imagePath: string): string => {
+  if (!imagePath) return '';
+
+  const normalized = imagePath.replace(/\\/g, '/').replace(/^\/+/, '');
+  if (normalized.startsWith('uploads/')) {
+    return `/${normalized}`;
+  }
+
+  const categories = [
+    'all_vehicle_detected_img',
+    'all_license_plate_img',
+    'new_sort_license_plate_img',
+  ];
+
   for (const category of categories) {
-    if (path.includes(category)) {
-      const parts = path.split('/');
-      const categoryIdx = parts.findIndex(p => p.includes(category));
+    if (normalized.includes(category)) {
+      const parts = normalized.split('/');
+      const categoryIdx = parts.findIndex((p) => p.includes(category));
       if (categoryIdx !== -1 && categoryIdx + 1 < parts.length) {
         return `/uploads/${parts[categoryIdx]}/${parts[categoryIdx + 1]}`;
       }
     }
   }
-  
-  // Fallback: prepend /uploads/
-  return `/uploads/${path}`;
+
+  return `/uploads/${normalized}`;
 };
 
 // ── Signal Simulation ─────────────────────────────────────────────────────

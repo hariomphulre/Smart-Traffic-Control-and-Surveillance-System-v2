@@ -1,9 +1,8 @@
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import {
   getHospitals,
   getSignals,
   triggerSignal,
-  getTrafficState,
 } from '@/src/controllers/Ambulance.controller';
 import { handleRequest } from '@/app/lib/handler-adapter';
 
@@ -20,7 +19,7 @@ export async function GET(
 
   const handler = handlers[slug];
   if (!handler) {
-    return new Response('Not Found', { status: 404 });
+    return NextResponse.json({ error: 'Not Found' }, { status: 404 });
   }
 
   return handleRequest(request, handler);
@@ -38,7 +37,7 @@ export async function POST(
 
   const handler = handlers[slug];
   if (!handler) {
-    return new Response('Not Found', { status: 404 });
+    return NextResponse.json({ error: 'Not Found' }, { status: 404 });
   }
 
   return handleRequest(request, handler);

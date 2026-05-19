@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import { getChallans } from '@/src/controllers/Challan.controller';
 import { handleRequest } from '@/app/lib/handler-adapter';
 

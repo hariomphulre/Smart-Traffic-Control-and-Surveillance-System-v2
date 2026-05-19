@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import { FiX, FiSearch, FiMapPin, FiClock, FiAlertCircle, FiCheckCircle, FiXCircle, FiDollarSign, FiCalendar } from 'react-icons/fi';
+import { FiX, FiSearch, FiMapPin, FiClock, FiAlertCircle, FiCheckCircle, FiXCircle, FiDollarSign } from 'react-icons/fi';
 import { getChallans, getChallanStats, type Challan, type ChallanStats } from '@/lib/api';
 
 export default function ChallanRecords() {
@@ -20,6 +20,8 @@ export default function ChallanRecords() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const PAGE_SIZE = 50;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,9 +29,9 @@ export default function ChallanRecords() {
         setLoading(true);
         setError(null);
         
-        const params: any = {
+        const params: Record<string, unknown> = {
           page,
-          limit: 100,
+          limit: PAGE_SIZE,
         };
 
         if (statusFilter !== 'all') params.status = statusFilter;
@@ -41,6 +43,7 @@ export default function ChallanRecords() {
         ]);
 
         setAllChallans(challansResponse.data || []);
+        setTotal(challansResponse.total || 0);
         setStats(statsResponse);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to fetch challans');
@@ -60,8 +63,8 @@ export default function ChallanRecords() {
       const filtered = allChallans.filter(challan =>
         challan.id.toLowerCase().includes(search) ||
         challan.licenseNo.toLowerCase().includes(search) ||
-        challan.location.toLowerCase().includes(search) ||
-        challan.vehicleType.toLowerCase().includes(search) ||
+        (challan.location?.toLowerCase().includes(search) ?? false) ||
+        (challan.vehicleType?.toLowerCase().includes(search) ?? false) ||
         challan.violationType.toLowerCase().includes(search)
       );
       setFilteredChallans(filtered);
@@ -231,7 +234,7 @@ export default function ChallanRecords() {
                 <div className="flex flex-wrap gap-3 text-sm text-gray-600 dark:text-gray-400">
                   <div className="flex items-center gap-1">
                     <FiMapPin size={14} />
-                    <span>{challan.location}</span>
+                    <span>{challan.location || 'N/A'}</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <FiClock size={14} />
@@ -260,6 +263,32 @@ export default function ChallanRecords() {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Pagination Controls */}
+      <div className="flex items-center justify-between mt-6">
+        <div className="text-sm text-[#5f6368] dark:text-[#9aa0a6]">
+          Showing {total > 0 ? (page - 1) * PAGE_SIZE + 1 : 0}-{Math.min(page * PAGE_SIZE, total)} of {total} records
+        </div>
+        <div className="flex gap-2">
+          <button
+            onClick={() => setPage(prev => Math.max(prev - 1, 1))}
+            disabled={page === 1}
+            className="px-4 py-2 rounded border border-[#dadce0] dark:border-[#5f6368] text-[#1a73e8] dark:text-[#8ab4f8] disabled:opacity-50 hover:bg-[#f8f9fa] dark:hover:bg-[#3c4043] transition-colors font-medium text-sm"
+          >
+            ← Previous
+          </button>
+          <span className="px-4 py-2 text-[#202124] dark:text-[#e8eaed] font-medium">
+            Page {page}
+          </span>
+          <button
+            onClick={() => setPage(prev => prev + 1)}
+            disabled={page * PAGE_SIZE >= total}
+            className="px-4 py-2 rounded border border-[#dadce0] dark:border-[#5f6368] text-[#1a73e8] dark:text-[#8ab4f8] disabled:opacity-50 hover:bg-[#f8f9fa] dark:hover:bg-[#3c4043] transition-colors font-medium text-sm"
+          >
+            Next →
+          </button>
+        </div>
       </div>
 
       {/* Empty State */}
@@ -350,7 +379,7 @@ export default function ChallanRecords() {
                     <div>
                       <p className="font-semibold text-green-900 dark:text-green-200 mb-1">✓ Payment Received</p>
                       <p className="text-sm text-green-800 dark:text-green-300">
-                        Payment of ₹{(selectedChallan.fineAmount + selectedChallan.penaltyAmount).toLocaleString()} received on {formatDateTime(selectedChallan.paymentDate || '')}.
+                        Payment of ₹{(selectedChallan.fineAmount + selectedChallan.penaltyAmount).toLocaleString()} received on {selectedChallan.paymentDate ? formatDateTime(selectedChallan.paymentDate) : 'N/A'}.
                       </p>
                     </div>
                   </div>
@@ -370,7 +399,7 @@ export default function ChallanRecords() {
                       <FiMapPin className="text-gray-600 dark:text-gray-400 mt-1 flex-shrink-0" size={16} />
                       <div>
                         <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Location</p>
-                        <p className="text-sm font-medium text-black dark:text-white">{selectedChallan.location}</p>
+                        <p className="text-sm font-medium text-black dark:text-white">{selectedChallan.location || 'N/A'}</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-2">
@@ -394,7 +423,7 @@ export default function ChallanRecords() {
                       <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Vehicle Type</p>
                       <p className="text-sm font-medium text-black dark:text-white">
                         <span className="inline-block px-3 py-1 bg-[#e8eaed] dark:bg-[#3c4043] border border-[#dadce0] dark:border-[#3c4043]">
-                          {selectedChallan.vehicleType}
+                          {selectedChallan.vehicleType || 'N/A'}
                         </span>
                       </p>
                     </div>

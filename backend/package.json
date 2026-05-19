@@ -11,7 +11,9 @@
     "migrate": "tsx src/scripts/migrate.ts",
     "seed": "tsx src/scripts/seed.ts",
     "seed:data": "tsx src/scripts/seedData.ts",
-    "sync": "tsx src/scripts/syncData.ts"
+    "sync": "tsx src/scripts/syncData.ts",
+    "setup:db": "tsx src/scripts/migrate.ts && tsx src/scripts/seed.ts && tsx src/scripts/seedData.ts",
+    "resolve:neon": "tsx src/scripts/resolve-neon.ts"
   },
   "dependencies": {
     "@types/node": "^20",
@@ -26,6 +28,7 @@
     "twilio": "^5.12.2"
   },
   "devDependencies": {
+    "@types/express": "^5.0.6",
     "@types/pg": "^8.11.5",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",

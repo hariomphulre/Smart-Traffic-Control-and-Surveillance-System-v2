@@ -61,7 +61,7 @@ export class ChallanModel {
     return {
       data: dataResult.rows.map((r) => ({
         id:            formatId(r.challan_id),
-        dateTime:      r.created_at,
+        dateTime:      r.created_at instanceof Date ? r.created_at.toISOString() : r.created_at,
         location:      r.location,
         licenseNo:     r.registration_number,
         vehicleType:   r.vehicle_type ?? null,
@@ -69,7 +69,9 @@ export class ChallanModel {
         fineAmount:    parseFloat(r.fine_amount),
         penaltyAmount: parseFloat(r.penalty_amount),
         status:        r.challan_status,
-        paymentDate:   r.challan_status === 'received' ? r.payment_date : null,
+        paymentDate:   r.challan_status === 'received' 
+          ? (r.payment_date instanceof Date ? r.payment_date.toISOString() : r.payment_date)
+          : null,
       })),
       total: parseInt(countResult.rows[0].count),
       page,

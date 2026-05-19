@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 import { FiImage, FiVideo, FiSearch, FiX } from 'react-icons/fi';
 import { getVehicleImages, getAccidentMedia, getImageUrl, type VehicleImage, type AccidentMedia } from '@/lib/api';
 
@@ -16,7 +15,8 @@ export default function Images() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
-
+  const [total, setTotal] = useState(0);
+  const PAGE_SIZE = 20;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,9 +24,9 @@ export default function Images() {
         setLoading(true);
         setError(null);
 
-        const params: any = {
+        const params: { page: number; limit: number; search?: string } = {
           page,
-          limit: 100,
+          limit: PAGE_SIZE,
         };
 
         if (searchTerm) params.search = searchTerm;
@@ -34,10 +34,11 @@ export default function Images() {
         if (activeTab === 'vehicles') {
           const response = await getVehicleImages(params);
           setVehicleImages(response.data || []);
-          console.log('Fetched vehicle images:', response.data);
+          setTotal(response.total || 0);
         } else {
           const response = await getAccidentMedia(params);
           setAccidentMedia(response.data || []);
+          setTotal(response.total || 0);
         }
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to fetch images');
@@ -51,30 +52,9 @@ export default function Images() {
   }, [activeTab, page, searchTerm]);
 
   useEffect(() => {
-    if (activeTab === 'vehicles') {
-      if (!searchTerm) {
-        setFilteredVehicleImages(vehicleImages);
-      } else {
-        const search = searchTerm.toLowerCase();
-        setFilteredVehicleImages(vehicleImages.filter(img =>
-          img.vehicleId.toLowerCase().includes(search) ||
-          img.licenseNo.toLowerCase().includes(search) ||
-          img.vehicleType.toLowerCase().includes(search)
-        ));
-      }
-    } else {
-      if (!searchTerm) {
-        setFilteredAccidentMedia(accidentMedia);
-      } else {
-        const search = searchTerm.toLowerCase();
-        setFilteredAccidentMedia(accidentMedia.filter(media =>
-          media.id.toLowerCase().includes(search) ||
-          media.location.toLowerCase().includes(search) ||
-          media.severity.toLowerCase().includes(search)
-        ));
-      }
-    }
-  }, [vehicleImages, accidentMedia, searchTerm, activeTab]);
+    setFilteredVehicleImages(vehicleImages);
+    setFilteredAccidentMedia(accidentMedia);
+  }, [vehicleImages, accidentMedia]);
 
   const formatDateTime = (isoString: string) => {
     const date = new Date(isoString);
@@ -128,6 +108,7 @@ export default function Images() {
           onClick={() => {
             setActiveTab('vehicles');
             setSearchTerm('');
+            setPage(1);
           }}
           className={`flex items-center gap-2 px-6 py-3 text-sm font-medium transition-colors rounded ${
             activeTab === 'vehicles'
@@ -136,12 +117,13 @@ export default function Images() {
           }`}
         >
           <FiImage size={20} />
-          Vehicle Images ({vehicleImages.length})
+          Vehicle Images ({total > 0 && activeTab === 'vehicles' ? total : vehicleImages.length})
         </button>
         <button
           onClick={() => {
             setActiveTab('accidents');
             setSearchTerm('');
+            setPage(1);
           }}
           className={`flex items-center gap-2 px-6 py-3 text-sm font-medium transition-colors rounded ${
             activeTab === 'accidents'
@@ -150,7 +132,7 @@ export default function Images() {
           }`}
         >
           <FiVideo size={20} />
-          Accident Media ({accidentMedia.length})
+          Accident Media ({total > 0 && activeTab === 'accidents' ? total : accidentMedia.length})
         </button>
       </div>
 
@@ -170,9 +152,9 @@ export default function Images() {
 
       {/* Results Count */}
       <div className="mb-4 text-sm text-[#5f6368] dark:text-[#9aa0a6]">
-        {activeTab === 'vehicles' 
-          ? `Showing ${filteredVehicleImages.length} of ${vehicleImages.length} vehicle images`
-          : `Showing ${filteredAccidentMedia.length} of ${accidentMedia.length} accident media files`
+        {activeTab === 'vehicles'
+          ? `Showing ${filteredVehicleImages.length} of ${total} vehicle images`
+          : `Showing ${filteredAccidentMedia.length} of ${total} accident media files`
         }
       </div>
 
@@ -186,13 +168,12 @@ export default function Images() {
               className="gcloud-card overflow-hidden cursor-pointer hover:border-[#1a73e8] dark:hover:border-[#8ab4f8] transition-colors"
             >
                 <div className="bg-[#f8f9fa] dark:bg-[#35363a] aspect-video flex items-center justify-center relative overflow-hidden">
-                <img 
-                  src={`uploads/${img.imagePath}`}
+                <img
+                  src={getImageUrl(img.imagePath)}
                   alt={`Vehicle ${img.vehicleId}`}
                   className="w-full h-full object-contain"
                   onError={(e) => {
-                  const img = e.target as HTMLImageElement;
-                  img.style.display = 'none';
+                    (e.target as HTMLImageElement).style.display = 'none';
                   }}
                 />
                 <div className="absolute top-2 right-2 bg-[#1a73e8] dark:bg-[#8ab4f8] text-white dark:text-[#202124] text-xs px-2 py-1 rounded">
@@ -227,7 +208,7 @@ export default function Images() {
                   <FiImage size={48} className="text-[#5f6368] dark:text-gray-300" />
                 )}
                 <div className="absolute top-2 right-2 bg-black dark:bg-white text-white dark:text-black text-xs px-2 py-1">
-                  {media.type === 'video' ? `Video ${media.duration}` : 'Image'}
+                  {media.type === 'video' ? `Video ${media.duration || 'N/A'}` : 'Image'}
                 </div>
                 <div className={`absolute bottom-2 left-2 text-xs px-2 py-1 font-bold ${
                   media.severity === 'high' ? 'bg-red-500 text-white' :
@@ -246,6 +227,34 @@ export default function Images() {
               </div>
             </div>
           ))}
+        </div>
+      )}
+
+      {/* Pagination Controls */}
+      {total > 0 && (
+        <div className="flex items-center justify-between mt-6">
+          <div className="text-sm text-[#5f6368] dark:text-[#9aa0a6]">
+            Showing {(page - 1) * PAGE_SIZE + 1}-{Math.min(page * PAGE_SIZE, total)} of {total}
+          </div>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setPage(prev => Math.max(prev - 1, 1))}
+              disabled={page === 1}
+              className="px-4 py-2 rounded border border-[#dadce0] dark:border-[#5f6368] text-[#1a73e8] dark:text-[#8ab4f8] disabled:opacity-50 hover:bg-[#f8f9fa] dark:hover:bg-[#3c4043] transition-colors font-medium text-sm"
+            >
+              ← Previous
+            </button>
+            <span className="px-4 py-2 text-[#202124] dark:text-[#e8eaed] font-medium">
+              Page {page}
+            </span>
+            <button
+              onClick={() => setPage(prev => prev + 1)}
+              disabled={page * PAGE_SIZE >= total}
+              className="px-4 py-2 rounded border border-[#dadce0] dark:border-[#5f6368] text-[#1a73e8] dark:text-[#8ab4f8] disabled:opacity-50 hover:bg-[#f8f9fa] dark:hover:bg-[#3c4043] transition-colors font-medium text-sm"
+            >
+              Next →
+            </button>
+          </div>
         </div>
       )}
 
@@ -396,17 +405,7 @@ export default function Images() {
                           alt="Accident Media" 
                           className="w-full h-full object-cover"
                           onError={(e) => {
-                            const img = e.target as HTMLImageElement;
-                            const parent = img.parentElement;
-                            if (parent) {
-                              parent.innerHTML = `
-                                <div class="text-center text-[#5f6368] dark:text-gray-300 p-4 flex flex-col items-center justify-center w-full h-full">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto mb-3 opacity-50"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                                  <p class="text-sm opacity-75">Image not found</p>
-                                  <p class="text-xs opacity-50 mt-2">${(selectedImage as AccidentMedia).path}</p>
-                                </div>
-                              `;
-                            }
+                            (e.target as HTMLImageElement).style.display = 'none';
                           }}
                         />
                       )}

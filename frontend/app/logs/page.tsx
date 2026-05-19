@@ -19,15 +19,16 @@ export default function Logs() {
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
+  const PAGE_SIZE = 50;
 
   useEffect(() => {
     const fetchLogs = async () => {
       try {
         setLoading(true);
         setError(null);
-        const params: any = {
+        const params: Record<string, unknown> = {
           page,
-          limit: 100,
+          limit: PAGE_SIZE,
         };
 
         if (filters.speeding) params.speeding = true;
@@ -51,20 +52,8 @@ export default function Logs() {
   }, [page, filters.speeding, filters.helmetless, filters.redLight, filters.tripling, searchTerm]);
 
   useEffect(() => {
-    // Client-side filtering for search (if backend doesn't handle it)
-    if (searchTerm) {
-      const search = searchTerm.toLowerCase();
-      const filtered = allLogs.filter(log =>
-        log.id.toLowerCase().includes(search) ||
-        log.licenseNo.toLowerCase().includes(search) ||
-        log.location.toLowerCase().includes(search) ||
-        log.vehicleType.toLowerCase().includes(search)
-      );
-      setFilteredLogs(filtered);
-    } else {
-      setFilteredLogs(allLogs);
-    }
-  }, [allLogs, searchTerm]);
+    setFilteredLogs(allLogs);
+  }, [allLogs]);
 
   const formatDateTime = (isoString: string) => {
     const date = new Date(isoString);
@@ -244,6 +233,32 @@ export default function Logs() {
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Pagination Controls */}
+        <div className="flex items-center justify-between mt-6 px-4">
+          <div className="text-sm text-[#5f6368] dark:text-[#9aa0a6]">
+            Showing {total > 0 ? (page - 1) * PAGE_SIZE + 1 : 0}-{Math.min(page * PAGE_SIZE, total)} of {total} logs
+          </div>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setPage(prev => Math.max(prev - 1, 1))}
+              disabled={page === 1}
+              className="px-4 py-2 rounded border border-[#dadce0] dark:border-[#5f6368] text-[#1a73e8] dark:text-[#8ab4f8] disabled:opacity-50 hover:bg-[#f8f9fa] dark:hover:bg-[#3c4043] transition-colors font-medium text-sm"
+            >
+              ← Previous
+            </button>
+            <span className="px-4 py-2 text-[#202124] dark:text-[#e8eaed] font-medium">
+              Page {page}
+            </span>
+            <button
+              onClick={() => setPage(prev => prev + 1)}
+              disabled={page * PAGE_SIZE >= total}
+              className="px-4 py-2 rounded border border-[#dadce0] dark:border-[#5f6368] text-[#1a73e8] dark:text-[#8ab4f8] disabled:opacity-50 hover:bg-[#f8f9fa] dark:hover:bg-[#3c4043] transition-colors font-medium text-sm"
+            >
+              Next →
+            </button>
+          </div>
         </div>
       </div>
 
