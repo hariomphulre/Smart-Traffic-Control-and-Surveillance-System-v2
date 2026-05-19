@@ -55,7 +55,7 @@ export async function getAllowedFiles(): Promise<Set<string>> {
   return new Set(videos.map((v) => v.file))
 }
 
-export async function isAllowedVideoFile(file: string): boolean {
+export async function isAllowedVideoFile(file: string): Promise<boolean> {
   const allowedFiles = await getAllowedFiles()
   return allowedFiles.has(file)
 }
