@@ -1,0 +1,50 @@
+# Smart Traffic Control & Surveillance System — Python dependencies
+# Install: python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt
+#
+# Used by: R1.py, R2.py, R3.py, R4.py, R1_with_amb.py, R2_with_acc.py,
+#          detection_simulation.py, temp.py, watchdog_simulation.py,
+#          traffic_signal_simulation/watch_signals.py, run_system.py
+#
+# Stdlib only (no pip): run_system.py, traffic_signal_simulation/simulation.py
+#   (json, time, subprocess, os, sys, argparse, glob, shutil, collections, io)
+
+# ---------------------------------------------------------------------------
+# Computer vision & YOLO detection (R*.py, detection_simulation.py, temp.py)
+# ---------------------------------------------------------------------------
+opencv-python>=4.8.0,<5.0.0
+numpy>=1.24.0,<3.0.0
+ultralytics>=8.3.0,<9.0.0
+Pillow>=10.0.0,<12.0.0
+
+# ---------------------------------------------------------------------------
+# Shared utilities
+# ---------------------------------------------------------------------------
+filelock>=3.12.0,<4.0.0
+
+# ---------------------------------------------------------------------------
+# File watching (watchdog_simulation.py, traffic_signal_simulation/watch_signals.py)
+# ---------------------------------------------------------------------------
+watchdog>=3.0.0,<7.0.0
+
+# ---------------------------------------------------------------------------
+# Google Cloud Vision API — license plate OCR
+# (watchdog_simulation.py, traffic_signal_simulation/watch_signals.py)
+# Requires service account JSON: set GOOGLE_APPLICATION_CREDENTIALS or path in code
+# ---------------------------------------------------------------------------
+#google-cloud-vision>=3.4.0,<4.0.0
+
+# ---------------------------------------------------------------------------
+# Optional: local ANPR (commented in R*.py / temp.py; mentioned in README)
+# Uncomment if using EasyOCR instead of/in addition to Google Vision:
+# easyocr>=1.7.0
+# torch  # installed automatically by ultralytics / easyocr
+# matplotlib>=3.7.0  # commented optional debug plots in detection scripts
+
+# ---------------------------------------------------------------------------
+# Raspberry Pi only — GPIO traffic lights & Pi Camera
+# (traffic_signal_simulation/watch_signals.py, R*.py when --source=picamera0)
+# On Raspberry Pi OS: pip install lgpio picamera2
+# These may fail to install on Windows/macOS/desktop Linux — that is expected.
+# ---------------------------------------------------------------------------
+#lgpio>=0.2.0; platform_machine == "aarch64" or platform_machine == "armv7l"
+#picamera2>=0.3.12; platform_machine == "aarch64" or platform_machine == "armv7l"

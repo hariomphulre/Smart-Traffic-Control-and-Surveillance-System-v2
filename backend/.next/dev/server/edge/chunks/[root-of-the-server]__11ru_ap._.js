@@ -23,15 +23,37 @@ __turbopack_context__.s([
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$api$2f$server$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/next/dist/esm/api/server.js [middleware-edge] (ecmascript) <locals>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$spec$2d$extension$2f$response$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/esm/server/web/spec-extension/response.js [middleware-edge] (ecmascript)");
 ;
-const ALLOWED_ORIGINS = [
-    process.env.FRONTEND_URL ?? 'http://localhost:3000',
+function parseOrigins(raw) {
+    if (!raw?.trim()) return [];
+    return raw.split(',').map((s)=>s.trim().replace(/\/$/, '')).filter(Boolean);
+}
+const DEFAULT_LOCAL = [
     'http://localhost:3000',
     'http://127.0.0.1:3000'
+];
+const ALLOWED_ORIGINS = [
+    ...parseOrigins(process.env.FRONTEND_URL),
+    ...parseOrigins(process.env.CORS_ALLOWED_ORIGINS),
+    ...("TURBOPACK compile-time truthy", 1) ? DEFAULT_LOCAL : "TURBOPACK unreachable"
 ].filter(Boolean);
+const allowVercelPreviews = process.env.CORS_ALLOW_VERCEL === 'true';
+function isVercelPreviewOrigin(origin) {
+    try {
+        const { hostname } = new URL(origin);
+        return hostname.endsWith('.vercel.app') || hostname === 'vercel.app';
+    } catch  {
+        return false;
+    }
+}
 function resolveOrigin(request) {
     const requestOrigin = request.headers.get('origin');
-    if (requestOrigin && ALLOWED_ORIGINS.includes(requestOrigin)) {
-        return requestOrigin;
+    if (requestOrigin) {
+        if (ALLOWED_ORIGINS.includes(requestOrigin)) {
+            return requestOrigin;
+        }
+        if (allowVercelPreviews && isVercelPreviewOrigin(requestOrigin)) {
+            return requestOrigin;
+        }
     }
     return ALLOWED_ORIGINS[0] ?? 'http://localhost:3000';
 }
@@ -41,6 +63,7 @@ function corsHeaders(request) {
     headers.set('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS');
     headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     headers.set('Access-Control-Max-Age', '86400');
+    headers.set('Vary', 'Origin');
     return headers;
 }
 function middleware(request) {

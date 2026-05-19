@@ -189,7 +189,7 @@ An **AI**-powered real-time multitasking system using advanced **custom trained*
  │           └── VehicleTypeDistribution.css
  ├── server/
  │   ├── server.js
- │   └── vehicle_data_with_helmet/
+ │   └── local_data/
  │       ├── all_license_plate_img/
  │       ├── all_vehicle_detected_img/
  │       ├── helmet_data.json

@@ -215,17 +215,17 @@ line1_y2=490
 # line2_y2=451
 
 ###################### store all detected images ###################
-output_dir="vehicle_data_with_helmet/all_vehicle_detected_img"
+output_dir="local_data/all_vehicle_detected_img"
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 
 ################# store license img with its vehicle track_id
-output_dir3="vehicle_data_with_helmet/all_license_plate_img"
+output_dir3="local_data/all_license_plate_img"
 if not os.path.exists(output_dir3):
     os.makedirs(output_dir3)
 
 ##################### store sort detected license plate image ##################
-output_dir2="vehicle_data_with_helmet/new_sort_license_plate_img"
+output_dir2="local_data/new_sort_license_plate_img"
 if not os.path.exists(output_dir2):
     os.makedirs(output_dir2)
 # track sort detected conf 
@@ -233,7 +233,7 @@ track_sort_conf={} # vehicle track id
 ###################################################
 
 ##################### store accident data ##################
-accident_base_dir="vehicle_data_with_helmet/accident_data"
+accident_base_dir="local_data/accident_data"
 if not os.path.exists(accident_base_dir):
     os.makedirs(accident_base_dir)
 
@@ -363,7 +363,7 @@ while True:
     #############################
 
     ############## json file to store helmet data with vehicle track id #############
-    FILE_PATH = r"vehicle_data_with_helmet/helmet_data.json"
+    FILE_PATH = r"local_data/helmet_data.json"
     # Load existing dictionary (if available)
     def load_dict():
         try:
@@ -380,7 +380,7 @@ while True:
     helmet_dict=load_dict()
 
     #################### json file to store speed data #############################
-    FILE_PATH2= r"vehicle_data_with_helmet/speed_data.json"
+    FILE_PATH2= r"local_data/speed_data.json"
     def load_dict2():
         try:
             with open(FILE_PATH2, "r") as file2:
@@ -454,7 +454,7 @@ while True:
     traffic_vol_dict=load_dict3()
 
     ################## json file to store cnt of vehicle types ############################
-    FILE_PATH4= r"vehicle_data_with_helmet/cnt_vehicle_types.json"
+    FILE_PATH4= r"local_data/cnt_vehicle_types.json"
     def load_dict4():
         try:
             with open(FILE_PATH4, "r") as file4:
@@ -467,7 +467,7 @@ while True:
     vehicle_cnt_dict=load_dict4()
 
     ################## json file to store types of vehicle ############################
-    FILE_PATH5= r"vehicle_data_with_helmet/vehicle_types.json"
+    FILE_PATH5= r"local_data/vehicle_types.json"
     def load_dict5():
         try:
             with open(FILE_PATH5, "r") as file5:
