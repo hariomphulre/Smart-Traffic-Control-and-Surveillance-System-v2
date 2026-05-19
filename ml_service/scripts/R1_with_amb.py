@@ -9,7 +9,6 @@ import numpy as np
 from ultralytics import YOLO
 import PIL.Image
 # import google.generativeai as genai
-# genai.configure(api_key="AIzaSyDX9D290jNNJ0e6MShOt3S8v_xPz6ZNwXw")
 import json
 import shutil
 from filelock import FileLock

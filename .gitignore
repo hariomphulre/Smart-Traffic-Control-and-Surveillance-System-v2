@@ -8,3 +8,4 @@ node_modules
 backend/.env
 frontend/.env.local
 venv
+.DS_Store
