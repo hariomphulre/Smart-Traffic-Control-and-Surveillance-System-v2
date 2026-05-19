@@ -48,32 +48,41 @@ export default function Analytics() {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [usingDemoData, setUsingDemoData] = useState(false);
 
   useEffect(() => {
     const fetchAnalytics = async () => {
-      try {
-        setLoading(true);
-        setError(null);
+      setLoading(true);
+      setError(null);
+      setUsingDemoData(false);
 
-        const [violations, vehicleTypes, hourly, speedDist, analyticsStats] = await Promise.all([
-          getViolations(),
-          getVehicleTypes(),
-          getHourlyTraffic(),
-          getSpeedDistribution(),
-          getStats(),
-        ]);
+      const results = await Promise.allSettled([
+        getStats(),
+        getViolations(),
+        getVehicleTypes(),
+        getHourlyTraffic(),
+        getSpeedDistribution(),
+      ]);
 
-        setViolationsData(violations);
-        setVehicleTypeData(vehicleTypes);
-        setHourlyTraffic(hourly);
-        setSpeedDistribution(speedDist);
-        setStats(analyticsStats);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to fetch analytics');
-        console.error('Error fetching analytics:', err);
-      } finally {
+      const failed = results.filter((r) => r.status === 'rejected');
+      if (failed.length === results.length) {
+        const reason = failed[0].status === 'rejected' ? failed[0].reason : null;
+        setError(reason instanceof Error ? reason.message : 'Failed to fetch analytics');
         setLoading(false);
+        return;
       }
+
+      if (results[0].status === 'fulfilled') setStats(results[0].value);
+      if (results[1].status === 'fulfilled') setViolationsData(results[1].value);
+      if (results[2].status === 'fulfilled') setVehicleTypeData(results[2].value);
+      if (results[3].status === 'fulfilled') setHourlyTraffic(results[3].value);
+      if (results[4].status === 'fulfilled') setSpeedDistribution(results[4].value);
+
+      if (failed.length > 0) {
+        setUsingDemoData(true);
+      }
+
+      setLoading(false);
     };
 
     fetchAnalytics();
@@ -127,6 +136,11 @@ export default function Analytics() {
         <p className="text-sm text-[#5f6368] dark:text-[#9aa0a6]">
           Comprehensive traffic data analysis and insights
         </p>
+        {usingDemoData && (
+          <p className="mt-2 text-sm text-[#ea8600] dark:text-[#fdd663]">
+            Some charts could not be loaded. Showing available data (demo mode may be active if the database is offline).
+          </p>
+        )}
       </div>
 
       {/* Stats Cards */}

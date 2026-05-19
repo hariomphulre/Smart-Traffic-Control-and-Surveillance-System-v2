@@ -167,23 +167,37 @@ export class AnalyticsModel {
     };
   }
 
-  // GET /analytics/stats
+  // GET /analytics/stats - Optimized to use single query
   static async getStats(): Promise<AnalyticsStats> {
-    const [totalResult, violationResult] = await Promise.all([
-      pool.query<{ total: string }>(`SELECT COUNT(*) AS total FROM vehicle_logs`),
-      pool.query<{ v: string }>(`
-        SELECT COUNT(*) AS v FROM vehicle_logs
-        WHERE speed > 60
-           OR (vehicle_type = 'Bike' AND helmet_status = FALSE)
-           OR red_light_cross = TRUE
-           OR (vehicle_type = 'Bike' AND tripling = TRUE)
-      `),
-    ]);
+    const { rows } = await pool.query<{
+      total: string;
+      violations: string;
+      helmetless: string;
+      tripling: string;
+      redLightCross: string;
+    }>(`
+      SELECT
+        COUNT(*) AS total,
+        SUM(CASE
+          WHEN speed > 60
+            OR (vehicle_type = 'Bike' AND helmet_status = FALSE)
+            OR red_light_cross = TRUE
+            OR (vehicle_type = 'Bike' AND tripling = TRUE)
+          THEN 1 ELSE 0
+        END) AS violations,
+        SUM(CASE WHEN vehicle_type = 'Bike' AND helmet_status = FALSE THEN 1 ELSE 0 END) AS helmetless,
+        SUM(CASE WHEN vehicle_type = 'Bike' AND tripling = TRUE THEN 1 ELSE 0 END) AS tripling,
+        SUM(CASE WHEN red_light_cross = TRUE THEN 1 ELSE 0 END) AS redLightCross
+      FROM vehicle_logs
+    `);
 
+    const row = rows[0];
     return {
-      totalVehicles:   parseInt(totalResult.rows[0].total),
-      totalViolations: parseInt(violationResult.rows[0].v),
-      trend:           12, // Replace with real period-comparison logic
+      totalVehicles:   parseInt(row.total),
+      totalViolations: parseInt(row.violations),
+      helmetless:      parseInt(row.helmetless ?? '0'),
+      tripling:        parseInt(row.tripling ?? '0'),
+      redLightCross:   parseInt(row.redLightCross ?? '0'),
     };
   }
 

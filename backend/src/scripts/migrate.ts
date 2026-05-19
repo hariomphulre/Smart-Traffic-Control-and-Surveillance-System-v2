@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import pool from '../config/db';
 
 const migrate = async (): Promise<void> => {
@@ -136,6 +135,75 @@ const migrate = async (): Promise<void> => {
       );
     `);
     console.log(' [7/7] accident_media');
+
+    // ── INDEXES (Critical for Performance) ─────────────────────────────────────
+    console.log('\n📊 Creating indexes...');
+    
+    // Vehicle Logs - Most queries use detected_at for filtering
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_vehicle_logs_detected_at 
+      ON vehicle_logs(detected_at DESC)`);
+    console.log('  ✓ idx_vehicle_logs_detected_at');
+    
+    // Location-based queries
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_vehicle_logs_location 
+      ON vehicle_logs(location)`);
+    console.log('  ✓ idx_vehicle_logs_location');
+    
+    // License number lookups
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_vehicle_logs_license_no 
+      ON vehicle_logs(license_no)`);
+    console.log('  ✓ idx_vehicle_logs_license_no');
+    
+    // Vehicle type searches
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_vehicle_logs_vehicle_type 
+      ON vehicle_logs(vehicle_type)`);
+    console.log('  ✓ idx_vehicle_logs_vehicle_type');
+    
+    // Composite index for violation detection
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_vehicle_logs_violations 
+      ON vehicle_logs(speed, red_light_cross, helmet_status, tripling)`);
+    console.log('  ✓ idx_vehicle_logs_violations');
+    
+    // Bike-specific violations
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_vehicle_logs_bike_violations 
+      ON vehicle_logs(vehicle_type, helmet_status, tripling) 
+      WHERE vehicle_type = 'Bike'`);
+    console.log('  ✓ idx_vehicle_logs_bike_violations');
+
+    // Accidents table
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_accidents_occurred_at 
+      ON accidents(occurred_at DESC)`);
+    console.log('  ✓ idx_accidents_occurred_at');
+    
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_accidents_location 
+      ON accidents(location)`);
+    console.log('  ✓ idx_accidents_location');
+    
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_accidents_severity 
+      ON accidents(severity)`);
+    console.log('  ✓ idx_accidents_severity');
+
+    // Challans table
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_challans_created_at 
+      ON vehicle_challan_details(created_at DESC)`);
+    console.log('  ✓ idx_challans_created_at');
+    
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_challans_status 
+      ON vehicle_challan_details(challan_status)`);
+    console.log('  ✓ idx_challans_status');
+
+    // Foreign key indexes (for JOINs)
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_vehicle_images_log_id 
+      ON vehicle_images(log_id)`);
+    console.log('  ✓ idx_vehicle_images_log_id');
+    
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_accident_vehicles_accident_id 
+      ON accident_vehicles(accident_id)`);
+    console.log('  ✓ idx_accident_vehicles_accident_id');
+    
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_accident_media_accident_id 
+      ON accident_media(accident_id)`);
+    console.log('  ✓ idx_accident_media_accident_id');
 
     console.log('\n🎉 All migrations complete!\n');
   } catch (err) {

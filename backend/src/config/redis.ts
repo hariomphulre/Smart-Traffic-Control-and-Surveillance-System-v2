@@ -1,10 +1,14 @@
 import Redis from 'ioredis';
 
-const REDIS_URL = process.env.REDIS_URL ?? 'redis://localhost:6379';
+const REDIS_URL = process.env.REDIS_URL?.trim() ?? '';
+const REDIS_ENABLED =
+  process.env.REDIS_ENABLED === 'true' ||
+  (process.env.REDIS_ENABLED !== 'false' && REDIS_URL.length > 0);
 
 let client: Redis | null = null;
 
 function connect(): Redis | null {
+  if (!REDIS_ENABLED || !REDIS_URL) return null;
   if (client) return client;
   try {
     client = new Redis(REDIS_URL, {
@@ -33,7 +37,7 @@ export async function disconnect(): Promise<void> {
 }
 
 export const CACHE_TTL = {
-  analytics: 60,       // 1 min
-  stats:     120,      // 2 min
-  list:      30,       // 30 sec
+  analytics: 60,
+  stats: 120,
+  list: 30,
 };

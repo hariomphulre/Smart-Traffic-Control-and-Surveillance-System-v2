@@ -34,7 +34,7 @@ export interface VehicleLogRow {
 
 export interface VehicleLogResponse {
   id:            string;            // "VEH-000001"
-  dateTime:      Date;
+  dateTime:      string;            // ISO string from database
   location:      string;
   licenseNo:     string;
   vehicleType:   VehicleType;
@@ -71,7 +71,7 @@ export interface ChallanRow {
 
 export interface ChallanResponse {
   id:            string;            // "CH-000001"
-  dateTime:      Date;
+  dateTime:      string;            // ISO string from database
   location:      string | null;
   licenseNo:     string;
   vehicleType:   VehicleType | null;
@@ -79,7 +79,7 @@ export interface ChallanResponse {
   fineAmount:    number;
   penaltyAmount: number;
   status:        ChallanStatus;
-  paymentDate:   Date | null;
+  paymentDate:   string | null;     // ISO string from database
 }
 
 export interface ChallanStats {
@@ -113,7 +113,7 @@ export interface AccidentRow {
 export interface AccidentResponse {
   id:               string;         // "ACC-0001"
   location:         string;
-  dateTime:         Date;
+  dateTime:         string;         // ISO string from database
   description:      string | null;
   severity:         Severity;
   hasRecording:     boolean;
@@ -144,7 +144,7 @@ export interface VehicleImageResponse {
   vehicleId:        string;         // "VEH-000001"
   licenseNo:        string;
   vehicleType:      VehicleType;
-  timestamp:        Date;
+  timestamp:        string;         // ISO string from database
   imagePath:        string;
   licensePlatePath: string;
 }
@@ -165,7 +165,7 @@ export interface AccidentMediaRow {
 export interface AccidentMediaResponse {
   id:        string;                // "ACC-0001"
   location:  string;
-  timestamp: Date;
+  timestamp: string;                // ISO string from database
   type:      MediaType;
   path:      string;
   duration:  string | null;
@@ -193,7 +193,9 @@ export interface SpeedRange {
 export interface AnalyticsStats {
   totalVehicles:   number;
   totalViolations: number;
-  trend:           number;
+  helmetless:      number;
+  tripling:        number;
+  redLightCross:   number;
 }
 
 export interface Hotspot {

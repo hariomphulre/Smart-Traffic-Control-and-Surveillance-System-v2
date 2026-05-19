@@ -66,7 +66,9 @@ return __turbopack_context__.a(async (__turbopack_handle_async_dependencies__, _
 
 __turbopack_context__.s([
     "default",
-    ()=>__TURBOPACK__default__export__
+    ()=>__TURBOPACK__default__export__,
+    "getPool",
+    ()=>getPool
 ]);
 var __TURBOPACK__imported__module__$5b$externals$5d2f$pg__$5b$external$5d$__$28$pg$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f$pg$29$__ = __turbopack_context__.i("[externals]/pg [external] (pg, esm_import, [project]/node_modules/pg)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$dotenv$2f$lib$2f$main$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/dotenv/lib/main.js [app-route] (ecmascript)");
@@ -77,26 +79,50 @@ var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
 ;
 ;
 __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$dotenv$2f$lib$2f$main$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].config();
-if (!process.env.DATABASE_URL) {
-    console.error('❌ DATABASE_URL is not set in .env');
-    process.exit(1);
+function needsSsl(connectionString) {
+    if (process.env.DATABASE_SSL === 'true') return true;
+    if (process.env.DATABASE_SSL === 'false') return false;
+    return connectionString.includes('neon.tech') || connectionString.includes('sslmode=require') || connectionString.includes('ssl=true');
 }
-const config = {
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-        rejectUnauthorized: false
-    },
-    max: 10,
-    idleTimeoutMillis: 30_000,
-    connectionTimeoutMillis: 5_000
-};
-const pool = new __TURBOPACK__imported__module__$5b$externals$5d2f$pg__$5b$external$5d$__$28$pg$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f$pg$29$__["Pool"](config);
-pool.on('connect', ()=>console.log('✅ Connected to Neon PostgreSQL'));
-pool.on('error', (err)=>{
-    console.error('❌ Unexpected DB error:', err.message);
-    process.exit(-1);
+function createPool() {
+    const connectionString = process.env.DATABASE_URL;
+    if (!connectionString) {
+        throw new Error('DATABASE_URL is not set in .env');
+    }
+    const config = {
+        connectionString,
+        max: 25,
+        min: 5,
+        idleTimeoutMillis: 60_000,
+        connectionTimeoutMillis: 10_000
+    };
+    if (needsSsl(connectionString)) {
+        config.ssl = {
+            rejectUnauthorized: false
+        };
+    }
+    const pool = new __TURBOPACK__imported__module__$5b$externals$5d2f$pg__$5b$external$5d$__$28$pg$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f$pg$29$__["Pool"](config);
+    pool.on('connect', ()=>console.log('✅ Connected to PostgreSQL'));
+    pool.on('error', (err)=>{
+        console.error('❌ Unexpected DB pool error:', err.message);
+    });
+    return pool;
+}
+let pool = null;
+function getPool() {
+    if (!pool) {
+        pool = createPool();
+    }
+    return pool;
+}
+/** Lazy pool — connects on first query, not at import time */ const poolProxy = new Proxy({}, {
+    get (_target, prop) {
+        const p = getPool();
+        const value = Reflect.get(p, prop, p);
+        return typeof value === 'function' ? value.bind(p) : value;
+    }
 });
-const __TURBOPACK__default__export__ = pool;
+const __TURBOPACK__default__export__ = poolProxy;
 __turbopack_async_result__();
 } catch(e) { __turbopack_async_result__(e); } }, false);}),
 "[project]/src/models/log.model.ts [app-route] (ecmascript)", ((__turbopack_context__) => {
@@ -152,7 +178,7 @@ class LogModel {
         return {
             data: dataResult.rows.map((r)=>({
                     id: formatId(r.log_id),
-                    dateTime: r.detected_at,
+                    dateTime: r.detected_at instanceof Date ? r.detected_at.toISOString() : r.detected_at,
                     location: r.location,
                     licenseNo: r.license_no,
                     vehicleType: r.vehicle_type,
@@ -225,9 +251,11 @@ async function handleRequest(request, handler) {
             params: {},
             headers: request.headers
         };
-        // Create a mock response object
+        // Create a mock response object with proper error handling
         let responseData = null;
         let statusCode = 200;
+        let errorOccurred = false;
+        let errorData = null;
         const mockRes = {
             status: (code)=>{
                 statusCode = code;
@@ -244,8 +272,37 @@ async function handleRequest(request, handler) {
             set: ()=>mockRes,
             setHeader: ()=>mockRes
         };
-        // Call the handler
-        await handler(mockReq, mockRes);
+        // next() callback to handle errors from Express handlers
+        const next = (error)=>{
+            if (error) {
+                errorOccurred = true;
+                errorData = error;
+                statusCode = 500;
+            }
+        };
+        // Call the handler with error handling
+        await handler(mockReq, mockRes, next);
+        // If error occurred via next(), return error response
+        if (errorOccurred) {
+            const errorMessage = errorData instanceof Error ? errorData.message : typeof errorData === 'string' ? errorData : 'Internal Server Error';
+            console.error('Handler error:', errorData);
+            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+                error: 'Internal Server Error',
+                message: errorMessage
+            }, {
+                status: statusCode
+            });
+        }
+        // Ensure responseData is not null
+        if (responseData === null || responseData === undefined) {
+            console.warn('Handler did not set response data');
+            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+                error: 'No response from handler',
+                message: 'The handler did not return any data'
+            }, {
+                status: 500
+            });
+        }
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(responseData, {
             status: statusCode
         });

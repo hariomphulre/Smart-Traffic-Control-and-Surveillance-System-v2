@@ -1,3 +1,9 @@
 linen*
 *.mp4
 node_modules
+.next
+.env
+.env.local
+.env.*.local
+backend/.env
+frontend/.env.local

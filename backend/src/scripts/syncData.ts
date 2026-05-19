@@ -250,7 +250,7 @@ function watchImages(): void {
 
     console.log(`👁️  Watching image folder: ${sourceDir}`);
 
-    const watcher = watch(sourcePath, { recursive: false }, (eventType, filename) => {
+    const watcher = watch(sourcePath, { recursive: false }, (_eventType, filename) => {
       if (!filename || !/\.(jpg|jpeg|png|gif)$/i.test(filename)) return;
 
       const source = path.join(sourcePath, filename);

@@ -4,7 +4,5 @@
   "/api/analytics/[slug]/route": "app/api/analytics/[slug]/route.js",
   "/api/challans/route": "app/api/challans/route.js",
   "/api/challans/stats/route": "app/api/challans/stats/route.js",
-  "/api/images/vehicles/route": "app/api/images/vehicles/route.js",
-  "/api/logs/route": "app/api/logs/route.js",
-  "/api/signals/state/route": "app/api/signals/state/route.js"
+  "/api/logs/route": "app/api/logs/route.js"
 }

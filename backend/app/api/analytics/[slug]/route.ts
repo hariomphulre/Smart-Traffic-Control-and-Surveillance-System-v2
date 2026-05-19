@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import {
   getViolations,
   getVehicleTypes,
@@ -26,7 +26,7 @@ export async function GET(
 
   const handler = handlers[slug];
   if (!handler) {
-    return new Response('Not Found', { status: 404 });
+    return NextResponse.json({ error: 'Not Found' }, { status: 404 });
   }
 
   return handleRequest(request, handler);

@@ -56,7 +56,7 @@ export class ImagesModel {
         vehicleId:        fmtVehId(r.log_id),
         licenseNo:        r.license_no,
         vehicleType:      r.vehicle_type,
-        timestamp:        r.captured_at,
+        timestamp:        r.captured_at instanceof Date ? r.captured_at.toISOString() : r.captured_at,
         imagePath:        r.image_path,
         licensePlatePath: r.license_plate_path,
       })),
@@ -104,7 +104,7 @@ export class ImagesModel {
       data: dataResult.rows.map((r) => ({
         id:        fmtAccId(r.accident_id),
         location:  r.location,
-        timestamp: r.recorded_at,
+        timestamp: r.recorded_at instanceof Date ? r.recorded_at.toISOString() : r.recorded_at,
         type:      r.media_type,
         path:      r.file_path,
         duration:  r.duration ?? null,

@@ -86,9 +86,10 @@ const config = {
     ssl: {
         rejectUnauthorized: false
     },
-    max: 10,
-    idleTimeoutMillis: 30_000,
-    connectionTimeoutMillis: 5_000
+    max: 25,
+    min: 5,
+    idleTimeoutMillis: 60_000,
+    connectionTimeoutMillis: 10_000
 };
 const pool = new __TURBOPACK__imported__module__$5b$externals$5d2f$pg__$5b$external$5d$__$28$pg$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f$pg$29$__["Pool"](config);
 pool.on('connect', ()=>console.log('✅ Connected to Neon PostgreSQL'));
@@ -305,21 +306,24 @@ class AnalyticsModel {
             ]
         };
     }
-    // GET /analytics/stats
+    // GET /analytics/stats - Optimized to use single query
     static async getStats() {
-        const [totalResult, violationResult] = await Promise.all([
-            __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$config$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].query(`SELECT COUNT(*) AS total FROM vehicle_logs`),
-            __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$config$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].query(`
-        SELECT COUNT(*) AS v FROM vehicle_logs
-        WHERE speed > 60
-           OR (vehicle_type = 'Bike' AND helmet_status = FALSE)
-           OR red_light_cross = TRUE
-           OR (vehicle_type = 'Bike' AND tripling = TRUE)
-      `)
-        ]);
+        const { rows } = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$config$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].query(`
+      SELECT
+        COUNT(*) AS total,
+        SUM(CASE
+          WHEN speed > 60
+            OR (vehicle_type = 'Bike' AND helmet_status = FALSE)
+            OR red_light_cross = TRUE
+            OR (vehicle_type = 'Bike' AND tripling = TRUE)
+          THEN 1 ELSE 0
+        END) AS violations
+      FROM vehicle_logs
+    `);
+        const row = rows[0];
         return {
-            totalVehicles: parseInt(totalResult.rows[0].total),
-            totalViolations: parseInt(violationResult.rows[0].v),
+            totalVehicles: parseInt(row.total),
+            totalViolations: parseInt(row.violations),
             trend: 12
         };
     }

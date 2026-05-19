@@ -3,7 +3,7 @@ import pool from '@/src/config/db';
 
 const PORT = process.env.PORT ?? 3001;
 
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     // Health check - verify database connection
     await pool.query('SELECT 1');

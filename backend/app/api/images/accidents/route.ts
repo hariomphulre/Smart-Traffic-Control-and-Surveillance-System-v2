@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import { getAccidentMedia } from '@/src/controllers/Images.controller';
 import { handleRequest } from '@/app/lib/handler-adapter';
 

@@ -23,15 +23,36 @@ __turbopack_context__.s([
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$api$2f$server$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/next/dist/esm/api/server.js [middleware-edge] (ecmascript) <locals>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$spec$2d$extension$2f$response$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/esm/server/web/spec-extension/response.js [middleware-edge] (ecmascript)");
 ;
+const ALLOWED_ORIGINS = [
+    process.env.FRONTEND_URL ?? 'http://localhost:3000',
+    'http://localhost:3000',
+    'http://127.0.0.1:3000'
+].filter(Boolean);
+function resolveOrigin(request) {
+    const requestOrigin = request.headers.get('origin');
+    if (requestOrigin && ALLOWED_ORIGINS.includes(requestOrigin)) {
+        return requestOrigin;
+    }
+    return ALLOWED_ORIGINS[0] ?? 'http://localhost:3000';
+}
+function corsHeaders(request) {
+    const headers = new Headers();
+    headers.set('Access-Control-Allow-Origin', resolveOrigin(request));
+    headers.set('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS');
+    headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    headers.set('Access-Control-Max-Age', '86400');
+    return headers;
+}
 function middleware(request) {
+    const headers = corsHeaders(request);
+    if (request.method === 'OPTIONS') {
+        return new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$spec$2d$extension$2f$response$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["NextResponse"](null, {
+            status: 204,
+            headers
+        });
+    }
     const response = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$spec$2d$extension$2f$response$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["NextResponse"].next();
-    // CORS headers
-    const origin = request.headers.get('origin') || process.env.FRONTEND_URL || 'http://localhost:3000';
-    response.headers.set('Access-Control-Allow-Origin', origin);
-    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS');
-    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    response.headers.set('Access-Control-Max-Age', '86400');
-    // Request logging
+    headers.forEach((value, key)=>response.headers.set(key, value));
     console.log(`[${new Date().toISOString()}] ${request.method} ${request.nextUrl.pathname}`);
     return response;
 }
