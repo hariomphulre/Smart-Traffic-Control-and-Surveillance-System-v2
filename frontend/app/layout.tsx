@@ -33,8 +33,8 @@ const secondaryNavItems = [
   { name: 'Logs', path: '/logs' },
   { name: 'Challan Records', path: '/challan-records' },
   { name: 'Accident/Fire Reports', path: '/accident-reports' },
+  { name: 'Simulation', path: '/simulation' },
   { name: 'Images', path: '/images' },
-   { name: 'Signals', path: '/signals' },
   { name: 'Ambulance', path: '/ambulance/sign-in' },
 ]
 

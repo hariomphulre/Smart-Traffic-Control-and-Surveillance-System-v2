@@ -13,11 +13,9 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-14">
           {/* Logo/Brand */}
           <div className="flex items-center gap-3">
-            <button className="p-2 hover:bg-[#f8f9fa] dark:hover:bg-[#35363a] rounded-lg transition-colors">
-              <FiMenu className="w-5 h-5 text-[#5f6368] dark:text-[#9aa0a6]" />
-            </button>
+            
             <Link href="/" className="flex items-center gap-2 text-[#5f6368] dark:text-[#9aa0a6] hover:text-[#202124] dark:hover:text-[#e8eaed] transition-colors">
-              <span className="text-sm font-medium">Smart Traffic Control System</span>
+              <span className="text-lg font-medium">Adv. Traffic Control & Surveillance System</span>
             </Link>
           </div>
 
