@@ -935,3 +935,22 @@
 {"timestamp":"00:45:38.273","source":"Server","level":"LOG","message":"[2026-05-19T18:55:58.017Z] GET /api/analytics/hourly-traffic"}
 {"timestamp":"00:45:38.276","source":"Server","level":"LOG","message":"[2026-05-19T18:55:58.020Z] GET /api/analytics/speed-distribution"}
 {"timestamp":"00:45:38.443","source":"Server","level":"LOG","message":"[2026-05-19T18:55:58.187Z] GET /api/analytics/hotspots"}
+{"timestamp":"00:51:49.884","source":"Server","level":"LOG","message":"[2026-05-19T19:02:09.624Z] GET /api/analytics/stats"}
+{"timestamp":"00:51:49.902","source":"Server","level":"LOG","message":"[2026-05-19T19:02:09.645Z] GET /api/analytics/violations"}
+{"timestamp":"00:51:49.917","source":"Server","level":"LOG","message":"[2026-05-19T19:02:09.660Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:51:49.930","source":"Server","level":"LOG","message":"[2026-05-19T19:02:09.673Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:51:49.932","source":"Server","level":"LOG","message":"[2026-05-19T19:02:09.676Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:51:50.786","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"00:51:50.787","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"00:51:50.990","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"00:51:50.991","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"00:51:50.991","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"00:51:51.924","source":"Server","level":"LOG","message":"[2026-05-19T19:02:11.668Z] GET /api/analytics/hotspots"}
+{"timestamp":"00:51:52.860","source":"Server","level":"LOG","message":"[2026-05-19T19:02:12.604Z] GET /api/logs"}
+{"timestamp":"00:51:53.945","source":"Server","level":"LOG","message":"[2026-05-19T19:02:13.689Z] GET /api/challans"}
+{"timestamp":"00:51:53.947","source":"Server","level":"LOG","message":"[2026-05-19T19:02:13.691Z] GET /api/challans/stats"}
+{"timestamp":"00:51:54.977","source":"Server","level":"LOG","message":"[2026-05-19T19:02:14.721Z] GET /api/accidents"}
+{"timestamp":"00:51:54.984","source":"Server","level":"LOG","message":"[2026-05-19T19:02:14.727Z] GET /api/accidents/stats"}
+{"timestamp":"00:51:55.880","source":"Server","level":"LOG","message":"[2026-05-19T19:02:15.624Z] GET /api/signals/state"}
+{"timestamp":"00:51:56.876","source":"Server","level":"LOG","message":"[2026-05-19T19:02:16.620Z] GET /api/signals/state"}
+{"timestamp":"00:51:57.378","source":"Server","level":"LOG","message":"[2026-05-19T19:02:17.122Z] GET /api/images/vehicles"}
