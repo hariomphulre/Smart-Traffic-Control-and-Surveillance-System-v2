@@ -19,31 +19,21 @@ from collections import defaultdict
 
 # import matplotlib.pyplot as plt
 # import easyocr
-
-# ============================================================================
-# EASY CONFIGURATION - Change these values to run with different settings
-# ============================================================================
-DEFAULT_MODEL = "new_car4_with_helmet.pt"        # Your detection model
-DEFAULT_SOURCE = "video4.mp4"                # Video file, image, folder, or "usb0" for webcam
-DEFAULT_RESOLUTION = "1280x720"                  # Resolution (e.g., "1920x1080", "1280x720", "640x480")
-DEFAULT_THRESHOLD = 0.5                          # Confidence threshold (0.0 to 1.0)
-DEFAULT_RECORD = False                           # Set to True to record output
-# ============================================================================
-
 # Define and parse user input arguments
+
 parser = argparse.ArgumentParser()
 parser.add_argument('--model', help='Path to YOLO model file (example: "runs/detect/train/weights/best.pt")',
-                    default=DEFAULT_MODEL)
+                    required=True)
 parser.add_argument('--source', help='Image source, can be image file ("test.jpg"), \
                     image folder ("test_dir"), video file ("testvid.mp4"), or index of USB camera ("usb0")', 
-                    default=DEFAULT_SOURCE)
+                    required=True)
 parser.add_argument('--thresh', help='Minimum confidence threshold for displaying detected objects (example: "0.4")',
-                    default=DEFAULT_THRESHOLD)
+                    default=0.5)
 parser.add_argument('--resolution', help='Resolution in WxH to display inference results at (example: "640x480"), \
                     otherwise, match source resolution',
-                    default=DEFAULT_RESOLUTION)
+                    default=None)
 parser.add_argument('--record', help='Record results from video or webcam and save it as "demo1.avi". Must specify --resolution argument to record.',
-                    action='store_true', default=DEFAULT_RECORD)
+                    action='store_true')
 
 args = parser.parse_args()
 
@@ -199,17 +189,17 @@ line1_y2=490
 # line2_y2=451
 
 ###################### store all detected images ###################
-output_dir="local_data/all_vehicle_detected_img"
+output_dir="../../local_data/all_vehicle_detected_img"
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 
 ################# store license img with its vehicle track_id
-output_dir3="local_data/all_license_plate_img"
+output_dir3="../../local_data/all_license_plate_img"
 if not os.path.exists(output_dir3):
     os.makedirs(output_dir3)
 
 ##################### store sort detected license plate image ##################
-output_dir2="local_data/new_sort_license_plate_img"
+output_dir2="../../local_data/new_sort_license_plate_img"
 if not os.path.exists(output_dir2):
     os.makedirs(output_dir2)
 # track sort detected conf 
@@ -290,7 +280,7 @@ while True:
     #############################
 
     ############## json file to store helmet data with vehicle track id #############
-    FILE_PATH = r"local_data/helmet_data.json"
+    FILE_PATH = "../../local_data/helmet_data.json"
     # Load existing dictionary (if available)
     def load_dict():
         try:
@@ -307,7 +297,7 @@ while True:
     helmet_dict=load_dict()
 
     #################### json file to store speed data #############################
-    FILE_PATH2= r"local_data/speed_data.json"
+    FILE_PATH2 = "../../local_data/speed_data.json"
     def load_dict2():
         try:
             with open(FILE_PATH2, "r") as file2:
@@ -320,7 +310,7 @@ while True:
     speed_dict=load_dict2()
 
     ################# UPDATE TRAFFIC VOLUME TO JSON ####################
-    FILE_PATH3 = r"traffic_signal_simulation/traffic.json"
+    FILE_PATH3 = "../traffic_signal_simulation/traffic.json"
     TEMP_PATH3 = FILE_PATH3 + ".tmp"
     LOCK_PATH3 = FILE_PATH3 + ".lock"  # Lock file will have the same name as the original file with ".lock" extension
 
@@ -381,7 +371,7 @@ while True:
     traffic_vol_dict=load_dict3()
 
     ################## json file to store cnt of vehicle types ############################
-    FILE_PATH4= r"local_data/cnt_vehicle_types.json"
+    FILE_PATH4 = "../../local_data/cnt_vehicle_types.json"
     def load_dict4():
         try:
             with open(FILE_PATH4, "r") as file4:
@@ -394,7 +384,7 @@ while True:
     vehicle_cnt_dict=load_dict4()
 
     ################## json file to store types of vehicle ############################
-    FILE_PATH5= r"local_data/vehicle_types.json"
+    FILE_PATH5 = "../../local_data/vehicle_types.json"
     def load_dict5():
         try:
             with open(FILE_PATH5, "r") as file5:
@@ -614,7 +604,7 @@ while True:
                 object_count = object_count + 1
 
             ################ UPDATE TRAFFIC_VOL_DICT ###################
-            traffic_vol_dict.update({"T3":object_count})
+            traffic_vol_dict.update({"T1":object_count})
             save_dict3(traffic_vol_dict)
             ##############################################################
 

@@ -19,29 +19,47 @@ from collections import defaultdict
 
 # import matplotlib.pyplot as plt
 # import easyocr
-# Define and parse user input arguments
 
+# ============================================================================
+# EASY CONFIGURATION - Change these values to run with different settings
+# ============================================================================
+DEFAULT_MODEL = "../models/new_car4_with_helmet.pt"              # Your main detection model
+DEFAULT_SOURCE = "../videos/video2.mp4"                # Video file, image, folder, or "usb0" for webcam
+DEFAULT_RESOLUTION = "1280x720"                  # Resolution (e.g., "1920x1080", "1280x720", "640x480")
+DEFAULT_THRESHOLD = 0.5                          # Confidence threshold for main model (0.0 to 1.0)
+DEFAULT_AMBULANCE_MODEL = "../models/new_ambulance_7.pt"   # Ambulance detection model
+DEFAULT_AMBULANCE_THRESHOLD = 0.7                # Confidence threshold for ambulance model (0.0 to 1.0)
+DEFAULT_RECORD = False                           # Set to True to record output
+# ============================================================================
+
+# Define and parse user input arguments
 parser = argparse.ArgumentParser()
 parser.add_argument('--model', help='Path to YOLO model file (example: "runs/detect/train/weights/best.pt")',
-                    required=True)
+                    default=DEFAULT_MODEL)
 parser.add_argument('--source', help='Image source, can be image file ("test.jpg"), \
                     image folder ("test_dir"), video file ("testvid.mp4"), or index of USB camera ("usb0")', 
-                    required=True)
+                    default=DEFAULT_SOURCE)
 parser.add_argument('--thresh', help='Minimum confidence threshold for displaying detected objects (example: "0.4")',
-                    default=0.5)
+                    default=DEFAULT_THRESHOLD)
 parser.add_argument('--resolution', help='Resolution in WxH to display inference results at (example: "640x480"), \
                     otherwise, match source resolution',
-                    default=None)
+                    default=DEFAULT_RESOLUTION)
 parser.add_argument('--record', help='Record results from video or webcam and save it as "demo1.avi". Must specify --resolution argument to record.',
-                    action='store_true')
+                    action='store_true', default=DEFAULT_RECORD)
+parser.add_argument('--ambulance_model', help='Path to ambulance detection YOLO model file (example: "new_ambulance_5.pt")',
+                    default=DEFAULT_AMBULANCE_MODEL)
+parser.add_argument('--ambulance_thresh', help='Minimum confidence threshold for ambulance detection (example: "0.4")',
+                    default=DEFAULT_AMBULANCE_THRESHOLD)
 
 args = parser.parse_args()
 
 
 # Parse user inputs
 model_path = args.model
+ambulance_model_path = args.ambulance_model
 img_source = args.source
 min_thresh = args.thresh
+ambulance_thresh = args.ambulance_thresh
 user_res = args.resolution
 record = args.record
 
@@ -53,6 +71,14 @@ if (not os.path.exists(model_path)):
 # Load the model into memory and get labemap
 model = YOLO(model_path, task='detect')
 labels = model.names
+
+# Load ambulance detection model
+ambulance_model = None
+if os.path.exists(ambulance_model_path):
+    ambulance_model = YOLO(ambulance_model_path, task='detect')
+    print(f'Ambulance detection model loaded: {ambulance_model_path}')
+else:
+    print(f'WARNING: Ambulance model not found at {ambulance_model_path}. Ambulance detection disabled.')
 
 # Parse input to determine if image source is a file, folder, video, or USB camera
 img_ext_list = ['.jpg','.JPG','.jpeg','.JPEG','.png','.PNG','.bmp','.BMP']
@@ -189,17 +215,17 @@ line1_y2=490
 # line2_y2=451
 
 ###################### store all detected images ###################
-output_dir="local_data/all_vehicle_detected_img"
+output_dir="../../local_data/all_vehicle_detected_img"
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 
 ################# store license img with its vehicle track_id
-output_dir3="local_data/all_license_plate_img"
+output_dir3="../../local_data/all_license_plate_img"
 if not os.path.exists(output_dir3):
     os.makedirs(output_dir3)
 
 ##################### store sort detected license plate image ##################
-output_dir2="local_data/new_sort_license_plate_img"
+output_dir2="../../local_data/new_sort_license_plate_img"
 if not os.path.exists(output_dir2):
     os.makedirs(output_dir2)
 # track sort detected conf 
@@ -260,6 +286,24 @@ while True:
     results=model.track(frame,persist=True) # by hariom
     #######################################################
 
+    ######################################
+    # Run ambulance detection on frame
+    ambulance_detected = False
+    if ambulance_model is not None:
+        ambulance_results = ambulance_model(frame, verbose=False)
+        ambulance_detections = ambulance_results[0].boxes
+        if len(ambulance_detections) > 0:
+            # Draw ambulance bounding boxes
+            for det in ambulance_detections:
+                amb_conf = det.conf.item()
+                if amb_conf > ambulance_thresh:  # Confidence threshold
+                    ambulance_detected = True
+                    amb_xyxy = det.xyxy.cpu().numpy().squeeze().astype(int)
+                    amb_xmin, amb_ymin, amb_xmax, amb_ymax = amb_xyxy
+                    cv2.rectangle(frame, (amb_xmin, amb_ymin), (amb_xmax, amb_ymax), (0, 0, 255), 3)
+                    amb_label = f'AMBULANCE: {int(amb_conf*100)}%'
+                    cv2.putText(frame, amb_label, (amb_xmin, amb_ymin-10), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+    #######################################################
 
     # Extract results
     detections = results[0].boxes
@@ -280,7 +324,7 @@ while True:
     #############################
 
     ############## json file to store helmet data with vehicle track id #############
-    FILE_PATH = r"/local_data/helmet_data.json"
+    FILE_PATH = "../../local_data/helmet_data.json"
     # Load existing dictionary (if available)
     def load_dict():
         try:
@@ -297,7 +341,7 @@ while True:
     helmet_dict=load_dict()
 
     #################### json file to store speed data #############################
-    FILE_PATH2= r"local_data/speed_data.json"
+    FILE_PATH2 = "../../local_data/speed_data.json"
     def load_dict2():
         try:
             with open(FILE_PATH2, "r") as file2:
@@ -310,7 +354,7 @@ while True:
     speed_dict=load_dict2()
 
     ################# UPDATE TRAFFIC VOLUME TO JSON ####################
-    FILE_PATH3 = r"traffic_signal_simulation/traffic.json"
+    FILE_PATH3 = "../traffic_signal_simulation/traffic.json"
     TEMP_PATH3 = FILE_PATH3 + ".tmp"
     LOCK_PATH3 = FILE_PATH3 + ".lock"  # Lock file will have the same name as the original file with ".lock" extension
 
@@ -371,7 +415,7 @@ while True:
     traffic_vol_dict=load_dict3()
 
     ################## json file to store cnt of vehicle types ############################
-    FILE_PATH4= r"local_data/cnt_vehicle_types.json"
+    FILE_PATH4 = "../../local_data/cnt_vehicle_types.json"
     def load_dict4():
         try:
             with open(FILE_PATH4, "r") as file4:
@@ -384,7 +428,7 @@ while True:
     vehicle_cnt_dict=load_dict4()
 
     ################## json file to store types of vehicle ############################
-    FILE_PATH5= r"local_data/vehicle_types.json"
+    FILE_PATH5 = "../../local_data/vehicle_types.json"
     def load_dict5():
         try:
             with open(FILE_PATH5, "r") as file5:
@@ -603,10 +647,10 @@ while True:
             if(classname=="car" or classname=="bike" or classname=="truck" or classname=="bus"):
                 object_count = object_count + 1
 
-            ################ UPDATE TRAFFIC_VOL_DICT ###################
-            traffic_vol_dict.update({"T2":object_count})
-            save_dict3(traffic_vol_dict)
-            ##############################################################
+    ################ UPDATE TRAFFIC_VOL_DICT ###################
+    traffic_vol_dict.update({"T1":object_count, "A1":ambulance_detected})
+    save_dict3(traffic_vol_dict)
+    ##############################################################
 
     ############ check helemt and license plate belongs to which vehicle  ########################################
     helmet_dict=load_dict()
@@ -629,7 +673,8 @@ while True:
                     license_file=f"{output_dir3}/{classname_special[j]}_{track_id_vehicle_special[i]}.jpg"
                     image_path=f"{output_dir}/license_plate_{track_id_special[j]}.jpg"
                     license_img=cv2.imread(image_path)
-                    cv2.imwrite(license_file,license_img)
+                    if license_img is not None:
+                        cv2.imwrite(license_file,license_img)
 
     ##############################################################################
 
@@ -638,7 +683,13 @@ while True:
     # Calculate and draw framerate (if using video, USB, or Picamera source)
     if source_type == 'video' or source_type == 'usb' or source_type == 'picamera':
         cv2.putText(frame, f'FPS: {avg_frame_rate:0.2f}', (10,20), cv2.FONT_HERSHEY_SIMPLEX, .7, (0,0,0), 2) # Draw framerate
-        cv2.putText(frame, f'R1', (30,20), cv2.FONT_HERSHEY_SIMPLEX, .7, (0,0,0), 3) # R1
+    
+    # Display ambulance status
+    if ambulance_detected:
+        cv2.putText(frame, 'AMBULANCE DETECTED!', (10,60), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0,0,255), 3)
+        cv2.putText(frame, 'A1: TRUE', (10,200), cv2.FONT_HERSHEY_SIMPLEX, .7, (0,0,255), 2)
+    else:
+        cv2.putText(frame, 'A1: FALSE', (10,200), cv2.FONT_HERSHEY_SIMPLEX, .7, (0,255,0), 2)
     
     # Display detection results
 

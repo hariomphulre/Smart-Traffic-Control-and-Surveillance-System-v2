@@ -9,14 +9,16 @@ import numpy as np
 from ultralytics import YOLO
 import PIL.Image
 # import google.generativeai as genai
-# genai.configure(api_key="xxxx")
+# genai.configure(api_key="AIzaSyDX9D290jNNJ0e6MShOt3S8v_xPz6ZNwXw")
 import json
+import shutil
+from filelock import FileLock
+from collections import defaultdict
 # import boto3
 # s3=boto3.resource('s3')
 
 # import matplotlib.pyplot as plt
 # import easyocr
-
 # Define and parse user input arguments
 
 parser = argparse.ArgumentParser()
@@ -187,17 +189,17 @@ line1_y2=490
 # line2_y2=451
 
 ###################### store all detected images ###################
-output_dir="local_data/all_vehicle_detected_img"
+output_dir="../../local_data/all_vehicle_detected_img"
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 
 ################# store license img with its vehicle track_id
-output_dir3="local_data/all_license_plate_img"
+output_dir3="../../local_data/all_license_plate_img"
 if not os.path.exists(output_dir3):
     os.makedirs(output_dir3)
 
 ##################### store sort detected license plate image ##################
-output_dir2="local_data/new_sort_license_plate_img"
+output_dir2="../../local_data/new_sort_license_plate_img"
 if not os.path.exists(output_dir2):
     os.makedirs(output_dir2)
 # track sort detected conf 
@@ -210,6 +212,10 @@ track_conf={}
 ####################### track time to calculate speed ###########################
 time1={}
 track_speed={}
+
+############ set to store vehicle types ####################
+vehicle_cnt=set()
+
 ###################################################################
 # Begin inference loop
 while True:
@@ -274,7 +280,7 @@ while True:
     #############################
 
     ############## json file to store helmet data with vehicle track id #############
-    FILE_PATH = r"C:\Users\hario\OneDrive\Coding - Workspace\Projects\Group Projects\Smart Traffic Control System\Smart_Traffic_Control_System\obj_detect_models\local_data\helmet_data.json"
+    FILE_PATH = "../../local_data/helmet_data.json"
     # Load existing dictionary (if available)
     def load_dict():
         try:
@@ -291,7 +297,7 @@ while True:
     helmet_dict=load_dict()
 
     #################### json file to store speed data #############################
-    FILE_PATH2= r"C:\Users\hario\OneDrive\Coding - Workspace\Projects\Group Projects\Smart Traffic Control System\Smart_Traffic_Control_System\obj_detect_models\local_data\speed_data.json"
+    FILE_PATH2 = "../../local_data/speed_data.json"
     def load_dict2():
         try:
             with open(FILE_PATH2, "r") as file2:
@@ -302,6 +308,93 @@ while True:
         with open(FILE_PATH2,"w") as file2:
             json.dump(data2,file2,indent=4)
     speed_dict=load_dict2()
+
+    ################# UPDATE TRAFFIC VOLUME TO JSON ####################
+    FILE_PATH3 = "../traffic_signal_simulation/traffic.json"
+    TEMP_PATH3 = FILE_PATH3 + ".tmp"
+    LOCK_PATH3 = FILE_PATH3 + ".lock"  # Lock file will have the same name as the original file with ".lock" extension
+
+    def load_dict3():
+        try:
+            with FileLock(LOCK_PATH3):  # Lock the file during reading
+                with open(FILE_PATH3, "r") as file3:
+                    return json.load(file3)
+        except (FileNotFoundError, json.JSONDecodeError) as e:
+            print(f"[ERROR] load_dict3: {e}")
+            return {}
+
+    def save_dict3(data3):
+        try:
+            with FileLock(LOCK_PATH3):  # Lock the file during writing
+                with open(TEMP_PATH3, "w") as temp_file:
+                    json.dump(data3, temp_file, indent=4)
+                shutil.move(TEMP_PATH3, FILE_PATH3)  # Move the temporary file to the original file
+        except Exception as e:
+            print(f"[ERROR] save_dict3: {e}")
+            if os.path.exists(TEMP_PATH3):
+                os.remove(TEMP_PATH3)
+    time.sleep(0.1)
+
+
+
+    # FILE_PATH3=r"C:\Users\hario\OneDrive\Desktop\Github\Smart-Traffic-Control-and-Surveillance-System\demo\traffic.json"
+    # TEMP_PATH3 = FILE_PATH3 + ".tmp"
+    # def load_dict3():
+    #     try:
+    #         with open(FILE_PATH3, "r") as file3:
+    #             return json.load(file3)
+    #     except (FileNotFoundError, json.JSONDecodeError) as e:
+    #         print(f"[ERROR] load_dict3: {e}")
+    #         return {}
+
+    # def save_dict3(data3):
+    #     try:
+    #         with open(TEMP_PATH3, "w") as temp_file:
+    #             json.dump(data3, temp_file, indent=4)
+    #         shutil.move(TEMP_PATH3, FILE_PATH3)
+    #     except Exception as e:
+    #         print(f"[ERROR] save_dict3: {e}")
+    #         if os.path.exists(TEMP_PATH3):
+    #             os.remove(TEMP_PATH3)
+    # time.sleep(0.1) 
+
+
+    # def load_dict3():
+    #     # try:
+    #     with open(FILE_PATH3, "r") as file3:
+    #         return json.load(file3)
+    #     # except (FileNotFoundError, json.JSONDecodeError):
+    #     #     return {}
+    # def save_dict3(data3):
+    #     with open(FILE_PATH3,"w") as file3:
+    #         json.dump(data3,file3,indent=4)
+    traffic_vol_dict=load_dict3()
+
+    ################## json file to store cnt of vehicle types ############################
+    FILE_PATH4 = "../../local_data/cnt_vehicle_types.json"
+    def load_dict4():
+        try:
+            with open(FILE_PATH4, "r") as file4:
+                return json.load(file4)
+        except (FileNotFoundError, json.JSONDecodeError):
+            return {}
+    def save_dict4(data4):
+        with open(FILE_PATH4,"w") as file4:
+            json.dump(data4,file4,indent=4)
+    vehicle_cnt_dict=load_dict4()
+
+    ################## json file to store types of vehicle ############################
+    FILE_PATH5 = "../../local_data/vehicle_types.json"
+    def load_dict5():
+        try:
+            with open(FILE_PATH5, "r") as file5:
+                return json.load(file5)
+        except (FileNotFoundError, json.JSONDecodeError):
+            return {}
+    def save_dict5(data5):
+        with open(FILE_PATH5,"w") as file5:
+            json.dump(data5,file5,indent=4)
+    vehicle_dict=load_dict5()
 
     ############### create lists to store track_id, and coordinates to check detected helmet or license_plate of which vehicle #############
     cirx_special=[] # for helemt & license_plate
@@ -384,7 +477,7 @@ while True:
                 cv2.putText(frame,str(int(track_speed[track_id]))+' km/h',(xmin,label_ymin-28),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1)
             #######################################################################
 
-
+            
 
             ############### store class for check which license plate & helmet belong to which vehicle #########
             if(classname=="helmet" or classname=="license_plate"):
@@ -438,7 +531,18 @@ while True:
             if track_id not in track_conf:
                 track_conf.update({track_id:float(f'{conf:.2f}')})
                 vehicle_file=f"{output_dir}/{labels[classidx]}_{track_id}.jpg"
-                cv2.imwrite(vehicle_file,crop_img)
+                if(classname!="helmet"):
+                    cv2.imwrite(vehicle_file,crop_img)
+                ############## update vehilce_tyeps.json #################################
+                if(classname=="car" or classname=="bike" or classname=="truck" or classname=="bus"):
+                    vehicle_cnt.add(classname) 
+                    vehicle_cnt_dict=load_dict4()
+                    vehicle_cnt_dict.update({'vehicle_types':len(vehicle_cnt)})
+                    save_dict4(vehicle_cnt_dict)
+
+                    vehicle_dict = defaultdict(int, load_dict5())
+                    vehicle_dict[classname] += 1
+                    save_dict5(dict(vehicle_dict))
                 ######### upload on sort_detected_image ##############
                 if(classname=="license_plate"):
                     if(conf<0.57):
@@ -468,7 +572,8 @@ while True:
             elif track_id in track_conf and conf > track_conf[track_id]:
                 track_conf.update({track_id:float(f'{conf:.2f}')})
                 vehicle_file=f"{output_dir}/{labels[classidx]}_{track_id}.jpg"
-                cv2.imwrite(vehicle_file,crop_img)
+                if(classname!="helmet"):
+                    cv2.imwrite(vehicle_file,crop_img)
                 ######### upload on sort_detected_image ##############
                 if(classname=="license_plate" and conf>=0.57 and not track_sort_conf[track_id]):
                     vehicle_file2=f"{output_dir2}/{labels[classidx]}_{track_id}.jpg"
@@ -497,6 +602,11 @@ while True:
             # Basic example: count the number of objects in the image
             if(classname=="car" or classname=="bike" or classname=="truck" or classname=="bus"):
                 object_count = object_count + 1
+
+            ################ UPDATE TRAFFIC_VOL_DICT ###################
+            traffic_vol_dict.update({"T2":object_count})
+            save_dict3(traffic_vol_dict)
+            ##############################################################
 
     ############ check helemt and license plate belongs to which vehicle  ########################################
     helmet_dict=load_dict()
@@ -528,6 +638,7 @@ while True:
     # Calculate and draw framerate (if using video, USB, or Picamera source)
     if source_type == 'video' or source_type == 'usb' or source_type == 'picamera':
         cv2.putText(frame, f'FPS: {avg_frame_rate:0.2f}', (10,20), cv2.FONT_HERSHEY_SIMPLEX, .7, (0,0,0), 2) # Draw framerate
+        cv2.putText(frame, f'R1', (30,20), cv2.FONT_HERSHEY_SIMPLEX, .7, (0,0,0), 3) # R1
     
     # Display detection results
 
