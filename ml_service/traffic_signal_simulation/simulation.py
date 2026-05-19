@@ -282,10 +282,10 @@
 
 
 import json
+import os
 import time
 
-
-FILE_PATH = "./traffic.json"
+FILE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "traffic.json")
 
 YELLOW_DURATION = 3
 GREEN_UNIT = 2

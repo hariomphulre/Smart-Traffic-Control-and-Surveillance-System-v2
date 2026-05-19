@@ -5,12 +5,15 @@ from google.cloud import vision
 import io
 import json
 
-client = vision.ImageAnnotatorClient.from_service_account_file('linen-marking-452309-e9-ae091aaff0b0.json')
+import os
 
-WATCH_FOLDER = 'local_data/all_license_plate_img'
+_CREDENTIALS = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'linen-marking-452309-e9-ae091aaff0b0.json')
+client = vision.ImageAnnotatorClient.from_service_account_file(_CREDENTIALS)
+
+WATCH_FOLDER = '../../local_data/all_license_plate_img'
 
 ############### json file to store license plate with track_id #############
-FILE_PATH = "local_data/new_license_data.json"
+FILE_PATH = "../../local_data/new_license_data.json"
 # Load existing dictionary (if available)
 def load_dict():
     try:
@@ -26,8 +29,6 @@ def save_dict(data):
 
 license_dict=load_dict()
 ##################################################
-
-import os
 
 def wait_for_file_complete(file_path, timeout=5):
     """Wait until file size stabilizes (means writing is done)"""
@@ -99,6 +100,6 @@ def start_monitoring():
     except KeyboardInterrupt:
         observer.stop()
     observer.join()
-
 if __name__ == "__main__":
     start_monitoring()
+

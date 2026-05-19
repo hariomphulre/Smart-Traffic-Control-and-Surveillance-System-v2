@@ -19,29 +19,47 @@ from collections import defaultdict
 
 # import matplotlib.pyplot as plt
 # import easyocr
-# Define and parse user input arguments
 
+# ============================================================================
+# EASY CONFIGURATION - Change these values to run with different settings
+# ============================================================================
+DEFAULT_MODEL = "../models/new_car4_with_helmet.pt"        # Your main detection model
+DEFAULT_SOURCE = "../videos/video3.mp4"                # Video file, image, folder, or "usb0" for webcam
+DEFAULT_RESOLUTION = "480x480"                  # Resolution (e.g., "1920x1080", "1280x720", "640x480")
+DEFAULT_THRESHOLD = 0.5                          # Confidence threshold for main model (0.0 to 1.0)
+DEFAULT_ACCIDENT_MODEL = "../models/new_accident_1.pt"     # Accident detection model
+DEFAULT_ACCIDENT_THRESHOLD = 0.8                 # Confidence threshold for accident model (0.0 to 1.0)
+DEFAULT_RECORD = False                           # Set to True to record output
+# ============================================================================
+
+# Define and parse user input arguments
 parser = argparse.ArgumentParser()
 parser.add_argument('--model', help='Path to YOLO model file (example: "runs/detect/train/weights/best.pt")',
-                    required=True)
+                    default=DEFAULT_MODEL)
 parser.add_argument('--source', help='Image source, can be image file ("test.jpg"), \
                     image folder ("test_dir"), video file ("testvid.mp4"), or index of USB camera ("usb0")', 
-                    required=True)
+                    default=DEFAULT_SOURCE)
 parser.add_argument('--thresh', help='Minimum confidence threshold for displaying detected objects (example: "0.4")',
-                    default=0.5)
+                    default=DEFAULT_THRESHOLD)
 parser.add_argument('--resolution', help='Resolution in WxH to display inference results at (example: "640x480"), \
                     otherwise, match source resolution',
-                    default=None)
+                    default=DEFAULT_RESOLUTION)
 parser.add_argument('--record', help='Record results from video or webcam and save it as "demo1.avi". Must specify --resolution argument to record.',
-                    action='store_true')
+                    action='store_true', default=DEFAULT_RECORD)
+parser.add_argument('--accident_model', help='Path to accident detection YOLO model file (example: "new_accident_1.pt")',
+                    default=DEFAULT_ACCIDENT_MODEL)
+parser.add_argument('--accident_thresh', help='Minimum confidence threshold for accident detection (example: "0.4")',
+                    default=DEFAULT_ACCIDENT_THRESHOLD)
 
 args = parser.parse_args()
 
 
 # Parse user inputs
 model_path = args.model
+accident_model_path = args.accident_model
 img_source = args.source
 min_thresh = args.thresh
+accident_thresh = args.accident_thresh
 user_res = args.resolution
 record = args.record
 
@@ -53,6 +71,14 @@ if (not os.path.exists(model_path)):
 # Load the model into memory and get labemap
 model = YOLO(model_path, task='detect')
 labels = model.names
+
+# Load accident detection model
+accident_model = None
+if os.path.exists(accident_model_path):
+    accident_model = YOLO(accident_model_path, task='detect')
+    print(f'Accident detection model loaded: {accident_model_path}')
+else:
+    print(f'WARNING: Accident model not found at {accident_model_path}. Accident detection disabled.')
 
 # Parse input to determine if image source is a file, folder, video, or USB camera
 img_ext_list = ['.jpg','.JPG','.jpeg','.JPEG','.png','.PNG','.bmp','.BMP']
@@ -189,21 +215,33 @@ line1_y2=490
 # line2_y2=451
 
 ###################### store all detected images ###################
-output_dir="local_data/all_vehicle_detected_img"
+output_dir="../../local_data/all_vehicle_detected_img"
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 
 ################# store license img with its vehicle track_id
-output_dir3="local_data/all_license_plate_img"
+output_dir3="../../local_data/all_license_plate_img"
 if not os.path.exists(output_dir3):
     os.makedirs(output_dir3)
 
 ##################### store sort detected license plate image ##################
-output_dir2="local_data/new_sort_license_plate_img"
+output_dir2="../../local_data/new_sort_license_plate_img"
 if not os.path.exists(output_dir2):
     os.makedirs(output_dir2)
 # track sort detected conf 
 track_sort_conf={} # vehicle track id
+###################################################
+
+##################### store accident data ##################
+accident_base_dir="../../local_data/accident_data"
+if not os.path.exists(accident_base_dir):
+    os.makedirs(accident_base_dir)
+
+# Better accident tracking system
+accident_counter = 0
+active_accidents = {}  # Format: {accident_id: {'bbox': (x1,y1,x2,y2), 'last_seen': frame_num, 'folder': path, 'vehicles': set(), 'frame_count': int}}
+frame_number = 0
+accident_persistence_frames = 30  # Consider accident ended after 30 frames without detection
 ###################################################
 
 # store confidence ans track_id to extract highiest license cofidence image
@@ -217,10 +255,35 @@ track_speed={}
 vehicle_cnt=set()
 
 ###################################################################
+# Helper function to calculate IoU (Intersection over Union)
+def calculate_iou(box1, box2):
+    x1_min, y1_min, x1_max, y1_max = box1
+    x2_min, y2_min, x2_max, y2_max = box2
+    
+    # Calculate intersection area
+    inter_xmin = max(x1_min, x2_min)
+    inter_ymin = max(y1_min, y2_min)
+    inter_xmax = min(x1_max, x2_max)
+    inter_ymax = min(y1_max, y2_max)
+    
+    if inter_xmax < inter_xmin or inter_ymax < inter_ymin:
+        return 0.0
+    
+    inter_area = (inter_xmax - inter_xmin) * (inter_ymax - inter_ymin)
+    
+    # Calculate union area
+    box1_area = (x1_max - x1_min) * (y1_max - y1_min)
+    box2_area = (x2_max - x2_min) * (y2_max - y2_min)
+    union_area = box1_area + box2_area - inter_area
+    
+    return inter_area / union_area if union_area > 0 else 0.0
+
+###################################################################
 # Begin inference loop
 while True:
 
     t_start = time.perf_counter()
+    frame_number += 1
 
     # Load frame from image source
     if source_type == 'image' or source_type == 'folder': # If source is image or image folder, load the image using its filename
@@ -260,6 +323,26 @@ while True:
     results=model.track(frame,persist=True) # by hariom
     #######################################################
 
+    ######################################
+    # Run accident detection on frame
+    accident_detected = False
+    accident_boxes = []
+    if accident_model is not None:
+        accident_results = accident_model(frame, verbose=False)
+        accident_detections = accident_results[0].boxes
+        if len(accident_detections) > 0:
+            for acc_idx, acc_det in enumerate(accident_detections):
+                acc_conf = acc_det.conf.item()
+                if acc_conf > accident_thresh:  # Confidence threshold
+                    accident_detected = True
+                    acc_xyxy = acc_det.xyxy.cpu().numpy().squeeze().astype(int)
+                    acc_xmin, acc_ymin, acc_xmax, acc_ymax = acc_xyxy
+                    accident_boxes.append((acc_xmin, acc_ymin, acc_xmax, acc_ymax, acc_conf, acc_idx))
+                    # Draw accident bounding box
+                    cv2.rectangle(frame, (acc_xmin, acc_ymin), (acc_xmax, acc_ymax), (0, 0, 255), 4)
+                    acc_label = f'ACCIDENT: {int(acc_conf*100)}%'
+                    cv2.putText(frame, acc_label, (acc_xmin, acc_ymin-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 3)
+    #######################################################
 
     # Extract results
     detections = results[0].boxes
@@ -280,7 +363,7 @@ while True:
     #############################
 
     ############## json file to store helmet data with vehicle track id #############
-    FILE_PATH = r"/local_data/helmet_data.json"
+    FILE_PATH = "../../local_data/helmet_data.json"
     # Load existing dictionary (if available)
     def load_dict():
         try:
@@ -297,7 +380,7 @@ while True:
     helmet_dict=load_dict()
 
     #################### json file to store speed data #############################
-    FILE_PATH2= r"local_data/speed_data.json"
+    FILE_PATH2 = "../../local_data/speed_data.json"
     def load_dict2():
         try:
             with open(FILE_PATH2, "r") as file2:
@@ -310,7 +393,7 @@ while True:
     speed_dict=load_dict2()
 
     ################# UPDATE TRAFFIC VOLUME TO JSON ####################
-    FILE_PATH3 = r"traffic_signal_simulation/traffic.json"
+    FILE_PATH3 = "../traffic_signal_simulation/traffic.json"
     TEMP_PATH3 = FILE_PATH3 + ".tmp"
     LOCK_PATH3 = FILE_PATH3 + ".lock"  # Lock file will have the same name as the original file with ".lock" extension
 
@@ -371,7 +454,7 @@ while True:
     traffic_vol_dict=load_dict3()
 
     ################## json file to store cnt of vehicle types ############################
-    FILE_PATH4= r"local_data/cnt_vehicle_types.json"
+    FILE_PATH4 = "../../local_data/cnt_vehicle_types.json"
     def load_dict4():
         try:
             with open(FILE_PATH4, "r") as file4:
@@ -384,7 +467,7 @@ while True:
     vehicle_cnt_dict=load_dict4()
 
     ################## json file to store types of vehicle ############################
-    FILE_PATH5= r"local_data/vehicle_types.json"
+    FILE_PATH5 = "../../local_data/vehicle_types.json"
     def load_dict5():
         try:
             with open(FILE_PATH5, "r") as file5:
@@ -406,6 +489,10 @@ while True:
     vehicle_ymin=[]
     vehicle_xmax=[]
     vehicle_ymax=[]
+    ##################################################
+
+    ############### Store vehicle info for accident correlation #############
+    vehicle_info_list = []  # Store all vehicle detections with their bounding boxes
     ##################################################
 
     # Go through each detection and get bbox coords, confidence, and class
@@ -493,6 +580,13 @@ while True:
                 vehicle_ymin.append(float(ymin))
                 vehicle_xmax.append(float(xmax))
                 vehicle_ymax.append(float(ymax))
+                # Store vehicle info for accident correlation
+                vehicle_info_list.append({
+                    'track_id': track_id,
+                    'classname': classname,
+                    'bbox': (xmin, ymin, xmax, ymax),
+                    'crop_img': crop_img.copy()
+                })
             #############################################################################
 
             # Check the obj is crossed the line
@@ -604,7 +698,7 @@ while True:
                 object_count = object_count + 1
 
             ################ UPDATE TRAFFIC_VOL_DICT ###################
-            traffic_vol_dict.update({"T1":object_count})
+            traffic_vol_dict.update({"T2":object_count})
             save_dict3(traffic_vol_dict)
             ##############################################################
 
@@ -629,16 +723,171 @@ while True:
                     license_file=f"{output_dir3}/{classname_special[j]}_{track_id_vehicle_special[i]}.jpg"
                     image_path=f"{output_dir}/license_plate_{track_id_special[j]}.jpg"
                     license_img=cv2.imread(image_path)
-                    cv2.imwrite(license_file,license_img)
+                    if license_img is not None:
+                        cv2.imwrite(license_file,license_img)
 
     ##############################################################################
 
-
+    ############### Process accident detections and save data #############
+    if accident_detected and len(accident_boxes) > 0:
+        for acc_box in accident_boxes:
+            acc_xmin, acc_ymin, acc_xmax, acc_ymax, acc_conf, acc_idx = acc_box
+            
+            # Check if this accident matches any existing active accident using IoU
+            acc_bbox = [acc_xmin, acc_ymin, acc_xmax, acc_ymax]
+            matched_accident_id = None
+            best_iou = 0
+            
+            for existing_id, existing_data in active_accidents.items():
+                iou = calculate_iou(acc_bbox, existing_data['bbox'])
+                if iou > 0.5 and iou > best_iou:  # IoU threshold of 0.5
+                    matched_accident_id = existing_id
+                    best_iou = iou
+            
+            # If matched, reuse existing accident; otherwise create new one
+            if matched_accident_id:
+                accident_id = matched_accident_id
+                accident_folder = active_accidents[accident_id]['folder_path']
+                active_accidents[accident_id]['last_seen_frame'] = frame_number
+                active_accidents[accident_id]['frame_count'] += 1
+                active_accidents[accident_id]['bbox'] = acc_bbox  # Update bbox
+                print(f"[ACCIDENT ONGOING] ID: {accident_id}, Frame: {active_accidents[accident_id]['frame_count']}")
+            else:
+                # New accident detected
+                accident_counter += 1
+                accident_id = f"accident_{accident_counter}_{int(time.time())}"
+                accident_folder = os.path.join(accident_base_dir, accident_id)
+                os.makedirs(accident_folder, exist_ok=True)
+                
+                # Initialize accident tracking data
+                active_accidents[accident_id] = {
+                    'bbox': acc_bbox,
+                    'first_detected_frame': frame_number,
+                    'last_seen_frame': frame_number,
+                    'frame_count': 1,
+                    'vehicles': set(),
+                    'folder_path': accident_folder
+                }
+                
+                # Save accident crop image (only on first detection)
+                accident_crop = frame[acc_ymin:acc_ymax, acc_xmin:acc_xmax].copy()
+                accident_img_path = os.path.join(accident_folder, f"accident_{accident_id}.jpg")
+                cv2.imwrite(accident_img_path, accident_crop)
+                print(f"\n[NEW ACCIDENT] ID: {accident_id}, Confidence: {acc_conf:.2f}")
+                print(f"Accident folder created: {accident_folder}")
+            
+            # Save full frame periodically (every 10 frames)
+            if active_accidents[accident_id]['frame_count'] % 10 == 0:
+                frame_capture_path = os.path.join(accident_folder, f"frame_{frame_number}.jpg")
+                cv2.imwrite(frame_capture_path, frame)
+            
+            # Find vehicles that intersect with accident bounding box
+            intersecting_vehicles = []
+            for vehicle_info in vehicle_info_list:
+                veh_xmin, veh_ymin, veh_xmax, veh_ymax = vehicle_info['bbox']
+                
+                # Check if vehicle bbox intersects with accident bbox
+                if not (veh_xmax < acc_xmin or veh_xmin > acc_xmax or 
+                        veh_ymax < acc_ymin or veh_ymin > acc_ymax):
+                    intersecting_vehicles.append(vehicle_info)
+            
+            # Save intersecting vehicle images and license plates
+            for veh_info in intersecting_vehicles:
+                veh_track_id = veh_info['track_id']
+                veh_classname = veh_info['classname']
+                veh_crop = veh_info['crop_img']
+                
+                # Check if this vehicle was already saved for this accident
+                if veh_track_id in active_accidents[accident_id]['vehicles']:
+                    continue  # Already saved, skip
+                
+                # Mark vehicle as saved for this accident
+                active_accidents[accident_id]['vehicles'].add(veh_track_id)
+                
+                # Save vehicle image from stored crop
+                veh_img_path = os.path.join(accident_folder, f"vehicle_{veh_classname}_{veh_track_id}.jpg")
+                cv2.imwrite(veh_img_path, veh_crop)
+                print(f"  + Vehicle saved: {veh_classname} (ID: {veh_track_id})")
+                
+                # Try to find and save corresponding license plate image from multiple sources
+                license_saved = False
+                
+                # Method 1: Try output_dir3 (matched license plates with vehicle track_id)
+                license_img_source = os.path.join(output_dir3, f"license_plate_{veh_track_id}.jpg")
+                if os.path.exists(license_img_source):
+                    license_img = cv2.imread(license_img_source)
+                    if license_img is not None:
+                        license_img_dest = os.path.join(accident_folder, f"license_plate_{veh_track_id}.jpg")
+                        cv2.imwrite(license_img_dest, license_img)
+                        print(f"    ✓ License plate saved for vehicle ID: {veh_track_id}")
+                        license_saved = True
+                
+                # Method 2: Try output_dir (all detected vehicle images - may have saved earlier)
+                if not license_saved:
+                    # Check if vehicle image itself was saved earlier with license data
+                    vehicle_img_source = os.path.join(output_dir, f"{veh_classname}_{veh_track_id}.jpg")
+                    if os.path.exists(vehicle_img_source):
+                        # Vehicle was detected before, copy the saved vehicle image too
+                        # This ensures we get the best quality image
+                        vehicle_img = cv2.imread(vehicle_img_source)
+                        if vehicle_img is not None:
+                            cv2.imwrite(veh_img_path, vehicle_img)
+                            print(f"    ✓ Updated vehicle image from saved data")
+            
+            # Update summary JSON file (continuously update as new vehicles are detected)
+            summary = {
+                "accident_id": accident_id,
+                "first_detected_frame": active_accidents[accident_id]['first_detected_frame'],
+                "last_updated": time.strftime("%Y-%m-%d %H:%M:%S"),
+                "total_frames": active_accidents[accident_id]['frame_count'],
+                "confidence": float(acc_conf),
+                "status": "ongoing",
+                "total_vehicles": len(active_accidents[accident_id]['vehicles']),
+                "vehicle_ids": sorted(list(active_accidents[accident_id]['vehicles']))
+            }
+            summary_path = os.path.join(accident_folder, "accident_summary.json")
+            with open(summary_path, 'w') as f:
+                json.dump(summary, f, indent=4)
+    ##############################################################################
+    
+    # Clean up accidents that haven't been detected recently
+    accidents_to_remove = []
+    for accident_id, accident_data in active_accidents.items():
+        frames_since_last_seen = frame_number - accident_data['last_seen_frame']
+        if frames_since_last_seen > accident_persistence_frames:
+            # Mark accident as completed
+            accident_folder = accident_data['folder_path']
+            summary_path = os.path.join(accident_folder, "accident_summary.json")
+            
+            # Read current summary and mark as completed
+            if os.path.exists(summary_path):
+                with open(summary_path, 'r') as f:
+                    summary = json.load(f)
+                summary['status'] = 'completed'
+                summary['completed_at'] = time.strftime("%Y-%m-%d %H:%M:%S")
+                summary['duration_frames'] = accident_data['frame_count']
+                with open(summary_path, 'w') as f:
+                    json.dump(summary, f, indent=4)
+            
+            accidents_to_remove.append(accident_id)
+            print(f"✓ Accident {accident_id} marked as completed ({accident_data['frame_count']} frames, {len(accident_data['vehicles'])} vehicles)")
+    
+    # Remove completed accidents from active tracking
+    for accident_id in accidents_to_remove:
+        del active_accidents[accident_id]
     
     # Calculate and draw framerate (if using video, USB, or Picamera source)
     if source_type == 'video' or source_type == 'usb' or source_type == 'picamera':
         cv2.putText(frame, f'FPS: {avg_frame_rate:0.2f}', (10,20), cv2.FONT_HERSHEY_SIMPLEX, .7, (0,0,0), 2) # Draw framerate
-        cv2.putText(frame, f'R1', (30,20), cv2.FONT_HERSHEY_SIMPLEX, .7, (0,0,0), 3) # R1
+        cv2.putText(frame, f'R2', (10,40), cv2.FONT_HERSHEY_SIMPLEX, .7, (0,0,0), 3) # R2
+    
+    # Display accident status
+    if accident_detected:
+        cv2.putText(frame, 'ACCIDENT DETECTED!', (10,200), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0,0,255), 3)
+        cv2.putText(frame, f'Active Accidents: {len(active_accidents)}', (10,240), cv2.FONT_HERSHEY_SIMPLEX, .7, (0,0,255), 2)
+        cv2.putText(frame, f'Total Detected: {accident_counter}', (10,270), cv2.FONT_HERSHEY_SIMPLEX, .7, (0,0,255), 2)
+    else:
+        cv2.putText(frame, f'Active Accidents: {len(active_accidents)}', (10,200), cv2.FONT_HERSHEY_SIMPLEX, .7, (0,255,0), 2)
     
     # Display detection results
 
@@ -669,7 +918,7 @@ while True:
     # cv2.putText(frame, f'Truck: {class_counts_2["truck"]}', (10,260), cv2.FONT_HERSHEY_SIMPLEX, .7, (255,0,0), 2)
     ########################################################################
 
-    cv2.putText(frame, f'Objects: {object_count}', (10,40), cv2.FONT_HERSHEY_SIMPLEX, .7, (0,0,0), 2) # Draw total number of detected objects
+    cv2.putText(frame, f'Objects: {object_count}', (10,60), cv2.FONT_HERSHEY_SIMPLEX, .7, (0,0,0), 2) # Draw total number of detected objects
     cv2.imshow('YOLO detection results',frame) # Display image
     if record: recorder.write(frame)
 

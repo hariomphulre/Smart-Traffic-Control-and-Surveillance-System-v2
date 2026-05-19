@@ -7,8 +7,9 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from google.cloud import vision
 
-########## Load traffic2.json to access data ################
-FILE_PATH = r"/home/pi/Desktop/Smart-Traffic-Control-and-Surveillance-System-v3.0/traffic_signal_simulation/traffic2.json"
+########## Load traffic.json to access data ################
+_SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+FILE_PATH = os.path.join(_SCRIPT_DIR, "traffic.json")
 
 def load_data():
     try:
@@ -34,9 +35,9 @@ for light in traffic_lights:
     except Exception as e:
         print(f"Error {light}: {e}")
 
-############## Watch traffic2.json ####################
+############## Watch traffic.json ####################
 
-WATCH_FOLDER = "/home/pi/Desktop/Smart-Traffic-Control-and-Surveillance-System-v3.0/traffic_signal_simulation"
+WATCH_FOLDER = _SCRIPT_DIR
 
 class detected_image_Handler(FileSystemEventHandler):
     def on_modified(self, event):
@@ -46,7 +47,7 @@ class detected_image_Handler(FileSystemEventHandler):
         file_path = event.src_path
         print(f"File modified: {file_path}")  # Debug print
         
-        if file_path.lower().endswith('.json') and 'traffic2.json' in file_path:
+        if file_path.lower().endswith('.json') and 'traffic.json' in file_path:
             try:
                 traffic = load_data()
                 
