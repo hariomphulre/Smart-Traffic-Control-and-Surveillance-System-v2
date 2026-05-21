@@ -1,10 +1,20 @@
 import axios from 'axios';
 import { getApiErrorMessage, logApiError } from './api-errors';
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3001';
+/** Browser: same-origin + next.config rewrites. SSR/build: explicit backend URL. */
+function getBackendBaseUrl(): string {
+  if (typeof window !== 'undefined') {
+    return ''
+  }
+  return (
+    process.env.BACKEND_INTERNAL_URL ||
+    process.env.NEXT_PUBLIC_BACKEND_URL ||
+    'http://127.0.0.1:3001'
+  )
+}
 
 export const axiosInstance = axios.create({
-  baseURL: BACKEND_URL,
+  baseURL: getBackendBaseUrl(),
   headers: {
     'Content-Type': 'application/json',
   },

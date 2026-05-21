@@ -16,5 +16,6 @@ export function isDbConnectionError(error: unknown): boolean {
 export function shouldUseMockOnDbError(): boolean {
   if (process.env.USE_MOCK_DATA === 'true') return true;
   if (process.env.USE_MOCK_DATA === 'false') return false;
+  if (process.env.DOCKER === 'true') return false;
   return process.env.NODE_ENV !== 'production';
 }

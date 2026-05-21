@@ -1,0 +1,13 @@
+{
+  "name": "websocket-service",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ioredis": "^5.9.3",
+    "ws": "^8.18.0"
+  }
+}

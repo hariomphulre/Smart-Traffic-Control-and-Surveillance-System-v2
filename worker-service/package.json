@@ -1,0 +1,12 @@
+{
+  "name": "worker-service",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node worker.js"
+  },
+  "dependencies": {
+    "ioredis": "^5.9.3"
+  }
+}

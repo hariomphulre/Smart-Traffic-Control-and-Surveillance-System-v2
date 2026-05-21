@@ -1,0 +1,14 @@
+# Optional RTSP/HLS gateway — enable profile "streaming" in docker-compose
+logLevel: info
+api: yes
+apiAddress: :9997
+
+paths:
+  partition1:
+    source: publisher
+  partition2:
+    source: publisher
+  partition3:
+    source: publisher
+  partition4:
+    source: publisher

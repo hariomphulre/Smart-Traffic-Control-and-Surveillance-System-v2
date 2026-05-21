@@ -10,8 +10,16 @@ FROM node:22-alpine AS builder
 WORKDIR /app
 
 # Baked into client bundle at build time — must be reachable from the user's browser
-ARG NEXT_PUBLIC_BACKEND_URL=http://localhost:3001
+ARG NEXT_PUBLIC_BACKEND_URL=http://localhost
+ARG NEXT_PUBLIC_ML_SERVICE_URL=http://localhost
+ARG NEXT_PUBLIC_WS_URL=ws://localhost/ws/analytics
+ARG BACKEND_INTERNAL_URL=http://backend:3001
+ARG ML_SERVICE_URL=http://ml-service:8000
 ENV NEXT_PUBLIC_BACKEND_URL=$NEXT_PUBLIC_BACKEND_URL
+ENV NEXT_PUBLIC_ML_SERVICE_URL=$NEXT_PUBLIC_ML_SERVICE_URL
+ENV NEXT_PUBLIC_WS_URL=$NEXT_PUBLIC_WS_URL
+ENV BACKEND_INTERNAL_URL=$BACKEND_INTERNAL_URL
+ENV ML_SERVICE_URL=$ML_SERVICE_URL
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
