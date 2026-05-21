@@ -13,10 +13,16 @@ export function getApiErrorMessage(error: unknown): string {
       if (body.error) return body.error;
     }
 
-    if (error.code === 'ERR_NETWORK') {
-      const base = error.config?.baseURL ?? 'backend';
-      if (isLocalBackend(base)) {
-        return `Cannot reach API at ${base}. Start the backend: cd backend && npm run dev`;
+    if (error.code === 'ERR_NETWORK' || error.code === 'ENOTFOUND') {
+      const base =
+        error.config?.baseURL ||
+        (typeof window !== 'undefined' ? window.location.origin : '') ||
+        'backend'
+      if (!base || base === '' || isLocalBackend(String(base))) {
+        return (
+          'Cannot reach the API. Use http://localhost (port 80 via nginx) or http://localhost:3000 ' +
+          'with docker compose up, and ensure backend + postgres containers are running.'
+        )
       }
       return (
         `Cannot reach API at ${base}. ` +

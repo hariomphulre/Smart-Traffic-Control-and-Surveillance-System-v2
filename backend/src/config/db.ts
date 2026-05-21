@@ -4,7 +4,12 @@ import type { Pool, PoolConfig } from 'pg';
 import dotenv from 'dotenv';
 import { getCachedIp, resolveHost } from '../lib/resolve-host';
 
-dotenv.config();
+// In Docker, compose sets DATABASE_URL — do not load backend/.env (Neon) over it
+if (process.env.DOCKER !== 'true') {
+  dotenv.config();
+} else {
+  dotenv.config({ override: false });
+}
 
 dns.setDefaultResultOrder('ipv4first');
 
@@ -48,8 +53,11 @@ function patchedLookup(
   });
 }
 
-patchedLookup.__promisify__ = originalLookup.__promisify__;
-dns.lookup = patchedLookup as typeof dns.lookup;
+// Docker Compose uses hostnames like "postgres" — do not patch dns.lookup (breaks pg)
+if (process.env.DOCKER !== 'true') {
+  patchedLookup.__promisify__ = originalLookup.__promisify__;
+  dns.lookup = patchedLookup as typeof dns.lookup;
+}
 
 function needsSsl(connectionString: string): boolean {
   if (process.env.DATABASE_SSL === 'true') return true;
@@ -74,20 +82,46 @@ async function createPool(): Promise<Pool> {
 
   const isNeon = url.hostname.includes('neon.tech');
 
+  // Docker/local Postgres: use connection string (avoids custom dns.lookup issues with host "postgres")
+  if (!isNeon) {
+    const localPool = new PgPool({
+      connectionString,
+      max: 25,
+      min: 0,
+      idleTimeoutMillis: 60_000,
+      connectionTimeoutMillis: 15_000,
+      allowExitOnIdle: true,
+      ssl: needsSsl(connectionString) ? { rejectUnauthorized: false } : undefined,
+    });
+    localPool.on('error', (err) => {
+      const msg = err.message ?? '';
+      if (
+        msg.includes('Connection terminated') ||
+        msg.includes('ECONNRESET') ||
+        msg.includes('socket hang up')
+      ) {
+        console.warn('⚠️ DB idle connection closed — will reconnect on next request');
+        return;
+      }
+      console.error('❌ DB pool error:', msg);
+    });
+    return localPool;
+  }
+
   const config: PoolConfig = {
     host: url.hostname,
     port: url.port ? Number(url.port) : 5432,
     user: decodeURIComponent(url.username),
     password: decodeURIComponent(url.password),
     database: url.pathname.replace(/^\//, ''),
-    max: isNeon ? 10 : 25,
+    max: 10,
     min: 0,
-    idleTimeoutMillis: isNeon ? 20_000 : 60_000,
+    idleTimeoutMillis: 20_000,
     connectionTimeoutMillis: 15_000,
     allowExitOnIdle: true,
     keepAlive: true,
     keepAliveInitialDelayMillis: 10_000,
-    maxUses: isNeon ? 5_000 : undefined,
+    maxUses: 5_000,
   };
 
   if (isNeon) {

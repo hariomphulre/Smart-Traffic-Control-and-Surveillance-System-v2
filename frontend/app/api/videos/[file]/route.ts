@@ -1,8 +1,7 @@
-import fs from 'fs'
 import path from 'path'
 import { NextRequest, NextResponse } from 'next/server'
 
-const VIDEOS_DIR = path.join(process.cwd(), '..', 'ml_service', 'videos')
+const ML_SERVICE_URL = process.env.ML_SERVICE_URL || 'http://localhost:8000'
 const ALLOWED_VIDEO_EXTENSIONS = ['.mp4', '.webm', '.mov', '.avi', '.mkv', '.flv', '.wmv', '.m4v']
 
 function isValidVideoFile(filename: string): boolean {
@@ -27,55 +26,28 @@ export async function GET(
     return NextResponse.json({ error: 'Invalid video file type' }, { status: 400 })
   }
 
-  const filePath = path.join(VIDEOS_DIR, decoded)
-  if (!fs.existsSync(filePath)) {
-    return NextResponse.json({ error: 'Video not found' }, { status: 404 })
-  }
-
-  const stat = fs.statSync(filePath)
-  const fileSize = stat.size
-  const range = request.headers.get('range')
-
-  if (range) {
-    const parts = range.replace(/bytes=/, '').split('-')
-    const start = parseInt(parts[0], 10)
-    const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1
-    const chunkSize = end - start + 1
-
-    const stream = fs.createReadStream(filePath, { start, end })
-    const readable = new ReadableStream({
-      start(controller) {
-        stream.on('data', (chunk) => controller.enqueue(chunk))
-        stream.on('end', () => controller.close())
-        stream.on('error', (err) => controller.error(err))
-      },
-    })
-
-    return new NextResponse(readable, {
-      status: 206,
-      headers: {
-        'Content-Range': `bytes ${start}-${end}/${fileSize}`,
-        'Accept-Ranges': 'bytes',
-        'Content-Length': String(chunkSize),
-        'Content-Type': 'video/mp4',
-      },
-    })
-  }
-
-  const stream = fs.createReadStream(filePath)
-  const readable = new ReadableStream({
-    start(controller) {
-      stream.on('data', (chunk) => controller.enqueue(chunk))
-      stream.on('end', () => controller.close())
-      stream.on('error', (err) => controller.error(err))
-    },
+  const upstream = await fetch(`${ML_SERVICE_URL}/video-files/${encodeURIComponent(decoded)}`, {
+    headers: request.headers.get('range')
+      ? {
+          Range: request.headers.get('range') as string,
+        }
+      : undefined,
+    cache: 'no-store',
   })
 
-  return new NextResponse(readable, {
-    headers: {
-      'Content-Length': String(fileSize),
-      'Content-Type': 'video/mp4',
-      'Accept-Ranges': 'bytes',
-    },
+  if (!upstream.ok || !upstream.body) {
+    return NextResponse.json({ error: 'Video not found' }, { status: upstream.status || 404 })
+  }
+
+  const headers = new Headers()
+  const passthrough = ['content-type', 'content-length', 'accept-ranges', 'content-range', 'cache-control']
+  for (const key of passthrough) {
+    const value = upstream.headers.get(key)
+    if (value) headers.set(key, value)
+  }
+
+  return new NextResponse(upstream.body, {
+    status: upstream.status,
+    headers,
   })
 }
