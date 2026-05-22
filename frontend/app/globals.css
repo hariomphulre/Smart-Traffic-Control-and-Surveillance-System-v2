@@ -26,6 +26,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+
 /* Google Cloud-style card */
 .gcloud-card {
   @apply bg-white dark:bg-[#292a2d] border border-[#dadce0] dark:border-[#3c4043] rounded-lg transition-colors;

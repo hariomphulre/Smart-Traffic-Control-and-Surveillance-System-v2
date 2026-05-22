@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useTheme } from '@/context/ThemeContext'
-import { FiSun, FiMoon, FiMenu } from 'react-icons/fi'
+import { FiSun, FiMoon } from 'react-icons/fi'
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme()
@@ -13,7 +13,6 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-14">
           {/* Logo/Brand */}
           <div className="flex items-center gap-3">
-            
             <Link href="/" className="flex items-center gap-2 text-[#5f6368] dark:text-[#9aa0a6] hover:text-[#202124] dark:hover:text-[#e8eaed] transition-colors">
               <span className="text-lg font-medium">Adv. Traffic Control & Surveillance System</span>
             </Link>

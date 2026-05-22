@@ -35,8 +35,15 @@ const secondaryNavItems = [
   { name: 'Accident/Fire Reports', path: '/accident-reports' },
   { name: 'Simulation', path: '/simulation' },
   { name: 'Images', path: '/images' },
-  { name: 'Ambulance', path: '/ambulance/sign-in' },
 ]
+
+const secondaryNavDropdowns = {
+  '🚨 Emergency Response': [
+    { name: '🗺️ Live Route Map', path: '/emergency-route' },
+    { name: '🚑 Ambulance Route', path: '/emergency-response/ambulance/simulation' },
+    { name: '🚒 Fire Brigade Route', path: '/emergency-response/fire-brigade/simulation' },
+  ],
+}
 
 export default function RootLayout({
   children,
@@ -63,7 +70,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProvider>
           <Navbar />
-          <SecondaryNavbar items={secondaryNavItems} />
+          <SecondaryNavbar items={secondaryNavItems} dropdowns={secondaryNavDropdowns} />
           <main className="min-h-screen transition-colors">
             {children}
           </main>
