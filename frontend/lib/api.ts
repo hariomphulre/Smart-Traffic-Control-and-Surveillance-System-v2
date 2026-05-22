@@ -302,6 +302,44 @@ export const triggerSignal = async (signalId: string): Promise<{ success: boolea
   return response.data;
 };
 
+// ── Fire Brigade ─────────────────────────────────────────────────────────
+
+export interface FireStation {
+  id: string;
+  name: string;
+  lat: number;
+  lng: number;
+  address: string;
+  capacity: number;
+  vehicles: number;
+}
+
+export const getFireStations = async (): Promise<FireStation[]> => {
+  const response = await axiosInstance.get('/api/fire-brigade/fire-stations');
+  return response.data?.data ?? [];
+};
+
+export const getFireBrigadeSignals = async (): Promise<TrafficSignal[]> => {
+  const response = await axiosInstance.get('/api/fire-brigade/signals');
+  return response.data?.data ?? [];
+};
+
+export const triggerFireBrigadeSignal = async (signalId: string): Promise<{ success: boolean; message: string }> => {
+  const response = await axiosInstance.post('/api/fire-brigade/trigger-signal', { signalId });
+  return response.data;
+};
+
+export const overrideSignalWithinRadius = async (
+  signalId: string,
+  vehicleLocation: { lat: number; lng: number }
+): Promise<{ success: boolean; message: string; distance: string }> => {
+  const response = await axiosInstance.post('/api/fire-brigade/override-signal', {
+    signalId,
+    vehicleLocation,
+  });
+  return response.data;
+};
+
 // ── Image Path Helper ────────────────────────────────────────────────────────
 // Images are served from frontend/public/uploads (populated by backend seed scripts)
 export const getImageUrl = (imagePath: string): string => {

@@ -117,6 +117,18 @@ services:
         condition: service_healthy
     restart: unless-stopped
 
+  emergency-backend:
+    build:
+      context: ./emergency-backend
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    environment:
+      NODE_ENV: production
+      PORT: "4000"
+      CORS_ORIGIN: ${PUBLIC_ORIGIN:-http://localhost},http://localhost:3000
+    restart: unless-stopped
+
   frontend:
     build:
       context: ./frontend
