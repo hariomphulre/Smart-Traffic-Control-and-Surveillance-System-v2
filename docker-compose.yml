@@ -14,7 +14,7 @@ services:
       - ./postgres/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
       - ./postgres/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-traffic} -d ${POSTGRES_DB:-traffic_db}"]
       interval: 5s
@@ -26,7 +26,7 @@ services:
     image: redis:7-alpine
     command: redis-server --appendonly yes --maxmemory 128mb --maxmemory-policy allkeys-lru
     ports:
-      - "6379:6379"
+      - "127.0.0.1:6379:6379"
     volumes:
       - redis_data:/data
     healthcheck:
@@ -40,8 +40,7 @@ services:
     build:
       context: ./ml_service
       dockerfile: Dockerfile
-    ports:
-      - "8000:8000"
+    # ml-service is internal; access via nginx proxy. Do not publish to host by default.
     environment:
       REDIS_URL: redis://redis:6379/0
       ML_DEFAULT_MODEL: ${ML_DEFAULT_MODEL:-new_car4_with_helmet.pt}
@@ -93,8 +92,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    ports:
-      - "3001:3001"
+    # backend is internal; proxied by nginx. Do not publish host port to avoid conflicts.
     # Do NOT mount backend/.env — it may point at Neon and break Docker Postgres
     environment:
       PORT: "3001"
@@ -108,7 +106,7 @@ services:
       USE_MOCK_DATA: "false"
       TRAFFIC_JSON_PATH: /ml_service/traffic_signal_simulation/traffic.json
     volumes:
-      - ./ml_service/traffic_signal_simulation:/ml_service/traffic_signal_simulation:ro
+      - ./ml_service/traffic_signal_simulation:/ml_service/traffic_signal_simulation
       - ./local_data:/local_data:ro
     depends_on:
       postgres:
@@ -121,8 +119,7 @@ services:
     build:
       context: ./emergency-backend
       dockerfile: Dockerfile
-    ports:
-      - "4000:4000"
+    # emergency-backend is internal; proxied by nginx at /emergency/. Do not publish host port.
     environment:
       NODE_ENV: production
       PORT: "4000"
@@ -137,10 +134,10 @@ services:
         NEXT_PUBLIC_BACKEND_URL: ${PUBLIC_ORIGIN:-http://localhost}
         NEXT_PUBLIC_ML_SERVICE_URL: ${PUBLIC_ORIGIN:-http://localhost}
         NEXT_PUBLIC_WS_URL: ${PUBLIC_WS_ORIGIN:-ws://localhost}/ws/analytics
+        NEXT_PUBLIC_EMERGENCY_SOCKET_URL: ${PUBLIC_EMERGENCY_SOCKET_URL:-http://localhost:4000}
         BACKEND_INTERNAL_URL: http://backend:3001
         ML_SERVICE_URL: http://ml-service:8000
-    ports:
-      - "3000:3000"
+    # frontend is proxied by nginx; do not publish host port to avoid conflicts.
     environment:
       NODE_ENV: production
       BACKEND_INTERNAL_URL: http://backend:3001
@@ -155,6 +152,11 @@ services:
       context: ./nginx
     ports:
       - "${NGINX_PORT:-80}:80"
+      - "443:443"
+    environment:
+      PUBLIC_DOMAIN: ${PUBLIC_DOMAIN:-signalx.hariomphulre.tech}
+    volumes:
+      - ./nginx/certs:/etc/nginx/certs:ro
     depends_on:
       - frontend
       - backend
