@@ -1,5 +1,5 @@
 linen*
-*.mp4
+# *.mp4
 node_modules
 .next
 .env

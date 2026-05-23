@@ -1,6 +1,6 @@
 # Smart Traffic Control & Surveillance — full stack
-# Usage: cp .env.example .env && docker compose up --build
-# App entry: http://localhost  (nginx)
+# Usage: cp .env.example .env && docker compose up -d --build
+# App entry: https://signal-x.hariomphulre.tech
 
 services:
   postgres:
@@ -13,8 +13,9 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./postgres/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
       - ./postgres/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
-    ports:
-      - "127.0.0.1:5432:5432"
+    # Ports commented out to prevent collisions with future projects on this VPS
+    # ports:
+    #   - "127.0.0.1:5432:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-traffic} -d ${POSTGRES_DB:-traffic_db}"]
       interval: 5s
@@ -25,8 +26,9 @@ services:
   redis:
     image: redis:7-alpine
     command: redis-server --appendonly yes --maxmemory 128mb --maxmemory-policy allkeys-lru
-    ports:
-      - "127.0.0.1:6379:6379"
+    # Ports commented out to prevent collisions
+    # ports:
+    #   - "127.0.0.1:6379:6379"
     volumes:
       - redis_data:/data
     healthcheck:
@@ -40,7 +42,6 @@ services:
     build:
       context: ./ml_service
       dockerfile: Dockerfile
-    # ml-service is internal; access via nginx proxy. Do not publish to host by default.
     environment:
       REDIS_URL: redis://redis:6379/0
       ML_DEFAULT_MODEL: ${ML_DEFAULT_MODEL:-new_car4_with_helmet.pt}
@@ -92,8 +93,6 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    # backend is internal; proxied by nginx. Do not publish host port to avoid conflicts.
-    # Do NOT mount backend/.env — it may point at Neon and break Docker Postgres
     environment:
       PORT: "3001"
       NODE_ENV: production
@@ -101,8 +100,8 @@ services:
       DATABASE_URL: postgresql://${POSTGRES_USER:-traffic}:${POSTGRES_PASSWORD:-traffic}@postgres:5432/${POSTGRES_DB:-traffic_db}
       DATABASE_SSL: "false"
       REDIS_URL: redis://redis:6379/0
-      FRONTEND_URL: ${PUBLIC_ORIGIN:-http://localhost}
-      CORS_ALLOWED_ORIGINS: ${PUBLIC_ORIGIN:-http://localhost},http://localhost:3000
+      FRONTEND_URL: ${PUBLIC_ORIGIN:-https://signal-x.hariomphulre.tech}
+      CORS_ALLOWED_ORIGINS: ${PUBLIC_ORIGIN:-https://signal-x.hariomphulre.tech}
       USE_MOCK_DATA: "false"
       TRAFFIC_JSON_PATH: /ml_service/traffic_signal_simulation/traffic.json
     volumes:
@@ -119,11 +118,10 @@ services:
     build:
       context: ./emergency-backend
       dockerfile: Dockerfile
-    # emergency-backend is internal; proxied by nginx at /emergency/. Do not publish host port.
     environment:
       NODE_ENV: production
       PORT: "4000"
-      CORS_ORIGIN: ${PUBLIC_ORIGIN:-http://localhost},http://localhost:3000
+      CORS_ORIGIN: ${PUBLIC_ORIGIN:-https://signal-x.hariomphulre.tech}
     restart: unless-stopped
 
   frontend:
@@ -131,13 +129,13 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        NEXT_PUBLIC_BACKEND_URL: ${PUBLIC_ORIGIN:-http://localhost}
-        NEXT_PUBLIC_ML_SERVICE_URL: ${PUBLIC_ORIGIN:-http://localhost}
-        NEXT_PUBLIC_WS_URL: ${PUBLIC_WS_ORIGIN:-ws://localhost}/ws/analytics
-        NEXT_PUBLIC_EMERGENCY_SOCKET_URL: ${PUBLIC_EMERGENCY_SOCKET_URL:-http://localhost:4000}
+        # These URLs must point to your public domain so the user's browser can route them correctly
+        NEXT_PUBLIC_BACKEND_URL: ${PUBLIC_ORIGIN:-https://signal-x.hariomphulre.tech}
+        NEXT_PUBLIC_ML_SERVICE_URL: ${PUBLIC_ORIGIN:-https://signal-x.hariomphulre.tech}
+        NEXT_PUBLIC_WS_URL: ${PUBLIC_WS_ORIGIN:-wss://signal-x.hariomphulre.tech}/ws/analytics
+        NEXT_PUBLIC_EMERGENCY_SOCKET_URL: ${PUBLIC_EMERGENCY_SOCKET_URL:-https://signal-x.hariomphulre.tech/emergency}
         BACKEND_INTERNAL_URL: http://backend:3001
         ML_SERVICE_URL: http://ml-service:8000
-    # frontend is proxied by nginx; do not publish host port to avoid conflicts.
     environment:
       NODE_ENV: production
       BACKEND_INTERNAL_URL: http://backend:3001
@@ -151,12 +149,10 @@ services:
     build:
       context: ./nginx
     ports:
-      - "${NGINX_PORT:-80}:80"
-      - "${NGINX_SSL_PORT:-443}:443"
+      # THIS IS THE MAGIC PORT MAPPING THAT CONNECTS TO YOUR VPS NGINX
+      - "127.0.0.1:8080:80"
     environment:
-      PUBLIC_DOMAIN: ${PUBLIC_DOMAIN:-signalx.hariomphulre.tech}
-    volumes:
-      - ./nginx/certs:/etc/nginx/certs:ro
+      PUBLIC_DOMAIN: ${PUBLIC_DOMAIN:-signal-x.hariomphulre.tech}
     depends_on:
       - frontend
       - backend
@@ -164,7 +160,6 @@ services:
       - websocket-service
     restart: unless-stopped
 
-  # Optional RTSP gateway (profile: streaming)
   mediamtx:
     image: bluenviron/mediamtx:latest-ffmpeg
     profiles: ["streaming"]
