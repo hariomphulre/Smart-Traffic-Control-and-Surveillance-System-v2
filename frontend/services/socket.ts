@@ -1,8 +1,18 @@
 import { io, Socket } from 'socket.io-client'
 import type { CityInit, Intersection, RoadSegment, SimulationState, VehicleType, EmergencyVehicle } from '@/types/emergency'
 
-const SOCKET_URL =
-  process.env.NEXT_PUBLIC_EMERGENCY_SOCKET_URL || 'http://localhost:4000'
+const SOCKET_CONFIG_URL = process.env.NEXT_PUBLIC_EMERGENCY_SOCKET_URL || 'http://localhost:4000'
+let parsedSocketUrl: URL | null = null
+try {
+  parsedSocketUrl = new URL(SOCKET_CONFIG_URL)
+} catch (e) {
+  parsedSocketUrl = null
+}
+const SOCKET_URL = parsedSocketUrl ? parsedSocketUrl.origin : SOCKET_CONFIG_URL
+const derivedSocketPath = parsedSocketUrl && parsedSocketUrl.pathname && parsedSocketUrl.pathname !== '/'
+  ? `${parsedSocketUrl.pathname.replace(/\/$/, '')}/socket.io`
+  : undefined
+const SOCKET_PATH = process.env.NEXT_PUBLIC_EMERGENCY_SOCKET_PATH || derivedSocketPath || '/socket.io'
 
 let socket: Socket | null = null
 
@@ -19,7 +29,7 @@ export type SocketHandlers = {
 export function getEmergencySocket(): Socket {
   if (!socket) {
     socket = io(SOCKET_URL, {
-      path: '/socket.io',
+      path: SOCKET_PATH,
       transports: ['websocket', 'polling'],
       autoConnect: true,
     })
