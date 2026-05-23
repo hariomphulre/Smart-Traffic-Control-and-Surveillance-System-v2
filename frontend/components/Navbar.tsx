@@ -14,7 +14,7 @@ export default function Navbar() {
           {/* Logo/Brand */}
           <div className="flex items-center gap-3">
             <Link href="/" className="flex items-center gap-2 text-[#5f6368] dark:text-[#9aa0a6] hover:text-[#202124] dark:hover:text-[#e8eaed] transition-colors">
-              <span className="text-lg font-medium">Adv. Traffic Control & Surveillance System</span>
+              <span className="text-lg font-medium">[Signal-X] - Adv. Traffic Control, Surveillance & Emergency Response System</span>
             </Link>
           </div>
 
