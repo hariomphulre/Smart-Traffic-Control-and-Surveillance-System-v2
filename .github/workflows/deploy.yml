@@ -1,6 +1,5 @@
 name: Deploy to VPS
 
-# 1. This tells GitHub to run the script ONLY when you push to "deploy"
 on:
   push:
     branches:
@@ -18,18 +17,12 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            # Navigate to your project folder
-            cd /path/to/your/project
+            cd CodingWorkspace/Projects/signal-x
             
-            # Ensure the VPS is actively on the deploy branch
             git checkout deploy
-            
-            # Discard any local changes and pull the absolute latest code from deploy
             git fetch --all
             git reset --hard origin/deploy
             
-            # Rebuild and restart the Docker containers
             docker compose up -d --build
             
-            # Clean up old unused Docker images to save VPS disk space
             docker image prune -f
