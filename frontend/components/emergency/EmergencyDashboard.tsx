@@ -2,8 +2,10 @@
 
 import { useEffect } from 'react'
 import dynamic from 'next/dynamic'
-import { useEmergencySocket } from '@/hooks/useEmergencySocket'
 import { useSimulationStore } from '@/store/simulationStore'
+import { useEmergencySocket } from '@/hooks/useEmergencySocket'
+import { axiosInstance } from '@/lib/axiosInstance'
+import type { CityInit } from '@/types/emergency'
 import LeftSidebar from '@/components/emergency/LeftSidebar'
 import RightControlPanel from '@/components/emergency/RightControlPanel'
 import type { UserRole } from '@/types/emergency'
@@ -26,10 +28,30 @@ export default function EmergencyDashboard({ defaultRole }: EmergencyDashboardPr
   useEmergencySocket()
   const setRole = useSimulationStore((s) => s.setRole)
   const setSelected = useSimulationStore((s) => s.setSelectedIntersection)
+  const city = useSimulationStore((s) => s.city)
+  const setCity = useSimulationStore((s) => s.setCity)
 
   useEffect(() => {
     if (defaultRole) setRole(defaultRole)
   }, [defaultRole, setRole])
+
+  useEffect(() => {
+    if (city) return
+    let cancelled = false
+
+    axiosInstance
+      .get<CityInit>('/api/city')
+      .then((response) => {
+        if (!cancelled) setCity(response.data)
+      })
+      .catch(() => {
+        // Socket bootstrap can still populate the store later.
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [city, setCity])
 
   return (
     <div className="flex h-full min-h-0 overflow-hidden bg-[#0d1117]">
