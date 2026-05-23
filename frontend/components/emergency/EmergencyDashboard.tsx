@@ -3,9 +3,8 @@
 import { useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import { useSimulationStore } from '@/store/simulationStore'
+import { getEmergencyCityUrl } from '@/services/socket'
 import { useEmergencySocket } from '@/hooks/useEmergencySocket'
-import { axiosInstance } from '@/lib/axiosInstance'
-import type { CityInit } from '@/types/emergency'
 import LeftSidebar from '@/components/emergency/LeftSidebar'
 import RightControlPanel from '@/components/emergency/RightControlPanel'
 import type { UserRole } from '@/types/emergency'
@@ -39,10 +38,15 @@ export default function EmergencyDashboard({ defaultRole }: EmergencyDashboardPr
     if (city) return
     let cancelled = false
 
-    axiosInstance
-      .get<CityInit>('/api/city')
+    fetch(getEmergencyCityUrl())
       .then((response) => {
-        if (!cancelled) setCity(response.data)
+        if (!response.ok) {
+          throw new Error(`Emergency city bootstrap failed with ${response.status}`)
+        }
+        return response.json()
+      })
+      .then((data) => {
+        if (!cancelled) setCity(data)
       })
       .catch(() => {
         // Socket bootstrap can still populate the store later.

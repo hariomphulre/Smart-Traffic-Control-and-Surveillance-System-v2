@@ -45,12 +45,18 @@ export default function LeafletEmergencyMap({
   const city = useSimulationStore((s) => s.city)
   const state = useSimulationStore((s) => s.state)
   const vehicleType = useSimulationStore((s) => s.vehicleType)
+  const poiType = vehicleType === 'ambulance' ? 'hospital' : 'fire-station'
 
   const center = useMemo((): [number, number] => {
     if (!city) return [28.6139, 77.209]
     const [lng, lat] = city.center
     return [lat, lng]
   }, [city])
+
+  const visiblePois = useMemo(
+    () => (city ? city.pois.filter((p) => p.type === poiType) : []),
+    [city, poiType]
+  )
 
   if (!city) {
     return (
@@ -65,11 +71,6 @@ export default function LeafletEmergencyMap({
 
   const roads = state?.roads ?? city.roads
   const intersections = state?.intersections ?? city.intersections
-  const poiType = vehicleType === 'ambulance' ? 'hospital' : 'fire-station'
-  const visiblePois = useMemo(
-    () => city.pois.filter((p) => p.type === poiType),
-    [city.pois, poiType]
-  )
   const vehicles = state?.vehicles ?? []
   const greenCorridorIds = state?.greenCorridorIds ?? []
   const routeCoords = vehicles[0]?.routeCoordinates ?? []

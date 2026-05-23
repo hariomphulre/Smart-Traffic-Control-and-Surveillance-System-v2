@@ -13,6 +13,22 @@ const derivedSocketPath = parsedSocketUrl && parsedSocketUrl.pathname && parsedS
   ? `${parsedSocketUrl.pathname.replace(/\/$/, '')}/socket.io`
   : undefined
 const SOCKET_PATH = process.env.NEXT_PUBLIC_EMERGENCY_SOCKET_PATH || derivedSocketPath || '/socket.io'
+const SOCKET_TRANSPORTS = (process.env.NEXT_PUBLIC_EMERGENCY_SOCKET_TRANSPORTS || 'polling,websocket')
+  .split(',')
+  .map((value) => value.trim())
+  .filter((value): value is 'polling' | 'websocket' => value === 'polling' || value === 'websocket')
+
+export function getEmergencyCityUrl(): string {
+  if (!parsedSocketUrl) {
+    return 'http://localhost:4000/api/city'
+  }
+
+  const basePath = parsedSocketUrl.pathname && parsedSocketUrl.pathname !== '/'
+    ? parsedSocketUrl.pathname.replace(/\/$/, '')
+    : ''
+
+  return `${parsedSocketUrl.origin}${basePath}/api/city`
+}
 
 let socket: Socket | null = null
 
@@ -30,8 +46,17 @@ export function getEmergencySocket(): Socket {
   if (!socket) {
     socket = io(SOCKET_URL, {
       path: SOCKET_PATH,
-      transports: ['websocket', 'polling'],
+      transports: SOCKET_TRANSPORTS.length ? SOCKET_TRANSPORTS : ['polling', 'websocket'],
+      upgrade: SOCKET_TRANSPORTS.includes('websocket'),
       autoConnect: true,
+      reconnection: true,
+      reconnectionAttempts: Infinity,
+      reconnectionDelay: 1000,
+      reconnectionDelayMax: 5000,
+    })
+
+    socket.on('connect_error', (error) => {
+      console.error('Emergency socket connect_error:', error.message)
     })
   }
   return socket

@@ -135,6 +135,7 @@ services:
         NEXT_PUBLIC_WS_URL: ${PUBLIC_WS_ORIGIN:-wss://signal-x.hariomphulre.tech}/ws/analytics
         NEXT_PUBLIC_EMERGENCY_SOCKET_URL: ${PUBLIC_EMERGENCY_SOCKET_URL:-https://signal-x.hariomphulre.tech/emergency}
         NEXT_PUBLIC_EMERGENCY_SOCKET_PATH: ${NEXT_PUBLIC_EMERGENCY_SOCKET_PATH:-/emergency/socket.io}
+        NEXT_PUBLIC_EMERGENCY_SOCKET_TRANSPORTS: ${NEXT_PUBLIC_EMERGENCY_SOCKET_TRANSPORTS:-polling,websocket}
         BACKEND_INTERNAL_URL: http://backend:3001
         ML_SERVICE_URL: http://ml-service:8000
     environment:

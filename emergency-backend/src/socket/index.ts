@@ -18,6 +18,7 @@ export function attachSocketIO(httpServer: HttpServer) {
   })
 
   io.on('connection', (socket) => {
+    console.log(`[emergency-socket] connected id=${socket.id} transport=${socket.conn.transport.name}`)
     socket.emit('simulation:init', {
       center: MAP_CENTER,
       pois: POIS,
@@ -28,6 +29,7 @@ export function attachSocketIO(httpServer: HttpServer) {
 
     socket.on('simulation:start', (payload: { vehicleType?: VehicleType }) => {
       const type = payload?.vehicleType ?? 'ambulance'
+      console.log(`[emergency-socket] simulation:start id=${socket.id} vehicleType=${type}`)
       engine.start(type)
       io.emit('simulation:start', { vehicleType: type })
     })
