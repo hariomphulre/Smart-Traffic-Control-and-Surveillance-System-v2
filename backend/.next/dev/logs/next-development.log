@@ -1,25 +1,2 @@
-{"timestamp":"00:00:01.334","source":"Server","level":"WARN","message":"⚠ The \"middleware\" file convention is deprecated. Please use \"proxy\" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy"}
-{"timestamp":"00:00:01.584","source":"Server","level":"LOG","message":""}
-{"timestamp":"00:00:30.791","source":"Server","level":"LOG","message":"[2026-05-22T06:07:01.985Z] GET /api/analytics/stats"}
-{"timestamp":"00:00:30.798","source":"Server","level":"LOG","message":"[2026-05-22T06:07:01.992Z] GET /api/analytics/violations"}
-{"timestamp":"00:00:30.805","source":"Server","level":"LOG","message":"[2026-05-22T06:07:02.000Z] GET /api/analytics/vehicle-types"}
-{"timestamp":"00:00:30.813","source":"Server","level":"LOG","message":"[2026-05-22T06:07:02.008Z] GET /api/analytics/hourly-traffic"}
-{"timestamp":"00:00:30.818","source":"Server","level":"LOG","message":"[2026-05-22T06:07:02.013Z] GET /api/analytics/speed-distribution"}
-{"timestamp":"00:00:31.702","source":"Server","level":"LOG","message":"🔗 Neon: using NEON_HOST_IP 3.0.167.45"}
-{"timestamp":"00:00:33.353","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
-{"timestamp":"00:00:33.355","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
-{"timestamp":"00:00:33.355","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
-{"timestamp":"00:00:33.358","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
-{"timestamp":"00:00:33.358","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
-{"timestamp":"00:00:34.497","source":"Server","level":"LOG","message":"[2026-05-22T06:07:05.692Z] GET /api/analytics/hotspots"}
-{"timestamp":"00:00:38.833","source":"Server","level":"LOG","message":"[2026-05-22T06:07:10.028Z] GET /api/challans"}
-{"timestamp":"00:00:38.837","source":"Server","level":"LOG","message":"[2026-05-22T06:07:10.032Z] GET /api/challans/stats"}
-{"timestamp":"00:00:40.191","source":"Server","level":"LOG","message":"[2026-05-22T06:07:11.386Z] GET /api/accidents"}
-{"timestamp":"00:00:40.196","source":"Server","level":"LOG","message":"[2026-05-22T06:07:11.391Z] GET /api/accidents/stats"}
-{"timestamp":"00:00:43.178","source":"Server","level":"LOG","message":"[2026-05-22T06:07:14.372Z] GET /api/signals/state"}
-{"timestamp":"00:00:43.643","source":"Server","level":"LOG","message":"[2026-05-22T06:07:14.838Z] GET /api/signals/state"}
-{"timestamp":"00:00:44.107","source":"Server","level":"LOG","message":"[2026-05-22T06:07:15.302Z] GET /api/signals/state"}
-{"timestamp":"00:00:44.608","source":"Server","level":"LOG","message":"[2026-05-22T06:07:15.803Z] GET /api/signals/state"}
-{"timestamp":"00:00:45.108","source":"Server","level":"LOG","message":"[2026-05-22T06:07:16.303Z] GET /api/signals/state"}
-{"timestamp":"00:00:45.608","source":"Server","level":"LOG","message":"[2026-05-22T06:07:16.803Z] GET /api/signals/state"}
-{"timestamp":"00:00:45.998","source":"Server","level":"LOG","message":"[2026-05-22T06:07:17.192Z] GET /api/images/vehicles"}
+{"timestamp":"00:00:00.562","source":"Server","level":"WARN","message":"⚠ The \"middleware\" file convention is deprecated. Please use \"proxy\" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy"}
+{"timestamp":"00:00:00.622","source":"Server","level":"LOG","message":""}

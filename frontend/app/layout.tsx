@@ -38,10 +38,9 @@ const secondaryNavItems = [
 ]
 
 const secondaryNavDropdowns = {
-  '🚨 Emergency Response': [
-    { name: '🗺️ Live Route Map', path: '/emergency-route' },
-    { name: '🚑 Ambulance Route', path: '/emergency-response/ambulance/simulation' },
-    { name: '🚒 Fire Brigade Route', path: '/emergency-response/fire-brigade/simulation' },
+  'Emergency Response': [
+    { name: 'Ambulance', path: '/emergency-response/ambulance/simulation' },
+    { name: 'Fire Brigade', path: '/emergency-response/fire-brigade/simulation' },
   ],
 }
 

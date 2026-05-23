@@ -9,13 +9,14 @@ export default function Navbar() {
 
   return (
     <nav className="bg-white dark:bg-[#202124] border-b border-[#dadce0] dark:border-[#3c4043] sticky top-0 z-50">
-      <div className="max-w-full px-4">
-        <div className="flex items-center justify-between h-14">
+      <div className="max-w-full max-h-100 px-4">
+        <div className="flex min-h-14 justify-between">
           {/* Logo/Brand */}
-          <div className="flex items-center gap-3">
-            <Link href="/" className="flex items-center gap-2 text-[#5f6368] dark:text-[#9aa0a6] hover:text-[#202124] dark:hover:text-[#e8eaed] transition-colors">
-              <span className="text-lg font-medium">[Signal-X] - Adv. Traffic Control, Surveillance & Emergency Response System</span>
-            </Link>
+          <div className="flex items-center">
+            <div className="flex flex-col sm:flex-row sm:gap-3 gap-1 sm:mb-0 mb-1 text-[#5f6368] dark:text-[#9aa0a6] transition-colors">
+              <Link href="/"><div className="hover:text-[#202124] dark:hover:text-[#e8eaed] transition-colors text-xl sm:mt-0 mt-2 font-medium min-w-21">Signal-X</div></Link>
+              <div className="text-lg font-light">Adv. Traffic Control, Surveillance & Emergency Response System</div>
+            </div>
           </div>
 
           {/* Right Section */}
