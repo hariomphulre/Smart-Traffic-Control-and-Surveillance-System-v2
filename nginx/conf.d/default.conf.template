@@ -1,90 +1,80 @@
 server {
-  listen 80;
-  server_name ${PUBLIC_DOMAIN:-_};
-  return 301 https://$host$request_uri;
-}
+    listen 80;
+    listen [::]:80;
+    
+    server_name ${PUBLIC_DOMAIN};
 
-server {
-  listen 443 ssl http2;
-  server_name ${PUBLIC_DOMAIN};
+    # Frontend Next API (simulation proxy, videos)
+    location ^~ /api/simulation/ {
+        proxy_pass http://frontend:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+    }
 
-  ssl_certificate /etc/nginx/certs/fullchain.pem;
-  ssl_certificate_key /etc/nginx/certs/privkey.pem;
-  ssl_protocols TLSv1.2 TLSv1.3;
-  ssl_prefer_server_ciphers on;
+    location ^~ /api/videos {
+        proxy_pass http://frontend:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+    }
 
-  # Frontend Next API (simulation proxy, videos)
-  location ^~ /api/simulation/ {
-    proxy_pass http://frontend_upstream;
-    proxy_http_version 1.1;
-    proxy_set_header Host $host;
-  }
+    # Backend REST API
+    location /api/ {
+        proxy_pass http://backend:3001;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
 
-  location ^~ /api/videos {
-    proxy_pass http://frontend_upstream;
-    proxy_http_version 1.1;
-    proxy_set_header Host $host;
-  }
+    # WebSocket analytics
+    location /ws/ {
+        proxy_pass http://websocket-service:8080;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+        proxy_set_header Host $host;
+        proxy_read_timeout 86400;
+    }
 
-  # Backend REST API
-  location /api/ {
-    proxy_pass http://backend_upstream;
-    proxy_http_version 1.1;
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Proto $scheme;
-  }
+    # ML service
+    location /ml/ {
+        rewrite ^/ml/(.*)$ /$1 break;
+        proxy_pass http://ml-service:8000;
+        proxy_set_header Host $host;
+    }
 
-  # WebSocket analytics
-  location /ws/ {
-    proxy_pass http://websocket_upstream;
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection $connection_upgrade;
-    proxy_set_header Host $host;
-    proxy_read_timeout 86400;
-  }
+    location /streams/ {
+        proxy_pass http://ml-service:8000;
+        proxy_buffering off;
+        proxy_set_header Host $host;
+        add_header Cache-Control "no-store";
+    }
 
-  # ML service
-  location /ml/ {
-    rewrite ^/ml/(.*)$ /$1 break;
-    proxy_pass http://ml_upstream;
-    proxy_set_header Host $host;
-  }
+    location /video-files/ {
+        proxy_pass http://ml-service:8000;
+        proxy_set_header Host $host;
+    }
 
-  location /streams/ {
-    proxy_pass http://ml_upstream;
-    proxy_buffering off;
-    proxy_set_header Host $host;
-    add_header Cache-Control "no-store";
-  }
+    # Emergency Socket (Socket.IO)
+    location /emergency/ {
+        proxy_pass http://emergency-backend:4000/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_read_timeout 86400;
+    }
 
-  location /video-files/ {
-    proxy_pass http://ml_upstream;
-    proxy_set_header Host $host;
-  }
-
-  # Emergency Socket (Socket.IO)
-  location /emergency/ {
-    # strip the /emergency prefix when proxying to the upstream
-    proxy_pass http://emergency_upstream/;
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection $connection_upgrade;
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Proto $scheme;
-    proxy_read_timeout 86400;
-  }
-
-  # Frontend SPA
-  location / {
-    proxy_pass http://frontend_upstream;
-    proxy_http_version 1.1;
-    proxy_set_header Host $host;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection $connection_upgrade;
-  }
+    # Frontend SPA Application
+    location / {
+        proxy_pass http://frontend:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+    }
 }
