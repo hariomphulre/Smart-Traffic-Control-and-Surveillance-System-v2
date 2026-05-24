@@ -4,6 +4,9 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { FaFireAlt, FaPlusSquare } from 'react-icons/fa'
+import { LuCctv } from 'react-icons/lu'
+import { PiTrafficSignal, PiTrafficSignalBold } from 'react-icons/pi'
+import { TbTrafficLights } from 'react-icons/tb'
 
 interface SecondaryNavItem {
   name: string
@@ -102,16 +105,15 @@ export default function SecondaryNavbar({ items, dropdowns }: SecondaryNavbarPro
                       className={`flex items-start gap-0 px-4 py-3 text-sm whitespace-nowrap transition-colors ${
                         pathname === item.path
                           ? 'bg-[#e8f0fe] text-[#1a73e8] dark:bg-[#1a73e8]/10 dark:text-[#8ab4f8]'
-                          : 'text-[#202124] hover:bg-[#f8f9fa] dark:text-[#e8eaed] dark:hover:bg-[#3c4043]'
+                          : 'text-[#202124] hover:text-[#1a73e8] dark:text-[#e8eaed] dark:hover:text-[#8ab4f8] hover:bg-[#1a73e8]/10'
                       }`}
                       role="menuitem"
                     >
                       <div className="">
-                        {item.path.includes('ambulance') ? (
-                          <FaPlusSquare className="h-4 w-4 text-red-400 mr-3" />
-                        ) : (
-                          <FaFireAlt className="h-4 w-4 text-orange-400 mr-3" />
-                        )}
+                        {item.path.includes('ambulance') && ( <FaPlusSquare className="h-4 w-4 hover:text-[#1a73e8] dark:hover:text-[#8ab4f8] mr-3" />)}
+                        {item.path.includes('fire-brigade') && ( <FaFireAlt className="h-4 w-4 hover:text-[#1a73e8] dark:hover:text-[#8ab4f8] mr-3" />)}
+                        {item.path.includes('surveillance') && ( <LuCctv className="h-4 w-4 hover:text-[#1a73e8] dark:hover:text-[#8ab4f8] mr-3" />)}
+                        {item.path.includes('traffic-signal') && ( <TbTrafficLights className="h-4 w-4 hover:text-[#1a73e8] dark:hover:text-[#8ab4f8] mr-3" />)}
                       </div>
                       <div className="leading-tight">
                         <div className="font-medium">{item.name}</div>

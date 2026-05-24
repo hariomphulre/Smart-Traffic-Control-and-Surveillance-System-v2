@@ -8,24 +8,24 @@ import { ThemeProvider } from '@/context/ThemeContext'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Traffic Management Platform',
-  description: 'Comprehensive traffic management and monitoring system',
+  title: 'Signal-X',
+  description: 'Adv. Traffic Control, Surveillance & Emergency Response System',
   icons: {
-    icon: '/icon/favicon.ico',
-    shortcut: '/icon/favicon.ico',
-    apple: '/icon/apple-touch-icon.png',
+    icon: '/signal-x.png',
+    shortcut: '/signal-x.png',
+    apple: '/signal-x.png',
     other: [
-      { rel: 'icon', url: '/icon/favicon-16x16.png', sizes: '16x16' },
-      { rel: 'icon', url: '/icon/favicon-32x32.png', sizes: '32x32' },
-      { rel: 'mask-icon', url: '/icon/favicon.ico' },
+      { rel: 'icon', url: '/signal-x.png', sizes: '16x16' },
+      { rel: 'icon', url: '/signal-x.png', sizes: '32x32' },
+      { rel: 'mask-icon', url: '/signal-x.png' },
     ],
   },
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'Traffic Management Platform',
+    title: 'Signal-X',
   },
-  applicationName: 'Traffic Management Platform',
+  applicationName: 'Signal-X',
 }
 
 const secondaryNavItems = [
@@ -33,14 +33,18 @@ const secondaryNavItems = [
   { name: 'Logs', path: '/logs' },
   { name: 'Challan Records', path: '/challan-records' },
   { name: 'Accident/Fire Reports', path: '/accident-reports' },
-  { name: 'Simulation', path: '/simulation' },
+  // { name: 'Simulation', path: '/simulation' },
   { name: 'Images', path: '/images' },
 ]
 
 const secondaryNavDropdowns = {
+  'Simulation': [
+    { name: 'Surveillance', path: '/simulation/surveillance'},
+    { name: 'Traffic Signal', path: '/simulation/traffic-signal'}
+  ],
   'Emergency Response': [
     { name: 'Ambulance', path: '/emergency-response/ambulance/simulation' },
-    { name: 'Fire Brigade', path: '/emergency-response/fire-brigade/simulation' },
+    { name: 'Fire brigade', path: '/emergency-response/fire-brigade/simulation' },
   ],
 }
 

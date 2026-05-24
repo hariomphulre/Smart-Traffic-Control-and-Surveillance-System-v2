@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Traffic Management API',
-  description: 'Traffic Management Platform API - Next.js',
+  title: 'Signal-X',
+  description: 'Adv. Traffic Control, Surveillance & Emergency Response System',
 };
 
 export default function RootLayout({

@@ -9,7 +9,7 @@ export async function GET(_request: NextRequest) {
     await pool.query('SELECT 1');
 
     return NextResponse.json({
-      name: 'Traffic Management Platform API',
+      name: 'Signal-X',
       version: '1.0.0',
       baseUrl: `http://localhost:${PORT}/api`,
       routes: {
