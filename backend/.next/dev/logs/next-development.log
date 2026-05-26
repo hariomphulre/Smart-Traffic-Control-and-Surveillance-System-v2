@@ -1,2 +1,2 @@
-{"timestamp":"00:00:00.702","source":"Server","level":"WARN","message":"⚠ The \"middleware\" file convention is deprecated. Please use \"proxy\" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy"}
-{"timestamp":"00:00:00.783","source":"Server","level":"LOG","message":""}
+{"timestamp":"00:00:00.406","source":"Server","level":"WARN","message":"⚠ The \"middleware\" file convention is deprecated. Please use \"proxy\" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy"}
+{"timestamp":"00:00:00.464","source":"Server","level":"LOG","message":""}

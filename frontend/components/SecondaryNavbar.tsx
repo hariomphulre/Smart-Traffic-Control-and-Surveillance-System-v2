@@ -5,7 +5,6 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { FaFireAlt, FaPlusSquare } from 'react-icons/fa'
 import { LuCctv } from 'react-icons/lu'
-import { PiTrafficSignal, PiTrafficSignalBold } from 'react-icons/pi'
 import { TbTrafficLights } from 'react-icons/tb'
 
 interface SecondaryNavItem {
@@ -27,6 +26,14 @@ export default function SecondaryNavbar({ items, dropdowns }: SecondaryNavbarPro
   const pathname = usePathname()
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const isDropdownActive = (dropdownItems: DropdownItem[]) => {
+    const basePath = dropdownItems[0]?.path.split('/').slice(0, 2).join('/')
+
+    if (!basePath) return false
+
+    return pathname === basePath || pathname.startsWith(`${basePath}/`)
+  }
 
   const clearCloseTimer = () => {
     if (closeTimerRef.current) {
@@ -52,7 +59,7 @@ export default function SecondaryNavbar({ items, dropdowns }: SecondaryNavbarPro
   if (items.length === 0 && !dropdowns) return null
 
   return (
-    <nav className="relative border-b border-[#dadce0] bg-white dark:border-[#3c4043] dark:bg-[#292a2d]">
+    <nav className="relative border-b border-[#dadce0] bg-white dark:border-[#3c4043] dark:bg-[#131314]">
       <div className="flex max-w-full px-4">
         <div className="flex flex-wrap items-center gap-1 overflow-visible py-2">
           {/* Regular nav items */}
@@ -81,7 +88,11 @@ export default function SecondaryNavbar({ items, dropdowns }: SecondaryNavbarPro
               >
                 <button
                   type="button"
-                  className="flex items-center gap-2 rounded px-4 py-2 text-sm font-medium whitespace-nowrap text-[#5f6368] transition-colors hover:bg-[#f8f9fa] dark:text-[#9aa0a6] dark:hover:bg-[#35363a]"
+                  className={`flex items-center gap-2 rounded px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors ${
+                    isDropdownActive(dropdownItems)
+                      ? 'bg-[#e8f0fe] text-[#1a73e8] dark:bg-[#1a73e8]/10 dark:text-[#8ab4f8]'
+                      : 'text-[#5f6368] hover:bg-[#f8f9fa] dark:text-[#9aa0a6] dark:hover:bg-[#35363a]'
+                  }`}
                   aria-haspopup="menu"
                   aria-expanded={openDropdown === dropdownName}
                 >

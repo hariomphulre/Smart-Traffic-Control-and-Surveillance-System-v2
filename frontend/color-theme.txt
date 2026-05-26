@@ -1,0 +1,5 @@
+DARK mode
+
+text:
+9aa0a6  //lightgrey
+e8eaed61 //disabled //darkgrey

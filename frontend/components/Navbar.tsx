@@ -8,9 +8,9 @@ export default function Navbar() {
   const { theme, toggleTheme } = useTheme()
 
   return (
-    <nav className="bg-white dark:bg-[#202124] border-b border-[#dadce0] dark:border-[#3c4043] sticky top-0 z-50">
+    <nav className="bg-white dark:bg-[#131314] border-b border-[#dadce0] dark:border-[#3c4043] sticky top-0 z-50">
       <div className="max-w-full max-h-100 px-4">
-        <div className="flex min-h-14 justify-between">
+        <div className="flex min-h-13 justify-between">
           {/* Logo/Brand */}
           <div className="flex items-center">
             <div className="flex flex-col sm:flex-row sm:gap-3 gap-1 sm:mb-0 mb-1 text-[#5f6368] dark:text-[#9aa0a6] transition-colors">
