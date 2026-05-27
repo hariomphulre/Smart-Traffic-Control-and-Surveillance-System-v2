@@ -3,4 +3,4 @@ DARK mode
 text:
 9aa0a6  //lightgrey
 e8eaed61 //disabled //darkgrey
-669DF6  // primary blue
+669DF6  // primary blue (clickable)
