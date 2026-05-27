@@ -61,13 +61,13 @@ export default function SecondaryNavbar({ items, dropdowns }: SecondaryNavbarPro
   return (
     <nav className="relative border-b border-[#dadce0] bg-white dark:border-[#3c4043] dark:bg-[#131314]">
       <div className="flex max-w-full px-4">
-        <div className="flex flex-wrap items-center gap-1 overflow-visible py-2">
+        <div className="flex flex-wrap items-center gap-1 overflow-visible py-1.5">
           {/* Regular nav items */}
           {items.map((item) => (
             <Link
               key={item.path}
               href={item.path}
-              className={`shrink-0 rounded px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors ${
+              className={`shrink-0 rounded px-4 py-[7px] text-sm font-medium whitespace-nowrap transition-colors ${
                 pathname === item.path
                   ? 'text-[#1a73e8] dark:text-[#8ab4f8] bg-[#e8f0fe] dark:bg-[#1a73e8]/10'
                   : 'text-[#5f6368] dark:text-[#9aa0a6] hover:bg-[#f8f9fa] dark:hover:bg-[#35363a]'

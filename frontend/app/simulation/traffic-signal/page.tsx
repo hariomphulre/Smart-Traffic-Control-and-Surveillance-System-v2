@@ -799,10 +799,10 @@ export default function TrafficSimulation() {
     const renderPole = () => {
       const base = "absolute bg-zinc-600 border-zinc-900 -z-10 shadow-lg";
       switch(dir) {
-        case 1: return <div className={`${base} right-[103%] top-[35%] w-[16px] h-[10px] border-y-2 border-l-2 rounded-l-sm`} />;
-        case 2: return <div className={`${base} bottom-[101%] left-1/2 -translate-x-1/2 w-[10px] h-[18px] border-x-2 border-t-2 rounded-t-sm`} />;
-        case 3: return <div className={`${base} left-[102%] top-[35%] w-[18px] h-[10px] border-y-2 border-r-2 rounded-r-sm`} />;
-        case 4: return <div className={`${base} top-[100%] left-1/2 -translate-x-1/2 w-[10px] h-[18px] border-x-2 border-b-2 rounded-b-sm`} />;
+        case 1: return <div className={`${base} right-[103%] top-[35%] w-[16px] h-[8px] border-y-2 border-l-2 rounded-l-sm`} />;
+        case 2: return <div className={`${base} bottom-[101%] left-1/2 -translate-x-1/2 w-[8px] h-[18px] border-x-2 border-t-2 rounded-t-sm`} />;
+        case 3: return <div className={`${base} left-[102%] top-[35%] w-[18px] h-[8px] border-y-2 border-r-2 rounded-r-sm`} />;
+        case 4: return <div className={`${base} top-[100%] left-1/2 -translate-x-1/2 w-[8px] h-[18px] border-x-2 border-b-2 rounded-b-sm`} />;
       }
     };
 
@@ -933,7 +933,7 @@ export default function TrafficSimulation() {
             </div>
           </div>
 
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-44 h-44 bg-zinc-950 border-2 border-dashed border-white/30 flex items-center justify-center z-0 rounded-lg">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-44 h-44 bg-[black] border-2 border-dashed border-white/30 flex items-center justify-center z-0 rounded-lg">
             <div className="text-white font-medium font-black text-3xl opacity-20 select-none">Signal-X</div>
           </div>
 

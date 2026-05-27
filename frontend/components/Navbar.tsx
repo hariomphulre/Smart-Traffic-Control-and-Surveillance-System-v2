@@ -27,9 +27,9 @@ export default function Navbar() {
               aria-label="Toggle theme"
             >
               {theme === 'light' ? (
-                <FiMoon className="w-5 h-5 text-[#5f6368] dark:text-[#9aa0a6]" />
+                <FiMoon className="w-5 h-5 text-[#669DF6] dark:text-[#669DF6]" />
               ) : (
-                <FiSun className="w-5 h-5 text-[#9aa0a6]" />
+                <FiSun className="w-5 h-5 text-[#669DF6]" />
               )}
             </button>
           </div>
