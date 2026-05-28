@@ -184,7 +184,7 @@ export default function Analytics() {
   const [selectedCity, setSelectedCity] = useState("");
 
   const states = Object.keys(locationData);
-  const cities = selectedState ? locationData[selectedState] : [];
+  const cities = selectedState ? locationData[selectedState as keyof typeof locationData] : [];
 
   useEffect(() => {
     const fetchAnalytics = async () => {

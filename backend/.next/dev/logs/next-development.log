@@ -13346,3 +13346,25 @@
 {"timestamp":"18:32:39.324","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
 {"timestamp":"18:32:39.324","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
 {"timestamp":"18:32:39.540","source":"Server","level":"LOG","message":"[2026-05-27T17:06:11.715Z] GET /api/analytics/hotspots"}
+{"timestamp":"20:14:57.266","source":"Server","level":"LOG","message":"[2026-05-28T03:04:02.604Z] GET /api/analytics/stats"}
+{"timestamp":"20:14:57.292","source":"Server","level":"LOG","message":"[2026-05-28T03:04:02.630Z] GET /api/analytics/violations"}
+{"timestamp":"20:14:57.300","source":"Server","level":"LOG","message":"[2026-05-28T03:04:02.639Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"20:14:57.307","source":"Server","level":"LOG","message":"[2026-05-28T03:04:02.645Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"20:14:57.320","source":"Server","level":"LOG","message":"[2026-05-28T03:04:02.658Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"20:15:01.105","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"20:15:01.106","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"20:15:01.106","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"20:15:01.107","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"20:15:01.107","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"20:15:01.385","source":"Server","level":"LOG","message":"[2026-05-28T03:04:06.723Z] GET /api/analytics/hotspots"}
+{"timestamp":"20:15:46.078","source":"Server","level":"LOG","message":"[2026-05-28T03:04:51.416Z] GET /api/analytics/stats"}
+{"timestamp":"20:15:46.143","source":"Server","level":"LOG","message":"[2026-05-28T03:04:51.482Z] GET /api/analytics/violations"}
+{"timestamp":"20:15:46.156","source":"Server","level":"LOG","message":"[2026-05-28T03:04:51.495Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"20:15:46.164","source":"Server","level":"LOG","message":"[2026-05-28T03:04:51.502Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"20:15:46.169","source":"Server","level":"LOG","message":"[2026-05-28T03:04:51.507Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"20:15:47.191","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"20:15:47.390","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"20:15:47.391","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"20:15:47.392","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"20:15:47.393","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"20:15:47.675","source":"Server","level":"LOG","message":"[2026-05-28T03:04:53.013Z] GET /api/analytics/hotspots"}
