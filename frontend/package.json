@@ -11,15 +11,17 @@
   "dependencies": {
     "@tailwindcss/postcss": "^4.2.0",
     "axios": "^1.13.5",
+    "clock": "^1.0.2",
     "framer-motion": "^11.15.0",
     "hls.js": "^1.6.2",
     "leaflet": "^1.9.4",
+    "lucide-react": "^1.17.0",
     "next": "^16.1.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",
     "react-leaflet": "^4.2.1",
-    "recharts": "^3.7.0",
+    "recharts": "^3.8.1",
     "socket.io-client": "^4.8.1",
     "zustand": "^5.0.2"
   },

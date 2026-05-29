@@ -4,6 +4,7 @@ import './globals.css'
 import Navbar from '@/components/Navbar'
 import SecondaryNavbar from '@/components/SecondaryNavbar'
 import { ThemeProvider } from '@/context/ThemeContext'
+import { LocationFilterProvider } from '@/context/LocationFilterContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -72,11 +73,13 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <ThemeProvider>
-          <Navbar />
-          <SecondaryNavbar items={secondaryNavItems} dropdowns={secondaryNavDropdowns} />
-          <main className="min-h-screen transition-colors">
-            {children}
-          </main>
+          <LocationFilterProvider>
+            <Navbar />
+            <SecondaryNavbar items={secondaryNavItems} dropdowns={secondaryNavDropdowns} />
+            <main className="min-h-screen transition-colors">
+              {children}
+            </main>
+          </LocationFilterProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -475,7 +475,7 @@
 "use client";
 
 import React, { useEffect, useReducer, useMemo } from 'react';
-import { FaMinusSquare, FaPause, FaPlusSquare } from 'react-icons/fa';
+import { FaLinux, FaMinusSquare, FaPause, FaPlusSquare } from 'react-icons/fa';
 
 // --- Types & Constants ---
 type Vehicle = 1 | 2; // 1 = Car, 2 = Ambulance
@@ -934,7 +934,7 @@ export default function TrafficSimulation() {
           </div>
 
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-44 h-44 bg-[black] border-2 border-dashed border-white/30 flex items-center justify-center z-0 rounded-lg">
-            <div className="text-white font-medium font-black text-3xl opacity-20 select-none">Signal-X</div>
+            <FaLinux className="text-white font-medium font-black text-3xl opacity-50 select-none w-30 h-30"></FaLinux>
           </div>
 
           {renderLight(1, "top-[90px] left-[450px]")}

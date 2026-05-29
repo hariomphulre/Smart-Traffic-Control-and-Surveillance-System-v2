@@ -1,10 +1,21 @@
 'use client'
 
 import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { FiX, FiAlertTriangle, FiMapPin, FiClock, FiVideo } from 'react-icons/fi';
 import { getAccidents, getAccidentStats, type Accident, type AccidentStats } from '@/lib/api';
+import LocationBar from '@/components/LocationBar';
+import { useLocationFilter } from '@/context/LocationFilterContext';
+import { MAP_SIGNALS } from '@/map/MapData';
+
+const DynamicMap = dynamic(() => import('@/components/RealMap'), { 
+  ssr: false, 
+  loading: () => <div className="flex-1 flex items-center justify-center bg-[#0a0a0a] text-[#8AB4F8] font-mono animate-pulse">Initializing Satellite Uplink...</div> 
+});
+import { IoMdRefresh } from 'react-icons/io';
 
 export default function AccidentReports() {
+  const { isMapOpen, setIsMapOpen, pathSegments, handleMapPinClick } = useLocationFilter();
   const [allReports, setAllReports] = useState<Accident[]>([]);
   const [filteredReports, setFilteredReports] = useState<Accident[]>([]);
   const [stats, setStats] = useState<AccidentStats>({
@@ -70,13 +81,20 @@ export default function AccidentReports() {
 
   if (loading) {
     return (
-      <div className="max-w-full px-4 py-8">
-        <div className="mb-6">
-          <h1 className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed] mb-2">Accident & Fire Reports</h1>
-          <p className="text-sm text-[#5f6368] dark:text-[#9aa0a6]">Incident detection and emergency response tracking</p>
+      <div className="w-full flex items-center justify-between h-13 mb-0 border-b border-[#3c4043] bg-[#131314] p-1 shadow-xl">
+        <div className="flex items-center min-w-170 flex-1">
+          <div>
+            <p className="text-[#ffffff] font-mono text-xl ml-4">Accident & Fire Reports</p>
+          </div>
+          
         </div>
-        <div className="gcloud-card p-8 text-center">
-          <p className="text-[#5f6368] dark:text-[#9aa0a6]">Loading accident reports...</p>
+        <div className="group flex items-center gap-1 px-2 mr-3 justify-center hover:bg-[#202124] rounded-sm transition-all">
+          <IoMdRefresh className="h-5 w-5 text-[#669DF6] group-hover:text-[#AECBFA]"></IoMdRefresh>
+          <button 
+            className="py-1 font-medium transition-all text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg"
+            >
+            Refresh
+          </button>
         </div>
       </div>
     );
@@ -84,24 +102,80 @@ export default function AccidentReports() {
 
   if (error) {
     return (
-      <div className="max-w-full px-4 py-8">
-        <div className="mb-6">
-          <h1 className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed] mb-2">Accident & Fire Reports</h1>
-          <p className="text-sm text-[#5f6368] dark:text-[#9aa0a6]">Incident detection and emergency response tracking</p>
+      <div className="w-full flex items-center justify-between h-13 mb-0 border-b border-[#3c4043] bg-[#131314] p-1 shadow-xl">
+        <div className="flex items-center min-w-170 flex-1">
+          <div>
+            <p className="text-[#ffffff] font-mono text-xl ml-4">Accident & Fire Reports</p>
+          </div>
+          
         </div>
-        <div className="gcloud-card p-8 text-center">
-          <p className="text-[#d93025] dark:text-[#f28b82]">Error: {error}</p>
+        <div className="group flex items-center gap-1 px-2 mr-3 justify-center hover:bg-[#202124] rounded-sm transition-all">
+          <IoMdRefresh className="h-5 w-5 text-[#669DF6] group-hover:text-[#AECBFA]"></IoMdRefresh>
+          <button 
+            className="py-1 font-medium transition-all text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg"
+            >
+            Refresh
+          </button>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-full px-4 py-8">
-      <div className="mb-6">
-        <h1 className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed] mb-2">Accident & Fire Reports</h1>
-        <p className="text-sm text-[#5f6368] dark:text-[#9aa0a6]">Incident detection and emergency response tracking</p>
+    <div className="max-w-full dark:bg-[#131314]">
+      <div className="w-full flex items-center justify-between h-13 mb-0 border-b border-[#3c4043] bg-[#131314] p-1 shadow-xl">
+        <div className="flex items-center min-w-170 flex-1">
+          <div>
+            <p className="text-[#ffffff] font-mono text-xl ml-4">Accident & Fire Reports</p>
+          </div>
+          
+        </div>
+        <div className="group flex items-center gap-1 px-2 mr-3 justify-center hover:bg-[#202124] rounded-sm transition-all">
+          <IoMdRefresh className="h-5 w-5 text-[#669DF6] group-hover:text-[#AECBFA]"></IoMdRefresh>
+          <button 
+            className="py-1 font-medium transition-all text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg"
+            >
+            Refresh
+          </button>
+        </div>
       </div>
+
+      <div className="w-full relative font-sans">
+        {/* LOCATION BAR */}
+        <LocationBar />
+
+        {/* MAP MODAL */}
+        {isMapOpen && (
+          <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/80 backdrop-blur-sm">
+            <div className="bg-[#131314] w-[95vw] h-[94vh] border-2 border-[#3c4043] rounded-2xl flex flex-col shadow-2xl overflow-hidden relative">
+              
+              <div className="h-12 border-b border-[#3c4043] bg-black flex items-center justify-between px-5 z-10 shrink-0">
+                <h2 className="text-[#8AB4F8] font-mono text-lg flex items-center gap-3">
+                  <span className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+                  Global Signal Radar
+                </h2>
+                <button 
+                  onClick={() => setIsMapOpen(false)}
+                  className="text-[#9aa0a6] hover:text-white transition-colors font-bold text-xl"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div className="flex-1 relative z-0">
+                <DynamicMap 
+                  signals={MAP_SIGNALS} 
+                  pathSegments={pathSegments} 
+                  onPinClick={handleMapPinClick} 
+                />
+              </div>
+
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="px-4 py-4">
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
@@ -361,6 +435,7 @@ export default function AccidentReports() {
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 }
