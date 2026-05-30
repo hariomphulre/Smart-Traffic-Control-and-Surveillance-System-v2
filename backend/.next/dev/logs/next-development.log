@@ -1,11 +1,4 @@
-{"timestamp":"00:00:00.565","source":"Server","level":"WARN","message":"⚠ The \"middleware\" file convention is deprecated. Please use \"proxy\" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy"}
-{"timestamp":"00:00:00.687","source":"Server","level":"LOG","message":""}
-{"timestamp":"00:00:15.485","source":"Server","level":"LOG","message":"[2026-05-30T10:30:36.658Z] GET /api/analytics/stats"}
-{"timestamp":"00:00:16.225","source":"Server","level":"LOG","message":"🔗 Neon: using NEON_HOST_IP 3.0.167.45"}
-{"timestamp":"00:00:17.467","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
-{"timestamp":"00:02:26.506","source":"Server","level":"LOG","message":"[2026-05-30T10:32:47.679Z] GET /api/analytics/stats"}
-{"timestamp":"00:02:27.786","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
-{"timestamp":"00:03:56.588","source":"Server","level":"LOG","message":"  Reload env: .env"}
-{"timestamp":"00:03:59.994","source":"Server","level":"LOG","message":"  Reload env: .env"}
-{"timestamp":"00:04:01.127","source":"Server","level":"LOG","message":"  Reload env: .env"}
-{"timestamp":"00:04:03.607","source":"Server","level":"LOG","message":"  Reload env: .env"}
+{"timestamp":"00:00:00.465","source":"Server","level":"WARN","message":"⚠ The \"middleware\" file convention is deprecated. Please use \"proxy\" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy"}
+{"timestamp":"00:00:00.559","source":"Server","level":"LOG","message":""}
+{"timestamp":"00:00:47.804","source":"Server","level":"LOG","message":"  Reload env: .env"}
+{"timestamp":"00:01:01.416","source":"Server","level":"LOG","message":"  Reload env: .env"}
