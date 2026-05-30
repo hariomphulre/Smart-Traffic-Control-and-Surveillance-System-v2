@@ -17,22 +17,15 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.VPS_SSH_KEY }}
           port: 2222
-          
-          command_timeout: 30m 
-          
           script: |
             cd CodingWorkspace/Projects/signal-x
-            
-            sudo chown -R $USER:$USER .
             
             git checkout deploy
             git fetch --all
             git reset --hard origin/deploy
-            
             rm -rf frontend/.next
             rm -rf backend/.next
             
-            docker compose build --no-cache
-            docker compose up -d --force-recreate -V
+            docker compose up -d --build
             
             docker image prune -f
