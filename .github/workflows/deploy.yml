@@ -166,7 +166,7 @@ jobs:
             
             docker compose up -d --remove-orphans
             
-            docker image prune -a -f
+            docker system prune -a -f
             
             echo "Waiting 10 seconds for containers to initialize..."
             sleep 10
