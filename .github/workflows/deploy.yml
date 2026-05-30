@@ -23,6 +23,8 @@ jobs:
             git checkout deploy
             git fetch --all
             git reset --hard origin/deploy
+            rm -rf frontend/.next
+            rm -rf backend/.next
             
             docker compose up -d --build
             

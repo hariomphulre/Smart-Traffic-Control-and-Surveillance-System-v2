@@ -8,6 +8,7 @@ import { IoMdRefresh } from 'react-icons/io';
 import LocationBar from '@/components/LocationBar';
 import { useLocationFilter } from '@/context/LocationFilterContext';
 import { MAP_SIGNALS } from '@/map/MapData';
+import { IoSearchSharp } from 'react-icons/io5';
 
 const DynamicMap = dynamic(() => import('@/components/RealMap'), { 
   ssr: false, 
@@ -155,10 +156,36 @@ export default function Images() {
   }
 
   return (
-    <div className="max-w-full px-4 py-8">
-      <div className="mb-6">
-        <h1 className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed] mb-2">Traffic Camera Images</h1>
-        <p className="text-sm text-[#5f6368] dark:text-[#9aa0a6]">Vehicle detection images and accident recordings</p>
+    <div className="max-w-full px-0 py-0">
+      <div className="w-full flex items-center justify-between h-13 mb-0 border-b border-[#3c4043] bg-[#131314] p-1 shadow-xl">
+        <div className="flex items-center min-w-170 flex-1">
+          <div>
+            <p className="text-[#ffffff] font-mono text-xl ml-4">Analytics Dashboard</p>
+          </div>
+
+          <div className="ml-5 min-w-0 flex-1 max-w-160">
+            <div className="flex items-center gap-2 px-2.5 py-[5.5px] bg-[#292A2D] border border-[#3C4043] rounded-md transition-colors hover:bg-[#303134] focus-within:border-[#8AB4F8] focus-within:ring-0.7 focus-within:ring-[#8AB4F8]">
+              
+              <IoSearchSharp className="w-6 h-6 flex-shrink-0 text-[#669DF6]"></IoSearchSharp>
+
+              <input
+                type="text "
+                placeholder="Search ( / ) for resources..."
+                className="min-w-50 bg-transparent outline-none text-[#E8EAED] placeholder:text-[#9AA0A6] text-md"
+              />
+              
+            </div>
+          </div>
+        </div>
+
+        <div className="group flex items-center gap-1 px-2 mr-3 justify-center hover:bg-[#202124] rounded-sm transition-all">
+          <IoMdRefresh className="h-5 w-5 text-[#669DF6] group-hover:text-[#AECBFA]"></IoMdRefresh>
+          <button 
+            className="py-1 font-medium transition-all text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg"
+            >
+            Refresh
+          </button>
+        </div>
       </div>
 
       <div className="w-full relative font-sans">
