@@ -160,25 +160,20 @@ jobs:
             set -e
             cd CodingWorkspace/Projects/signal-x
             
-            # Log the VPS into GHCR so it can download your private images
-            echo "${{ secrets.GHCR_PAT }}" | sudo docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+            echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
             
-            # Pull the new binaries
-            sudo docker compose pull
+            docker compose pull
             
-            # Swap the containers (zero downtime for unchanged services)
-            sudo docker compose up -d --remove-orphans
+            docker compose up -d --remove-orphans
             
-            # Clean up old images to keep the VPS hard drive empty
-            sudo docker image prune -a -f
+            docker image prune -a -f
             
-            # Health Check
             echo "Waiting 10 seconds for containers to initialize..."
             sleep 10
             
             if [ $(sudo docker ps -q | wc -l) -gt 0 ]; then
               echo "✅ Deployment Successful! Current live containers:"
-              sudo docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+              docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
             else
               echo "❌ Health Check Failed! No containers are running."
               exit 1
