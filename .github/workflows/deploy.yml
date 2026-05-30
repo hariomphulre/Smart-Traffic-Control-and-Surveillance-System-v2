@@ -171,7 +171,7 @@ jobs:
             echo "Waiting 10 seconds for containers to initialize..."
             sleep 10
             
-            if [ $(sudo docker ps -q | wc -l) -gt 0 ]; then
+            if [ $(docker ps -q | wc -l) -gt 0 ]; then
               echo "✅ Deployment Successful! Current live containers:"
               docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
             else
