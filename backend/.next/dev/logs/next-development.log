@@ -1,4 +1,7 @@
-{"timestamp":"00:00:00.465","source":"Server","level":"WARN","message":"⚠ The \"middleware\" file convention is deprecated. Please use \"proxy\" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy"}
-{"timestamp":"00:00:00.559","source":"Server","level":"LOG","message":""}
-{"timestamp":"00:00:47.804","source":"Server","level":"LOG","message":"  Reload env: .env"}
-{"timestamp":"00:01:01.416","source":"Server","level":"LOG","message":"  Reload env: .env"}
+{"timestamp":"00:00:05.561","source":"Server","level":"WARN","message":"⚠ The \"middleware\" file convention is deprecated. Please use \"proxy\" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy"}
+{"timestamp":"00:00:07.157","source":"Server","level":"LOG","message":""}
+{"timestamp":"00:00:13.306","source":"Server","level":"ERROR","message":"⨯ The file \"./middleware.ts\" must export a function, either as a default export or as a named \"middleware\" export.\nThis function is what Next.js runs for every request handled by this middleware.\n\nWhy this happens:\n- The file exists but doesn't export a function.\n- The export is not a function (e.g., an object or constant).\n- There's a syntax error preventing the export from being recognized.\n\nTo fix it:\n- Ensure this file has either a default or \"middleware\" function export.\n\nLearn more: https://nextjs.org/docs/messages/middleware-to-proxy"}
+{"timestamp":"00:00:13.663","source":"Server","level":"LOG","message":"✓ Compiled in 301ms"}
+{"timestamp":"00:00:35.776","source":"Server","level":"LOG","message":"✓ Compiled in 34ms"}
+{"timestamp":"00:00:52.593","source":"Server","level":"LOG","message":"✓ Compiled in 48ms"}
+{"timestamp":"00:01:10.111","source":"Server","level":"LOG","message":"✓ Compiled in 21ms"}
