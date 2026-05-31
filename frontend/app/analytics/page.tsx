@@ -15,7 +15,13 @@ import {
   type SpeedDistribution,
   type AnalyticsStats,
 } from '@/lib/api';
-import { FaCaretDown, FaRegClock, FaSearch, FaTimes } from 'react-icons/fa';
+import { FaCaretDown, FaSearch } from 'react-icons/fa';
+import { ChartDurationPicker } from '@/components/analytics/ChartDurationPicker';
+import { CustomDurationModal } from '@/components/analytics/CustomDurationModal';
+import {
+  ANALYTICS_CHART_IDS,
+  useChartDurations,
+} from '@/components/analytics/useChartDurations';
 import { IoSearchSharp } from 'react-icons/io5';
 import { MdArrowDropDown } from 'react-icons/md';
 import { IoMdRefresh } from 'react-icons/io';
@@ -104,38 +110,17 @@ const DynamicMap = dynamic(() => import('@/components/RealMap'), {
 });
 
 export default function Analytics() {
-  const [selectedDuration, setSelectedDuration] = useState('1 hr');
-  
-  // States for Custom Duration Logic
-  const [isCustomModalOpen, setIsCustomModalOpen] = useState(false);
-  const [customStart, setCustomStart] = useState('');
-  const [customEnd, setCustomEnd] = useState('');
-
-  const durations = [
-    '1 hr', '3 hr', '6 hr', '1d', 
-    '1 week', '1 month', '1 year', 
-    'all time', 'custom duration'
-  ];
-
-  const handleDurationSelect = (duration: string) => {
-    if (duration === 'custom duration') {
-      setIsCustomModalOpen(true);
-    } else {
-      setSelectedDuration(duration);
-      // TODO: Fetch data for the standard duration here
-    }
-  };
-
-  const handleCustomApply = () => {
-    if (customStart && customEnd) {
-      // You can format this text to show the actual dates if you prefer
-      setSelectedDuration('custom'); 
-      setIsCustomModalOpen(false);
-      
-      // TODO: Fetch data using customStart and customEnd variables here
-      console.log(`Fetching from ${customStart} to ${customEnd}`);
-    }
-  };
+  const {
+    getDuration,
+    handleDurationSelect,
+    isCustomModalOpen,
+    customStart,
+    customEnd,
+    setCustomStart,
+    setCustomEnd,
+    handleCustomApply,
+    closeCustomModal,
+  } = useChartDurations();
 
   const data = useMemo(() => generateDenseData(), []);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -289,6 +274,16 @@ export default function Analytics() {
 
   return (
     <div className="max-w-full px-0 py-0">
+      <CustomDurationModal
+        isOpen={isCustomModalOpen}
+        customStart={customStart}
+        customEnd={customEnd}
+        onCustomStartChange={setCustomStart}
+        onCustomEndChange={setCustomEnd}
+        onClose={closeCustomModal}
+        onApply={handleCustomApply}
+      />
+
       <div className="w-full flex items-center justify-between h-13 mb-0 border-b border-[#3c4043] bg-[#131314] p-1 shadow-xl">
         <div className="flex items-center min-w-170 flex-1">
           <div>
@@ -371,61 +366,6 @@ export default function Analytics() {
           
         >
 
-          {/* ---------------- CUSTOM DURATION MODAL ---------------- */}
-          {isCustomModalOpen && (
-            <div className="absolute inset-0 z-[60] flex items-center justify-center bg-black/50 rounded-md backdrop-blur-[2px]">
-              <div className="bg-[#1e1e1e] border border-gray-700 p-5 rounded-lg shadow-2xl w-80">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-white font-medium">Set Custom Time</h3>
-                  <button 
-                    onClick={() => setIsCustomModalOpen(false)} 
-                    className="text-gray-400 hover:text-white transition-colors"
-                  >
-                    <FaTimes />
-                  </button>
-                </div>
-                
-                <div className="flex flex-col gap-4">
-                  <div>
-                    <label className="block text-xs text-gray-400 mb-1">Start Date & Time</label>
-                    {/* [color-scheme:dark] ensures the native browser calendar popup is dark themed */}
-                    <input 
-                      type="datetime-local" 
-                      value={customStart}
-                      onChange={(e) => setCustomStart(e.target.value)}
-                      className="w-full bg-[#131314] text-gray-200 border border-gray-700 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-blue-500 [color-scheme:dark]"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs text-gray-400 mb-1">End Date & Time</label>
-                    <input 
-                      type="datetime-local" 
-                      value={customEnd}
-                      onChange={(e) => setCustomEnd(e.target.value)}
-                      className="w-full bg-[#131314] text-gray-200 border border-gray-700 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-blue-500 [color-scheme:dark]"
-                    />
-                  </div>
-                </div>
-
-                <div className="flex justify-end gap-2 mt-6">
-                  <button 
-                    onClick={() => setIsCustomModalOpen(false)}
-                    className="px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-gray-700 rounded-md transition-colors"
-                  >
-                    Cancel
-                  </button>
-                  <button 
-                    onClick={handleCustomApply}
-                    disabled={!customStart || !customEnd}
-                    className="px-4 py-2 text-sm bg-[#1a73e8] text-white rounded-md hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    Apply
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-
           {/* Header Panel Containing Controls */}
           <div className="flex justify-between items-center mb-5">
             <h2 className="text-gray-200 text-lg ml-5">
@@ -434,28 +374,12 @@ export default function Analytics() {
             
             {/* Action Button Strip */}
             <div className="chart-actions flex items-center gap-3.5 text-xs">
-              <div className="group relative z-50">
-                <button className="flex items-center gap-3.5 pl-3 rounded-md text-gray-400">
-                  <span className="bg-[#060606] px-2 py-1 rounded-md text-sm capitalize">{selectedDuration}</span>
-                  <FaRegClock className="group-hover:text-[#AECBFA] w-5 h-5 text-lg" />
-                </button>
-
-                <div className="absolute right-0 top-full mt-1 w-44 bg-[#1e1e1e] border border-gray-700 rounded-md shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                  <ul className="py-1 text-sm text-gray-300">
-                    {durations.map((duration) => (
-                      <li
-                        key={duration}
-                        onClick={() => handleDurationSelect(duration)}
-                        className={`px-4 py-2 cursor-pointer transition-colors hover:bg-[#303134] hover:text-white capitalize ${
-                          selectedDuration === duration ? 'bg-[#2a2b2f] text-white font-medium' : ''
-                        }`}
-                      >
-                        {duration}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+              <ChartDurationPicker
+                selectedDuration={getDuration(ANALYTICS_CHART_IDS.overallTraffic)}
+                onSelect={(d) =>
+                  handleDurationSelect(ANALYTICS_CHART_IDS.overallTraffic, d)
+                }
+              />
               {/* CSV Export Button */}
               <button 
                 onClick={exportCSV}
@@ -552,6 +476,12 @@ export default function Analytics() {
             
             {/* Action Button Strip */}
             <div className="chart-actions flex items-center gap-3.5 text-xs">
+              <ChartDurationPicker
+                selectedDuration={getDuration(ANALYTICS_CHART_IDS.separateTraffic1)}
+                onSelect={(d) =>
+                  handleDurationSelect(ANALYTICS_CHART_IDS.separateTraffic1, d)
+                }
+              />
               {/* CSV Export Button */}
               <button 
                 onClick={exportCSV}
@@ -647,6 +577,12 @@ export default function Analytics() {
             
             {/* Action Button Strip */}
             <div className="chart-actions flex items-center gap-3.5 text-xs">
+              <ChartDurationPicker
+                selectedDuration={getDuration(ANALYTICS_CHART_IDS.emergency1)}
+                onSelect={(d) =>
+                  handleDurationSelect(ANALYTICS_CHART_IDS.emergency1, d)
+                }
+              />
               {/* CSV Export Button */}
               <button 
                 onClick={exportCSV}
@@ -731,8 +667,18 @@ export default function Analytics() {
       {/* chart div 2*/}
       <div className="flex w-full mt-2 px-4 gap-2">
 
-        <div className="w-full min-w-0 rounded-md !bg-[#131314] py-5">
-          <h2 className="text-lg mb-4 pl-6 text-[#202124] dark:text-[#e8eaed]">Violations data</h2>
+        <div className="w-full min-w-0 rounded-md !bg-[#131314] py-5 relative">
+          <div className="flex justify-between items-center mb-4 pl-6 pr-6">
+            <h2 className="text-gray-200 text-lg">Violations data</h2>
+            <div className="chart-actions flex items-center gap-3.5 text-xs">
+              <ChartDurationPicker
+                selectedDuration={getDuration(ANALYTICS_CHART_IDS.violations)}
+                onSelect={(d) =>
+                  handleDurationSelect(ANALYTICS_CHART_IDS.violations, d)
+                }
+              />
+            </div>
+          </div>
           <div className="flex-cols gap-4">
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
@@ -770,8 +716,18 @@ export default function Analytics() {
           </div>
         </div>
         
-        <div className="w-full min-w-0 rounded-md !bg-[#131314] py-5">
-          <h2 className="text-lg mb-4 pl-6 text-[#202124] dark:text-[#e8eaed]">Vehicle Type Distribution</h2>
+        <div className="w-full min-w-0 rounded-md !bg-[#131314] py-5 relative">
+          <div className="flex justify-between items-center mb-4 pl-6 pr-6">
+            <h2 className="text-gray-200 text-lg">Vehicle Type Distribution</h2>
+            <div className="chart-actions flex items-center gap-3.5 text-xs">
+              <ChartDurationPicker
+                selectedDuration={getDuration(ANALYTICS_CHART_IDS.vehicleTypes)}
+                onSelect={(d) =>
+                  handleDurationSelect(ANALYTICS_CHART_IDS.vehicleTypes, d)
+                }
+              />
+            </div>
+          </div>
           <div className="flex-cols gap-4">
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
@@ -808,8 +764,18 @@ export default function Analytics() {
             </div>
           </div>
         </div>
-        <div className="w-full min-w-0 rounded-md !bg-[#131314] py-5">
-          <h2 className="text-lg mb-4 pl-6 text-[#202124] dark:text-[#e8eaed]">Speed Distribution</h2>
+        <div className="w-full min-w-0 rounded-md !bg-[#131314] py-5 relative">
+          <div className="flex justify-between items-center mb-4 pl-6 pr-6">
+            <h2 className="text-gray-200 text-lg">Speed Distribution</h2>
+            <div className="chart-actions flex items-center gap-3.5 text-xs">
+              <ChartDurationPicker
+                selectedDuration={getDuration(ANALYTICS_CHART_IDS.speedDistributionPie)}
+                onSelect={(d) =>
+                  handleDurationSelect(ANALYTICS_CHART_IDS.speedDistributionPie, d)
+                }
+              />
+            </div>
+          </div>
           <div className="flex-cols gap-4">
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
@@ -866,6 +832,12 @@ export default function Analytics() {
             
             {/* Action Button Strip */}
             <div className="chart-actions flex items-center gap-3.5 text-xs">
+              <ChartDurationPicker
+                selectedDuration={getDuration(ANALYTICS_CHART_IDS.speedLine)}
+                onSelect={(d) =>
+                  handleDurationSelect(ANALYTICS_CHART_IDS.speedLine, d)
+                }
+              />
               {/* CSV Export Button */}
               <button 
                 onClick={exportCSV}
@@ -962,6 +934,12 @@ export default function Analytics() {
             
             {/* Action Button Strip */}
             <div className="chart-actions flex items-center gap-3.5 text-xs">
+              <ChartDurationPicker
+                selectedDuration={getDuration(ANALYTICS_CHART_IDS.separateTraffic2)}
+                onSelect={(d) =>
+                  handleDurationSelect(ANALYTICS_CHART_IDS.separateTraffic2, d)
+                }
+              />
               {/* CSV Export Button */}
               <button 
                 onClick={exportCSV}
@@ -1057,6 +1035,12 @@ export default function Analytics() {
             
             {/* Action Button Strip */}
             <div className="chart-actions flex items-center gap-3.5 text-xs">
+              <ChartDurationPicker
+                selectedDuration={getDuration(ANALYTICS_CHART_IDS.emergency2)}
+                onSelect={(d) =>
+                  handleDurationSelect(ANALYTICS_CHART_IDS.emergency2, d)
+                }
+              />
               {/* CSV Export Button */}
               <button 
                 onClick={exportCSV}
@@ -1140,8 +1124,20 @@ export default function Analytics() {
       </div>
 
       {/* Traffic Heat Map */}
-      <div className="gcloud-card p-6">
-        <h2 className="text-base font-medium mb-4 text-[#202124] dark:text-[#e8eaed]">Traffic Violation Heat Map - City Overview</h2>
+      <div className="gcloud-card p-6 relative">
+        <div className="flex justify-between items-start gap-4 mb-4">
+          <h2 className="text-base font-medium text-[#202124] dark:text-[#e8eaed]">
+            Traffic Violation Heat Map - City Overview
+          </h2>
+          <div className="chart-actions flex items-center gap-3.5 text-xs shrink-0">
+            <ChartDurationPicker
+              selectedDuration={getDuration(ANALYTICS_CHART_IDS.heatmap)}
+              onSelect={(d) =>
+                handleDurationSelect(ANALYTICS_CHART_IDS.heatmap, d)
+              }
+            />
+          </div>
+        </div>
         <p className="text-sm text-[#5f6368] dark:text-[#9aa0a6] mb-4">
           Click on the markers to see detailed violation information for each zone. Larger markers indicate higher violation counts.
         </p>
