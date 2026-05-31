@@ -244,14 +244,14 @@ export default function Logs() {
                 </button>
               )}
             </div>
-            <div className="relative w-full md:w-100">
+            <div className="relative w-full md:w-100 border border-[#3C4043] rounded-md transition-colors focus-within:border-[#8AB4F8] focus-within:ring-0.7 focus-within:ring-[#8AB4F8]">
               <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#5f6368] dark:text-[#9aa0a6]" />
               <input
                 type="text"
                 placeholder="Search ID, License, Location..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-[#dadce0] dark:border-[#3c4043] bg-white dark:bg-[#131314] text-[#202124] dark:text-[#e8eaed] rounded focus:ring-1.5 focus:ring-[#1a73e8] dark:focus:ring-[#8ab4f8] focus:border-transparent text-sm"
+                className="w-full pl-10 pr-4 py-2 outline-none text-sm"
               />
             </div>
           </div>
