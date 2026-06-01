@@ -10,11 +10,14 @@ import {
 const formatId = (n: number): string => `VEH-${String(n).padStart(6, '0')}`;
 
 interface LogQuery extends PaginationQuery {
-  search?:     string;
-  speeding?:   string;
-  helmetless?: string;
-  redLight?:   string;
-  tripling?:   string;
+  search?:       string;
+  speeding?:     string;
+  helmetless?:   string;
+  redLight?:     string;
+  tripling?:     string;
+  from?:         string;
+  to?:           string;
+  vehicleType?:  string;
 }
 
 export class LogModel {
@@ -41,6 +44,18 @@ export class LogModel {
     if (query.helmetless === 'true') conditions.push(`vehicle_type = 'Bike' AND helmet_status = FALSE`);
     if (query.redLight === 'true')   conditions.push(`red_light_cross = TRUE`);
     if (query.tripling === 'true')   conditions.push(`vehicle_type = 'Bike' AND tripling = TRUE`);
+    if (query.from) {
+      conditions.push(`detected_at >= $${idx++}`);
+      values.push(query.from);
+    }
+    if (query.to) {
+      conditions.push(`detected_at <= $${idx++}`);
+      values.push(query.to);
+    }
+    if (query.vehicleType) {
+      conditions.push(`vehicle_type = $${idx++}`);
+      values.push(query.vehicleType);
+    }
 
     const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
 

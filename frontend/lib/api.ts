@@ -158,6 +158,9 @@ export const getLogs = async (params?: {
   helmetless?: boolean;
   redLight?: boolean;
   tripling?: boolean;
+  from?: string;
+  to?: string;
+  vehicleType?: string;
 }): Promise<LogsResponse> => {
   const finalParams = {
     page: params?.page ?? 1,

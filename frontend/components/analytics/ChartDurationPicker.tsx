@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { FiFilter } from 'react-icons/fi';
 import { FaRegClock } from 'react-icons/fa';
 
 export const DURATION_OPTIONS = [
@@ -18,6 +19,10 @@ export const DURATION_OPTIONS = [
 type ChartDurationPickerProps = {
   selectedDuration: string;
   onSelect: (duration: string) => void;
+  /** Analytics chart header (clock + duration badge) */
+  variant?: 'chart' | 'logs';
+  /** Highlight logs interval button when a non-default range is selected */
+  isActive?: boolean;
 };
 
 function isDurationSelected(selected: string, option: string) {
@@ -32,6 +37,8 @@ const CLOSE_DELAY_MS = 200;
 export function ChartDurationPicker({
   selectedDuration,
   onSelect,
+  variant = 'chart',
+  isActive = false,
 }: ChartDurationPickerProps) {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -82,6 +89,19 @@ export function ChartDurationPicker({
     setOpen(false);
   };
 
+  const logsButtonClass = isActive
+    ? 'bg-[#1a73e8] dark:bg-[#8ab4f8] text-white dark:text-[#202124]'
+    : 'bg-[#f1f3f4] dark:bg-[#292A2D] text-[#5f6368] dark:text-[#9aa0a6] hover:bg-[#e8eaed] dark:hover:bg-[#4d4e52]';
+
+  const durationBadgeClass =
+    variant === 'logs'
+      ? `ml-2 px-2 py-1 rounded-md text-xs capitalize shrink-0 ${
+          isActive
+            ? 'bg-[#202124]/20 dark:bg-[#060606] text-[#e8eaed]'
+            : 'bg-[#060606] text-[#e8eaed]'
+        }`
+      : 'bg-[#060606] px-2 py-1 rounded-md text-sm capitalize';
+
   return (
     <div
       ref={containerRef}
@@ -92,19 +112,29 @@ export function ChartDurationPicker({
       <button
         type="button"
         onClick={() => setOpen((prev) => !prev)}
-        className="flex items-center gap-3.5 pl-3 rounded-md text-gray-400 hover:text-[#AECBFA] transition-colors"
+        className={
+          variant === 'logs'
+            ? `px-4 py-[6.5px] text-sm font-medium transition-colors rounded flex items-center ${logsButtonClass}`
+            : 'flex items-center gap-3.5 pl-3 rounded-md text-gray-400 hover:text-[#AECBFA] transition-colors'
+        }
         aria-label="Select time range"
         aria-expanded={open}
         aria-haspopup="listbox"
       >
-        <span className="bg-[#060606] px-2 py-1 rounded-md text-sm capitalize">
-          {displayLabel}
-        </span>
-        <FaRegClock
-          className={`w-5 h-5 text-lg transition-colors ${
-            open ? 'text-[#AECBFA]' : 'group-hover:text-[#AECBFA]'
-          }`}
-        />
+        {variant === 'logs' && (
+          <>
+            <FiFilter className="inline mr-2 shrink-0" />
+            <span className="shrink-0">Interval</span>
+          </>
+        )}
+        <span className={durationBadgeClass}>{displayLabel}</span>
+        {variant === 'chart' && (
+          <FaRegClock
+            className={`w-5 h-5 text-lg transition-colors ${
+              open ? 'text-[#AECBFA]' : 'group-hover:text-[#AECBFA]'
+            }`}
+          />
+        )}
       </button>
 
       {/* pt-1 bridges the gap so the pointer does not leave the hover target */}

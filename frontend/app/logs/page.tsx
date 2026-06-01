@@ -7,6 +7,11 @@ import { getLogs, type Log } from '@/lib/api';
 import LocationBar from '@/components/LocationBar';
 import { useLocationFilter } from '@/context/LocationFilterContext';
 import { MAP_SIGNALS } from '@/map/MapData';
+import { ChartDurationPicker } from '@/components/analytics/ChartDurationPicker';
+import { CustomDurationModal } from '@/components/analytics/CustomDurationModal';
+import { VehicleTypeFilter } from '@/components/logs/VehicleTypeFilter';
+import { useDurationFilter } from '@/hooks/useDurationFilter';
+import type { LogVehicleTypeFilter } from '@/lib/logFilters';
 
 const DynamicMap = dynamic(() => import('@/components/RealMap'), { 
   ssr: false, 
@@ -33,11 +38,42 @@ export default function Logs() {
     tripling: false,
   });
   const [searchTerm, setSearchTerm] = useState('');
+  const [vehicleTypeFilter, setVehicleTypeFilter] =
+    useState<LogVehicleTypeFilter>('All');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const PAGE_SIZE = 50;
+
+  const {
+    selectedDuration,
+    dateRange,
+    isDefaultDuration,
+    handleDurationSelect,
+    isCustomModalOpen,
+    customStart,
+    customEnd,
+    setCustomStart,
+    setCustomEnd,
+    handleCustomApply,
+    closeCustomModal,
+    resetDuration,
+  } = useDurationFilter('all time');
+
+  useEffect(() => {
+    setPage(1);
+  }, [
+    filters.speeding,
+    filters.helmetless,
+    filters.redLight,
+    filters.tripling,
+    searchTerm,
+    vehicleTypeFilter,
+    selectedDuration,
+    dateRange.from,
+    dateRange.to,
+  ]);
 
   useEffect(() => {
     const fetchLogs = async () => {
@@ -54,6 +90,9 @@ export default function Logs() {
         if (filters.redLight) params.redLight = true;
         if (filters.tripling) params.tripling = true;
         if (searchTerm) params.search = searchTerm;
+        if (vehicleTypeFilter !== 'All') params.vehicleType = vehicleTypeFilter;
+        if (dateRange.from) params.from = dateRange.from;
+        if (dateRange.to) params.to = dateRange.to;
 
         const response = await getLogs(params);
         setAllLogs(response.data || []);
@@ -67,7 +106,17 @@ export default function Logs() {
     };
 
     fetchLogs();
-  }, [page, filters.speeding, filters.helmetless, filters.redLight, filters.tripling, searchTerm]);
+  }, [
+    page,
+    filters.speeding,
+    filters.helmetless,
+    filters.redLight,
+    filters.tripling,
+    searchTerm,
+    vehicleTypeFilter,
+    dateRange.from,
+    dateRange.to,
+  ]);
 
   useEffect(() => {
     setFilteredLogs(allLogs);
@@ -88,7 +137,23 @@ export default function Logs() {
     setFilters(prev => ({ ...prev, [filterName]: !prev[filterName] }));
   };
 
-  const activeFilterCount = Object.values(filters).filter(Boolean).length;
+  const violationFilterCount = Object.values(filters).filter(Boolean).length;
+  const intervalFilterCount = isDefaultDuration ? 0 : 1;
+  const vehicleTypeFilterCount = vehicleTypeFilter !== 'All' ? 1 : 0;
+  const activeFilterCount =
+    violationFilterCount + intervalFilterCount + vehicleTypeFilterCount;
+
+  const clearAllFilters = () => {
+    setFilters({
+      speeding: false,
+      helmetless: false,
+      redLight: false,
+      tripling: false,
+    });
+    setVehicleTypeFilter('All');
+    resetDuration();
+    setPage(1);
+  };
 
   if (loading) {
     return (
@@ -134,6 +199,16 @@ export default function Logs() {
 
   return (
     <div className="max-w-full dark:bg-[#131314]">
+      <CustomDurationModal
+        isOpen={isCustomModalOpen}
+        customStart={customStart}
+        customEnd={customEnd}
+        onCustomStartChange={setCustomStart}
+        onCustomEndChange={setCustomEnd}
+        onClose={closeCustomModal}
+        onApply={handleCustomApply}
+      />
+
       <div className="w-full flex items-center justify-between h-13 mb-0 border-b border-[#3c4043] bg-[#131314] p-1 shadow-xl">
         <div className="flex items-center min-w-170 flex-1">
           <div>
@@ -190,7 +265,19 @@ export default function Logs() {
         {/* Filters and Search */}
         <div className="gcloud-card mb-4 p-0 !border-0 !bg-[#131314] !dark:bg-[#131314]">
           <div className="flex flex-col !bg-[#131314] md:flex-row gap-4 items-start md:items-center justify-between">
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 items-center">
+              <ChartDurationPicker
+                variant="logs"
+                isActive={!isDefaultDuration}
+                selectedDuration={selectedDuration}
+                onSelect={handleDurationSelect}
+              />
+
+              <VehicleTypeFilter
+                selected={vehicleTypeFilter}
+                onSelect={setVehicleTypeFilter}
+              />
+
               <button
                 onClick={() => toggleFilter('speeding')}
                 className={`px-4 py-2 text-sm font-medium transition-colors rounded ${
@@ -237,7 +324,7 @@ export default function Logs() {
               </button>
               {activeFilterCount > 0 && (
                 <button
-                  onClick={() => setFilters({ speeding: false, helmetless: false, redLight: false, tripling: false })}
+                  onClick={clearAllFilters}
                   className="px-4 py-2 text-sm font-medium bg-[#f1f3f4] dark:bg-[#292A2D] text-[#5f6368] dark:text-[#9aa0a6] hover:bg-[#e8eaed] dark:hover:bg-[#4d4e52] transition-colors rounded"
                 >
                   Clear All ({activeFilterCount})
@@ -248,7 +335,7 @@ export default function Logs() {
               <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#5f6368] dark:text-[#9aa0a6]" />
               <input
                 type="text"
-                placeholder="Search ID, License, Location..."
+                placeholder="Search ID, License No., Location..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 outline-none text-sm"

@@ -7910,3 +7910,465 @@
 {"timestamp":"05:15:57.006","source":"Server","level":"LOG","message":"[2026-05-31T21:23:25.342Z] GET /api/analytics/hotspots"}
 {"timestamp":"05:15:57.021","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
 {"timestamp":"05:15:57.143","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"05:22:21.437","source":"Server","level":"LOG","message":"[2026-05-31T21:29:49.774Z] GET /api/analytics/stats"}
+{"timestamp":"05:22:21.439","source":"Server","level":"LOG","message":"[2026-05-31T21:29:49.775Z] GET /api/analytics/violations"}
+{"timestamp":"05:22:21.440","source":"Server","level":"LOG","message":"[2026-05-31T21:29:49.777Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"05:22:21.442","source":"Server","level":"LOG","message":"[2026-05-31T21:29:49.778Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"05:22:21.446","source":"Server","level":"LOG","message":"[2026-05-31T21:29:49.782Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"05:22:21.471","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"05:22:21.476","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"05:22:21.490","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"05:22:21.509","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"05:22:21.517","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"05:22:22.767","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"05:22:22.768","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"05:22:22.826","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"05:22:22.833","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"05:22:22.834","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"05:22:22.957","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"05:22:23.007","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"05:22:23.015","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"05:22:23.022","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"05:22:23.033","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"05:22:23.714","source":"Server","level":"LOG","message":"[2026-05-31T21:29:52.050Z] GET /api/analytics/stats"}
+{"timestamp":"05:22:23.726","source":"Server","level":"LOG","message":"[2026-05-31T21:29:52.063Z] GET /api/analytics/violations"}
+{"timestamp":"05:22:23.730","source":"Server","level":"LOG","message":"[2026-05-31T21:29:52.067Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"05:22:23.737","source":"Server","level":"LOG","message":"[2026-05-31T21:29:52.072Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"05:22:23.741","source":"Server","level":"LOG","message":"[2026-05-31T21:29:52.078Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"05:22:23.760","source":"Server","level":"LOG","message":"[2026-05-31T21:29:52.096Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"05:22:23.768","source":"Server","level":"LOG","message":"[2026-05-31T21:29:52.105Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"05:22:23.773","source":"Server","level":"LOG","message":"[2026-05-31T21:29:52.110Z] GET /api/analytics/violations"}
+{"timestamp":"05:22:23.778","source":"Server","level":"LOG","message":"[2026-05-31T21:29:52.115Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"05:22:24.309","source":"Server","level":"LOG","message":"[2026-05-31T21:29:52.646Z] GET /api/analytics/stats"}
+{"timestamp":"05:22:24.312","source":"Server","level":"LOG","message":"[2026-05-31T21:29:52.648Z] GET /api/analytics/violations"}
+{"timestamp":"05:22:24.315","source":"Server","level":"LOG","message":"[2026-05-31T21:29:52.651Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"05:22:24.318","source":"Server","level":"LOG","message":"[2026-05-31T21:29:52.654Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"05:22:24.324","source":"Server","level":"LOG","message":"[2026-05-31T21:29:52.660Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"05:22:24.349","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"05:22:24.354","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"05:22:24.358","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"05:22:24.365","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"05:22:24.372","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"05:22:24.454","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"05:22:24.456","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"05:22:24.458","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"05:22:24.494","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"05:22:24.502","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"05:22:25.449","source":"Server","level":"LOG","message":"[2026-05-31T21:29:53.785Z] GET /api/analytics/hotspots"}
+{"timestamp":"05:22:25.469","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"05:22:25.580","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"05:23:39.798","source":"Server","level":"LOG","message":"[2026-05-31T21:31:08.135Z] GET /api/analytics/stats"}
+{"timestamp":"05:23:39.799","source":"Server","level":"LOG","message":"[2026-05-31T21:31:08.136Z] GET /api/analytics/violations"}
+{"timestamp":"05:23:39.801","source":"Server","level":"LOG","message":"[2026-05-31T21:31:08.137Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"05:23:39.802","source":"Server","level":"LOG","message":"[2026-05-31T21:31:08.138Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"05:23:39.803","source":"Server","level":"LOG","message":"[2026-05-31T21:31:08.139Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"05:23:39.818","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"05:23:39.825","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"05:23:39.829","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"05:23:39.833","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"05:23:39.838","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"05:23:40.699","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"05:23:40.699","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"05:23:40.699","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"05:23:40.699","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"05:23:40.699","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"05:23:40.953","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"05:23:40.957","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"05:23:40.959","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"05:23:40.961","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"05:23:40.962","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"05:23:40.984","source":"Server","level":"LOG","message":"[2026-05-31T21:31:09.321Z] GET /api/analytics/hotspots"}
+{"timestamp":"05:23:40.997","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"05:23:41.203","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:17:49.261","source":"Server","level":"LOG","message":"[2026-06-01T06:15:48.224Z] GET /api/logs"}
+{"timestamp":"06:17:53.889","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:17:54.711","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:29:58.225","source":"Server","level":"LOG","message":"[2026-06-01T06:27:57.188Z] GET /api/logs"}
+{"timestamp":"06:30:00.122","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:30:00.353","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:30:05.793","source":"Server","level":"LOG","message":"[2026-06-01T06:28:04.755Z] GET /api/logs"}
+{"timestamp":"06:30:07.047","source":"Server","level":"LOG","message":"[2026-06-01T06:28:06.010Z] GET /api/logs"}
+{"timestamp":"06:30:08.835","source":"Server","level":"LOG","message":"[2026-06-01T06:28:07.798Z] GET /api/logs"}
+{"timestamp":"06:30:10.907","source":"Server","level":"LOG","message":"[2026-06-01T06:28:09.870Z] GET /api/logs"}
+{"timestamp":"06:30:13.108","source":"Server","level":"LOG","message":"[2026-06-01T06:28:12.071Z] GET /api/logs"}
+{"timestamp":"06:30:46.863","source":"Server","level":"LOG","message":"[2026-06-01T06:28:45.826Z] GET /api/logs"}
+{"timestamp":"06:30:47.841","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:30:47.841","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:30:52.421","source":"Server","level":"LOG","message":"[2026-06-01T06:28:51.384Z] GET /api/logs"}
+{"timestamp":"06:31:10.393","source":"Server","level":"LOG","message":"[2026-06-01T06:29:09.356Z] GET /api/logs"}
+{"timestamp":"06:31:16.299","source":"Server","level":"LOG","message":"[2026-06-01T06:29:15.262Z] GET /api/logs"}
+{"timestamp":"06:31:18.859","source":"Server","level":"LOG","message":"[2026-06-01T06:29:17.822Z] GET /api/logs"}
+{"timestamp":"06:31:21.210","source":"Server","level":"LOG","message":"[2026-06-01T06:29:20.173Z] GET /api/logs"}
+{"timestamp":"06:31:24.853","source":"Server","level":"LOG","message":"[2026-06-01T06:29:23.816Z] GET /api/logs"}
+{"timestamp":"06:31:26.787","source":"Server","level":"LOG","message":"[2026-06-01T06:29:25.750Z] GET /api/logs"}
+{"timestamp":"06:31:30.579","source":"Server","level":"LOG","message":"[2026-06-01T06:29:29.542Z] GET /api/logs"}
+{"timestamp":"06:31:37.046","source":"Server","level":"LOG","message":"[2026-06-01T06:29:36.009Z] GET /api/logs"}
+{"timestamp":"06:31:39.363","source":"Server","level":"LOG","message":"[2026-06-01T06:29:38.326Z] GET /api/logs"}
+{"timestamp":"06:31:40.243","source":"Server","level":"LOG","message":"[2026-06-01T06:29:39.205Z] GET /api/logs"}
+{"timestamp":"06:31:40.841","source":"Server","level":"LOG","message":"[2026-06-01T06:29:39.804Z] GET /api/logs"}
+{"timestamp":"06:31:41.590","source":"Server","level":"LOG","message":"[2026-06-01T06:29:40.553Z] GET /api/logs"}
+{"timestamp":"06:31:43.648","source":"Server","level":"LOG","message":"[2026-06-01T06:29:42.611Z] GET /api/logs"}
+{"timestamp":"06:31:46.716","source":"Server","level":"LOG","message":"[2026-06-01T06:29:45.679Z] GET /api/logs"}
+{"timestamp":"06:31:59.364","source":"Server","level":"LOG","message":"[2026-06-01T06:29:58.327Z] GET /api/logs"}
+{"timestamp":"06:32:01.268","source":"Server","level":"LOG","message":"[2026-06-01T06:30:00.231Z] GET /api/logs"}
+{"timestamp":"06:34:27.474","source":"Server","level":"LOG","message":"[2026-06-01T06:32:26.437Z] GET /api/logs"}
+{"timestamp":"06:34:28.410","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:34:29.022","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:34:34.741","source":"Server","level":"LOG","message":"[2026-06-01T06:32:33.704Z] GET /api/logs"}
+{"timestamp":"06:34:36.422","source":"Server","level":"LOG","message":"[2026-06-01T06:32:35.384Z] GET /api/logs"}
+{"timestamp":"06:34:40.041","source":"Server","level":"LOG","message":"[2026-06-01T06:32:39.004Z] GET /api/logs"}
+{"timestamp":"06:35:32.451","source":"Server","level":"LOG","message":"[2026-06-01T06:33:31.414Z] GET /api/logs"}
+{"timestamp":"06:35:33.210","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:35:33.210","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:35:36.374","source":"Server","level":"LOG","message":"[2026-06-01T06:33:35.337Z] GET /api/analytics/stats"}
+{"timestamp":"06:35:36.375","source":"Server","level":"LOG","message":"[2026-06-01T06:33:35.338Z] GET /api/analytics/violations"}
+{"timestamp":"06:35:36.379","source":"Server","level":"LOG","message":"[2026-06-01T06:33:35.341Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"06:35:36.385","source":"Server","level":"LOG","message":"[2026-06-01T06:33:35.348Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"06:35:36.388","source":"Server","level":"LOG","message":"[2026-06-01T06:33:35.351Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"06:35:36.406","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:35:36.409","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:35:36.420","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:35:36.424","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:35:36.427","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:35:36.539","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:35:36.608","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:35:37.638","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:35:37.638","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:35:37.638","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:35:37.843","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:35:37.845","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:35:37.847","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:35:38.542","source":"Server","level":"LOG","message":"[2026-06-01T06:33:37.505Z] GET /api/analytics/hotspots"}
+{"timestamp":"06:35:38.553","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:35:38.672","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:35:40.347","source":"Server","level":"LOG","message":"[2026-06-01T06:33:39.310Z] GET /api/analytics/stats"}
+{"timestamp":"06:35:40.348","source":"Server","level":"LOG","message":"[2026-06-01T06:33:39.311Z] GET /api/analytics/violations"}
+{"timestamp":"06:35:40.350","source":"Server","level":"LOG","message":"[2026-06-01T06:33:39.313Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"06:35:40.351","source":"Server","level":"LOG","message":"[2026-06-01T06:33:39.314Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"06:35:40.355","source":"Server","level":"LOG","message":"[2026-06-01T06:33:39.318Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"06:35:40.374","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:35:40.376","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:35:40.380","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:35:40.384","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:35:40.387","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:35:40.504","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:35:40.508","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:35:40.512","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:35:40.710","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:35:40.712","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:35:41.374","source":"Server","level":"LOG","message":"[2026-06-01T06:33:40.337Z] GET /api/analytics/hotspots"}
+{"timestamp":"06:35:41.384","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:35:41.721","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:35:47.404","source":"Server","level":"LOG","message":"[2026-06-01T06:33:46.367Z] GET /api/logs"}
+{"timestamp":"06:36:15.937","source":"Server","level":"LOG","message":"[2026-06-01T06:34:14.900Z] GET /api/logs"}
+{"timestamp":"06:36:17.033","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:36:17.045","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:36:22.785","source":"Server","level":"LOG","message":"[2026-06-01T06:34:21.748Z] GET /api/logs"}
+{"timestamp":"06:36:32.319","source":"Server","level":"LOG","message":"[2026-06-01T06:34:31.282Z] GET /api/logs"}
+{"timestamp":"06:36:42.968","source":"Server","level":"LOG","message":"[2026-06-01T06:34:41.931Z] GET /api/logs"}
+{"timestamp":"06:37:46.402","source":"Server","level":"LOG","message":"[2026-06-01T06:35:45.365Z] GET /api/logs"}
+{"timestamp":"06:37:47.403","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:37:47.548","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:37:47.748","source":"Server","level":"LOG","message":"[2026-06-01T06:35:46.711Z] GET /api/logs"}
+{"timestamp":"06:37:48.425","source":"Server","level":"LOG","message":"[2026-06-01T06:35:47.388Z] GET /api/logs"}
+{"timestamp":"06:37:49.720","source":"Server","level":"LOG","message":"[2026-06-01T06:35:48.683Z] GET /api/logs"}
+{"timestamp":"06:37:49.846","source":"Server","level":"LOG","message":"[2026-06-01T06:35:48.809Z] GET /api/logs"}
+{"timestamp":"06:37:50.299","source":"Server","level":"LOG","message":"[2026-06-01T06:35:49.262Z] GET /api/logs"}
+{"timestamp":"06:38:14.074","source":"Server","level":"LOG","message":"[2026-06-01T06:36:13.036Z] GET /api/analytics/stats"}
+{"timestamp":"06:38:14.086","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:38:14.091","source":"Server","level":"LOG","message":"[2026-06-01T06:36:13.054Z] GET /api/analytics/violations"}
+{"timestamp":"06:38:14.093","source":"Server","level":"LOG","message":"[2026-06-01T06:36:13.056Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"06:38:14.098","source":"Server","level":"LOG","message":"[2026-06-01T06:36:13.060Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"06:38:14.100","source":"Server","level":"LOG","message":"[2026-06-01T06:36:13.063Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"06:38:14.113","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:38:14.118","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:38:14.131","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:38:14.135","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:38:14.718","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:38:14.767","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:38:14.773","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:38:14.824","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:38:14.824","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:38:14.843","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:38:14.874","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:38:14.875","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:38:14.953","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:38:14.955","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:38:15.283","source":"Server","level":"LOG","message":"[2026-06-01T06:36:14.246Z] GET /api/analytics/hotspots"}
+{"timestamp":"06:38:15.294","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:38:15.432","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:38:17.922","source":"Server","level":"LOG","message":"[2026-06-01T06:36:16.885Z] GET /api/logs"}
+{"timestamp":"06:42:32.650","source":"Server","level":"LOG","message":"[2026-06-01T06:40:31.613Z] GET /api/logs"}
+{"timestamp":"06:42:33.311","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:42:33.315","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:42:34.689","source":"Server","level":"LOG","message":"[2026-06-01T06:40:33.652Z] GET /api/logs"}
+{"timestamp":"06:42:35.206","source":"Server","level":"LOG","message":"[2026-06-01T06:40:34.169Z] GET /api/logs"}
+{"timestamp":"06:42:35.697","source":"Server","level":"LOG","message":"[2026-06-01T06:40:34.660Z] GET /api/logs"}
+{"timestamp":"06:42:51.609","source":"Server","level":"LOG","message":"[2026-06-01T06:40:50.572Z] GET /api/logs"}
+{"timestamp":"06:42:56.085","source":"Server","level":"LOG","message":"[2026-06-01T06:40:55.048Z] GET /api/logs"}
+{"timestamp":"06:42:58.645","source":"Server","level":"LOG","message":"[2026-06-01T06:40:57.608Z] GET /api/logs"}
+{"timestamp":"06:46:52.124","source":"Server","level":"LOG","message":"[2026-06-01T06:44:51.087Z] GET /api/logs"}
+{"timestamp":"06:46:53.929","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:46:54.716","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:46:55.214","source":"Server","level":"LOG","message":"[2026-06-01T06:44:54.176Z] GET /api/logs"}
+{"timestamp":"06:46:55.828","source":"Server","level":"LOG","message":"[2026-06-01T06:44:54.791Z] GET /api/logs"}
+{"timestamp":"06:47:03.006","source":"Server","level":"LOG","message":"[2026-06-01T06:45:01.969Z] GET /api/logs"}
+{"timestamp":"06:47:08.270","source":"Server","level":"LOG","message":"[2026-06-01T06:45:07.233Z] GET /api/logs"}
+{"timestamp":"06:47:09.897","source":"Server","level":"LOG","message":"[2026-06-01T06:45:08.860Z] GET /api/logs"}
+{"timestamp":"06:47:12.803","source":"Server","level":"LOG","message":"[2026-06-01T06:45:11.766Z] GET /api/logs"}
+{"timestamp":"06:47:24.377","source":"Server","level":"LOG","message":"[2026-06-01T06:45:23.340Z] GET /api/logs"}
+{"timestamp":"06:47:38.027","source":"Server","level":"LOG","message":"[2026-06-01T06:45:36.990Z] GET /api/logs"}
+{"timestamp":"06:47:39.989","source":"Server","level":"LOG","message":"[2026-06-01T06:45:38.952Z] GET /api/logs"}
+{"timestamp":"06:47:42.950","source":"Server","level":"LOG","message":"[2026-06-01T06:45:41.913Z] GET /api/logs"}
+{"timestamp":"06:47:45.196","source":"Server","level":"LOG","message":"[2026-06-01T06:45:44.156Z] GET /api/logs"}
+{"timestamp":"06:47:51.355","source":"Server","level":"LOG","message":"[2026-06-01T06:45:50.318Z] GET /api/logs"}
+{"timestamp":"06:47:52.811","source":"Server","level":"LOG","message":"[2026-06-01T06:45:51.774Z] GET /api/logs"}
+{"timestamp":"06:47:58.282","source":"Server","level":"LOG","message":"[2026-06-01T06:45:57.245Z] GET /api/logs"}
+{"timestamp":"06:48:04.906","source":"Server","level":"LOG","message":"[2026-06-01T06:46:03.869Z] GET /api/logs"}
+{"timestamp":"06:48:30.961","source":"Server","level":"LOG","message":"[2026-06-01T06:46:29.923Z] GET /api/logs"}
+{"timestamp":"06:48:33.018","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:48:33.018","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:48:46.184","source":"Server","level":"LOG","message":"[2026-06-01T06:46:45.147Z] GET /api/logs"}
+{"timestamp":"06:48:47.359","source":"Server","level":"LOG","message":"[2026-06-01T06:46:46.322Z] GET /api/logs"}
+{"timestamp":"06:49:00.283","source":"Server","level":"LOG","message":"[2026-06-01T06:46:59.245Z] GET /api/logs"}
+{"timestamp":"06:49:11.870","source":"Server","level":"LOG","message":"[2026-06-01T06:47:10.833Z] GET /api/logs"}
+{"timestamp":"06:49:28.081","source":"Server","level":"LOG","message":"[2026-06-01T06:47:27.044Z] GET /api/logs"}
+{"timestamp":"06:49:30.446","source":"Server","level":"LOG","message":"[2026-06-01T06:47:29.409Z] GET /api/logs"}
+{"timestamp":"06:49:41.029","source":"Server","level":"LOG","message":"[2026-06-01T06:47:39.992Z] GET /api/logs"}
+{"timestamp":"06:49:47.766","source":"Server","level":"LOG","message":"[2026-06-01T06:47:46.729Z] GET /api/logs"}
+{"timestamp":"06:50:00.873","source":"Server","level":"LOG","message":"[2026-06-01T06:47:59.836Z] GET /api/logs"}
+{"timestamp":"06:51:16.082","source":"Server","level":"LOG","message":"[2026-06-01T06:49:15.045Z] GET /api/logs"}
+{"timestamp":"06:51:17.683","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:51:17.695","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:51:22.139","source":"Server","level":"LOG","message":"[2026-06-01T06:49:21.102Z] GET /api/logs"}
+{"timestamp":"06:51:28.982","source":"Server","level":"LOG","message":"[2026-06-01T06:49:27.945Z] GET /api/logs"}
+{"timestamp":"06:51:35.028","source":"Server","level":"LOG","message":"[2026-06-01T06:49:33.991Z] GET /api/logs"}
+{"timestamp":"06:52:31.059","source":"Server","level":"LOG","message":"[2026-06-01T06:50:30.022Z] GET /api/logs"}
+{"timestamp":"06:52:31.905","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:52:31.906","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:52:33.959","source":"Server","level":"LOG","message":"[2026-06-01T06:50:32.921Z] GET /api/logs"}
+{"timestamp":"06:52:39.703","source":"Server","level":"LOG","message":"[2026-06-01T06:50:38.666Z] GET /api/logs"}
+{"timestamp":"06:52:46.811","source":"Server","level":"LOG","message":"[2026-06-01T06:50:45.774Z] GET /api/logs"}
+{"timestamp":"06:52:52.558","source":"Server","level":"LOG","message":"[2026-06-01T06:50:51.521Z] GET /api/logs"}
+{"timestamp":"06:52:54.874","source":"Server","level":"LOG","message":"[2026-06-01T06:50:53.837Z] GET /api/logs"}
+{"timestamp":"06:53:20.302","source":"Server","level":"LOG","message":"[2026-06-01T06:51:19.265Z] GET /api/logs"}
+{"timestamp":"06:53:21.399","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:53:21.399","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:53:31.100","source":"Server","level":"LOG","message":"[2026-06-01T06:51:30.062Z] GET /api/logs"}
+{"timestamp":"06:53:37.116","source":"Server","level":"LOG","message":"[2026-06-01T06:51:36.079Z] GET /api/logs"}
+{"timestamp":"06:53:39.860","source":"Server","level":"LOG","message":"[2026-06-01T06:51:38.822Z] GET /api/logs"}
+{"timestamp":"06:53:41.876","source":"Server","level":"LOG","message":"[2026-06-01T06:51:40.839Z] GET /api/logs"}
+{"timestamp":"06:53:43.829","source":"Server","level":"LOG","message":"[2026-06-01T06:51:42.792Z] GET /api/logs"}
+{"timestamp":"06:53:45.418","source":"Server","level":"LOG","message":"[2026-06-01T06:51:44.381Z] GET /api/logs"}
+{"timestamp":"06:53:47.844","source":"Server","level":"LOG","message":"[2026-06-01T06:51:46.807Z] GET /api/logs"}
+{"timestamp":"06:54:32.370","source":"Server","level":"LOG","message":"[2026-06-01T06:52:31.333Z] GET /api/logs"}
+{"timestamp":"06:54:33.476","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:54:33.482","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:54:38.338","source":"Server","level":"LOG","message":"[2026-06-01T06:52:37.301Z] GET /api/logs"}
+{"timestamp":"06:54:42.844","source":"Server","level":"LOG","message":"[2026-06-01T06:52:41.807Z] GET /api/logs"}
+{"timestamp":"06:55:38.241","source":"Server","level":"LOG","message":"[2026-06-01T06:53:37.204Z] GET /api/logs"}
+{"timestamp":"06:55:38.973","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:55:39.021","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:55:58.757","source":"Server","level":"LOG","message":"[2026-06-01T06:53:57.720Z] GET /api/logs"}
+{"timestamp":"06:56:15.761","source":"Server","level":"LOG","message":"[2026-06-01T06:54:14.722Z] GET /api/analytics/stats"}
+{"timestamp":"06:56:15.765","source":"Server","level":"LOG","message":"[2026-06-01T06:54:14.728Z] GET /api/analytics/violations"}
+{"timestamp":"06:56:15.769","source":"Server","level":"LOG","message":"[2026-06-01T06:54:14.732Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"06:56:15.773","source":"Server","level":"LOG","message":"[2026-06-01T06:54:14.736Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"06:56:15.776","source":"Server","level":"LOG","message":"[2026-06-01T06:54:14.738Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"06:56:15.787","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:56:15.795","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:56:15.801","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:56:15.807","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:56:15.812","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:56:15.905","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:56:15.912","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:56:16.470","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:56:16.487","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:56:16.556","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:56:16.590","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:56:16.594","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:56:16.652","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:56:17.320","source":"Server","level":"LOG","message":"[2026-06-01T06:54:16.283Z] GET /api/analytics/hotspots"}
+{"timestamp":"06:56:17.335","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:56:17.454","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:56:18.038","source":"Server","level":"LOG","message":"[2026-06-01T06:54:17.000Z] GET /api/logs"}
+{"timestamp":"06:57:12.369","source":"Server","level":"LOG","message":"[2026-06-01T06:55:11.332Z] GET /api/analytics/stats"}
+{"timestamp":"06:57:12.383","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:57:12.386","source":"Server","level":"LOG","message":"[2026-06-01T06:55:11.349Z] GET /api/analytics/violations"}
+{"timestamp":"06:57:12.388","source":"Server","level":"LOG","message":"[2026-06-01T06:55:11.351Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"06:57:12.390","source":"Server","level":"LOG","message":"[2026-06-01T06:55:11.353Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"06:57:12.395","source":"Server","level":"LOG","message":"[2026-06-01T06:55:11.358Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"06:57:12.400","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:57:12.406","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:57:12.410","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:57:12.414","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:57:27.542","source":"Server","level":"ERROR","message":"Handler error: Error: Connection terminated due to connection timeout"}
+{"timestamp":"06:57:27.631","source":"Server","level":"ERROR","message":"Handler error: Error: Connection terminated due to connection timeout"}
+{"timestamp":"06:57:27.699","source":"Server","level":"ERROR","message":"Handler error: Error: Connection terminated due to connection timeout"}
+{"timestamp":"06:57:27.768","source":"Server","level":"ERROR","message":"Handler error: Error: Connection terminated due to connection timeout"}
+{"timestamp":"06:57:27.841","source":"Server","level":"ERROR","message":"Handler error: Error: Connection terminated due to connection timeout"}
+{"timestamp":"06:57:33.968","source":"Server","level":"LOG","message":"[2026-06-01T06:55:32.931Z] GET /api/logs"}
+{"timestamp":"06:57:34.864","source":"Server","level":"LOG","message":"[2026-06-01T06:55:33.827Z] GET /api/analytics/stats"}
+{"timestamp":"06:57:34.877","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:57:34.880","source":"Server","level":"LOG","message":"[2026-06-01T06:55:33.843Z] GET /api/analytics/violations"}
+{"timestamp":"06:57:34.882","source":"Server","level":"LOG","message":"[2026-06-01T06:55:33.845Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"06:57:34.884","source":"Server","level":"LOG","message":"[2026-06-01T06:55:33.847Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"06:57:34.885","source":"Server","level":"LOG","message":"[2026-06-01T06:55:33.848Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"06:57:34.892","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:57:34.896","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:57:34.899","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:57:34.902","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:57:36.260","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:57:36.437","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:57:36.438","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:57:36.438","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:57:36.438","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:57:36.438","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:57:36.438","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:57:36.670","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:57:36.672","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:57:36.674","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:57:36.676","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:57:36.680","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:57:36.707","source":"Server","level":"LOG","message":"[2026-06-01T06:55:35.670Z] GET /api/analytics/hotspots"}
+{"timestamp":"06:57:36.719","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:57:37.276","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:57:49.351","source":"Server","level":"LOG","message":"[2026-06-01T06:55:48.314Z] GET /api/analytics/stats"}
+{"timestamp":"06:57:49.352","source":"Server","level":"LOG","message":"[2026-06-01T06:55:48.315Z] GET /api/analytics/violations"}
+{"timestamp":"06:57:49.354","source":"Server","level":"LOG","message":"[2026-06-01T06:55:48.317Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"06:57:49.355","source":"Server","level":"LOG","message":"[2026-06-01T06:55:48.318Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"06:57:49.356","source":"Server","level":"LOG","message":"[2026-06-01T06:55:48.319Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"06:57:49.373","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:57:49.378","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:57:49.381","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:57:49.383","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:57:49.387","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:57:49.504","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:57:49.554","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:57:49.555","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:57:49.583","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:57:49.596","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:57:50.290","source":"Server","level":"LOG","message":"[2026-06-01T06:55:49.252Z] GET /api/analytics/hotspots"}
+{"timestamp":"06:57:50.302","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:57:50.444","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:58:12.031","source":"Server","level":"LOG","message":"[2026-06-01T06:56:10.994Z] GET /api/challans"}
+{"timestamp":"06:58:12.035","source":"Server","level":"LOG","message":"[2026-06-01T06:56:10.998Z] GET /api/challans/stats"}
+{"timestamp":"06:58:13.746","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:58:13.945","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:58:14.152","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:58:14.211","source":"Server","level":"LOG","message":"[2026-06-01T06:56:13.174Z] GET /api/logs"}
+{"timestamp":"06:59:35.283","source":"Server","level":"LOG","message":"[2026-06-01T06:57:34.246Z] GET /api/logs"}
+{"timestamp":"06:59:36.443","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:59:36.443","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:59:40.086","source":"Server","level":"LOG","message":"[2026-06-01T06:57:39.049Z] GET /api/logs"}
+{"timestamp":"06:59:45.279","source":"Server","level":"LOG","message":"[2026-06-01T06:57:44.242Z] GET /api/analytics/stats"}
+{"timestamp":"06:59:45.280","source":"Server","level":"LOG","message":"[2026-06-01T06:57:44.243Z] GET /api/analytics/violations"}
+{"timestamp":"06:59:45.281","source":"Server","level":"LOG","message":"[2026-06-01T06:57:44.244Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"06:59:45.282","source":"Server","level":"LOG","message":"[2026-06-01T06:57:44.245Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"06:59:45.285","source":"Server","level":"LOG","message":"[2026-06-01T06:57:44.247Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"06:59:45.300","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:59:45.304","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:59:45.308","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:59:45.311","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:59:45.314","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:59:45.419","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:59:45.425","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:59:46.036","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:59:46.149","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:59:46.160","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"06:59:46.179","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:59:46.287","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:59:46.315","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"06:59:46.344","source":"Server","level":"LOG","message":"[2026-06-01T06:57:45.307Z] GET /api/analytics/hotspots"}
+{"timestamp":"06:59:46.356","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"06:59:46.533","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"07:02:58.188","source":"Server","level":"LOG","message":"[2026-06-01T07:00:57.150Z] GET /api/analytics/stats"}
+{"timestamp":"07:02:58.190","source":"Server","level":"LOG","message":"[2026-06-01T07:00:57.152Z] GET /api/analytics/violations"}
+{"timestamp":"07:02:58.195","source":"Server","level":"LOG","message":"[2026-06-01T07:00:57.158Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"07:02:58.198","source":"Server","level":"LOG","message":"[2026-06-01T07:00:57.160Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"07:02:58.201","source":"Server","level":"LOG","message":"[2026-06-01T07:00:57.164Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"07:02:58.235","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"07:02:58.244","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"07:02:58.250","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"07:02:58.257","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"07:02:58.263","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"07:03:00.765","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"07:03:00.766","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"07:03:00.939","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"07:03:00.951","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"07:03:00.992","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"07:03:01.122","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"07:03:01.157","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"07:03:01.213","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"07:03:01.227","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"07:03:01.252","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"07:03:01.276","source":"Server","level":"LOG","message":"[2026-06-01T07:01:00.239Z] GET /api/analytics/hotspots"}
+{"timestamp":"07:03:01.287","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"07:03:01.409","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"07:03:26.740","source":"Server","level":"LOG","message":"[2026-06-01T07:01:25.703Z] GET /api/analytics/stats"}
+{"timestamp":"07:03:26.760","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"07:03:26.765","source":"Server","level":"LOG","message":"[2026-06-01T07:01:25.727Z] GET /api/analytics/violations"}
+{"timestamp":"07:03:26.770","source":"Server","level":"LOG","message":"[2026-06-01T07:01:25.733Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"07:03:26.777","source":"Server","level":"LOG","message":"[2026-06-01T07:01:25.740Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"07:03:26.783","source":"Server","level":"LOG","message":"[2026-06-01T07:01:25.745Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"07:03:26.791","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"07:03:26.800","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"07:03:26.806","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"07:03:26.809","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"07:03:27.901","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"07:03:27.901","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"07:03:28.103","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"07:03:28.104","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"07:03:28.105","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"07:03:28.106","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"07:03:28.106","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"07:03:28.487","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"07:03:28.488","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"07:03:28.490","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"07:03:28.521","source":"Server","level":"LOG","message":"[2026-06-01T07:01:27.484Z] GET /api/analytics/hotspots"}
+{"timestamp":"07:03:28.536","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"07:03:28.937","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"07:03:29.406","source":"Server","level":"LOG","message":"[2026-06-01T07:01:28.369Z] GET /api/analytics/stats"}
+{"timestamp":"07:03:29.408","source":"Server","level":"LOG","message":"[2026-06-01T07:01:28.370Z] GET /api/analytics/violations"}
+{"timestamp":"07:03:29.410","source":"Server","level":"LOG","message":"[2026-06-01T07:01:28.372Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"07:03:29.411","source":"Server","level":"LOG","message":"[2026-06-01T07:01:28.374Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"07:03:29.413","source":"Server","level":"LOG","message":"[2026-06-01T07:01:28.376Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"07:03:29.441","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"07:03:29.444","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"07:03:29.449","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"07:03:29.454","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"07:03:29.457","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"07:03:29.569","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"07:03:29.608","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"07:03:29.624","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"07:03:29.658","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"07:03:29.695","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"07:03:29.829","source":"Server","level":"LOG","message":"[2026-06-01T07:01:28.792Z] GET /api/analytics/hotspots"}
+{"timestamp":"07:03:29.836","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"07:03:29.946","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"07:25:37.160","source":"Server","level":"LOG","message":"[2026-06-01T07:23:36.123Z] GET /api/logs"}
+{"timestamp":"07:25:38.682","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"07:25:38.683","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"07:26:00.773","source":"Server","level":"LOG","message":"[2026-06-01T07:23:59.736Z] GET /api/logs"}
+{"timestamp":"07:26:02.034","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"07:26:02.034","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"07:26:04.286","source":"Server","level":"LOG","message":"[2026-06-01T07:24:03.249Z] GET /api/logs"}
+{"timestamp":"07:26:18.000","source":"Server","level":"LOG","message":"[2026-06-01T07:24:16.962Z] GET /api/logs"}
+{"timestamp":"07:26:20.149","source":"Server","level":"LOG","message":"[2026-06-01T07:24:19.112Z] GET /api/logs"}
+{"timestamp":"07:26:21.552","source":"Server","level":"LOG","message":"[2026-06-01T07:24:20.514Z] GET /api/logs"}
+{"timestamp":"07:26:22.628","source":"Server","level":"LOG","message":"[2026-06-01T07:24:21.591Z] GET /api/logs"}
+{"timestamp":"07:26:23.573","source":"Server","level":"LOG","message":"[2026-06-01T07:24:22.536Z] GET /api/logs"}
+{"timestamp":"07:26:24.645","source":"Server","level":"LOG","message":"[2026-06-01T07:24:23.608Z] GET /api/logs"}
+{"timestamp":"07:26:25.883","source":"Server","level":"LOG","message":"[2026-06-01T07:24:24.846Z] GET /api/logs"}
+{"timestamp":"07:26:26.996","source":"Server","level":"LOG","message":"[2026-06-01T07:24:25.958Z] GET /api/logs"}
+{"timestamp":"07:26:30.386","source":"Server","level":"LOG","message":"[2026-06-01T07:24:29.349Z] GET /api/logs"}
+{"timestamp":"07:26:33.900","source":"Server","level":"LOG","message":"[2026-06-01T07:24:32.863Z] GET /api/logs"}
+{"timestamp":"07:26:35.844","source":"Server","level":"LOG","message":"[2026-06-01T07:24:34.807Z] GET /api/logs"}
+{"timestamp":"07:26:37.408","source":"Server","level":"LOG","message":"[2026-06-01T07:24:36.371Z] GET /api/logs"}
+{"timestamp":"07:26:39.125","source":"Server","level":"LOG","message":"[2026-06-01T07:24:38.088Z] GET /api/logs"}
+{"timestamp":"07:26:42.812","source":"Server","level":"LOG","message":"[2026-06-01T07:24:41.775Z] GET /api/logs"}
+{"timestamp":"07:26:45.767","source":"Server","level":"LOG","message":"[2026-06-01T07:24:44.730Z] GET /api/logs"}
+{"timestamp":"07:26:48.514","source":"Server","level":"LOG","message":"[2026-06-01T07:24:47.477Z] GET /api/logs"}
+{"timestamp":"07:29:26.824","source":"Server","level":"LOG","message":"[2026-06-01T07:27:25.787Z] GET /api/logs"}
+{"timestamp":"07:29:28.083","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"07:29:28.084","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}

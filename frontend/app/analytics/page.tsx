@@ -22,6 +22,11 @@ import {
   ANALYTICS_CHART_IDS,
   useChartDurations,
 } from '@/components/analytics/useChartDurations';
+import {
+  getSpeedRangeColor,
+  sortSpeedDistribution,
+  totalSpeedDistributionCount,
+} from '@/lib/speedDistribution';
 import { IoSearchSharp } from 'react-icons/io5';
 import { MdArrowDropDown } from 'react-icons/md';
 import { IoMdRefresh } from 'react-icons/io';
@@ -249,6 +254,15 @@ export default function Analytics() {
 
   const totalVehicles = stats.totalVehicles || vehicleTypeData.reduce((sum, item) => sum + item.count, 0);
   const totalViolations = stats.totalViolations || violationsData.reduce((sum, item) => sum + item.count, 0);
+
+  const speedDistributionChartData = useMemo(
+    () => sortSpeedDistribution(speedDistribution),
+    [speedDistribution],
+  );
+  const speedDistributionTotal = useMemo(
+    () => totalSpeedDistributionCount(speedDistributionChartData),
+    [speedDistributionChartData],
+  );
 
   if (loading) {
     return (
@@ -780,35 +794,43 @@ export default function Analytics() {
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
                 <Pie
-                  data={speedDistribution}
+                  data={speedDistributionChartData}
+                  nameKey="range"
                   cx="50%"
                   cy="50%"
                   labelLine={false}
-                  label={({ name, percent }) => `${name}: ${((percent || 0) * 100).toFixed(0)}%`}
+                  label={({ range, percent }) =>
+                    `${range} km/h: ${((percent || 0) * 100).toFixed(0)}%`
+                  }
                   outerRadius={100}
-                  fill="#1a73e8"
                   dataKey="count"
                 >
-                  {speedDistribution.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={VIOLATION_COLORS[index % VIOLATION_COLORS.length]} />
+                  {speedDistributionChartData.map((entry, index) => (
+                    <Cell
+                      key={`speed-${entry.range}`}
+                      fill={getSpeedRangeColor(entry.range, index)}
+                    />
                   ))}
                 </Pie>
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: 'black', 
+                <Tooltip
+                  formatter={(value: number, _name, item) => [
+                    value,
+                    `${item.payload.range} km/h`,
+                  ]}
+                  contentStyle={{
+                    backgroundColor: 'black',
                     color: 'white',
-                    padding:'0px',
+                    padding: '0px',
                     paddingLeft: '8px',
                     paddingRight: '8px',
                     borderRadius: '4px',
-                    border: '0px'
-                  }} 
+                    border: '0px',
+                  }}
                 />
               </PieChart>
             </ResponsiveContainer>
-            <div className="w-full pl-4 flex justify-center">
-                  Total vehicles: {totalVehicles}
-
+            <div className="w-full pl-4 flex justify-center text-[#9aa0a6]">
+              Total in range: {speedDistributionTotal}
             </div>
           </div>
         </div>
@@ -929,7 +951,7 @@ export default function Analytics() {
           {/* Header Panel Containing Controls */}
           <div className="flex justify-between items-center mb-5">
             <h2 className="text-gray-200 text-lg ml-5">
-              Separate Traffic Volume
+              Helmet
             </h2>
             
             {/* Action Button Strip */}
@@ -1030,7 +1052,7 @@ export default function Analytics() {
           {/* Header Panel Containing Controls */}
           <div className="flex justify-between items-center mb-5">
             <h2 className="text-gray-200 text-lg ml-5">
-              Emergency Vehicles
+              Tripling
             </h2>
             
             {/* Action Button Strip */}

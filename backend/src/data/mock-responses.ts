@@ -6,7 +6,63 @@ const MOCK_LOGS = [
   { id: 'VEH-000003', dateTime: new Date(Date.now() - 10800000).toISOString(), location: 'NH-8 Toll Plaza', licenseNo: 'KA-03-EF-9012', vehicleType: 'Truck', speed: 80, helmetStatus: 'N/A' as const, redLightCross: false, tripling: false },
   { id: 'VEH-000004', dateTime: new Date(Date.now() - 14400000).toISOString(), location: 'Airport Road', licenseNo: 'TN-07-GH-3456', vehicleType: 'Bus', speed: 55, helmetStatus: 'N/A' as const, redLightCross: true, tripling: false },
   { id: 'VEH-000005', dateTime: new Date(Date.now() - 18000000).toISOString(), location: 'Sadar Bazaar', licenseNo: 'RJ-14-MN-6789', vehicleType: 'Bike', speed: 40, helmetStatus: true, redLightCross: false, tripling: true },
+  { id: 'VEH-000006', dateTime: new Date(Date.now() - 2 * 86400000).toISOString(), location: 'Karol Bagh', licenseNo: 'DL-05-XY-1122', vehicleType: 'Auto', speed: 38, helmetStatus: 'N/A' as const, redLightCross: false, tripling: false },
+  { id: 'VEH-000007', dateTime: new Date(Date.now() - 5 * 86400000).toISOString(), location: 'Civil Lines', licenseNo: 'HR-26-AB-7788', vehicleType: 'Ambulance', speed: 72, helmetStatus: 'N/A' as const, redLightCross: false, tripling: false },
+  { id: 'VEH-000008', dateTime: new Date(Date.now() - 12 * 86400000).toISOString(), location: 'Industrial Area Gate 4', licenseNo: 'UP-16-FG-3344', vehicleType: 'Fire brigade', speed: 68, helmetStatus: 'N/A' as const, redLightCross: true, tripling: false },
 ];
+
+type MockLog = (typeof MOCK_LOGS)[number];
+
+function filterMockLogs(items: MockLog[], searchParams: URLSearchParams): MockLog[] {
+  let filtered = [...items];
+
+  const search = searchParams.get('search');
+  if (search) {
+    const q = search.toLowerCase();
+    filtered = filtered.filter(
+      (log) =>
+        log.id.toLowerCase().includes(q) ||
+        log.licenseNo.toLowerCase().includes(q) ||
+        log.location.toLowerCase().includes(q) ||
+        log.vehicleType.toLowerCase().includes(q),
+    );
+  }
+
+  if (searchParams.get('speeding') === 'true') {
+    filtered = filtered.filter((log) => log.speed > 60);
+  }
+  if (searchParams.get('helmetless') === 'true') {
+    filtered = filtered.filter(
+      (log) => log.vehicleType === 'Bike' && log.helmetStatus === false,
+    );
+  }
+  if (searchParams.get('redLight') === 'true') {
+    filtered = filtered.filter((log) => log.redLightCross);
+  }
+  if (searchParams.get('tripling') === 'true') {
+    filtered = filtered.filter(
+      (log) => log.vehicleType === 'Bike' && log.tripling,
+    );
+  }
+
+  const from = searchParams.get('from');
+  const to = searchParams.get('to');
+  if (from) {
+    const fromMs = new Date(from).getTime();
+    filtered = filtered.filter((log) => new Date(log.dateTime).getTime() >= fromMs);
+  }
+  if (to) {
+    const toMs = new Date(to).getTime();
+    filtered = filtered.filter((log) => new Date(log.dateTime).getTime() <= toMs);
+  }
+
+  const vehicleType = searchParams.get('vehicleType');
+  if (vehicleType) {
+    filtered = filtered.filter((log) => log.vehicleType === vehicleType);
+  }
+
+  return filtered;
+}
 
 const MOCK_CHALLANS = [
   { id: 'CH-000001', dateTime: new Date(Date.now() - 432000000).toISOString(), location: 'MG Road Junction', licenseNo: 'DL-01-AB-1234', vehicleType: 'Car', violationType: 'Over Speeding', fineAmount: 2000, status: 'pending' as const, penaltyAmount: 0, paymentDate: null },
@@ -85,11 +141,12 @@ export function getMockResponse(pathname: string, searchParams: URLSearchParams)
   if (pathname === '/api/analytics/speed-distribution') {
     return {
       data: [
-        { range: '0-40', count: 4 },
-        { range: '41-60', count: 5 },
+        { range: '0-20', count: 4 },
+        { range: '21-40', count: 5 },
+        { range: '41-60', count: 6 },
         { range: '61-80', count: 4 },
         { range: '81-100', count: 2 },
-        { range: '100+', count: 0 },
+        { range: '100+', count: 1 },
       ],
     };
   }
@@ -104,7 +161,10 @@ export function getMockResponse(pathname: string, searchParams: URLSearchParams)
     };
   }
 
-  if (pathname === '/api/logs') return paginate(MOCK_LOGS, page, limit);
+  if (pathname === '/api/logs') {
+    const filtered = filterMockLogs(MOCK_LOGS, searchParams);
+    return paginate(filtered, page, limit);
+  }
   if (pathname === '/api/challans') return paginate(MOCK_CHALLANS, page, limit);
   if (pathname === '/api/challans/stats') {
     return { pending: 2, received: 1, rejected: 0, totalFines: 3500, collectedFines: 500 };
