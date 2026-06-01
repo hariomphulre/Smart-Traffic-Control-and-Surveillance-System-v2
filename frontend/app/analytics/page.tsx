@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect , useMemo, useRef} from 'react';
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import dynamic from 'next/dynamic';
 import {
@@ -127,8 +127,10 @@ export default function Analytics() {
     closeCustomModal,
   } = useChartDurations();
 
-  const data = useMemo(() => generateDenseData(), []);
+  const [chartDataSeed, setChartDataSeed] = useState(0);
+  const data = useMemo(() => generateDenseData(), [chartDataSeed]);
   const cardRef = useRef<HTMLDivElement>(null);
+  const hasInitiallyLoaded = useRef(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   // Sync fullscreen state if user exits via ESC key
@@ -210,47 +212,66 @@ export default function Analytics() {
     tripling: 0,
     redLightCross: 0,
   });
-  const [loading, setLoading] = useState(true);
+  const [initialLoading, setInitialLoading] = useState(true);
+  const [sectionRefreshing, setSectionRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [usingDemoData, setUsingDemoData] = useState(false);
+  const [contentRefreshKey, setContentRefreshKey] = useState(0);
+
+  const fetchAnalytics = useCallback(async (loadMode: 'initial' | 'section') => {
+    if (loadMode === 'section') {
+      setSectionRefreshing(true);
+    }
+
+    setError(null);
+    setUsingDemoData(false);
+
+    const results = await Promise.allSettled([
+      getStats(),
+      getViolations(),
+      getVehicleTypes(),
+      getHourlyTraffic(),
+      getSpeedDistribution(),
+    ]);
+
+    const failed = results.filter((r) => r.status === 'rejected');
+    if (failed.length === results.length) {
+      const reason = failed[0].status === 'rejected' ? failed[0].reason : null;
+      setError(
+        reason instanceof Error ? reason.message : 'Failed to fetch analytics',
+      );
+      setInitialLoading(false);
+      setSectionRefreshing(false);
+      return;
+    }
+
+    if (results[0].status === 'fulfilled') setStats(results[0].value);
+    if (results[1].status === 'fulfilled') setViolationsData(results[1].value);
+    if (results[2].status === 'fulfilled') setVehicleTypeData(results[2].value);
+    if (results[3].status === 'fulfilled') setHourlyTraffic(results[3].value);
+    if (results[4].status === 'fulfilled') setSpeedDistribution(results[4].value);
+
+    if (failed.length > 0) {
+      setUsingDemoData(true);
+    }
+
+    hasInitiallyLoaded.current = true;
+    setInitialLoading(false);
+    setSectionRefreshing(false);
+
+    if (loadMode === 'section') {
+      setChartDataSeed((seed) => seed + 1);
+      setContentRefreshKey((key) => key + 1);
+    }
+  }, []);
 
   useEffect(() => {
-    const fetchAnalytics = async () => {
-      setLoading(true);
-      setError(null);
-      setUsingDemoData(false);
+    fetchAnalytics('initial');
+  }, [fetchAnalytics]);
 
-      const results = await Promise.allSettled([
-        getStats(),
-        getViolations(),
-        getVehicleTypes(),
-        getHourlyTraffic(),
-        getSpeedDistribution(),
-      ]);
-
-      const failed = results.filter((r) => r.status === 'rejected');
-      if (failed.length === results.length) {
-        const reason = failed[0].status === 'rejected' ? failed[0].reason : null;
-        setError(reason instanceof Error ? reason.message : 'Failed to fetch analytics');
-        setLoading(false);
-        return;
-      }
-
-      if (results[0].status === 'fulfilled') setStats(results[0].value);
-      if (results[1].status === 'fulfilled') setViolationsData(results[1].value);
-      if (results[2].status === 'fulfilled') setVehicleTypeData(results[2].value);
-      if (results[3].status === 'fulfilled') setHourlyTraffic(results[3].value);
-      if (results[4].status === 'fulfilled') setSpeedDistribution(results[4].value);
-
-      if (failed.length > 0) {
-        setUsingDemoData(true);
-      }
-
-      setLoading(false);
-    };
-
-    fetchAnalytics();
-  }, []);
+  const handleRefresh = () => {
+    fetchAnalytics('section');
+  };
 
   const totalVehicles = stats.totalVehicles || vehicleTypeData.reduce((sum, item) => sum + item.count, 0);
   const totalViolations = stats.totalViolations || violationsData.reduce((sum, item) => sum + item.count, 0);
@@ -264,7 +285,7 @@ export default function Analytics() {
     [speedDistributionChartData],
   );
 
-  if (loading) {
+  if (initialLoading && !hasInitiallyLoaded.current) {
     return (
       <div className="w-full h-screen flex flex-col items-center justify-center bg-[#0a0a0a]">
         <div className="text-center">
@@ -275,7 +296,7 @@ export default function Analytics() {
     );
   }
 
-  if (error) {
+  if (error && !hasInitiallyLoaded.current) {
     return (
       <div className="w-full h-screen flex flex-col items-center justify-center bg-[#0a0a0a]">
         <div className="text-center">
@@ -320,18 +341,20 @@ export default function Analytics() {
         </div>
 
         <div className="group flex items-center gap-1 px-2 mr-3 justify-center hover:bg-[#202124] rounded-sm transition-all">
-          <IoMdRefresh className="h-5 w-5 text-[#669DF6] group-hover:text-[#AECBFA]"></IoMdRefresh>
-          <button 
-            className="py-1 font-medium transition-all text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg"
-            >
+          <IoMdRefresh
+            className={`h-5 w-5 text-[#669DF6] group-hover:text-[#AECBFA] ${
+              sectionRefreshing ? 'animate-spin' : ''
+            }`}
+          />
+          <button
+            type="button"
+            onClick={handleRefresh}
+            disabled={sectionRefreshing}
+            className="py-1 font-medium transition-all text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg disabled:opacity-50"
+          >
             Refresh
           </button>
         </div>
-        {usingDemoData && (
-          <p className="mt-2 text-sm text-[#ea8600] dark:text-[#fdd663]">
-            Some charts could not be loaded. Showing available data (demo mode may be active if the database is offline).
-          </p>
-        )}
       </div>
 
       <div className="w-full relative font-sans">
@@ -368,7 +391,27 @@ export default function Analytics() {
           </div>
         )}
       </div>
-      
+
+      <div key={contentRefreshKey} className="relative min-h-[480px]">
+        {sectionRefreshing && (
+          <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-[#131314]/90 backdrop-blur-[1px]">
+            <div className="w-10 h-10 border-4 border-[#3c4043] border-t-[#8AB4F8] rounded-full animate-spin mb-3" />
+            <p className="text-[#9aa0a6] font-mono text-sm">Refreshing analytics...</p>
+          </div>
+        )}
+
+        {error && hasInitiallyLoaded.current && !sectionRefreshing && (
+          <div className="mx-4 mt-4 px-4 py-3 rounded-md border border-[#d93025]/40 bg-[#d93025]/10 text-[#f28b82] text-sm">
+            {error}
+          </div>
+        )}
+
+        {usingDemoData && !sectionRefreshing && (
+          <p className="mx-4 mt-4 text-sm text-[#ea8600] dark:text-[#fdd663]">
+            Some charts could not be loaded. Showing available data (demo mode may be active if the database is offline).
+          </p>
+        )}
+
       {/* Chart div 1*/}
       <div className="flex w-full mt-6 px-4 gap-2">
 
@@ -1163,7 +1206,8 @@ export default function Analytics() {
         <p className="text-sm text-[#5f6368] dark:text-[#9aa0a6] mb-4">
           Click on the markers to see detailed violation information for each zone. Larger markers indicate higher violation counts.
         </p>
-        <TrafficHeatMap />
+        <TrafficHeatMap key={contentRefreshKey} />
+      </div>
       </div>
     </div>
   )

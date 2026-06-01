@@ -1,9 +1,6 @@
 {
-  "/api/accidents/route": "app/api/accidents/route.js",
-  "/api/accidents/stats/route": "app/api/accidents/stats/route.js",
   "/api/analytics/[slug]/route": "app/api/analytics/[slug]/route.js",
   "/api/challans/route": "app/api/challans/route.js",
   "/api/challans/stats/route": "app/api/challans/stats/route.js",
-  "/api/images/vehicles/route": "app/api/images/vehicles/route.js",
   "/api/logs/route": "app/api/logs/route.js"
 }
