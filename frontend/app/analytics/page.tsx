@@ -493,6 +493,8 @@ export default function Analytics() {
         )}
 
 
+      <div></div>
+      
       {/* Headline Data Ribbon */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 border-t border-l border-[#3c4043] mt-4 bg-[#131314]">
         
@@ -601,7 +603,7 @@ export default function Analytics() {
         {/* 5. Traffic Growth Rate (Inline Sparkline) */}
         <div className="pt-3 pb-4 pl-4 pr-4 border-b border-r border-[#3c4043] flex flex-col justify-between transition-colors group">
           <div className="flex items-center gap-2 mb-2 text-[#9aa0a6] transition-colors">
-            {isGrowthPositive ? <MdTrendingUp className="w-5 h-5" /> : <MdTrendingDown className="w-4.5 h-4.5 text-[#f28b82]" />}
+            {isGrowthPositive ? <MdTrendingUp className="w-5 h-5" /> : <MdTrendingDown className="w-4.5 h-4.5" />}
             <span className="text-sm uppercase font-medium tracking-wide">Traffic Growth Rate</span>
           </div>
           <div className="flex justify-between items-center h-full gap-4 w-full">
