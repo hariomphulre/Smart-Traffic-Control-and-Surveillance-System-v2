@@ -148,16 +148,16 @@ export const LOCATION_DB: Record<string, any> = {
   "Odisha": {
     "Bhubaneswar": {
       "CRP Square": ["ODB1", "ODB2"],
-      "Jaydev Vihar": ["ODB2", "ODB3"],
-      "Kalpana Square": ["ODB3", "ODB4"],
-      "Master Canteen": ["ODB4", "ODB5"],
-      "Patia": ["ODB5", "ODB6"],
-      "Rasulgarh": ["ODB6", "ODB7"],
-      "Vani Vihar": ["ODB7", "ODB9"],
-      "Acharya Vihar": ["ODB8", "ODB1"],
-      "Khandagiri": ["ODB9", "ODB10"],
-      "Fire Station Square": ["ODB10"],
-      "Rajmahal Square": ["ODB8"]
+      "Jaydev Vihar": ["ODB3", "ODB4"],
+      "Kalpana Square": ["ODB5", "ODB6"],
+      "Master Canteen": ["ODB7", "ODB8"],
+      "Patia": ["ODB9", "ODB10"],
+      "Rasulgarh": ["ODB11", "ODB12"],
+      "Vani Vihar": ["ODB13", "ODB14"],
+      "Acharya Vihar": ["ODB15", "ODB16"],
+      "Khandagiri": ["ODB17", "ODB18"],
+      "Fire Station Square": ["ODB19"],
+      "Rajmahal Square": ["ODB20"]
     },
     "Cuttack": {
       "Badambadi": ["ODC1"],

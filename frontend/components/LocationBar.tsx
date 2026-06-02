@@ -59,7 +59,7 @@ export default function LocationBar() {
                 }}
                 onKeyDown={handleKeyDown}
                 onFocus={() => { if (!isLocked) setShowSuggestions(true); }}
-                placeholder={pathSegments.length === 0 ? "state / city / area / signal code, Ex: Maharashtra / Pune / Pimpri / T1" : ""}
+                placeholder={pathSegments.length === 0 ? "state / city / area / signal code, Ex: Maharashtra / Mumbai / Bandra / MMB2" : ""}
                 className={`bg-transparent outline-none h-full w-full caret-white cursor-text
                   ${isLocked 
                     ? 'text-transparent placeholder:text-transparent' 
