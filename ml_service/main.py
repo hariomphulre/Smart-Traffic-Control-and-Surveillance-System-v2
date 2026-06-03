@@ -223,6 +223,54 @@ class ProcessManager:
                 }
         return payload
 
+    def pause_partition(self, partition: int) -> None:
+        """Pause a partition by sending SIGSTOP to its process."""
+        with self._lock:
+            runtime = self._partition_runtime.get(partition)
+            if not runtime or runtime.detector.poll() is not None:
+                return
+            try:
+                import signal
+                os.kill(runtime.detector.pid, signal.SIGSTOP)
+            except Exception:
+                pass
+
+    def resume_partition(self, partition: int) -> None:
+        """Resume a partition by sending SIGCONT to its process."""
+        with self._lock:
+            runtime = self._partition_runtime.get(partition)
+            if not runtime or runtime.detector.poll() is not None:
+                return
+            try:
+                import signal
+                os.kill(runtime.detector.pid, signal.SIGCONT)
+            except Exception:
+                pass
+
+    def pause_all(self) -> None:
+        """Pause all running partitions."""
+        for partition in [1, 2, 3, 4]:
+            self.pause_partition(partition)
+        with self._lock:
+            if self._signal_process and self._signal_process.poll() is None:
+                try:
+                    import signal
+                    os.kill(self._signal_process.pid, signal.SIGSTOP)
+                except Exception:
+                    pass
+
+    def resume_all(self) -> None:
+        """Resume all paused partitions."""
+        for partition in [1, 2, 3, 4]:
+            self.resume_partition(partition)
+        with self._lock:
+            if self._signal_process and self._signal_process.poll() is None:
+                try:
+                    import signal
+                    os.kill(self._signal_process.pid, signal.SIGCONT)
+                except Exception:
+                    pass
+
     def stop_all(self) -> None:
         for partition in [1, 2, 3, 4]:
             self.stop_partition(partition)
@@ -289,6 +337,18 @@ def run_simulation(req: RunRequest) -> Dict[str, object]:
 def stop_simulation() -> Dict[str, bool]:
     manager.stop_all()
     return {"ok": True}
+
+
+@app.post("/simulation/pause")
+def pause_simulation() -> Dict[str, object]:
+    manager.pause_all()
+    return {"ok": True, "status": manager.status()}
+
+
+@app.post("/simulation/resume")
+def resume_simulation() -> Dict[str, object]:
+    manager.resume_all()
+    return {"ok": True, "status": manager.status()}
 
 
 @app.get("/simulation/status")

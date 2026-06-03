@@ -276,7 +276,7 @@ export default function Logs() {
               className={`group flex items-center gap-1 px-3 justify-center rounded-sm transition-all cursor-pointer ${isListMode && !editingListId ? 'bg-[#202124]' : 'hover:bg-[#202124]'}`}
             >
               <FiPlus className="h-4 w-4 text-[#669DF6] group-hover:text-[#AECBFA]" />
-              <button className="py-1 font-medium transition-all text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg">
+                  <button className="py-1 font-medium transition-all text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg">
                 Create list
               </button>
             </div>
@@ -323,7 +323,9 @@ export default function Logs() {
           </div>
         </div>
 
-        <div className="group flex items-center gap-1 px-2 mr-3 justify-center hover:bg-[#202124] rounded-sm transition-all">
+        <div className="group flex items-center gap-1 px-2 mr-3 justify-center hover:bg-[#202124] rounded-sm transition-all"
+          onClick={handleRefresh}
+        >
           <IoMdRefresh
             className={`h-5 w-5 text-[#669DF6] group-hover:text-[#AECBFA] ${
               sectionRefreshing ? 'animate-spin' : ''
@@ -331,7 +333,6 @@ export default function Logs() {
           />
           <button
             type="button"
-            onClick={handleRefresh}
             disabled={sectionRefreshing}
             className="py-1 font-medium transition-all text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg disabled:opacity-50"
           >

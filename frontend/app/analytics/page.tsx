@@ -79,7 +79,6 @@ const generateDenseData = () => {
 
 const formatYAxis = (tickItem: number) => {
   if (tickItem === 0) return "0";
-  // if (tickItem >= 1000) return `${(tickItem / 1000).toFixed(1)}s`;
   return `${Math.round(tickItem)}`;
 };
 
@@ -156,6 +155,7 @@ const SparklineTooltip = ({ active, payload }: any) => {
   }
   return null;
 };
+
 export default function Analytics() {
   const {
     getDuration,
@@ -168,6 +168,10 @@ export default function Analytics() {
     handleCustomApply,
     closeCustomModal,
   } = useChartDurations();
+
+  useEffect(() => {
+    handleDurationSelect(('headlineData' as any), 'Today');
+  }, [handleDurationSelect]);
 
   const [chartDataSeed, setChartDataSeed] = useState(0);
   const data = useMemo(() => generateDenseData(), [chartDataSeed]);
@@ -224,7 +228,6 @@ export default function Analytics() {
     if (!cardRef.current) return;
 
     try {
-      // Temporarily hide action buttons during image capture
       const actionsArea = cardRef.current.querySelector(".chart-actions");
       if (actionsArea) actionsArea.classList.add("invisible");
 
@@ -340,7 +343,7 @@ export default function Analytics() {
   const avgWaitTime = Math.floor(40 + (totalVehiclesCount % 60)); 
   const avgQueueLength = Math.floor(20 + (totalVehiclesCount % 30));
 
-// Growth rate fluctuation
+  // Growth rate fluctuation
   const growthRate = (totalVehiclesCount % 15) - 5; // Yields -5% to +9%
   const isGrowthPositive = growthRate >= 0;
   
@@ -364,6 +367,10 @@ export default function Analytics() {
   const ambCount = Math.floor(totalVehiclesCount * 0.02);
   const fireBrigadeCount = Math.floor(totalVehiclesCount * 0.005);
   // -----------------------------------
+
+  const currentLocationName = pathSegments && pathSegments.length > 0 
+    ? pathSegments[pathSegments.length - 1] 
+    : '-';
 
   if (initialLoading && !hasInitiallyLoaded.current) {
     return (
@@ -420,7 +427,9 @@ export default function Analytics() {
           </div>
         </div>
 
-        <div className="group flex items-center gap-1 px-2 mr-3 justify-center hover:bg-[#202124] rounded-sm transition-all">
+        <div className="group flex items-center gap-1 px-2 mr-3 justify-center hover:bg-[#202124] rounded-sm transition-all"
+          onClick={handleRefresh}
+        >
           <IoMdRefresh
             className={`h-5 w-5 text-[#669DF6] group-hover:text-[#AECBFA] ${
               sectionRefreshing ? 'animate-spin' : ''
@@ -428,7 +437,6 @@ export default function Analytics() {
           />
           <button
             type="button"
-            onClick={handleRefresh}
             disabled={sectionRefreshing}
             className="py-1 font-medium transition-all text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg disabled:opacity-50"
           >
@@ -492,11 +500,37 @@ export default function Analytics() {
           </p>
         )}
 
+      {/* Headline Data*/}
+      <div className="flex border-l border-r border-[#3c4043] p-2 justify-between items-center bg-[#131314]">
 
-      <div></div>
-      
+        <p className="text-xl pl-2 font-[450] text-[#ffffff]">
+          {currentLocationName}
+        </p>
+        <div className="flex items-center gap-1 bg-[#131314]" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          {['Today', 'Yesterday', '1 week', '1 month', '1 year', 'all time', 'custom duration'].map((duration) => {
+            
+            const currentDur = getDuration(('headlineData' as any)) || 'Today';
+            const isActive = currentDur === duration || (currentDur === 'custom' && duration === 'custom duration');
+            
+            return (
+              <button
+                key={duration}
+                onClick={() => handleDurationSelect(('headlineData' as any), duration)}
+                className={`px-4 py-1.5 text-sm rounded-md whitespace-nowrap transition-all ${
+                  isActive
+                    ? 'bg-[#8AB4F8]/10 text-[#8AB4F8] font-medium'
+                    : 'text-[#9aa0a6] hover:bg-[#202124] hover:text-[#e8eaed]'
+                } capitalize`}
+              >
+                {duration}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       {/* Headline Data Ribbon */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 border-t border-l border-[#3c4043] mt-4 bg-[#131314]">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 border-t border-l border-[#3c4043] mt-0 bg-[#131314]">
         
         {/* 1. Total Vehicles Count */}
         <div className="pt-3 pb-4 pl-4 pr-4 border-b border-r border-[#3c4043] flex flex-col justify-between transition-colors group">
@@ -574,7 +608,6 @@ export default function Analytics() {
             <span className="text-sm uppercase font-medium tracking-wide">Peak Traffic</span>
           </div>
           <div className="flex items-center h-full">
-            {/* Slightly increased container size so hover interactions feel smoother */}
             <div className="w-14 h-14 relative flex items-center justify-center cursor-crosshair">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
@@ -585,7 +618,6 @@ export default function Analytics() {
                     dataKey="value" 
                     stroke="none" 
                   />
-                  {/* Attached Custom Tooltip */}
                   <Tooltip content={<PeakTrafficTooltip />} />
                 </PieChart>
               </ResponsiveContainer>
@@ -607,14 +639,12 @@ export default function Analytics() {
             <span className="text-sm uppercase font-medium tracking-wide">Traffic Growth Rate</span>
           </div>
           <div className="flex justify-between items-center h-full gap-4 w-full">
-            {/* Replaced +/- with Up/Down arrows */}
-            <span className={`text-2xl font-mono flex items-center gap-0.5 ${isGrowthPositive ? 'text-[#81c995]' : 'text-[#f28b82]'}`}>
+            <span className={`text-2xl font-mono flex items-center gap-0.5 ${isGrowthPositive ? 'text-[#f28b82]' : 'text-[#81c995]'}`}>
               {isGrowthPositive ? '↑' : '↓'} {Math.abs(growthRate)}%
             </span>
             <div className="flex-1 h-10 w-full pr-1">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={sparklineData}>
-                  {/* Dynamic YAxis bounds prevent the line from hitting the flat edges of the box */}
                   <YAxis domain={['dataMin - 5', 'dataMax + 5']} hide />
                   <Tooltip 
                     content={<SparklineTooltip />} 
@@ -623,10 +653,10 @@ export default function Analytics() {
                   <Line 
                     type="monotone" 
                     dataKey="value" 
-                    stroke={isGrowthPositive ? '#81c995' : '#f28b82'} 
+                    stroke={isGrowthPositive ? '#f28b82' : '#81c995'} 
                     strokeWidth={2} 
-                    dot={{ r: 0 }} // Hides dots normally
-                    activeDot={{ r: 3 }} // Shows dot smoothly on hover
+                    dot={{ r: 0 }}
+                    activeDot={{ r: 3 }}
                   />
                 </LineChart>
               </ResponsiveContainer>
@@ -790,7 +820,7 @@ export default function Analytics() {
           {/* Header Panel Containing Controls */}
           <div className="flex justify-between items-center mb-5">
             <h2 className="text-gray-200 text-lg ml-5">
-              Separate Traffic Volume
+              Dir. Wise Traffic Volume
             </h2>
             
             {/* Action Button Strip */}
@@ -874,9 +904,9 @@ export default function Analytics() {
                 <Tooltip content={<CustomTooltip />} />
                 
                 <Line type="monotone" dataKey="p99" stroke="#e2e8f0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
-                <Line type="monotone" dataKey="p95" stroke="#63b3ed" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
-                <Line type="monotone" dataKey="vehicles" stroke="#3182ce" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
-                <Line type="monotone" dataKey="p50" stroke="#2b6cb0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
+//                 <Line type="monotone" dataKey="p95" stroke="#63b3ed" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
+//                 <Line type="monotone" dataKey="vehicles" stroke="#3182ce" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
+//                 <Line type="monotone" dataKey="p50" stroke="#2b6cb0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -1147,6 +1177,15 @@ export default function Analytics() {
 
         <div className="flex-cols bg-[#131314] w-[66.6%]">
           <div className="flex w-full">
+            <div className="w-[99.5%] h-43 p-3 pl-4 text-lg border-t border-r border-[#3c4043]">
+                <p>Latest Violation Logs</p>
+                
+            </div>
+            <div className="w-full p-3 text-lg border-t border-r border-[#3c4043]">
+                <p>Latest Incident Logs</p>
+            </div>
+          </div>
+          <div className="flex w-full">
             <div 
               ref={cardRef}
               className={`w-[99.5%] font-sans transition-all duration-150 ${
@@ -1240,9 +1279,9 @@ export default function Analytics() {
                     />
                     <Tooltip content={<CustomTooltip />} />
                     
-                    <Line type="monotone" dataKey="p99" stroke="#e2e8f0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
-                    <Line type="monotone" dataKey="p95" stroke="#63b3ed" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
-                    <Line type="monotone" dataKey="vehicles" stroke="#3182ce" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
+                    {/* <Line type="monotone" dataKey="p99" stroke="#e2e8f0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} /> */}
+                    <Line type="monotone" dataKey="p95" stroke="#ed6363" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
+                    {/* <Line type="monotone" dataKey="vehicles" stroke="#ce3131" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} /> */}
                     <Line type="monotone" dataKey="p50" stroke="#2b6cb0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
                   </LineChart>
                 </ResponsiveContainer>
@@ -1341,9 +1380,9 @@ export default function Analytics() {
                     />
                     <Tooltip content={<CustomTooltip />} />
                     
-                    <Line type="monotone" dataKey="p99" stroke="#e2e8f0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
-                    <Line type="monotone" dataKey="p95" stroke="#63b3ed" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
-                    <Line type="monotone" dataKey="vehicles" stroke="#3182ce" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
+                    {/* <Line type="monotone" dataKey="p99" stroke="#e2e8f0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} /> */}
+                    <Line type="monotone" dataKey="p95" stroke="#ed6363" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
+                    {/* <Line type="monotone" dataKey="vehicles" stroke="#ce3131" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} /> */}
                     <Line type="monotone" dataKey="p50" stroke="#2b6cb0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
                   </LineChart>
                 </ResponsiveContainer>
@@ -1463,7 +1502,7 @@ export default function Analytics() {
               {/* Header Panel Containing Controls */}
               <div className="flex justify-between items-center mb-5">
                 <h2 className="text-gray-200 text-lg ml-5">
-                  Accident
+                  Incidents
                 </h2>
                 
                 {/* Action Button Strip */}
@@ -1555,7 +1594,210 @@ export default function Analytics() {
               </div>
             </div>
           </div>
-          <div></div>
+          <div className="flex w-full">
+            <div 
+              ref={cardRef}
+              className={`w-[99.5%] font-sans transition-all duration-150 ${
+                isFullscreen ? "p-10 h-screen flex flex-col justify-center" : "border-b border-[#3c4043] h-88.5 pt-3 pb-0 pl-2 pr-6"
+              } bg-[#131314]`}
+              
+            >
+              {/* Header Panel Containing Controls */}
+              <div className="flex justify-between items-center mb-5">
+                <h2 className="text-gray-200 text-lg ml-5">
+                  Red Light Jump
+                </h2>
+                
+                {/* Action Button Strip */}
+                <div className="chart-actions flex items-center gap-3.5 text-xs">
+                  <ChartDurationPicker
+                    selectedDuration={getDuration(ANALYTICS_CHART_IDS.emergency2)}
+                    onSelect={(d) =>
+                      handleDurationSelect(ANALYTICS_CHART_IDS.emergency2, d)
+                    }
+                  />
+                  {/* CSV Export Button */}
+                  <button 
+                    onClick={exportCSV}
+                    className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
+                    title="Download CSV Data"
+                  >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                  </button>
+
+                  {/* Snapshot Image Button */}
+                  <button 
+                    onClick={saveAsImage}
+                    className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
+                    title="Save as PNG"
+                  >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 002-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </button>
+
+                  {/* Fullscreen Toggle Button */}
+                  <button 
+                    onClick={toggleFullscreen}
+                    className="text-gray-400 hover:text-[#AECBFA] transition-colors"
+                    title={isFullscreen ? "Exit Fullscreen" : "View Fullscreen"}
+                  >
+                    {isFullscreen ? (
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 14h6m0 0v6m0-6L3 21m17-7h-6m0 0v6m0-6l7 7M16 10h6m0 0v-6m0 6l3-3M4 10h6m0 0V4m0 6L3 3" />
+                      </svg>
+                    ) : (
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5h-4m4 0v-4m0 4l-5-5" />
+                      </svg>
+                    )}
+                  </button>
+                </div>
+              </div>
+              
+              {/* Chart Canvas Area */}
+              <div className={`w-full ${isFullscreen ? "h-[75vh]" : "h-[270px]"}`}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart
+                    data={data}
+                    margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
+                  >
+                    <CartesianGrid 
+                      vertical={false} 
+                      stroke="#2d3748" 
+                      strokeWidth={1}
+                    />
+                    <XAxis 
+                      dataKey="time" 
+                      stroke="#718096" 
+                      tick={{ fill: '#718096', fontSize: 12 }} 
+                      tickFormatter={formatXAxis}
+                      tickMargin={10}
+                      axisLine={false}
+                      tickLine={false}
+                      minTickGap={60}
+                    />
+                    <YAxis 
+                      stroke="#718096" 
+                      tickFormatter={formatYAxis}
+                      tick={{ fill: '#718096', fontSize: 12 }}
+                      axisLine={false}
+                      tickLine={false}
+                    />
+                    <Tooltip content={<CustomTooltip />} />
+                    
+                    {/* <Line type="monotone" dataKey="p99" stroke="#e2e8f0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} /> */}
+                    <Line type="monotone" dataKey="p95" stroke="#ed6363" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
+                    {/* <Line type="monotone" dataKey="vehicles" stroke="#ce3131" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} /> */}
+                    <Line type="monotone" dataKey="p50" stroke="#2b6cb0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+            <div 
+              ref={cardRef}
+              className={`w-full font-sans transition-all duration-150 ${
+                isFullscreen ? "p-10 h-screen flex flex-col justify-center" : "border-b border-l border-r border-[#3c4043] w-full h-88.5 pt-3 pb-0 pl-2 pr-6"
+              } bg-[#131314]`}
+              
+            >
+              {/* Header Panel Containing Controls */}
+              <div className="flex justify-between items-center mb-5">
+                <h2 className="text-gray-200 text-lg ml-5">
+                  Queue Length
+                </h2>
+                
+                {/* Action Button Strip */}
+                <div className="chart-actions flex items-center gap-3.5 text-xs">
+                  <ChartDurationPicker
+                    selectedDuration={getDuration(ANALYTICS_CHART_IDS.emergency2)}
+                    onSelect={(d) =>
+                      handleDurationSelect(ANALYTICS_CHART_IDS.emergency2, d)
+                    }
+                  />
+                  {/* CSV Export Button */}
+                  <button 
+                    onClick={exportCSV}
+                    className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
+                    title="Download CSV Data"
+                  >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                  </button>
+
+                  {/* Snapshot Image Button */}
+                  <button 
+                    onClick={saveAsImage}
+                    className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
+                    title="Save as PNG"
+                  >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 002-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </button>
+
+                  {/* Fullscreen Toggle Button */}
+                  <button 
+                    onClick={toggleFullscreen}
+                    className="text-gray-400 hover:text-[#AECBFA] transition-colors"
+                    title={isFullscreen ? "Exit Fullscreen" : "View Fullscreen"}
+                  >
+                    {isFullscreen ? (
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 14h6m0 0v6m0-6L3 21m17-7h-6m0 0v6m0-6l7 7M16 10h6m0 0v-6m0 6l3-3M4 10h6m0 0V4m0 6L3 3" />
+                      </svg>
+                    ) : (
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5h-4m4 0v-4m0 4l-5-5" />
+                      </svg>
+                    )}
+                  </button>
+                </div>
+              </div>
+              
+              {/* Chart Canvas Area */}
+              <div className={`w-full ${isFullscreen ? "h-[75vh]" : "h-[270px]"}`}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart
+                    data={data}
+                    margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
+                  >
+                    <CartesianGrid 
+                      vertical={false} 
+                      stroke="#2d3748" 
+                      strokeWidth={1}
+                    />
+                    <XAxis 
+                      dataKey="time" 
+                      stroke="#718096" 
+                      tick={{ fill: '#718096', fontSize: 12 }} 
+                      tickFormatter={formatXAxis}
+                      tickMargin={10}
+                      axisLine={false}
+                      tickLine={false}
+                      minTickGap={60}
+                    />
+                    <YAxis 
+                      stroke="#718096" 
+                      tickFormatter={formatYAxis}
+                      tick={{ fill: '#718096', fontSize: 12 }}
+                      axisLine={false}
+                      tickLine={false}
+                    />
+                    <Tooltip content={<CustomTooltip />} />
+                    
+                    {/* <Line type="monotone" dataKey="p99" stroke="#e2e8f0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} /> */}
+                    <Line type="monotone" dataKey="p95" stroke="#ed6363" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
+                    {/* <Line type="monotone" dataKey="vehicles" stroke="#ce3131" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} /> */}
+                    <Line type="monotone" dataKey="p50" stroke="#2b6cb0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1565,4 +1807,3 @@ export default function Analytics() {
     </div>
   )
 }
-

@@ -10,6 +10,7 @@ import {
   type SimulationVideo,
 } from '@/lib/simulation-videos'
 import SignalLanePanel, { type LaneId } from '@/components/SignalLanePanel'
+import { IoMdRefresh } from 'react-icons/io'
 
 const PANEL_BORDER = 'border-[#dadce0] dark:border-[#3c4043]'
 
@@ -270,13 +271,13 @@ export default function SimulationPartition({
   const selectValue = activeVideoFile
 
   return (
-    <div className="gcloud-card p-3 h-full flex flex-col gap-2">
+    <div className="bg-[#131314] border-r border-b border-[#3c4043] p-3 h-full flex flex-col gap-2">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <div className="flex flex-wrap items-center gap-3 min-w-0">
           <h2 className="text-sm font-medium text-[#202124] dark:text-[#e8eaed]">
             Camera {lane}
           </h2>
-          <span className="inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-sm text-[#5f6368] dark:text-[#9aa0a6] bg-[#f8f9fa] dark:bg-[#292a2d] border-[#dadce0] dark:border-[#3c4043]">
+          <span className="inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-sm text-[#5f6368] dark:text-[#9aa0a6] bg-[#f8f9fa] dark:bg-[#060606] border-[#dadce0] dark:border-[#3c4043]">
             Traffic:{' '}
             <span className="font-semibold text-[#1a73e8] dark:text-[#8ab4f8] tabular-nums">
               {trafficCount ?? '—'}
@@ -338,7 +339,7 @@ export default function SimulationPartition({
             title="Reload video from start"
             aria-label="Reload video from start"
           >
-            <FiRotateCw className="w-4 h-4" />
+            <IoMdRefresh className="w-5 h-5" />
           </button>
         </div>
       </div>
@@ -405,7 +406,7 @@ export default function SimulationPartition({
         </div>
 
         <div className="flex-1 flex items-center justify-center gap-3 min-w-0">
-          <div className={`gcloud-card p-3 max-w-[100px] border ${PANEL_BORDER}`}>
+          <div className={`gcloud-card !bg-[#131314] p-3 max-w-[100px] border ${PANEL_BORDER}`}>
             <SignalLanePanel lane={lane} state={state} compact />
           </div>
           <div className="flex flex-col items-center justify-center gap-3 shrink-0">

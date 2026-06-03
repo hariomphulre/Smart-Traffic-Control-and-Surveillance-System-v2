@@ -2,6 +2,9 @@
 
 import React, { useEffect, useReducer, useMemo } from 'react';
 import { FaLinux, FaMinusSquare, FaPause, FaPlusSquare } from 'react-icons/fa';
+import { GrPause } from 'react-icons/gr';
+import { IoPlayOutline } from 'react-icons/io5';
+import { RiRefreshLine } from 'react-icons/ri';
 
 // --- Types & Constants ---
 type Vehicle = 1 | 2; // 1 = Car, 2 = Ambulance
@@ -394,22 +397,34 @@ export default function TrafficSimulation() {
           <p className="text-[#ffffff] font-mono text-xl ml-4">Adv. Traffic Signal Simulation</p>
         </div>
         
-        <div className="flex gap-4 items-center">
+        <div className="flex gap-3 items-center">
           <div className="px-3 py-1 rounded-md text-[#e8eaed61] font-mono font-normal flex items-center gap-2 shadow-inner">
             Status: {state.isRunning ? (state.mode === 'Dormant' ? <span className="">Idle</span> : <span className="">Running ({state.mode})</span>) : <span className="">Paused</span>}
           </div>
-          <button 
+
+          <div className="group flex items-center gap-1 px-2 mr-0 justify-center hover:bg-[#202124] rounded-sm transition-all"
             onClick={() => dispatch({ type: 'TOGGLE_RUN' })}
-            className={`px-3 py-1 rounded-md font-medium transition-all hover:bg-[#202124] hover:text-[#AECBFA] text-[#669DF6] shadow-lg ${state.isRunning ? '' : ''}`}
           >
-            {state.isRunning ? 'Pause' : 'Run'}
-          </button>
-          <button 
+            {state.isRunning ? <GrPause className="h-4 w-5 text-[#669DF6] group-hover:text-[#AECBFA]"/> : <IoPlayOutline className="h-5 w-5 text-[#669DF6] group-hover:text-[#AECBFA]"/> }
+            <button
+              type="button"
+              className="text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg py-1 font-medium transition-all"
+            >
+              {state.isRunning ? 'Pause' : 'Run'}
+            </button>
+          </div>
+
+          <div className="group flex items-center gap-1 px-2 mr-3 justify-center hover:bg-[#202124] rounded-sm transition-all"
             onClick={() => dispatch({ type: 'RESET' })}
-            className="px-3 mr-5 py-1 rounded-md font-medium transition-all hover:bg-[#202124] hover:text-[#AECBFA] text-[#669DF6] shadow-lg"
           >
-            Reset
-          </button>
+            <RiRefreshLine className="group h-4.5 w-5 text-[#669DF6] group-hover:text-[#AECBFA]"/>
+            <button
+              type="button"
+              className="group text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg py-1 font-medium transition-all"
+            >
+              Reset
+            </button>
+          </div>
         </div>
       </div>
 

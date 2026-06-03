@@ -39,3 +39,15 @@ export async function stopSimulation(): Promise<void> {
   if (!res.ok) throw new Error('Failed to stop simulation')
 }
 
+export async function pauseSimulation(): Promise<SimulationStatusResponse> {
+  const res = await fetch('/api/simulation/pause', { method: 'POST' })
+  if (!res.ok) throw new Error('Failed to pause simulation')
+  return (await res.json()) as SimulationStatusResponse
+}
+
+export async function resumeSimulation(): Promise<SimulationStatusResponse> {
+  const res = await fetch('/api/simulation/resume', { method: 'POST' })
+  if (!res.ok) throw new Error('Failed to resume simulation')
+  return (await res.json()) as SimulationStatusResponse
+}
+

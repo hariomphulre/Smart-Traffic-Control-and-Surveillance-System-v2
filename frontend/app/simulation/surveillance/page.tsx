@@ -9,8 +9,16 @@ import {
   getSimulationStatus,
   runSimulation,
   stopSimulation,
+  pauseSimulation,
+  resumeSimulation,
   type SimulationPartitionStatus,
 } from '@/lib/simulation'
+import { IoIosPlay, IoMdRefresh } from 'react-icons/io'
+import { IoPlayOutline, IoSearchSharp, IoStopOutline } from 'react-icons/io5'
+import { FiPause, FiPlay } from 'react-icons/fi'
+import { LuPause } from 'react-icons/lu'
+import { GrPause, GrResume } from 'react-icons/gr'
+import { RxResume } from 'react-icons/rx'
 
 const LANES: LaneId[] = [1, 2, 3, 4]
 
@@ -28,6 +36,7 @@ export default function SimulationPage() {
   const [isRunning, setIsRunning] = useState(false)
   const [isStarting, setIsStarting] = useState(false)
   const [isStopping, setIsStopping] = useState(false)
+  const [isPause, setIsPause] = useState(false)
   const [streamStatus, setStreamStatus] = useState<Record<LaneId, SimulationPartitionStatus>>({
     1: { running: false },
     2: { running: false },
@@ -175,6 +184,7 @@ export default function SimulationPage() {
     try {
       await stopSimulation()
       setIsRunning(false)
+      setIsPause(false)
       setLockedVideos(null)
       setWsUrl(null)
       setTrafficLiveSnapshot(null)
@@ -190,6 +200,42 @@ export default function SimulationPage() {
       setIsStopping(false)
     }
   }, [])
+
+  const handlePause = useCallback(async () => {
+    if (!isRunning || isPause) return
+    setError(null)
+    try {
+      const response = await pauseSimulation()
+      const partitionStatus = response.status || {}
+      setStreamStatus({
+        1: partitionStatus[1] || { running: false },
+        2: partitionStatus[2] || { running: false },
+        3: partitionStatus[3] || { running: false },
+        4: partitionStatus[4] || { running: false },
+      })
+      setIsPause(true)
+    } catch {
+      setError('Unable to pause simulation')
+    }
+  }, [isRunning, isPause])
+
+  const handleResume = useCallback(async () => {
+    if (!isRunning || !isPause) return
+    setError(null)
+    try {
+      const response = await resumeSimulation()
+      const partitionStatus = response.status || {}
+      setStreamStatus({
+        1: partitionStatus[1] || { running: false },
+        2: partitionStatus[2] || { running: false },
+        3: partitionStatus[3] || { running: false },
+        4: partitionStatus[4] || { running: false },
+      })
+      setIsPause(false)
+    } catch {
+      setError('Unable to resume simulation')
+    }
+  }, [isRunning, isPause])
 
   // Load traffic state
   useEffect(() => {
@@ -233,38 +279,71 @@ export default function SimulationPage() {
   }, [isRunning, state, trafficLiveSnapshot])
 
   return (
-    <div className="max-w-full px-4 py-3">
-      <div className="mb-4 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
-        <div>
-          <h1 className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed] mb-1">
-            Live Simulation Demo
-          </h1>
-          <p className="text-sm text-[#5f6368] dark:text-[#9aa0a6]">
-            Select the demo videos and click on 'Run' button to start the simulation. You can check other section, Live data will update.
-          </p>
-          {error && (
-            <p className="mt-2 text-sm text-[#d93025] dark:text-[#f28b82]">{error}</p>
-          )}
+    <div className="max-w-full px-0 py-0">
+      <div className="w-full flex items-center justify-between h-13 mb-0 border-b border-[#3c4043] bg-[#131314] p-1 shadow-xl">
+        <div className="flex items-center min-w-0 flex-1">
+          <div>
+            <p className="text-[#ffffff] font-mono text-xl ml-4">Simulation / Live Surveillance Demo</p>
+          </div>
         </div>
-        <div className="shrink-0 self-start sm:self-center flex items-center gap-2">
-          <button
-            type="button"
-            onClick={handleRun}
-            disabled={isStarting || isRunning || isStopping}
-            className="rounded-md bg-[#1a73e8] hover:bg-[#1765cc] px-5 py-2 text-sm font-medium text-white transition-colors disabled:cursor-not-allowed disabled:bg-[#a8c7fa] disabled:text-white/80 disabled:hover:bg-[#a8c7fa] dark:disabled:bg-[#3c5a8a] dark:disabled:text-white/70 dark:disabled:hover:bg-[#3c5a8a]"
+        <div className="flex gap-1">
+          <div className="shrink-0 self-start sm:self-center flex items-center gap-1">
+            <div className="group flex items-center gap-1 px-2 mr-3 justify-center hover:bg-[#202124] rounded-sm transition-all"
+              onClick={handleRun}
+            >
+              <IoPlayOutline className="h-5 w-5 text-[#669DF6] group-hover:text-[#AECBFA]"/>
+              <button
+                type="button"
+                disabled={isStarting || isRunning || isStopping}
+                className="text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg py-1 font-medium transition-all disabled:cursor-not-allowed disabled:text-white/80 disabled:hover:bg-[#a8c7fa] dark:disabled:bg-[#3c5a8a] dark:disabled:text-white/70 dark:disabled:hover:bg-[#3c5a8a]"
+              >
+                {isStarting ? 'Starting...' : isRunning ? 'Running' : 'Run'}
+              </button>
+            </div>
+            { isRunning && (
+              <div className="group flex items-center gap-1 px-2 mr-3 justify-center hover:bg-[#202124] rounded-sm transition-all"
+                onClick={isPause ? handleResume : handlePause}
+              >
+                {isPause ? <RxResume className="h-5 w-6 text-[#669DF6] group-hover:text-[#AECBFA]"/> : <GrPause className="h-4.5 w-5 text-[#669DF6] group-hover:text-[#AECBFA]"/> }
+                <button
+                  type="button"
+                  disabled={isStopping || isStarting}
+                  className="text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg py-1 font-medium transition-all disabled:cursor-not-allowed disabled:text-white/80 disabled:hover:bg-[#a8c7fa] dark:disabled:bg-[#3c5a8a] dark:disabled:text-white/70 dark:disabled:hover:bg-[#3c5a8a]"
+                >
+                  {isPause ? 'Resume' : 'Pause'}
+                </button>
+              </div>
+            )}
+            { isRunning && (
+              <div className="group flex items-center gap-1 px-2 mr-3 justify-center hover:bg-[#202124] rounded-sm transition-all"
+                onClick={handleStop}
+              >
+                <IoStopOutline className="h-5 w-5 text-[#669DF6] group-hover:text-[#AECBFA]"/>
+                <button
+                  type="button"
+                  disabled={isStopping}
+                  className="text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg py-1 font-medium transition-all disabled:cursor-not-allowed disabled:text-white/80 disabled:hover:bg-[#a8c7fa] dark:disabled:bg-[#3c5a8a] dark:disabled:text-white/70 dark:disabled:hover:bg-[#3c5a8a]"
+                >
+                  {isStopping ? 'Stopping...' : 'Stop'}
+                </button>
+              </div>
+            )}
+          </div>
+          <div className="group flex items-center gap-1 px-2 mr-3 justify-center hover:bg-[#202124] rounded-sm transition-all"
           >
-            {isStarting ? 'Starting...' : isRunning ? 'Running' : 'Run'}
-          </button>
-          {isRunning && (
+            {/* onClick={handleRefresh} */}
+            <IoMdRefresh
+              className={`h-5 w-5 text-[#669DF6] group-hover:text-[#AECBFA]
+              `}
+            />
             <button
               type="button"
-              onClick={handleStop}
-              disabled={isStopping}
-              className="rounded-md bg-[#1a73e8] hover:bg-[#1765cc] px-5 py-2 text-sm font-medium text-white transition-colors disabled:cursor-not-allowed disabled:bg-[#a8c7fa] disabled:text-white/80 disabled:hover:bg-[#a8c7fa] dark:disabled:bg-[#3c5a8a] dark:disabled:text-white/70 dark:disabled:hover:bg-[#3c5a8a]"
+              // disabled={sectionRefreshing}
+              className="py-1 font-medium transition-all text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg disabled:opacity-50"
             >
-              {isStopping ? 'Stopping...' : 'Stop'}
+              Refresh
             </button>
-          )}
+          </div>
         </div>
       </div>
 
@@ -273,7 +352,7 @@ export default function SimulationPage() {
           Loading videos...
         </div>
       ) : (
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-0">
           {LANES.map((lane) => (
             <SimulationPartition
               key={lane}
