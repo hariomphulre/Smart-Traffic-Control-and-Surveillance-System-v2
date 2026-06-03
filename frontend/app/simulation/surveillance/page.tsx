@@ -295,7 +295,7 @@ export default function SimulationPage() {
               <button
                 type="button"
                 disabled={isStarting || isRunning || isStopping}
-                className="text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg py-1 font-medium transition-all disabled:cursor-not-allowed disabled:text-white/80 disabled:hover:bg-[#a8c7fa] dark:disabled:bg-[#3c5a8a] dark:disabled:text-white/70 dark:disabled:hover:bg-[#3c5a8a]"
+                className="text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg py-1 font-medium transition-all disabled:cursor-not-allowed"
               >
                 {isStarting ? 'Starting...' : isRunning ? 'Running' : 'Run'}
               </button>
@@ -308,7 +308,7 @@ export default function SimulationPage() {
                 <button
                   type="button"
                   disabled={isStopping || isStarting}
-                  className="text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg py-1 font-medium transition-all disabled:cursor-not-allowed disabled:text-white/80 disabled:hover:bg-[#a8c7fa] dark:disabled:bg-[#3c5a8a] dark:disabled:text-white/70 dark:disabled:hover:bg-[#3c5a8a]"
+                  className="text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg py-1 font-medium transition-all disabled:cursor-not-allowed "
                 >
                   {isPause ? 'Resume' : 'Pause'}
                 </button>
@@ -317,12 +317,12 @@ export default function SimulationPage() {
             { isRunning && (
               <div className="group flex items-center gap-1 px-2 mr-3 justify-center hover:bg-[#202124] rounded-sm transition-all"
                 onClick={handleStop}
-              >
+                >
                 <IoStopOutline className="h-5 w-5 text-[#669DF6] group-hover:text-[#AECBFA]"/>
                 <button
                   type="button"
                   disabled={isStopping}
-                  className="text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg py-1 font-medium transition-all disabled:cursor-not-allowed disabled:text-white/80 disabled:hover:bg-[#a8c7fa] dark:disabled:bg-[#3c5a8a] dark:disabled:text-white/70 dark:disabled:hover:bg-[#3c5a8a]"
+                  className="text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg py-1 font-medium transition-all disabled:cursor-not-allowed "
                 >
                   {isStopping ? 'Stopping...' : 'Stop'}
                 </button>
