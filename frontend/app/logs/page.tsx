@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import dynamic from 'next/dynamic';
-import { FiFilter, FiX, FiSearch, FiPlus, FiList, FiEye, FiEdit2, FiTrash2 } from 'react-icons/fi';
+import { FiFilter, FiX, FiSearch, FiPlus, FiList, FiEye, FiEdit2, FiTrash2, FiDownload } from 'react-icons/fi';
 import { getLogs, type Log } from '@/lib/api';
 import LocationBar from '@/components/LocationBar';
 import { useLocationFilter } from '@/context/LocationFilterContext';
@@ -231,6 +231,29 @@ export default function Logs() {
   };
   // --------------------------------
 
+  const handleSaveAsPNG = useCallback(async () => {
+    if (!selectedLog) return;
+    
+    try {
+      const element = document.getElementById('vehicle-details-content');
+      if (!element) return;
+
+      const { toPng } = await import('html-to-image');
+      const dataUrl = await toPng(element, {
+        backgroundColor: '#131314',
+        pixelRatio: 2,
+      });
+
+      const link = document.createElement('a');
+      link.href = dataUrl;
+      link.download = `vehicle-details-${selectedLog.licenseNo}-${Date.now()}.png`;
+      link.click();
+    } catch (error) {
+      console.error('Error saving PNG:', error);
+      alert('Failed to save as PNG');
+    }
+  }, [selectedLog]);
+
   const violationFilterCount = Object.values(filters).filter(Boolean).length;
   const intervalFilterCount = isDefaultDuration ? 0 : 1;
   const vehicleTypeFilterCount = vehicleTypeFilter !== 'All' ? 1 : 0;
@@ -276,7 +299,7 @@ export default function Logs() {
               className={`group flex items-center gap-1 px-3 justify-center rounded-sm transition-all cursor-pointer ${isListMode && !editingListId ? 'bg-[#202124]' : 'hover:bg-[#202124]'}`}
             >
               <FiPlus className="h-4 w-4 text-[#669DF6] group-hover:text-[#AECBFA]" />
-                  <button className="py-1 font-medium transition-all text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg">
+                    <button className="py-1 font-medium transition-all text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg">
                 Create list
               </button>
             </div>
@@ -406,7 +429,7 @@ export default function Logs() {
 
       <div className="py-5 px-4 dark:bg-[#131314] relative min-h-[320px]">
         {sectionBusy && (
-          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-[#131314]/90 backdrop-blur-[1px]">
+          <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-[#131314]/90 backdrop-blur-[1px]">
             <div className="w-10 h-10 border-4 border-[#3c4043] border-t-[#8AB4F8] rounded-full animate-spin mb-3" />
             <p className="text-[#9aa0a6] font-mono text-sm">
               {initialLoading ? 'Loading logs...' : 'Refreshing logs...'}
@@ -554,6 +577,7 @@ export default function Logs() {
                   <th className="px-4 py-2 text-left text-md font-medium text-[#5f6368] dark:text-[#e8eaed]">Date & Time</th>
                   <th className="px-4 py-2 text-left text-md font-medium text-[#5f6368] dark:text-[#e8eaed]">ID</th>
                   <th className="px-4 py-2 text-left text-md font-medium text-[#5f6368] dark:text-[#e8eaed]">Location</th>
+                  <th className="px-4 py-2 text-left text-md font-medium text-[#5f6368] dark:text-[#e8eaed]">Signal Code</th>
                   <th className="px-4 py-2 text-left text-md font-medium text-[#5f6368] dark:text-[#e8eaed]">License No.</th>
                   <th className="px-4 py-2 text-left text-md font-medium text-[#5f6368] dark:text-[#e8eaed]">Vehicle Type</th>
                   <th className="px-4 py-2 text-left text-md font-medium text-[#5f6368] dark:text-[#e8eaed]">Speed</th>
@@ -566,7 +590,7 @@ export default function Logs() {
                 {!tableLoading && allLogs.length === 0 && !sectionBusy && (
                   <tr>
                     <td
-                      colSpan={isListMode ? 10 : 9}
+                      colSpan={isListMode ? 11 : 10}
                       className="px-4 py-10 text-center text-sm text-[#9aa0a6]"
                     >
                       No logs found matching your filters.
@@ -600,6 +624,7 @@ export default function Logs() {
                     <td className="px-4 py-3 text-sm text-[#5f6368] dark:text-[#9aa0a6]">{formatDateTime(log.dateTime)}</td>
                     <td className="px-4 py-3 text-sm font-mono text-[#5f6368] dark:text-[#9aa0a6]">{log.id}</td>
                     <td className="px-4 py-3 text-sm text-[#5f6368] dark:text-[#9aa0a6]">{log.location}</td>
+                    <td className="px-4 py-3 text-sm font-mono text-[#8AB4F8] dark:text-[#8AB4F8]">{log.signalCode || '-'}</td>
                     <td className="px-4 py-3 text-sm"><span className="font-mono font-medium text-[#8AB4F8] dark:text-[#8AB4F8]">{log.licenseNo}</span></td>
                     <td className="px-4 py-3 text-sm text-[#5f6368] dark:text-[#9aa0a6]">{log.vehicleType}</td>
                     <td className={`flex gap-1.5 items-center px-4 py-3 text-sm font-medium ${log.speed > 60 ? 'text-[#d93025] dark:text-[#f28b82]' : 'text-[#5f6368] dark:text-[#9aa0a6]'}`}>
@@ -674,6 +699,7 @@ export default function Logs() {
                         <th className="px-4 py-2 text-left text-sm font-medium text-[#e8eaed]">Date & Time</th>
                         <th className="px-4 py-2 text-left text-sm font-medium text-[#e8eaed]">ID</th>
                         <th className="px-4 py-2 text-left text-sm font-medium text-[#e8eaed]">Location</th>
+                        <th className="px-4 py-2 text-left text-sm font-medium text-[#e8eaed]">Signal Code</th>
                         <th className="px-4 py-2 text-left text-sm font-medium text-[#e8eaed]">License No.</th>
                         <th className="px-4 py-2 text-left text-sm font-medium text-[#e8eaed]">Vehicle Type</th>
                         <th className="px-4 py-2 text-left text-sm font-medium text-[#e8eaed]">Speed</th>
@@ -688,6 +714,7 @@ export default function Logs() {
                          <td className="px-4 py-3 text-sm text-[#5f6368] dark:text-[#9aa0a6]">{formatDateTime(log.dateTime)}</td>
                           <td className="px-4 py-3 text-sm font-mono text-[#5f6368] dark:text-[#9aa0a6]">{log.id}</td>
                           <td className="px-4 py-3 text-sm text-[#5f6368] dark:text-[#9aa0a6]">{log.location}</td>
+                          <td className="px-4 py-3 text-sm font-mono text-[#8AB4F8] dark:text-[#8AB4F8]">{log.signalCode || '-'}</td>
                           <td className="px-4 py-3 text-sm"><span className="font-mono font-medium text-[#8AB4F8] dark:text-[#8AB4F8]">{log.licenseNo}</span></td>
                           <td className="px-4 py-3 text-sm text-[#5f6368] dark:text-[#9aa0a6]">{log.vehicleType}</td>
                           <td className={`flex gap-1.5 items-center px-4 py-3 text-sm font-medium ${log.speed > 60 ? 'text-[#d93025] dark:text-[#f28b82]' : 'text-[#5f6368] dark:text-[#9aa0a6]'}`}>
@@ -721,84 +748,158 @@ export default function Logs() {
 
         {/* Detail Modal */}
         {selectedLog && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setSelectedLog(null)}>
-            <div className="bg-white dark:bg-[#292a2d] shadow-2xl rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
-              <div className="sticky top-0 bg-white dark:bg-[#292a2d] border-b border-[#dadce0] dark:border-[#3c4043] px-6 py-4 flex justify-between items-center rounded-t-lg">
-                <h2 className="text-xl font-medium text-[#202124] dark:text-[#e8eaed]">Vehicle Details - {selectedLog.id}</h2>
-                <button onClick={() => setSelectedLog(null)} className="text-[#5f6368] dark:text-[#9aa0a6] hover:text-[#202124] dark:hover:text-[#e8eaed] transition-colors">
-                  <FiX size={24 } />
-                </button>
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-60 p-0" onClick={() => setSelectedLog(null)}>
+            <div className="bg-white dark:bg-[#131314] shadow-2xl rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+              <div className="sticky top-0 bg-white dark:bg-[#131314] border-b border-[#dadce0] dark:border-[#3c4043] px-6 py-2 flex justify-between items-center rounded-t-lg">
+                <div className="flex gap-5 items-center">
+                  <h2 className="text-xl font-medium text-[#202124] dark:text-[#e8eaed]">Vehicle Details</h2> 
+                  <h2 className="text-lg py-1 px-2 rounded-md bg-black text-[#202124] dark:text-[#e8eaed]">{selectedLog.licenseNo}</h2>
+                </div>
+                <div className="flex items-center gap-4">
+                  <button 
+                    onClick={handleSaveAsPNG}
+                    className="text-[#5f6368] dark:text-[#9aa0a6] hover:text-[#202124] dark:hover:text-[#e8eaed] p-2 rounded transition-colors"
+                    title="Save as PNG"
+                  >
+                    <FiDownload size={20} />
+                  </button>
+                  <button onClick={() => setSelectedLog(null)} className="text-[#5f6368] dark:text-[#9aa0a6] hover:text-[#202124] dark:hover:text-[#e8eaed] transition-colors">
+                    <FiX size={24 } />
+                  </button>
+                </div>
               </div>
               
-              <div className="p-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                  <div>
-                    <h3 className="text-sm font-medium text-[#5f6368] dark:text-[#9aa0a6] mb-2 uppercase">Basic Information</h3>
-                    <div className="space-y-3">
-                      <div>
-                        <p className="text-xs text-[#5f6368] dark:text-[#9aa0a6]">Date & Time</p>
-                        <p className="text-sm font-medium text-[#202124] dark:text-[#e8eaed]">{formatDateTime(selectedLog.dateTime)}</p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">Location</p>
-                        <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{selectedLog.location}</p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">License Number</p>
-                        <p className="text-sm font-mono font-semibold bg-yellow-100 dark:bg-yellow-900 text-yellow-900 dark:text-yellow-200 px-2 py-1 inline-block">{selectedLog.licenseNo}</p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">Vehicle Type</p>
-                        <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{selectedLog.vehicleType}</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <h3 className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-2 uppercase">Violation Status</h3>
-                    <div className="space-y-3">
-                      <div>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">Speed</p>
-                        <p className={`text-sm font-semibold ${selectedLog.speed > 60 ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
-                          {selectedLog.speed} km/h {selectedLog.speed > 60 && '⚠️ Over Speed'}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">Helmet Status</p>
-                        <p className="text-sm font-medium">
-                          {selectedLog.helmetStatus === 'N/A' ? (
-                            <span className="text-gray-400">Not Applicable</span>
-                          ) : selectedLog.helmetStatus ? (
-                            <span className="text-green-600 dark:text-green-400 font-bold">✓ Wearing Helmet</span>
-                          ) : (
-                            <span className="text-red-600 dark:text-red-400 font-bold">✗ No Helmet</span>
-                          )}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">Red Light Violation</p>
-                        <p className="text-sm font-medium">
-                          {selectedLog.redLightCross ? (
-                            <span className="text-red-600 dark:text-red-400 font-bold">✗ Violated</span>
-                          ) : (
-                            <span className="text-green-600 dark:text-green-400 font-bold">✓ No Violation</span>
-                          )}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">Triple Riding</p>
-                        <p className="text-sm font-medium">
-                          {selectedLog.tripling ? (
-                            <span className="text-red-600 dark:text-red-400 font-bold">✗ Detected</span>
-                          ) : (
-                            <span className="text-green-600 dark:text-green-400 font-bold">✓ Not Detected</span>
-                          )}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+              <div id="vehicle-details-content" className="overflow-y-auto">
+                <div className="flex justify-between gap-3 px-5 py-4">
+                <div className="flex-cols w-full">
+                  <p className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-2 uppercase">Basic Details</p>
+                  <table className="border-collapse w-full border border-[#3C4043]">
+                    <tbody>
+                      <tr>
+                        <td className="border border-[#3C4043] dark:text-gray-400 px-3 py-2">Date & Time</td>
+                        <td className="border border-[#3C4043] px-3 py-2">{formatDateTime(selectedLog.dateTime)}</td>
+                      </tr>
+                      <tr>
+                        <td className="border border-[#3C4043] dark:text-gray-400 px-3 py-2">Location</td>
+                        <td className="border border-[#3C4043] px-3 py-2">{selectedLog.location}</td>
+                      </tr>
+                      <tr>
+                        <td className="border border-[#3C4043] dark:text-gray-400 px-3 py-2">Signal Code</td>
+                        <td className="border border-[#3C4043] px-3 py-2">-</td>
+                      </tr>
+                      <tr>
+                        <td className="border border-[#3C4043] dark:text-gray-400 px-3 py-2">License No.</td>
+                        <td className="border border-[#3C4043] dark:text-[#8AB4F8] px-3 py-2">{selectedLog.licenseNo}</td>
+                      </tr>
+                      <tr>
+                        <td className="border border-[#3C4043] dark:text-gray-400 px-3 py-2">Vehicle Type</td>
+                        <td className="border border-[#3C4043] px-3 py-2">{selectedLog.vehicleType}</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
+                <div className="flex-cols w-full">
+                  <p className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-2 uppercase">Violation Details</p>
+                  <table className="border-collapse w-full border border-[#3C4043]">
+                    <tbody>
+                      <tr>
+                        <td className="border border-[#3C4043] dark:text-gray-400 px-3 py-2">Speed (Km/h)</td>
+                        <td className="border border-[#3C4043] px-3 py-2 font-semibold">{selectedLog.speed} {selectedLog.speed < 60 && '(Normal)'} {selectedLog.speed < 100 && selectedLog.speed >=60 && '(Overspeed)'} {selectedLog.speed >= 100 && '(Danger)'}</td>
+                      </tr>
+                      <tr>
+                        <td className="border border-[#3C4043] dark:text-gray-400 px-3 py-2">Helmet</td>
+                        <td className="border border-[#3C4043] px-3 py-2">
+                          {selectedLog.helmetStatus === 'N/A' ? (
+                            <span className="text-gray-400">N/A</span>
+                          ) : selectedLog.helmetStatus ? (
+                            <span className="text-green-600 dark:text-green-400 font-bold">YES</span>
+                          ) : (
+                            <span className="text-red-600 dark:text-red-400 font-bold">NO</span>
+                          )}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="border border-[#3C4043] dark:text-gray-400 px-3 py-2">Tripling</td>
+                        <td className="border border-[#3C4043] px-3 py-2">
+                          {selectedLog.tripling ? (
+                            <span className="text-red-600 dark:text-red-400 font-bold">YES</span>
+                          ) : (
+                            <span className="text-green-600 dark:text-green-400 font-bold">NO</span>
+                          )}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="border border-[#3C4043] dark:text-gray-400 px-3 py-2">Red Signal Jump</td>
+                        <td className="border border-[#3C4043] px-3 py-2">
+                          {selectedLog.redLightCross ? (
+                            <span className="text-red-600 dark:text-red-400 font-bold">YES</span>
+                          ) : (
+                            <span className="text-green-600 dark:text-green-400 font-bold">NO</span>
+                          )}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
 
+              <div className="flex-cols px-5 w-full">
+                <p className="text-sm font-semibold text-gray-600 dark:text-gray-400 mt-2 mb-2 uppercase">Vehicle & Owner Details</p>
+                <div className="flex">
+                  <p className="text-[#e8eaed61]">RTO API Required</p>
+                  {/* <table className="border-collapse w-full border border-[#3C4043]">
+                    <tbody>
+                      <tr>
+                        <td className="border border-[#3C4043] dark:text-gray-400 px-3 py-2">Speed</td>
+                        <td className="border border-[#3C4043] px-3 py-2"></td>
+                      </tr>
+                      <tr>
+                        <td className="border border-[#3C4043] dark:text-gray-400 px-3 py-2">Helmet</td>
+                        <td className="border border-[#3C4043] px-3 py-2"></td>
+                      </tr>
+                      <tr>
+                        <td className="border border-[#3C4043] dark:text-gray-400 px-3 py-2">Tripling</td>
+                        <td className="border border-[#3C4043] px-3 py-2"></td>
+                      </tr>
+                      <tr>
+                        <td className="border border-[#3C4043] dark:text-gray-400 px-3 py-2">Red Signal Jump</td>
+                        <td className="border border-[#3C4043] px-3 py-2"></td>
+                      </tr>
+                      <tr>
+                        <td className="border border-[#3C4043] dark:text-gray-400 px-3 py-2">Vehicle Type</td>
+                        <td className="border border-[#3C4043] px-3 py-2"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table className="border-collapse w-full border border-[#3C4043]">
+                    <tbody>
+                      <tr>
+                        <td className="border border-[#3C4043] px-3 py-2">Speed</td>
+                        <td className="border border-[#3C4043] px-3 py-2"></td>
+                      </tr>
+                      <tr>
+                        <td className="border border-[#3C4043] px-3 py-2">Helmet</td>
+                        <td className="border border-[#3C4043] px-3 py-2"></td>
+                      </tr>
+                      <tr>
+                        <td className="border border-[#3C4043] px-3 py-2">Tripling</td>
+                        <td className="border border-[#3C4043] px-3 py-2"></td>
+                      </tr>
+                      <tr>
+                        <td className="border border-[#3C4043] px-3 py-2">Red Signal Jump</td>
+                        <td className="border border-[#3C4043] px-3 py-2"></td>
+                      </tr>
+                      <tr>
+                        <td className="border border-[#3C4043] px-3 py-2">Vehicle Type</td>
+                        <td className="border border-[#3C4043] px-3 py-2"></td>
+                      </tr>
+                    </tbody>
+                  </table> */}
+                </div>
+              </div>
+
+<div className="p-6">
+                
                 <div>
                   <h3 className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-3 uppercase">Captured Images</h3>
                   <div className="grid grid-cols-2 gap-4">
@@ -816,6 +917,7 @@ export default function Logs() {
                     </div>
                   </div>
                 </div>
+              </div>
               </div>
             </div>
           </div>

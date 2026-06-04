@@ -13,6 +13,13 @@ const DynamicMap = dynamic(() => import('@/components/RealMap'), {
   loading: () => <div className="flex-1 flex items-center justify-center bg-[#0a0a0a] text-[#8AB4F8] font-mono animate-pulse">Initializing Satellite Uplink...</div> 
 });
 import { IoMdRefresh } from 'react-icons/io';
+import { 
+  MdReceipt, 
+  MdPendingActions, 
+  MdCheckCircleOutline, 
+  MdCurrencyRupee, 
+  MdPriceCheck 
+} from 'react-icons/md';
 
 export default function ChallanRecords() {
   const { isMapOpen, setIsMapOpen, pathSegments, handleMapPinClick } = useLocationFilter();
@@ -191,39 +198,84 @@ export default function ChallanRecords() {
         )}
       </div>
 
-      <div className="px-4 py-4">
-        <div className="gcloud-card p-4">
-          <h3 className="text-[#5f6368] dark:text-[#9aa0a6] text-xs font-medium mb-1 uppercase">Total Challans</h3>
-          <p className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed]">{stats.pending + stats.received + stats.rejected}</p>
+      {/* Challan Data Ribbon */}
+      <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 border-t border-l border-[#3c4043] mt-4 bg-[#131314]">
+        
+        {/* 1. Total Challans */}
+        <div className="pt-3 pb-4 pl-4 pr-4 border-b border-r border-[#3c4043] flex flex-col justify-between hover:bg-[#202124] transition-colors group">
+          <div className="flex items-center gap-2 mb-3 text-[#9aa0a6] group-hover:text-[#8AB4F8] transition-colors">
+            <MdReceipt className="w-5 h-5" />
+            <span className="text-sm uppercase font-medium tracking-wide">Total Challans</span>
+          </div>
+          <div className="flex px-0 justify-between items-center">
+            <span className="text-3xl font-mono text-[#e8eaed]">
+              {stats.pending + stats.received + stats.rejected}
+            </span>
+          </div>
         </div>
-        <div className="gcloud-card p-4">
-          <h3 className="text-[#5f6368] dark:text-[#9aa0a6] text-xs font-medium mb-1 uppercase">Pending</h3>
-          <p className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed]">{stats.pending}</p>
+
+        {/* 2. Pending */}
+        <div className="pt-3 pb-4 pl-4 pr-4 border-b border-r border-[#3c4043] flex flex-col justify-between hover:bg-[#202124] transition-colors group">
+          <div className="flex items-center gap-2 mb-3 text-[#9aa0a6] group-hover:text-[#8AB4F8] transition-colors">
+            <MdPendingActions className="w-5 h-5" />
+            <span className="text-sm uppercase font-medium tracking-wide">Pending</span>
+          </div>
+          <div className="flex px-0 justify-between items-center">
+            <span className="text-3xl font-mono text-[#e8eaed]">{stats.pending}</span>
+          </div>
         </div>
-        <div className="gcloud-card p-4">
-          <h3 className="text-[#5f6368] dark:text-[#9aa0a6] text-xs font-medium mb-1 uppercase">Received</h3>
-          <p className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed]">{stats.received}</p>
+
+        {/* 3. Received */}
+        <div className="pt-3 pb-4 pl-4 pr-4 border-b border-r border-[#3c4043] flex flex-col justify-between hover:bg-[#202124] transition-colors group">
+          <div className="flex items-center gap-2 mb-3 text-[#9aa0a6] group-hover:text-[#8AB4F8] transition-colors">
+            <MdCheckCircleOutline className="w-5 h-5" />
+            <span className="text-sm uppercase font-medium tracking-wide">Received</span>
+          </div>
+          <div className="flex px-0 justify-between items-center">
+            <span className="text-3xl font-mono text-[#e8eaed]">{stats.received}</span>
+          </div>
         </div>
-        <div className="gcloud-card p-4">
-          <h3 className="text-[#5f6368] dark:text-[#9aa0a6] text-xs font-medium mb-1 uppercase">Total Fines</h3>
-          <p className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed]">₹{stats.totalFines.toLocaleString()}</p>
+
+        {/* 4. Total Fines */}
+        <div className="pt-3 pb-4 pl-4 pr-4 border-b border-r border-[#3c4043] flex flex-col justify-between hover:bg-[#202124] transition-colors group">
+          <div className="flex items-center gap-2 mb-3 text-[#9aa0a6] group-hover:text-[#8AB4F8] transition-colors">
+            <MdCurrencyRupee className="w-5 h-5" />
+            <span className="text-sm uppercase font-medium tracking-wide">Total Fines</span>
+          </div>
+          <div className="flex px-0 justify-between items-center">
+            <div className="flex items-baseline gap-1">
+              <span className="text-lg text-[#5f6368] font-mono">₹</span>
+              <span className="text-3xl font-mono text-[#e8eaed]">{stats.totalFines.toLocaleString()}</span>
+            </div>
+          </div>
         </div>
-        <div className="gcloud-card p-4">
-          <h3 className="text-[#5f6368] dark:text-[#9aa0a6] text-xs font-medium mb-1 uppercase">Collected</h3>
-          <p className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed]">₹{stats.collectedFines.toLocaleString()}</p>
+
+        {/* 5. Collected */}
+        <div className="pt-3 pb-4 pl-4 pr-4 border-b border-r border-[#3c4043] flex flex-col justify-between hover:bg-[#202124] transition-colors group">
+          <div className="flex items-center gap-2 mb-3 text-[#9aa0a6] group-hover:text-[#8AB4F8] transition-colors">
+            <MdPriceCheck className="w-5 h-5" />
+            <span className="text-sm uppercase font-medium tracking-wide">Collected</span>
+          </div>
+          <div className="flex px-0 justify-between items-center">
+            <div className="flex items-baseline gap-1">
+              <span className="text-lg text-[#5f6368] font-mono">₹</span>
+              <span className="text-3xl font-mono text-[#e8eaed]">{stats.collectedFines.toLocaleString()}</span>
+            </div>
+          </div>
         </div>
+
       </div>
 
       {/* Filters and Search */}
-      <div className="gcloud-card p-4 mb-6">
-        <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
-          <div className="flex flex-wrap gap-2">
+      <div className="gcloud-card mb-4 p-0 !border-0 !bg-[#131314] !dark:bg-[#131314]">
+        <div className="flex flex-col !bg-[#131314] md:flex-row gap-4 items-start md:items-center justify-between">
+          <div className="flex flex-wrap gap-2 items-center">
             <button
               onClick={() => setStatusFilter('all')}
               className={`px-4 py-2 text-sm font-medium transition-colors rounded ${
                 statusFilter === 'all'
                   ? 'bg-[#1a73e8] dark:bg-[#8ab4f8] text-white dark:text-[#202124]'
-                  : 'bg-[#f1f3f4] dark:bg-[#3c4043] text-[#5f6368] dark:text-[#9aa0a6] hover:bg-[#e8eaed] dark:hover:bg-[#4d4e52]'
+                  : 'bg-[#f1f3f4] dark:bg-[#292A2D] text-[#5f6368] dark:text-[#9aa0a6] hover:bg-[#e8eaed] dark:hover:bg-[#4d4e52]'
               }`}
             >
               All
@@ -233,7 +285,7 @@ export default function ChallanRecords() {
               className={`px-4 py-2 text-sm font-medium transition-colors rounded ${
                 statusFilter === 'pending'
                   ? 'bg-[#fbbc04] dark:bg-[#fdd663] text-[#202124]'
-                  : 'bg-[#f1f3f4] dark:bg-[#3c4043] text-[#5f6368] dark:text-[#9aa0a6] hover:bg-[#fef7e0] dark:hover:bg-[#5f5317]'
+                  : 'bg-[#f1f3f4] dark:bg-[#292A2D] text-[#5f6368] dark:text-[#9aa0a6] hover:bg-[#e8eaed] dark:hover:bg-[#4d4e52]'
               }`}
             >
               Pending ({stats.pending})
@@ -243,7 +295,7 @@ export default function ChallanRecords() {
               className={`px-4 py-2 text-sm font-medium transition-colors rounded ${
                 statusFilter === 'received'
                   ? 'bg-[#34a853] dark:bg-[#81c995] text-white dark:text-[#202124]'
-                  : 'bg-[#f1f3f4] dark:bg-[#3c4043] text-[#5f6368] dark:text-[#9aa0a6] hover:bg-[#e6f4ea] dark:hover:bg-[#1e4620]'
+                  : 'bg-[#f1f3f4] dark:bg-[#292A2D] text-[#5f6368] dark:text-[#9aa0a6] hover:bg-[#e8eaed] dark:hover:bg-[#4d4e52]'
               }`}
             >
               Received ({stats.received})
@@ -253,20 +305,20 @@ export default function ChallanRecords() {
               className={`px-4 py-2 text-sm font-medium transition-colors rounded ${
                 statusFilter === 'rejected'
                   ? 'bg-[#5f6368] dark:bg-[#9aa0a6] text-white dark:text-[#202124]'
-                  : 'bg-[#f1f3f4] dark:bg-[#3c4043] text-[#5f6368] dark:text-[#9aa0a6] hover:bg-[#e8eaed] dark:hover:bg-[#4d4e52]'
+                  : 'bg-[#f1f3f4] dark:bg-[#292A2D] text-[#5f6368] dark:text-[#9aa0a6] hover:bg-[#e8eaed] dark:hover:bg-[#4d4e52]'
               }`}
             >
               Rejected ({stats.rejected})
             </button>
           </div>
-          <div className="relative w-full md:w-64">
+          <div className="relative w-full md:w-100 border border-[#3C4043] rounded-md transition-colors focus-within:border-[#8AB4F8] focus-within:ring-0.7 focus-within:ring-[#8AB4F8]">
             <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#5f6368] dark:text-[#9aa0a6]" />
             <input
               type="text"
               placeholder="Search ID, License No., Location..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-[#dadce0] dark:border-[#3c4043] bg-white dark:bg-[#292a2d] text-[#202124] dark:text-[#e8eaed] rounded focus:ring-2 focus:ring-[#1a73e8] dark:focus:ring-[#8ab4f8] focus:border-transparent text-sm"
+              className="w-full pl-10 pr-4 py-2 outline-none text-sm bg-transparent text-[#e8eaed]"
             />
           </div>
         </div>

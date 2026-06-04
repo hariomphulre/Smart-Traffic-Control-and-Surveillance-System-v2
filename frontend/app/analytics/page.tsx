@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
-import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Sector } from 'recharts';
 import dynamic from 'next/dynamic';
 import {
   getViolations,
@@ -127,12 +127,16 @@ const DynamicMap = dynamic(() => import('@/components/RealMap'), {
 const PeakTrafficTooltip = ({ active, payload }: any) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
+    
+    // Hide tooltip if hovering over the empty future track
+    if (data.isFuture) return null; 
+
     return (
-      <div className="bg-[#1e1e1e] border border-gray-700 p-3 rounded shadow-xl text-xs font-mono z-50">
+      <div className="bg-[#1e1e1e] ml-20 border border-gray-700 p-3 rounded shadow-xl text-xs font-mono z-50">
         <p className="mb-2 text-sm font-bold border-b border-gray-700 pb-1" style={{ color: data.fill }}>
           {data.name} Traffic
         </p>
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1 w-40 text-[13px]">
           <p className="text-gray-400">Avg. Traffic: <span className="text-[#e8eaed]">{data.avgVolume}</span></p>
           <p className="text-gray-400">Duration: <span className="text-[#e8eaed]">{data.duration}</span></p>
           <p className="text-gray-400">Timing: <span className="text-[#e8eaed]">{data.timing}</span></p>
@@ -154,6 +158,30 @@ const SparklineTooltip = ({ active, payload }: any) => {
     );
   }
   return null;
+};
+
+// Custom animated hover shape for the Peak Traffic Donut Chart
+const renderActiveShape = (props: any) => {
+  const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill } = props;
+  return (
+    <g>
+      <Sector
+        cx={cx}
+        cy={cy}
+        innerRadius={innerRadius - 2}
+        outerRadius={outerRadius + 2}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        fill={fill}
+        stroke="#ffffff"  
+        strokeWidth={1}
+        style={{ 
+          transition: 'all 0.3s ease-in-out',
+          outline: 'none',
+        }}
+      />
+    </g>
+  );
 };
 
 export default function Analytics() {
@@ -178,6 +206,7 @@ export default function Analytics() {
   const cardRef = useRef<HTMLDivElement>(null);
   const hasInitiallyLoaded = useRef(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [peakActiveIndex, setPeakActiveIndex] = useState<number>(-1);
 
   // Sync fullscreen state if user exits via ESC key
   useEffect(() => {
@@ -354,12 +383,45 @@ export default function Analytics() {
     value: Math.floor(50 + (i * growthRate) + (Math.random() * 10))
   }));
 
-  // Enriched Pie Chart data with Volumes, Durations, and Timings
-  const peakTrafficData = [
-    { name: 'Peak', value: 30, fill: '#ea4335', avgVolume: `${Math.floor(totalVehiclesCount * 0.4)} veh/hr`, duration: '4 hrs', timing: '17:00 - 21:00' },
-    { name: 'Moderate', value: 40, fill: '#fbbc04', avgVolume: `${Math.floor(totalVehiclesCount * 0.25)} veh/hr`, duration: '6 hrs', timing: '09:00 - 15:00' },
-    { name: 'Low', value: 30, fill: '#34a853', avgVolume: `${Math.floor(totalVehiclesCount * 0.1)} veh/hr`, duration: '14 hrs', timing: '21:00 - 09:00' }
+// --- REAL-TIME PEAK TRAFFIC CALCULATION ---
+  // Get exact fractional hour (e.g., 3:30 AM = 3.5)
+  const currentHour = new Date().getHours() + (new Date().getMinutes() / 60);
+
+  const baseSegments = [
+    { name: 'Night (Low)', start: 0, end: 7, fill: '#34a853', avgVolume: `${Math.floor(totalVehiclesCount * 0.05)} veh/hr`, duration: '7 hrs', timing: '00:00 - 07:00' },
+    { name: 'Morning Peak', start: 7, end: 11, fill: '#ea4335', avgVolume: `${Math.floor(totalVehiclesCount * 0.35)} veh/hr`, duration: '4 hrs', timing: '07:00 - 11:00' },
+    { name: 'Mid-day (Mod)', start: 11, end: 16, fill: '#fbbc04', avgVolume: `${Math.floor(totalVehiclesCount * 0.15)} veh/hr`, duration: '5 hrs', timing: '11:00 - 16:00' },
+    { name: 'Evening Peak', start: 16, end: 21, fill: '#ea4335', avgVolume: `${Math.floor(totalVehiclesCount * 0.40)} veh/hr`, duration: '5 hrs', timing: '16:00 - 21:00' },
+    { name: 'Night (Low)', start: 21, end: 24, fill: '#34a853', avgVolume: `${Math.floor(totalVehiclesCount * 0.05)} veh/hr`, duration: '3 hrs', timing: '21:00 - 24:00' }
   ];
+
+  const peakTrafficData: any[] = [];
+  let accumulatedHours = 0;
+
+  // 1. Only push segments (or partial segments) that have already elapsed today
+  baseSegments.forEach(seg => {
+    if (currentHour > seg.start) {
+      const activeValue = Math.min(currentHour, seg.end) - seg.start;
+      if (activeValue > 0) {
+        peakTrafficData.push({
+          ...seg,
+          value: activeValue, // Overrides value with just the elapsed hours
+        });
+        accumulatedHours += activeValue;
+      }
+    }
+  });
+
+  // 2. Fill the remainder of the 24 hours with an empty dark track
+  const remainingHours = 24 - accumulatedHours;
+  if (remainingHours > 0) {
+    peakTrafficData.push({
+      name: 'Future',
+      value: remainingHours,
+      fill: '#292A2D', // Subtle grey unlit track
+      isFuture: true
+    });
+  }
 
   // Incidents
   const accidentsCount = Math.floor((totalVehiclesCount / 1000) * 2);
@@ -602,13 +664,13 @@ export default function Analytics() {
         </div>
 
         {/* 4. Peak Traffic (Inline Donut Chart) */}
-        <div className="pt-3 pb-4 pl-4 pr-4 border-b border-r border-[#3c4043] flex flex-col justify-between transition-colors group">
-          <div className="flex items-center gap-2 mb-2 text-[#9aa0a6] transition-colors">
+        <div className="pt-3 pb-0 pl-2 pr-2 border-b border-r border-[#3c4043] flex flex-col justify-between transition-colors group">
+          <div className="flex items-center px-2 gap-2 mb-0 text-[#9aa0a6] transition-colors">
             <MdOutlineInsights className="w-4.5 h-4.5" />
             <span className="text-sm uppercase font-medium tracking-wide">Peak Traffic</span>
           </div>
           <div className="flex items-center h-full">
-            <div className="w-14 h-14 relative flex items-center justify-center cursor-crosshair">
+            <div className="w-20 h-20 relative  flex items-center justify-center cursor-crosshair">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie 
@@ -616,7 +678,20 @@ export default function Analytics() {
                     innerRadius={20} 
                     outerRadius={28} 
                     dataKey="value" 
-                    stroke="none" 
+                    stroke="none"
+                    startAngle={90}
+                    endAngle={-270}
+                    // peakActiveIndex is guaranteed to be a number. 
+                    // Recharts safely ignores -1.
+                    activeIndex={peakActiveIndex} 
+                    activeShape={renderActiveShape as any}
+                    onMouseEnter={(data: any, index: number) => {
+                      // Safely check array bounds
+                      if (peakTrafficData[index] && !peakTrafficData[index].isFuture) {
+                        setPeakActiveIndex(index);
+                      }
+                    }}
+                    onMouseLeave={() => setPeakActiveIndex(-1)}
                   />
                   <Tooltip content={<PeakTrafficTooltip />} />
                 </PieChart>

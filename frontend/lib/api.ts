@@ -5,6 +5,7 @@ export interface Log {
   id: string;
   dateTime: string;
   location: string;
+  signalCode?: string;
   licenseNo: string;
   vehicleType: string;
   speed: number;
