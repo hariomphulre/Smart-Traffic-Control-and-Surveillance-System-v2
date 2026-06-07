@@ -681,19 +681,18 @@ export default function Analytics() {
                     stroke="none"
                     startAngle={90}
                     endAngle={-270}
-                    // peakActiveIndex is guaranteed to be a number. 
-                    // Recharts safely ignores -1.
+                    
+                    // @ts-expect-error Recharts type definitions mismatch
                     activeIndex={peakActiveIndex} 
+                    
                     activeShape={renderActiveShape as any}
                     onMouseEnter={(data: any, index: number) => {
-                      // Safely check array bounds
                       if (peakTrafficData[index] && !peakTrafficData[index].isFuture) {
                         setPeakActiveIndex(index);
                       }
                     }}
                     onMouseLeave={() => setPeakActiveIndex(-1)}
                   />
-                  <Tooltip content={<PeakTrafficTooltip />} />
                 </PieChart>
               </ResponsiveContainer>
               <span className="absolute text-[12px] font-mono text-[#e8eaed] pointer-events-none">
