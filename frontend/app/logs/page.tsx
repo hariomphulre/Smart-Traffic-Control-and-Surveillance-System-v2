@@ -60,7 +60,24 @@ export default function Logs() {
   const [savedLists, setSavedLists] = useState<SavedList[]>([]);
   const [isViewListsOpen, setIsViewListsOpen] = useState(false);
   const [viewingList, setViewingList] = useState<SavedList | null>(null);
+  const viewListsRef = useRef<HTMLDivElement>(null);
   // --------------------------------------
+
+  useEffect(() => {
+    const handlePointerDown = (event: PointerEvent) => {
+      if (
+        viewListsRef.current &&
+        !viewListsRef.current.contains(event.target as Node)
+      ) {
+        setIsViewListsOpen(false);
+      }
+    };
+
+    if (isViewListsOpen) {
+      document.addEventListener('pointerdown', handlePointerDown);
+    }
+    return () => document.removeEventListener('pointerdown', handlePointerDown);
+  }, [isViewListsOpen]);
 
   const {
     selectedDuration,
@@ -304,7 +321,7 @@ export default function Logs() {
               </button>
             </div>
 
-            <div className="relative">
+            <div className="relative" ref={viewListsRef}>
               <div 
                 onClick={() => setIsViewListsOpen(!isViewListsOpen)}
                 className={`group flex items-center gap-1 px-3 justify-center rounded-sm transition-all cursor-pointer ${isViewListsOpen ? 'bg-[#202124]' : 'hover:bg-[#202124]'}`}

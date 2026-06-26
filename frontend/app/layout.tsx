@@ -35,18 +35,19 @@ export const metadata: Metadata = {
 
 const secondaryNavItems = [
   { name: 'Analytics', path: '/analytics' },
+  { name: 'Surveillance', path: '/simulation/surveillance' },
   { name: 'Logs', path: '/logs' },
   { name: 'Challan Records', path: '/challan-records' },
   { name: 'Accident/Fire Reports', path: '/accident-reports' },
-  // { name: 'Simulation', path: '/simulation' },
   { name: 'Images', path: '/images' },
+  { name: 'Signal Simulation', path: '/simulation/traffic-signal' },
 ]
 
 const secondaryNavDropdowns = {
-  'Simulation': [
-    { name: 'Surveillance', path: '/simulation/surveillance'},
-    { name: 'Traffic Signal', path: '/simulation/traffic-signal'}
-  ],
+  // 'Simulation': [
+  //   { name: 'Surveillance', path: '/simulation/surveillance'},
+  //   { name: 'Traffic Signal', path: '/simulation/traffic-signal'}
+  // ],
   'Emergency Response': [
     { name: 'Ambulance', path: '/emergency-response/ambulance/simulation' },
     { name: 'Fire brigade', path: '/emergency-response/fire-brigade/simulation' },

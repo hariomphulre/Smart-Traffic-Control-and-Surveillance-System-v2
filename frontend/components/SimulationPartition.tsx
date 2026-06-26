@@ -420,7 +420,7 @@ export default function SimulationPartition({
               >
                 <Icon className="w-5 h-5 text-[#9aa0a6] dark:text-[#80868b]" />
                 <span
-                  className={`pointer-events-none absolute left-full ml-2 z-10 whitespace-nowrap rounded px-2 py-0.5 text-[10px] font-medium text-[#202124] dark:text-[#e8eaed] bg-white dark:bg-[#35363a] border opacity-0 transition-opacity group-hover:opacity-100 ${PANEL_BORDER}`}
+                  className={`pointer-events-none absolute left-full ml-2 z-10 whitespace-nowrap rounded px-2 py-0.5 text-[12px] font-medium text-[#202124] dark:text-[#e8eaed] bg-white dark:bg-black border opacity-0 transition-opacity group-hover:opacity-100 ${PANEL_BORDER}`}
                 >
                   {label}
                 </span>

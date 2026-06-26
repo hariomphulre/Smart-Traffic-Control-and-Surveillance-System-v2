@@ -19,10 +19,21 @@ import { FiPause, FiPlay } from 'react-icons/fi'
 import { LuPause } from 'react-icons/lu'
 import { GrPause, GrResume } from 'react-icons/gr'
 import { RxResume } from 'react-icons/rx'
+import LocationBar from '@/components/LocationBar'
+import dynamic from 'next/dynamic'
+import { useLocationFilter } from '@/context/LocationFilterContext'
+import { MAP_SIGNALS } from '@/map/MapData';
 
 const LANES: LaneId[] = [1, 2, 3, 4]
 
+const DynamicMap = dynamic(() => import('@/components/RealMap'), { 
+  ssr: false, 
+  loading: () => <div className="flex-1 flex items-center justify-center bg-[#0a0a0a] text-[#8AB4F8] font-mono animate-pulse">Initializing Satellite Uplink...</div> 
+});
+
 export default function SimulationPage() {
+  const { isMapOpen,isLocked, setIsMapOpen, pathSegments, handleMapPinClick } = useLocationFilter();
+
   const [state, setState] = useState<TrafficState | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [availableVideos, setAvailableVideos] = useState<SimulationVideo[]>([])
@@ -283,7 +294,7 @@ export default function SimulationPage() {
       <div className="w-full flex items-center justify-between h-13 mb-0 border-b border-[#3c4043] bg-[#131314] p-1 shadow-xl">
         <div className="flex items-center min-w-0 flex-1">
           <div>
-            <p className="text-[#ffffff] font-mono text-xl ml-4">Simulation / Live Surveillance Demo</p>
+            <p className="text-[#ffffff] font-mono text-xl ml-4">Live Surveillance</p>
           </div>
         </div>
         <div className="flex gap-1">
@@ -347,7 +358,83 @@ export default function SimulationPage() {
         </div>
       </div>
 
-      {isLoading ? (
+      <div className="w-full relative font-sans">
+        {/* LOCATION BAR */}
+        <LocationBar />
+
+        {/* MAP MODAL */}
+        {isMapOpen && (
+          <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/80 backdrop-blur-sm">
+            <div className="bg-[#131314] w-[95vw] h-[94vh] border-2 border-[#3c4043] rounded-2xl flex flex-col shadow-2xl overflow-hidden relative">
+              
+              <div className="h-12 border-b border-[#3c4043] bg-black flex items-center justify-between px-5 z-10 shrink-0">
+                <h2 className="text-[#8AB4F8] font-mono text-lg flex items-center gap-3">
+                  <span className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+                  Global Signal Radar
+                </h2>
+                <button 
+                  onClick={() => setIsMapOpen(false)}
+                  className="text-[#9aa0a6] hover:text-white transition-colors font-bold text-xl"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div className="flex-1 relative z-0">
+                <DynamicMap 
+                  signals={MAP_SIGNALS} 
+                  pathSegments={pathSegments} 
+                  onPinClick={handleMapPinClick} 
+                />
+              </div>
+
+            </div>
+          </div>
+        )}
+      </div>
+
+      {isLoading && 
+        <div className="text-center py-8 text-[#5f6368] dark:text-[#9aa0a6]">
+          Loading videos...
+        </div>
+      }  
+
+      {!isLoading && 
+
+        (isLocked ?
+          (
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-0">
+              {LANES.map((lane) => (
+                <SimulationPartition
+                  key={lane}
+                  lane={lane}
+                  selectedVideo={videoByLane[lane]}
+                  lockedVideo={lockedVideos?.[lane]}
+                  state={displayTrafficState}
+                  streamUrl={streamStatus[lane].streamUrl}
+                  streamStartedAt={streamStatus[lane].startedAt}
+                  simulationRunning={isRunning}
+                  usedVideos={usedVideos}
+                  availableVideos={availableVideos}
+                  onVideoChange={handleVideoChange}
+                />
+              ))}
+            </div>
+          )
+          :
+          (
+            <div className="flex h-150 w-full items-center justify-center gap-1">
+                <div className="text-gray-500 text-xl font-medium self-center justify-self">Invalid location path.</div>
+                <div className="text-gray-500 text-xl font-medium">Please select a specific traffic signal location</div>
+            </div>
+          )
+        )
+      }
+
+
+      
+
+      {/* {isLoading ? (
         <div className="text-center py-8 text-[#5f6368] dark:text-[#9aa0a6]">
           Loading videos...
         </div>
@@ -369,7 +456,7 @@ export default function SimulationPage() {
             />
           ))}
         </div>
-      )}
+      )} */}
     </div>
   )
 }
