@@ -29,7 +29,7 @@ export default function LocationBar() {
   return (
     <div className="w-full relative font-sans" ref={wrapperRef}>
       {/* TOP LOCATION BAR */}
-      <div className="flex w-full border-b border-[#3c4043] h-8 bg-black mb-0 items-center justify-between">
+      <div className="flex w-full border-b border-l border-[#3c4043] h-8 bg-black mb-0 items-center justify-between">
         
         <div 
           onClick={() => inputRef.current?.focus()}

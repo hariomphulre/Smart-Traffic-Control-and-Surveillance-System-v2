@@ -304,7 +304,7 @@ export default function Logs() {
       />
 
       {/* Added relative and z-[60] here to fix dropdown overlap issues */}
-      <div className="w-full flex items-center justify-between h-13 mb-0 border-b border-[#3c4043] bg-[#131314] p-1 shadow-xl relative z-[60]">
+      <div className="w-full flex items-center justify-between h-13 mb-0 border-b border-l border-[#3c4043] bg-[#131314] p-1 shadow-xl relative z-[60]">
         <div className="flex items-center min-w-170 flex-1">
           <div>
             <p className="text-[#ffffff] font-mono text-xl ml-4">System Logs</p>

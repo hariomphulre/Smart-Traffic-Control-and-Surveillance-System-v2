@@ -7,8 +7,8 @@ import { useSearchParams } from "next/navigation";
 
 
 const Profile = () => {
-    const router=useRouter();
     const searchParams = useSearchParams();
+    const router=useRouter();
     const backendInternal =process.env.BACKEND_INTERNAL_URL || 'http://127.0.0.1:3001'
     const handlePasskey = async (e)=>{
         e.preventDefault();

@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar'
 import SecondaryNavbar from '@/components/SecondaryNavbar'
 import { ThemeProvider } from '@/context/ThemeContext'
 import { LocationFilterProvider } from '@/context/LocationFilterContext'
+import Sidebar from '@/components/Sidebar'
 
 const inter = Inter({ subsets: ['latin'] })
 const jetbrainsMono = JetBrains_Mono({
@@ -80,10 +81,15 @@ export default function RootLayout({
         <ThemeProvider>
           <LocationFilterProvider>
             <Navbar />
-            <SecondaryNavbar items={secondaryNavItems} dropdowns={secondaryNavDropdowns} />
-            <main className="min-h-screen transition-colors">
-              {children}
-            </main>
+            <div className="flex flex-row">
+              <Sidebar/>
+              <div className="w-full">
+                <SecondaryNavbar items={secondaryNavItems} dropdowns={secondaryNavDropdowns} />
+                <main className="min-h-screen transition-colors">
+                  {children}
+                </main>
+              </div>
+            </div>
           </LocationFilterProvider>
         </ThemeProvider>
       </body>
