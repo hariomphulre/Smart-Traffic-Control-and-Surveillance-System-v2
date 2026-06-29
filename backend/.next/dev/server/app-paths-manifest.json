@@ -4,10 +4,5 @@
   "/api/auth/login-verify/route": "app/api/auth/login-verify/route.js",
   "/api/auth/register-challenge/route": "app/api/auth/register-challenge/route.js",
   "/api/auth/register-verify/route": "app/api/auth/register-verify/route.js",
-  "/api/auth/register/route": "app/api/auth/register/route.js",
-  "/api/challans/route": "app/api/challans/route.js",
-  "/api/challans/stats/route": "app/api/challans/stats/route.js",
-  "/api/images/vehicles/route": "app/api/images/vehicles/route.js",
-  "/api/logs/route": "app/api/logs/route.js",
-  "/api/signals/state/route": "app/api/signals/state/route.js"
+  "/api/auth/register/route": "app/api/auth/register/route.js"
 }
