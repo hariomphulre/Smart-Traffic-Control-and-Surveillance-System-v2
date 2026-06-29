@@ -1,64 +1,87 @@
-{"timestamp":"00:00:01.134","source":"Server","level":"WARN","message":"⚠ The \"middleware\" file convention is deprecated. Please use \"proxy\" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy"}
-{"timestamp":"00:00:01.436","source":"Server","level":"LOG","message":""}
-{"timestamp":"00:00:02.553","source":"Browser","level":"INFO","message":"%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"}
-{"timestamp":"00:00:22.867","source":"Server","level":"LOG","message":"[2026-06-29T10:17:51.621Z] GET /api/analytics/stats"}
-{"timestamp":"00:00:22.887","source":"Server","level":"LOG","message":"[2026-06-29T10:17:51.641Z] GET /api/analytics/violations"}
-{"timestamp":"00:00:22.897","source":"Server","level":"LOG","message":"[2026-06-29T10:17:51.651Z] GET /api/analytics/vehicle-types"}
-{"timestamp":"00:00:22.904","source":"Server","level":"LOG","message":"[2026-06-29T10:17:51.658Z] GET /api/analytics/hourly-traffic"}
-{"timestamp":"00:00:22.930","source":"Server","level":"LOG","message":"[2026-06-29T10:17:51.684Z] GET /api/analytics/speed-distribution"}
-{"timestamp":"00:00:24.239","source":"Server","level":"LOG","message":"[2026-06-29T10:17:52.994Z] GET /api/analytics/stats"}
-{"timestamp":"00:00:24.275","source":"Server","level":"LOG","message":"[2026-06-29T10:17:53.029Z] GET /api/analytics/violations"}
-{"timestamp":"00:00:24.284","source":"Server","level":"LOG","message":"[2026-06-29T10:17:53.038Z] GET /api/analytics/vehicle-types"}
-{"timestamp":"00:00:24.291","source":"Server","level":"LOG","message":"[2026-06-29T10:17:53.046Z] GET /api/analytics/hourly-traffic"}
-{"timestamp":"00:00:24.305","source":"Server","level":"LOG","message":"[2026-06-29T10:17:53.059Z] GET /api/analytics/speed-distribution"}
-{"timestamp":"00:00:24.630","source":"Server","level":"ERROR","message":"(node:231386) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.\n(Use `node --trace-deprecation ...` to show where the warning was created)"}
-{"timestamp":"00:00:24.641","source":"Server","level":"WARN","message":"⚠️ Redis error: \"Invalid IP address: undefined\""}
-{"timestamp":"00:00:24.847","source":"Server","level":"WARN","message":"⚠️ Redis error: \"Invalid IP address: undefined\""}
-{"timestamp":"00:00:25.251","source":"Server","level":"WARN","message":"⚠️ Redis error: \"Invalid IP address: undefined\""}
-{"timestamp":"00:00:25.860","source":"Server","level":"WARN","message":"⚠️ Redis error: \"Invalid IP address: undefined\""}
-{"timestamp":"00:00:25.863","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:25.874","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:25.877","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:25.878","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:25.882","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:25.884","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:25.885","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:25.886","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:25.889","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:25.890","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:25.961","source":"Server","level":"LOG","message":"🔗 Neon: using NEON_HOST_IP 3.0.167.45"}
-{"timestamp":"00:00:40.969","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
-{"timestamp":"00:00:40.983","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
-{"timestamp":"00:00:40.989","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
-{"timestamp":"00:00:40.996","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
-{"timestamp":"00:00:41.001","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
-{"timestamp":"00:00:41.005","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
-{"timestamp":"00:00:41.011","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
-{"timestamp":"00:00:41.016","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
-{"timestamp":"00:00:41.024","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
-{"timestamp":"00:00:41.031","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
-{"timestamp":"00:01:21.451","source":"Server","level":"LOG","message":"[2026-06-29T10:18:50.202Z] GET /api/signals/state"}
-{"timestamp":"00:01:21.841","source":"Server","level":"LOG","message":"[2026-06-29T10:18:50.596Z] GET /api/signals/state"}
-{"timestamp":"00:01:22.288","source":"Server","level":"LOG","message":"[2026-06-29T10:18:51.043Z] GET /api/signals/state"}
-{"timestamp":"00:01:22.786","source":"Server","level":"LOG","message":"[2026-06-29T10:18:51.541Z] GET /api/signals/state"}
-{"timestamp":"00:01:23.285","source":"Server","level":"LOG","message":"[2026-06-29T10:18:52.040Z] GET /api/signals/state"}
-{"timestamp":"00:01:23.785","source":"Server","level":"LOG","message":"[2026-06-29T10:18:52.540Z] GET /api/signals/state"}
-{"timestamp":"00:01:24.288","source":"Server","level":"LOG","message":"[2026-06-29T10:18:53.043Z] GET /api/signals/state"}
-{"timestamp":"00:01:24.785","source":"Server","level":"LOG","message":"[2026-06-29T10:18:53.540Z] GET /api/signals/state"}
-{"timestamp":"00:01:25.286","source":"Server","level":"LOG","message":"[2026-06-29T10:18:54.041Z] GET /api/signals/state"}
-{"timestamp":"00:01:25.894","source":"Server","level":"LOG","message":"[2026-06-29T10:18:54.648Z] GET /api/signals/state"}
-{"timestamp":"00:01:25.924","source":"Server","level":"LOG","message":"[2026-06-29T10:18:54.679Z] GET /api/analytics/stats"}
-{"timestamp":"00:01:25.940","source":"Server","level":"LOG","message":"[2026-06-29T10:18:54.695Z] GET /api/analytics/violations"}
-{"timestamp":"00:01:25.944","source":"Server","level":"LOG","message":"[2026-06-29T10:18:54.699Z] GET /api/analytics/vehicle-types"}
-{"timestamp":"00:01:25.951","source":"Server","level":"LOG","message":"[2026-06-29T10:18:54.706Z] GET /api/analytics/hourly-traffic"}
-{"timestamp":"00:01:25.958","source":"Server","level":"LOG","message":"[2026-06-29T10:18:54.713Z] GET /api/analytics/speed-distribution"}
-{"timestamp":"00:01:25.981","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:01:26.001","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:01:26.011","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:01:26.021","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:01:26.029","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:01:40.992","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
-{"timestamp":"00:01:41.003","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
-{"timestamp":"00:01:41.013","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
-{"timestamp":"00:01:41.023","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
-{"timestamp":"00:01:41.030","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:00:00.549","source":"Server","level":"WARN","message":"⚠ The \"middleware\" file convention is deprecated. Please use \"proxy\" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy"}
+{"timestamp":"00:00:00.700","source":"Server","level":"LOG","message":""}
+{"timestamp":"00:00:47.695","source":"Server","level":"LOG","message":"[2026-06-29T13:00:02.102Z] GET /api/analytics/stats"}
+{"timestamp":"00:00:47.698","source":"Server","level":"LOG","message":"[2026-06-29T13:00:02.106Z] GET /api/analytics/violations"}
+{"timestamp":"00:00:47.699","source":"Server","level":"LOG","message":"[2026-06-29T13:00:02.107Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:00:47.701","source":"Server","level":"LOG","message":"[2026-06-29T13:00:02.109Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:00:47.703","source":"Server","level":"LOG","message":"[2026-06-29T13:00:02.111Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:00:48.437","source":"Server","level":"ERROR","message":"(node:548650) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.\n(Use `node --trace-deprecation ...` to show where the warning was created)"}
+{"timestamp":"00:00:48.454","source":"Server","level":"WARN","message":"⚠️ Redis error: \"Invalid IP address: undefined\""}
+{"timestamp":"00:00:48.658","source":"Server","level":"WARN","message":"⚠️ Redis error: \"Invalid IP address: undefined\""}
+{"timestamp":"00:00:49.060","source":"Server","level":"WARN","message":"⚠️ Redis error: \"Invalid IP address: undefined\""}
+{"timestamp":"00:00:49.671","source":"Server","level":"WARN","message":"⚠️ Redis error: \"Invalid IP address: undefined\""}
+{"timestamp":"00:00:49.672","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:00:49.676","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:00:49.678","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:00:49.679","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:00:49.680","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:00:49.705","source":"Server","level":"LOG","message":"🔗 Neon: using NEON_HOST_IP 3.0.167.45"}
+{"timestamp":"00:01:04.711","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:01:04.724","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:01:04.727","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:01:04.730","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:01:04.733","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:01:24.612","source":"Server","level":"LOG","message":"[2026-06-29T13:00:39.020Z] GET /api/analytics/stats"}
+{"timestamp":"00:01:24.629","source":"Server","level":"LOG","message":"[2026-06-29T13:00:39.037Z] GET /api/analytics/violations"}
+{"timestamp":"00:01:24.632","source":"Server","level":"LOG","message":"[2026-06-29T13:00:39.040Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:01:24.640","source":"Server","level":"LOG","message":"[2026-06-29T13:00:39.048Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:01:24.646","source":"Server","level":"LOG","message":"[2026-06-29T13:00:39.054Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:01:24.673","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:01:24.687","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:01:24.695","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:01:24.704","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:01:24.714","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:01:39.683","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:01:39.689","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:01:39.697","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:01:39.705","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:01:39.715","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:12:15.584","source":"Server","level":"LOG","message":"[2026-06-29T13:11:29.992Z] POST /api/auth/register"}
+{"timestamp":"00:16:49.849","source":"Server","level":"LOG","message":"[2026-06-29T13:16:04.257Z] POST /api/auth/register"}
+{"timestamp":"00:17:48.198","source":"Server","level":"LOG","message":"[2026-06-29T13:17:02.607Z] POST /api/auth/register"}
+{"timestamp":"00:20:15.501","source":"Server","level":"LOG","message":"[2026-06-29T13:19:29.909Z] POST /api/auth/register"}
+{"timestamp":"00:22:29.477","source":"Server","level":"LOG","message":"[2026-06-29T13:21:43.885Z] POST /api/auth/register-challenge"}
+{"timestamp":"00:23:57.007","source":"Server","level":"LOG","message":"[2026-06-29T13:23:11.415Z] POST /api/auth/register-verify"}
+{"timestamp":"00:24:09.233","source":"Server","level":"LOG","message":"[2026-06-29T13:23:23.641Z] POST /api/auth/login-challenge"}
+{"timestamp":"00:24:30.074","source":"Server","level":"LOG","message":"[2026-06-29T13:23:44.482Z] POST /api/auth/login-verify"}
+{"timestamp":"00:27:28.609","source":"Server","level":"LOG","message":"[2026-06-29T13:26:43.017Z] GET /api/analytics/stats"}
+{"timestamp":"00:27:28.611","source":"Server","level":"LOG","message":"[2026-06-29T13:26:43.019Z] GET /api/analytics/violations"}
+{"timestamp":"00:27:28.613","source":"Server","level":"LOG","message":"[2026-06-29T13:26:43.021Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:27:28.615","source":"Server","level":"LOG","message":"[2026-06-29T13:26:43.023Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:27:28.617","source":"Server","level":"LOG","message":"[2026-06-29T13:26:43.025Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:27:28.650","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:27:28.656","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:27:28.660","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:27:28.664","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:27:28.676","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:27:43.658","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:27:43.662","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:27:43.668","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:27:43.673","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:27:43.680","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:58:29.001","source":"Server","level":"ERROR","message":"[Server HMR] Update failed, full reload needed: SyntaxError: Identifier 'origin' has already been declared"}
+{"timestamp":"00:58:29.020","source":"Server","level":"ERROR","message":"[Server HMR] Listener error: SyntaxError: Identifier 'origin' has already been declared"}
+{"timestamp":"01:14:32.830","source":"Server","level":"LOG","message":"[2026-06-29T14:13:47.238Z] GET /api/analytics/stats"}
+{"timestamp":"01:14:32.833","source":"Server","level":"LOG","message":"[2026-06-29T14:13:47.241Z] GET /api/analytics/violations"}
+{"timestamp":"01:14:32.835","source":"Server","level":"LOG","message":"[2026-06-29T14:13:47.243Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"01:14:32.840","source":"Server","level":"LOG","message":"[2026-06-29T14:13:47.249Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"01:14:32.845","source":"Server","level":"LOG","message":"[2026-06-29T14:13:47.253Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"01:14:32.987","source":"Server","level":"WARN","message":"⚠️ Redis error: \"Invalid IP address: undefined\""}
+{"timestamp":"01:14:33.190","source":"Server","level":"WARN","message":"⚠️ Redis error: \"Invalid IP address: undefined\""}
+{"timestamp":"01:14:33.593","source":"Server","level":"WARN","message":"⚠️ Redis error: \"Invalid IP address: undefined\""}
+{"timestamp":"01:14:34.197","source":"Server","level":"WARN","message":"⚠️ Redis error: \"Invalid IP address: undefined\""}
+{"timestamp":"01:14:34.198","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"01:14:34.198","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"01:14:34.199","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"01:14:34.199","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"01:14:34.199","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"01:14:49.207","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"01:14:49.215","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"01:14:49.218","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"01:14:49.221","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"01:14:49.224","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"01:14:56.889","source":"Server","level":"LOG","message":"[2026-06-29T14:14:11.298Z] POST /api/auth/register"}
+{"timestamp":"01:14:58.049","source":"Server","level":"LOG","message":"[2026-06-29T14:14:12.457Z] POST /api/auth/register-challenge"}
+{"timestamp":"01:15:22.521","source":"Server","level":"LOG","message":"[2026-06-29T14:14:36.929Z] POST /api/auth/register-verify"}
+{"timestamp":"01:15:40.153","source":"Server","level":"LOG","message":"[2026-06-29T14:14:54.561Z] POST /api/auth/login-challenge"}
+{"timestamp":"01:16:03.789","source":"Server","level":"LOG","message":"[2026-06-29T14:15:18.197Z] POST /api/auth/login-verify"}

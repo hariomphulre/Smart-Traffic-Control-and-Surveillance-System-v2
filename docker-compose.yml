@@ -34,7 +34,7 @@ services:
     image: ghcr.io/hariomphulre/signal-x-ml-service:latest
     environment:
       REDIS_URL: redis://redis:6379/0
-      ML_DEFAULT_MODEL: ${ML_DEFAULT_MODEL:-best.pt}
+      ML_DEFAULT_MODEL: ${ML_DEFAULT_MODEL:-new_car4_with_helmet.pt}
       ML_DEFAULT_RESOLUTION: ${ML_DEFAULT_RESOLUTION:-500x300}
       ML_MAX_PARTITIONS: ${ML_MAX_PARTITIONS:-1}
       ML_PARTITION_STAGGER_SEC: ${ML_PARTITION_STAGGER_SEC:-6}
@@ -87,6 +87,9 @@ services:
       CORS_ALLOWED_ORIGINS: ${PUBLIC_ORIGIN:-https://signal-x.hariomphulre.tech}
       USE_MOCK_DATA: "false"
       TRAFFIC_JSON_PATH: /ml_service/traffic_signal_simulation/traffic.json
+      WEBAUTHN_RPID: ${PUBLIC_DOMAIN:-signal-x.hariomphulre.tech}
+      WEBAUTHN_RPNAME: Signal-X
+      WEBAUTHN_ORIGIN: https://${PUBLIC_DOMAIN:-signal-x.hariomphulre.tech}
     volumes:
       - ./local_data:/local_data:ro
     depends_on:

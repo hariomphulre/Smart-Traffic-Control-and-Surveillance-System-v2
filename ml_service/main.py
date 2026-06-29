@@ -38,7 +38,8 @@ SCRIPT_BY_PARTITION = {
     4: "partition4_stream.py",
 }
 
-DEFAULT_MODEL = os.getenv("ML_DEFAULT_MODEL", "new_car4_with_helmet.pt")
+# DEFAULT_MODEL = os.getenv("ML_DEFAULT_MODEL", "new_car4_with_helmet.pt")
+DEFAULT_MODEL = "best.pt"
 DEFAULT_RESOLUTION = os.getenv("ML_DEFAULT_RESOLUTION", "500x300")
 REDIS_URL = os.getenv("REDIS_URL", "")
 STATS_CHANNEL = "simulation:stats"

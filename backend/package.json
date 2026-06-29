@@ -16,6 +16,7 @@
     "resolve:neon": "tsx src/scripts/resolve-neon.ts"
   },
   "dependencies": {
+    "@simplewebauthn/server": "^13.3.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

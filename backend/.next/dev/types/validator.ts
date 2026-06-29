@@ -70,6 +70,51 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   type __Unused = __Check
 }
 
+// Validate ../../../app/api/auth/login-challenge/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/auth/login-challenge">> = Specific
+  const handler = {} as typeof import("../../../app/api/auth/login-challenge/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../app/api/auth/login-verify/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/auth/login-verify">> = Specific
+  const handler = {} as typeof import("../../../app/api/auth/login-verify/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../app/api/auth/register-challenge/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/auth/register-challenge">> = Specific
+  const handler = {} as typeof import("../../../app/api/auth/register-challenge/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../app/api/auth/register-verify/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/auth/register-verify">> = Specific
+  const handler = {} as typeof import("../../../app/api/auth/register-verify/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../app/api/auth/register/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/auth/register">> = Specific
+  const handler = {} as typeof import("../../../app/api/auth/register/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
 // Validate ../../../app/api/challans/route.ts
 {
   type __IsExpected<Specific extends RouteHandlerConfig<"/api/challans">> = Specific
