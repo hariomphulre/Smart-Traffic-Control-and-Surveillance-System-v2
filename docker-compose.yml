@@ -34,7 +34,7 @@ services:
     image: ghcr.io/hariomphulre/signal-x-ml-service:latest
     environment:
       REDIS_URL: redis://redis:6379/0
-      ML_DEFAULT_MODEL: ${ML_DEFAULT_MODEL:-new_car4_with_helmet.pt}
+      ML_DEFAULT_MODEL: ${ML_DEFAULT_MODEL:-Plate.pt}
       ML_DEFAULT_RESOLUTION: ${ML_DEFAULT_RESOLUTION:-500x300}
       ML_MAX_PARTITIONS: ${ML_MAX_PARTITIONS:-1}
       ML_PARTITION_STAGGER_SEC: ${ML_PARTITION_STAGGER_SEC:-6}
