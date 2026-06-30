@@ -392,7 +392,7 @@ export default function TrafficSimulation() {
     <div className="min-h-screen bg-[#131314] flex flex-col items-center font-sans text-zinc-100 selection:bg-cyan-900">
       
       {/* Dashboard */}
-      <div className="w-full flex items-center h-12 justify-between mb-5 border-b border-l border-[#3c4043] bg-[#131314] p-1 shadow-xl">
+      <div className="w-full flex items-center h-12 justify-between mb-5 border-b border-[#3c4043] bg-[#131314] p-1 shadow-xl">
         <div>
           <p className="text-[#ffffff] font-mono text-xl ml-4">Adv. Traffic Signal Simulation</p>
         </div>

@@ -59,7 +59,7 @@ export default function SecondaryNavbar({ items, dropdowns }: SecondaryNavbarPro
   if (items.length === 0 && !dropdowns) return null
 
   return (
-    <nav className="relative border-b border-l border-[#dadce0] bg-white dark:border-[#3c4043] dark:bg-[#131314]">
+    <nav className="relative border-b border-[#dadce0] bg-white dark:border-[#3c4043] dark:bg-[#131314]">
       <div className="flex max-w-full px-4">
         <div className="flex flex-wrap items-center gap-1 overflow-visible py-1.5">
           {/* Regular nav items */}

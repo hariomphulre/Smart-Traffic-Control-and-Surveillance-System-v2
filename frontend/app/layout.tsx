@@ -79,8 +79,9 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <ThemeProvider>
-          <LocationFilterProvider>
-            <Navbar />
+          {/* <LocationFilterProvider>
+            <div className=""><Navbar /></div>
+            
             <div className="flex flex-row">
               <Sidebar/>
               <div className="w-full">
@@ -90,6 +91,26 @@ export default function RootLayout({
                 </main>
               </div>
             </div>
+          </LocationFilterProvider> */}
+          <LocationFilterProvider>
+            <div className="fixed top-0 left-0 right-0 z-50">
+              <Navbar />
+            </div>
+
+            <div className="fixed left-0 top-13 bottom-0">
+              <Sidebar />
+            </div>
+
+            <div className="ml-12 pt-13 h-screen flex flex-col">
+              <div className="sticky top-0 z-40">
+                <SecondaryNavbar items={secondaryNavItems} dropdowns={secondaryNavDropdowns} />
+              </div>
+
+              <main className="flex-1 overflow-y-auto">
+                {children}
+              </main>
+            </div>
+
           </LocationFilterProvider>
         </ThemeProvider>
       </body>

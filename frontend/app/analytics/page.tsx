@@ -468,7 +468,7 @@ export default function Analytics() {
         onApply={handleCustomApply}
       />
 
-      <div className="w-full flex items-center justify-between h-13 mb-0 border-b border-l border-[#3c4043] bg-[#131314] p-1 shadow-xl">
+      <div className="w-full flex items-center justify-between h-13 mb-0 border-b border-[#3c4043] bg-[#131314] p-1 shadow-xl">
         <div className="flex items-center min-w-170 flex-1">
           <div>
             <p className="text-[#ffffff] font-mono text-xl ml-4">Analytics Dashboard</p>
@@ -563,7 +563,7 @@ export default function Analytics() {
         )}
 
       {/* Headline Data*/}
-      <div className="flex border-l border-r border-[#3c4043] p-2 justify-between items-center bg-[#131314]">
+      <div className="flex border-r border-[#3c4043] p-2 justify-between items-center bg-[#131314]">
 
         <p className="text-xl pl-2 font-[450] text-[#ffffff]">
           {currentLocationName}
@@ -592,7 +592,7 @@ export default function Analytics() {
       </div>
 
       {/* Headline Data Ribbon */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 border-t border-l border-[#3c4043] mt-0 bg-[#131314]">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 border-t border-[#3c4043] mt-0 bg-[#131314]">
         
         {/* 1. Total Vehicles Count */}
         <div className="pt-3 pb-4 pl-4 pr-4 border-b border-r border-[#3c4043] flex flex-col justify-between transition-colors group">
@@ -779,7 +779,7 @@ export default function Analytics() {
 
 
       {/* Chart div 1*/}
-      <div className="flex w-full mt-0 border-r border-l border-[#3c4043]">
+      <div className="flex w-full mt-0 border-r border-[#3c4043]">
 
         <div 
           ref={cardRef}
@@ -1092,7 +1092,7 @@ export default function Analytics() {
 
         <div className="flex-cols bg-[#131314] w-[33.4%]">
 
-          <div className="w-full min-w-0 border-t border-l border-r border-[#3c4043] !bg-[#131314] py-5 relative">
+          <div className="w-full min-w-0 border-t border-r border-[#3c4043] !bg-[#131314] py-5 relative">
             <div className="flex justify-between items-center mb-4 pl-6 pr-6">
               <h2 className="text-gray-200 text-lg">Violations data</h2>
               <div className="chart-actions flex items-center gap-3.5 text-xs">
@@ -1141,7 +1141,7 @@ export default function Analytics() {
             </div>
           </div>
           
-          <div className="w-full min-w-0 border border-[#3c4043] !bg-[#131314] py-5 relative">
+          <div className="w-full min-w-0 border-r border-t border-b border-[#3c4043] !bg-[#131314] py-5 relative">
             <div className="flex justify-between items-center mb-4 pl-6 pr-6">
               <h2 className="text-gray-200 text-lg">Vehicle Type Distribution</h2>
               <div className="chart-actions flex items-center gap-3.5 text-xs">
@@ -1189,7 +1189,7 @@ export default function Analytics() {
               </div>
             </div>
           </div>
-          <div className="w-full min-w-0 border-b border-l border-r border-[#3c4043] !bg-[#131314] py-5 relative">
+          <div className="w-full min-w-0 border-b border-r border-[#3c4043] !bg-[#131314] py-5 relative">
             <div className="flex justify-between items-center mb-4 pl-6 pr-6">
               <h2 className="text-gray-200 text-lg">Speed Distribution</h2>
               <div className="chart-actions flex items-center gap-3.5 text-xs">

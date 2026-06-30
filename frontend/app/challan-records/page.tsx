@@ -146,7 +146,7 @@ export default function ChallanRecords() {
 
   return (
     <div className="max-w-full dark:bg-[#131314]">
-      <div className="w-full flex items-center justify-between h-13 mb-0 border-b border-l border-[#3c4043] bg-[#131314] p-1 shadow-xl">
+      <div className="w-full flex items-center justify-between h-13 mb-0 border-b border-[#3c4043] bg-[#131314] p-1 shadow-xl">
         <div className="flex items-center min-w-170 flex-1">
           <div>
             <p className="text-[#ffffff] font-mono text-xl ml-4">Challan Records</p>
@@ -199,7 +199,7 @@ export default function ChallanRecords() {
       </div>
 
       {/* Challan Data Ribbon */}
-      <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 border-t border-l border-[#3c4043] mt-4 bg-[#131314]">
+      <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 border-t border-[#3c4043] mt-4 bg-[#131314]">
         
         {/* 1. Total Challans */}
         <div className="pt-3 pb-4 pl-4 pr-4 border-b border-r border-[#3c4043] flex flex-col justify-between hover:bg-[#202124] transition-colors group">

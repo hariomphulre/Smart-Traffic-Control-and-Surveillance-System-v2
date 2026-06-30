@@ -291,7 +291,7 @@ export default function SimulationPage() {
 
   return (
     <div className="max-w-full px-0 py-0">
-      <div className="w-full flex items-center justify-between h-13 mb-0 border-b border-l border-[#3c4043] bg-[#131314] p-1 shadow-xl">
+      <div className="w-full flex items-center justify-between h-13 mb-0 border-b border-[#3c4043] bg-[#131314] p-1 shadow-xl">
         <div className="flex items-center min-w-0 flex-1">
           <div>
             <p className="text-[#ffffff] font-mono text-xl ml-4">Live Surveillance</p>
