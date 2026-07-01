@@ -18,7 +18,7 @@ const PANEL_BORDER = 'border-[#dadce0] dark:border-[#3c4043]'
 async function waitForLivePlaylist(
   url: string,
   isCancelled: () => boolean,
-  timeoutMs = 120_000
+  timeoutMs = 90_000
 ): Promise<boolean> {
   const deadline = Date.now() + timeoutMs
   while (Date.now() < deadline && !isCancelled()) {
@@ -33,7 +33,7 @@ async function waitForLivePlaylist(
     } catch {
       /* retry */
     }
-    await new Promise((r) => setTimeout(r, 1000))
+    await new Promise((r) => setTimeout(r, 250))
   }
   return false
 }
@@ -179,8 +179,10 @@ export default function SimulationPartition({
         const player = new HlsCtor({
           enableWorker: true,
           lowLatencyMode: true,
-          liveSyncDurationCount: 3,
-          manifestLoadingTimeOut: 30_000,
+          liveSyncDurationCount: 2,
+          liveMaxLatencyDurationCount: 5,
+          maxLiveSyncPlaybackRate: 1.5,
+          manifestLoadingTimeOut: 20_000,
           manifestLoadingMaxRetry: 12,
           levelLoadingMaxRetry: 6,
           fragLoadingMaxRetry: 6,
@@ -367,7 +369,7 @@ export default function SimulationPartition({
 
           {streamLoading && simulationRunning && !videoError && (
             <div className="absolute inset-0 flex items-center justify-center bg-black/50 text-sm text-white px-4 text-center">
-              Starting live stream… (YOLO + FFmpeg may take up to 2 minutes on first run)
+              Starting live stream…
             </div>
           )}
 

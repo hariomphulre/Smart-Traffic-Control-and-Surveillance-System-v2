@@ -1,6 +1,7 @@
 """
 Headless YOLO partition runner + HLS output.
-Streams video to FFmpeg immediately while YOLO loads in the background (avoids 404 on index.m3u8).
+Streams the current video frame at a steady FPS; overlays the latest detections
+when inference completes (never substitutes a stale full frame).
 """
 
 import argparse
@@ -11,6 +12,7 @@ import sys
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
@@ -26,19 +28,30 @@ TRAFFIC_LOCK = Path(str(TRAFFIC_JSON) + ".lock")
 
 CONF_THRESHOLD = 0.5
 VEHICLE_CLASSES = frozenset({"car", "bike", "bus", "truck"})
-OUTPUT_FPS = 12
-INFER_EVERY_N_FRAMES = 2
+OUTPUT_FPS = 15
+INFER_EVERY_N_FRAMES = 3
+TRAFFIC_WRITE_INTERVAL_SEC = 0.5
+
+
+@dataclass
+class DetectionBox:
+    x1: int
+    y1: int
+    x2: int
+    y2: int
+    classname: str
+    conf: float
+    track_id: int
+
+
+@dataclass
+class OverlayState:
+    boxes: list[DetectionBox] = field(default_factory=list)
+    object_count: int = 0
 
 
 def _log(msg: str) -> None:
     print(msg, flush=True)
-
-
-def _infer_frame(model: Any, frame: Any) -> Any:
-    try:
-        return model.track(frame, persist=True, verbose=False)
-    except Exception:
-        return model(frame, verbose=False)
 
 
 def parse_resolution(value: str) -> tuple[int, int]:
@@ -100,11 +113,11 @@ def _start_ffmpeg(hls_index: Path, width: int, height: int) -> subprocess.Popen:
             "-sc_threshold",
             "0",
             "-hls_time",
-            "1",
+            "0.5",
             "-hls_init_time",
-            "1",
+            "0.5",
             "-hls_list_size",
-            "6",
+            "8",
             "-hls_flags",
             "delete_segments+append_list+omit_endlist",
             str(hls_index),
@@ -125,23 +138,14 @@ def _load_model_async(model_path: str, holder: list, err: list) -> None:
         _log(f"YOLO load failed: {exc}")
 
 
-def _annotate_frame(
-    frame: Any,
-    model: Any,
-    labels: dict,
-    partition: int,
-    frame_idx: int,
-) -> tuple[Any, int]:
-    if frame_idx % INFER_EVERY_N_FRAMES != 0:
-        return frame, 0
-
-    results = _infer_frame(model, frame)
+def _run_inference(model: Any, frame: np.ndarray, labels: dict) -> OverlayState:
+    """Detect vehicles on a single frame; returns overlay metadata (not a cached frame)."""
+    results = model(frame, verbose=False)
     boxes = results[0].boxes
-    object_count = 0
+    overlay = OverlayState()
 
     if boxes is None or len(boxes) == 0:
-        update_partition_traffic_r1_style(partition, 0)
-        return frame, 0
+        return overlay
 
     track_ids = None
     if boxes.id is not None:
@@ -154,17 +158,35 @@ def _annotate_frame(
         if conf <= CONF_THRESHOLD:
             continue
         if classname in VEHICLE_CLASSES:
-            object_count += 1
+            overlay.object_count += 1
 
         xyxy = boxes[i].xyxy[0].int().tolist()
-        x1, y1, x2, y2 = xyxy[0], xyxy[1], xyxy[2], xyxy[3]
-        cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
         tid = int(track_ids[i]) if track_ids is not None else i
-        label = f"ID: {tid}, {classname}: {int(conf * 100)}%"
+        overlay.boxes.append(
+            DetectionBox(
+                x1=xyxy[0],
+                y1=xyxy[1],
+                x2=xyxy[2],
+                y2=xyxy[3],
+                classname=classname,
+                conf=conf,
+                track_id=tid,
+            )
+        )
+
+    return overlay
+
+
+def _draw_overlay(frame: np.ndarray, overlay: OverlayState, partition: int) -> np.ndarray:
+    """Draw the latest detection overlay onto the current video frame."""
+    out = frame.copy()
+    for det in overlay.boxes:
+        cv2.rectangle(out, (det.x1, det.y1), (det.x2, det.y2), (0, 255, 0), 2)
+        label = f"ID: {det.track_id}, {det.classname}: {int(det.conf * 100)}%"
         cv2.putText(
-            frame,
+            out,
             label,
-            (x1, max(20, y1 - 8)),
+            (det.x1, max(20, det.y1 - 8)),
             cv2.FONT_HERSHEY_SIMPLEX,
             0.5,
             (255, 255, 255),
@@ -172,16 +194,15 @@ def _annotate_frame(
         )
 
     cv2.putText(
-        frame,
-        f"P{partition} vehicles (T{partition}): {object_count}",
+        out,
+        f"P{partition} vehicles (T{partition}): {overlay.object_count}",
         (12, 28),
         cv2.FONT_HERSHEY_SIMPLEX,
         0.7,
         (255, 255, 0),
         2,
     )
-    update_partition_traffic_r1_style(partition, object_count)
-    return frame, object_count
+    return out
 
 
 def run_partition() -> None:
@@ -217,17 +238,32 @@ def run_partition() -> None:
 
     frame_interval = 1.0 / OUTPUT_FPS
     frame_idx = 0
-    display_lock = threading.Lock()
-    latest_display: dict[str, Any] = {"frame": None}
+    overlay_lock = threading.Lock()
+    latest_overlay: dict[str, OverlayState | None] = {"state": None}
     infer_busy = {"flag": False}
+    last_traffic_write = 0.0
+    pending_traffic_count: dict[str, int | None] = {"value": None}
     executor = ThreadPoolExecutor(max_workers=1)
 
-    def _run_inference(frame_copy: np.ndarray, idx: int) -> None:
+    def _maybe_flush_traffic() -> None:
+        nonlocal last_traffic_write
+        pending = pending_traffic_count["value"]
+        if pending is None:
+            return
+        now = time.monotonic()
+        if now - last_traffic_write < TRAFFIC_WRITE_INTERVAL_SEC:
+            return
+        update_partition_traffic_r1_style(partition, pending)
+        pending_traffic_count["value"] = None
+        last_traffic_write = now
+
+    def _run_inference_async(frame_copy: np.ndarray) -> None:
         try:
             model = model_holder[0]
-            annotated, _ = _annotate_frame(frame_copy, model, model.names, partition, idx)
-            with display_lock:
-                latest_display["frame"] = annotated
+            overlay = _run_inference(model, frame_copy, model.names)
+            with overlay_lock:
+                latest_overlay["state"] = overlay
+            pending_traffic_count["value"] = overlay.object_count
         finally:
             infer_busy["flag"] = False
 
@@ -241,14 +277,14 @@ def run_partition() -> None:
             ok, frame = cap.read()
             if not ok:
                 cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
-                time.sleep(0.03)
+                time.sleep(0.02)
                 continue
 
             frame = cv2.resize(frame, (width, height))
             frame_idx += 1
-            out = frame.copy()
 
             if model_err:
+                out = frame.copy()
                 cv2.putText(
                     out,
                     "ML model failed to load",
@@ -259,6 +295,7 @@ def run_partition() -> None:
                     2,
                 )
             elif not model_holder:
+                out = frame.copy()
                 cv2.putText(
                     out,
                     "Loading ML model...",
@@ -269,13 +306,18 @@ def run_partition() -> None:
                     2,
                 )
             else:
-                with display_lock:
-                    cached = latest_display["frame"]
-                if cached is not None:
-                    out = cached.copy()
+                with overlay_lock:
+                    overlay = latest_overlay["state"]
+                if overlay is not None:
+                    out = _draw_overlay(frame, overlay, partition)
+                else:
+                    out = frame.copy()
+
                 if not infer_busy["flag"] and frame_idx % INFER_EVERY_N_FRAMES == 0:
                     infer_busy["flag"] = True
-                    executor.submit(_run_inference, frame.copy(), frame_idx)
+                    executor.submit(_run_inference_async, frame.copy())
+
+            _maybe_flush_traffic()
 
             if ffmpeg.stdin:
                 try:
@@ -289,6 +331,11 @@ def run_partition() -> None:
             if sleep_for > 0:
                 time.sleep(sleep_for)
     finally:
+        if pending_traffic_count["value"] is not None:
+            try:
+                update_partition_traffic_r1_style(partition, pending_traffic_count["value"])
+            except Exception:
+                pass
         executor.shutdown(wait=False, cancel_futures=True)
         cap.release()
         if ffmpeg.stdin:

@@ -15,18 +15,24 @@ export async function GET() {
       process.env.NEXT_PUBLIC_ML_WS_URL ||
       `${(process.env.NEXT_PUBLIC_ML_SERVICE_URL || ML_SERVICE_URL).replace(/^http/, 'ws').replace(/\/$/, '')}/ws/analytics`
     const status = payload?.status || {}
-    for (const key of Object.keys(status)) {
-      const partition = status[key]
-      if (partition?.running && partition?.streamPath) {
+    const starting = Boolean(payload?.starting)
+    const signalRunning = Boolean(payload?.signalSimulationRunning)
+    for (const key of ['1', '2', '3', '4']) {
+      const partition = status[key] || { running: false }
+      if (partition.running || starting || signalRunning) {
         partition.streamUrl = `/streams/partition${key}/index.m3u8`
       } else {
         delete partition.streamUrl
       }
+      status[key] = partition
     }
 
     return NextResponse.json({
       status,
       wsUrl,
+      starting: payload?.starting ?? false,
+      batchStartedAt: payload?.batchStartedAt,
+      signalSimulationRunning: payload?.signalSimulationRunning ?? false,
     })
   } catch (error) {
     return NextResponse.json({ error: 'Unable to fetch simulation status', details: String(error) }, { status: 500 })

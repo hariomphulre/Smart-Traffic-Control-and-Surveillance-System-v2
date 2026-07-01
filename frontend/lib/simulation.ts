@@ -16,6 +16,24 @@ export interface SimulationPartitionStatus {
 export interface SimulationStatusResponse {
   status: Record<PartitionId, SimulationPartitionStatus>
   wsUrl: string
+  starting?: boolean
+  batchStartedAt?: number
+  signalSimulationRunning?: boolean
+}
+
+function enrichPartitionStatus(
+  status: Record<string, SimulationPartitionStatus>,
+  batchStartedAt?: number
+): Record<PartitionId, SimulationPartitionStatus> {
+  const enriched = {} as Record<PartitionId, SimulationPartitionStatus>
+  for (const lane of [1, 2, 3, 4] as PartitionId[]) {
+    const part = status[lane] || status[String(lane)] || { running: false }
+    enriched[lane] = {
+      ...part,
+      startedAt: part.startedAt ?? batchStartedAt,
+    }
+  }
+  return enriched
 }
 
 export async function runSimulation(payload: RunSimulationPayload): Promise<SimulationStatusResponse> {
@@ -25,13 +43,21 @@ export async function runSimulation(payload: RunSimulationPayload): Promise<Simu
     body: JSON.stringify(payload),
   })
   if (!res.ok) throw new Error('Failed to start simulation')
-  return (await res.json()) as SimulationStatusResponse
+  const data = (await res.json()) as SimulationStatusResponse
+  return {
+    ...data,
+    status: enrichPartitionStatus(data.status || {}, data.batchStartedAt),
+  }
 }
 
 export async function getSimulationStatus(): Promise<SimulationStatusResponse> {
-  const res = await fetch('/api/simulation/status')
+  const res = await fetch('/api/simulation/status', { cache: 'no-store' })
   if (!res.ok) throw new Error('Failed to get simulation status')
-  return (await res.json()) as SimulationStatusResponse
+  const data = (await res.json()) as SimulationStatusResponse
+  return {
+    ...data,
+    status: enrichPartitionStatus(data.status || {}, data.batchStartedAt),
+  }
 }
 
 export async function stopSimulation(): Promise<void> {
@@ -42,12 +68,23 @@ export async function stopSimulation(): Promise<void> {
 export async function pauseSimulation(): Promise<SimulationStatusResponse> {
   const res = await fetch('/api/simulation/pause', { method: 'POST' })
   if (!res.ok) throw new Error('Failed to pause simulation')
-  return (await res.json()) as SimulationStatusResponse
+  const data = (await res.json()) as SimulationStatusResponse
+  return {
+    ...data,
+    status: enrichPartitionStatus(data.status || {}, data.batchStartedAt),
+  }
 }
 
 export async function resumeSimulation(): Promise<SimulationStatusResponse> {
   const res = await fetch('/api/simulation/resume', { method: 'POST' })
   if (!res.ok) throw new Error('Failed to resume simulation')
-  return (await res.json()) as SimulationStatusResponse
+  const data = (await res.json()) as SimulationStatusResponse
+  return {
+    ...data,
+    status: enrichPartitionStatus(data.status || {}, data.batchStartedAt),
+  }
 }
 
+export function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}

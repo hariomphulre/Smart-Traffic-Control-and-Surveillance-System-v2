@@ -21,19 +21,23 @@ export async function POST(request: Request) {
       process.env.NEXT_PUBLIC_ML_WS_URL ||
       `${(process.env.NEXT_PUBLIC_ML_SERVICE_URL || ML_SERVICE_URL).replace(/^http/, 'ws').replace(/\/$/, '')}/ws/analytics`
     const status = payload?.status || {}
-    for (const key of Object.keys(status)) {
-      const partition = status[key]
-      if (partition?.running && partition?.streamPath) {
-        // Relative URL: nginx :80 or Next rewrites → ml-service /streams/
+    const starting = Boolean(payload?.starting)
+    for (const key of ['1', '2', '3', '4']) {
+      const partition = status[key] || { running: false }
+      if (partition.running || starting) {
         partition.streamUrl = `/streams/partition${key}/index.m3u8`
       } else {
         delete partition.streamUrl
       }
+      status[key] = partition
     }
 
     return NextResponse.json({
       status,
       wsUrl,
+      starting: payload?.starting ?? false,
+      batchStartedAt: payload?.batchStartedAt,
+      signalSimulationRunning: payload?.signalSimulationRunning ?? false,
     })
   } catch (error) {
     return NextResponse.json({ error: 'Unable to start simulation', details: String(error) }, { status: 500 })

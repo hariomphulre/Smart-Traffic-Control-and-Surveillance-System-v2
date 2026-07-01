@@ -11,6 +11,7 @@ import {
   stopSimulation,
   pauseSimulation,
   resumeSimulation,
+  sleep,
   type SimulationPartitionStatus,
 } from '@/lib/simulation'
 import { IoIosPlay, IoMdRefresh } from 'react-icons/io'
@@ -142,6 +143,20 @@ export default function SimulationPage() {
     return () => ws.close()
   }, [isRunning, wsUrl])
 
+  const applyStreamStatus = useCallback(
+    (partitionStatus: Record<number, SimulationPartitionStatus>) => {
+      const nextStatus = {
+        1: partitionStatus[1] || { running: false },
+        2: partitionStatus[2] || { running: false },
+        3: partitionStatus[3] || { running: false },
+        4: partitionStatus[4] || { running: false },
+      } as Record<LaneId, SimulationPartitionStatus>
+      setStreamStatus(nextStatus)
+      return nextStatus
+    },
+    []
+  )
+
   const handleRun = useCallback(async () => {
     if (isRunning) return
     setIsStarting(true)
@@ -163,31 +178,59 @@ export default function SimulationPage() {
           4: { video: locked[4] },
         },
       })
-      const partitionStatus = response.status || {}
-      const nextStatus = {
-        1: partitionStatus[1] || { running: false },
-        2: partitionStatus[2] || { running: false },
-        3: partitionStatus[3] || { running: false },
-        4: partitionStatus[4] || { running: false },
-      }
-      setStreamStatus(nextStatus)
+
       setWsUrl(response.wsUrl || null)
-      const anyRunning = LANES.some((lane) => nextStatus[lane]?.running)
-      if (!anyRunning) {
-        setError('Simulation pipelines did not start. Check ml_service logs (docker compose logs ml-service).')
-        setLockedVideos(null)
-        setIsRunning(false)
-        return
-      }
       setIsRunning(true)
       setTrafficLiveSnapshot(null)
+
+      const batchStartedAt = response.batchStartedAt
+      applyStreamStatus(
+        Object.fromEntries(
+          LANES.map((lane) => [
+            lane,
+            {
+              running: Boolean(response.status?.[lane]?.running),
+              streamUrl: `/streams/partition${lane}/index.m3u8`,
+              startedAt: response.status?.[lane]?.startedAt ?? batchStartedAt,
+              video: locked[lane],
+            },
+          ])
+        ) as Record<number, SimulationPartitionStatus>
+      )
+
+      const deadline = Date.now() + 120_000
+      let ready = false
+
+      while (Date.now() < deadline) {
+        const latest = await getSimulationStatus()
+        const nextStatus = applyStreamStatus(latest.status || {})
+        const allRunning = LANES.every((lane) => nextStatus[lane]?.running)
+        if (allRunning && !latest.starting) {
+          ready = true
+          break
+        }
+        await sleep(300)
+      }
+
+      if (!ready) {
+        const finalStatus = await getSimulationStatus()
+        const nextStatus = applyStreamStatus(finalStatus.status || {})
+        const anyRunning = LANES.some((lane) => nextStatus[lane]?.running)
+        if (!anyRunning) {
+          setError('Simulation pipelines did not start. Check ml_service logs (docker compose logs ml-service).')
+          setLockedVideos(null)
+          setIsRunning(false)
+          return
+        }
+      }
     } catch {
       setError('Unable to start simulation pipelines')
       setIsRunning(false)
+      setLockedVideos(null)
     } finally {
       setIsStarting(false)
     }
-  }, [isRunning, videoByLane])
+  }, [isRunning, videoByLane, applyStreamStatus])
 
   const handleStop = useCallback(async () => {
     setIsStopping(true)

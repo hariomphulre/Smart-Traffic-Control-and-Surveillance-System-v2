@@ -38,13 +38,12 @@ SCRIPT_BY_PARTITION = {
     4: "partition4_stream.py",
 }
 
-# DEFAULT_MODEL = os.getenv("ML_DEFAULT_MODEL", "new_car4_with_helmet.pt")
-DEFAULT_MODEL = "yolov8s.pt"
+DEFAULT_MODEL = os.getenv("ML_DEFAULT_MODEL", "yolov8s.pt")
 DEFAULT_RESOLUTION = os.getenv("ML_DEFAULT_RESOLUTION", "500x300")
 REDIS_URL = os.getenv("REDIS_URL", "")
 STATS_CHANNEL = "simulation:stats"
-ML_MAX_PARTITIONS = max(1, int(os.getenv("ML_MAX_PARTITIONS", "2")))
-ML_PARTITION_STAGGER_SEC = float(os.getenv("ML_PARTITION_STAGGER_SEC", "6"))
+ML_MAX_PARTITIONS = max(1, min(4, int(os.getenv("ML_MAX_PARTITIONS", "4"))))
+ML_PARTITION_STAGGER_SEC = max(0.0, float(os.getenv("ML_PARTITION_STAGGER_SEC", "0")))
 DISABLE_ML_STATS_LOOP = os.getenv("DISABLE_ML_STATS_LOOP", "false").lower() == "true"
 
 
@@ -74,8 +73,14 @@ class ProcessManager:
         self._signal_process: Optional[subprocess.Popen] = None
         self._stop_event = threading.Event()
         self._stats_thread: Optional[threading.Thread] = None
+        self._batch_started_at: Optional[float] = None
+        self._run_in_progress = False
 
-    def ensure_signal_simulation(self) -> None:
+    def signal_simulation_running(self) -> bool:
+        with self._lock:
+            return bool(self._signal_process and self._signal_process.poll() is None)
+
+    def ensure_signal_simulation(self, started_at: Optional[float] = None) -> None:
         with self._lock:
             running = self._signal_process and self._signal_process.poll() is None
             if running:
@@ -84,6 +89,8 @@ class ProcessManager:
                 [sys.executable, str(SIMULATION_SCRIPT)],
                 cwd=str(SIMULATION_SCRIPT.parent),
             )
+            if started_at is not None:
+                self._batch_started_at = started_at
 
     def _ensure_stats_loop(self) -> None:
         if self._stats_thread and self._stats_thread.is_alive():
@@ -142,7 +149,12 @@ class ProcessManager:
                 return
             self._stop_process(runtime.detector)
 
-    def run_partition(self, partition: int, cfg: PartitionRunConfig) -> None:
+    def run_partition(
+        self,
+        partition: int,
+        cfg: PartitionRunConfig,
+        started_at: Optional[float] = None,
+    ) -> None:
         script_name = SCRIPT_BY_PARTITION.get(partition)
         if not script_name:
             raise ValueError(f"Unsupported partition: {partition}")
@@ -164,6 +176,10 @@ class ProcessManager:
         if stream_dir.exists():
             shutil.rmtree(stream_dir)
         stream_dir.mkdir(parents=True, exist_ok=True)
+
+        batch_ts = started_at if started_at is not None else self._batch_started_at
+        launch_ts = batch_ts if batch_ts is not None else time.time()
+
         detector = subprocess.Popen(
             [
                 sys.executable,
@@ -193,7 +209,7 @@ class ProcessManager:
                 video=cfg.video,
                 model=cfg.model,
                 resolution=cfg.resolution,
-                started_at=time.time(),
+                started_at=launch_ts,
             )
         if not DISABLE_ML_STATS_LOOP:
             self._ensure_stats_loop()
@@ -206,7 +222,7 @@ class ProcessManager:
                 if rt.detector.poll() is None
             )
 
-    def status(self) -> Dict[int, Dict[str, object]]:
+    def status(self) -> Dict[str, object]:
         payload: Dict[int, Dict[str, object]] = {}
         with self._lock:
             for partition in range(1, 5):
@@ -222,7 +238,13 @@ class ProcessManager:
                     "streamPath": f"/streams/partition{partition}/index.m3u8",
                     "startedAt": runtime.started_at,
                 }
-        return payload
+
+        return {
+            "partitions": payload,
+            "signalSimulationRunning": self.signal_simulation_running(),
+            "batchStartedAt": self._batch_started_at,
+            "starting": self._run_in_progress,
+        }
 
     def pause_partition(self, partition: int) -> None:
         """Pause a partition by sending SIGSTOP to its process."""
@@ -279,7 +301,52 @@ class ProcessManager:
             if self._signal_process:
                 self._stop_process(self._signal_process)
                 self._signal_process = None
+            self._batch_started_at = None
+            self._run_in_progress = False
         self._stop_event.set()
+
+    def start_simulation_batch(self, req: RunRequest) -> float:
+        """Start traffic signal simulation and all partitions together (non-blocking caller)."""
+        batch_started_at = time.time()
+        with self._lock:
+            self._batch_started_at = batch_started_at
+            self._run_in_progress = True
+
+        self.ensure_signal_simulation(started_at=batch_started_at)
+
+        items = sorted(req.partitions.items(), key=lambda x: x[0])
+
+        def _start_partition(partition: int, cfg: PartitionRunConfig) -> None:
+            while True:
+                if self.running_partition_count() < ML_MAX_PARTITIONS:
+                    break
+                time.sleep(0.05)
+            try:
+                self.run_partition(partition, cfg, started_at=batch_started_at)
+            except Exception as exc:
+                print(f"[partition {partition}] failed to start: {exc}", flush=True)
+
+        threads: list[threading.Thread] = []
+        for idx, (partition, cfg) in enumerate(items):
+            thread = threading.Thread(
+                target=_start_partition,
+                args=(partition, cfg),
+                daemon=True,
+                name=f"start-partition-{partition}",
+            )
+            threads.append(thread)
+            thread.start()
+            if idx < len(items) - 1 and ML_PARTITION_STAGGER_SEC > 0:
+                time.sleep(ML_PARTITION_STAGGER_SEC)
+
+        def _finalize() -> None:
+            for thread in threads:
+                thread.join()
+            with self._lock:
+                self._run_in_progress = False
+
+        threading.Thread(target=_finalize, daemon=True, name="simulation-batch-finalize").start()
+        return batch_started_at
 
 
 manager = ProcessManager()
@@ -311,6 +378,18 @@ def publish_stats(stats: Dict[str, Any]) -> None:
         pass
 
 
+def _normalize_status_response(raw: Dict[str, object]) -> Dict[str, object]:
+    """Support legacy flat partition map and new nested status shape."""
+    if "partitions" in raw:
+        return raw
+    return {
+        "partitions": raw,
+        "signalSimulationRunning": manager.signal_simulation_running(),
+        "batchStartedAt": manager._batch_started_at,
+        "starting": manager._run_in_progress,
+    }
+
+
 @app.get("/health")
 def health() -> Dict[str, str]:
     return {"status": "ok"}
@@ -324,14 +403,15 @@ def videos() -> Dict[str, list]:
 
 @app.post("/simulation/run")
 def run_simulation(req: RunRequest) -> Dict[str, object]:
-    manager.ensure_signal_simulation()
-    items = sorted(req.partitions.items(), key=lambda x: x[0])
-    for partition, cfg in items:
-        while manager.running_partition_count() >= ML_MAX_PARTITIONS:
-            time.sleep(2)
-        manager.run_partition(partition, cfg)
-        time.sleep(ML_PARTITION_STAGGER_SEC)
-    return {"ok": True, "status": manager.status()}
+    batch_started_at = manager.start_simulation_batch(req)
+    status = manager.status()
+    return {
+        "ok": True,
+        "starting": True,
+        "batchStartedAt": batch_started_at,
+        "status": status["partitions"],
+        "signalSimulationRunning": status["signalSimulationRunning"],
+    }
 
 
 @app.post("/simulation/stop")
@@ -343,18 +423,26 @@ def stop_simulation() -> Dict[str, bool]:
 @app.post("/simulation/pause")
 def pause_simulation() -> Dict[str, object]:
     manager.pause_all()
-    return {"ok": True, "status": manager.status()}
+    status = manager.status()
+    return {"ok": True, "status": status["partitions"]}
 
 
 @app.post("/simulation/resume")
 def resume_simulation() -> Dict[str, object]:
     manager.resume_all()
-    return {"ok": True, "status": manager.status()}
+    status = manager.status()
+    return {"ok": True, "status": status["partitions"]}
 
 
 @app.get("/simulation/status")
 def simulation_status() -> Dict[str, object]:
-    return {"status": manager.status()}
+    status = manager.status()
+    return {
+        "status": status["partitions"],
+        "signalSimulationRunning": status["signalSimulationRunning"],
+        "batchStartedAt": status["batchStartedAt"],
+        "starting": status["starting"],
+    }
 
 
 @app.websocket("/ws/analytics")
@@ -389,4 +477,3 @@ async def analytics_socket(websocket: WebSocket) -> None:
                 await pubsub.aclose()
             except Exception:
                 pass
-
