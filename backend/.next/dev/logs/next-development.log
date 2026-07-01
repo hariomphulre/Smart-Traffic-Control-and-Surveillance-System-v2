@@ -388,3 +388,5 @@
 {"timestamp":"05:30:53.027","source":"Server","level":"LOG","message":"[2026-07-01T21:28:27.564Z] GET /api/signals/state"}
 {"timestamp":"05:31:04.044","source":"Server","level":"LOG","message":"[2026-07-01T21:28:38.581Z] GET /api/signals/state"}
 {"timestamp":"05:32:04.047","source":"Server","level":"LOG","message":"[2026-07-01T21:29:38.585Z] GET /api/signals/state"}
+{"timestamp":"05:33:04.037","source":"Server","level":"LOG","message":"[2026-07-01T21:30:38.574Z] GET /api/signals/state"}
+{"timestamp":"05:34:04.049","source":"Server","level":"LOG","message":"[2026-07-01T21:31:38.586Z] GET /api/signals/state"}
