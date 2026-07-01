@@ -21,6 +21,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          lfs: true
 
       - name: Log in to the GitHub Container Registry
         uses: docker/login-action@v3
@@ -99,6 +101,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          lfs: true
 
       # Securely copy the Compose file AND necessary config folders to the VPS
       - name: Copy config files to VPS via SCP
@@ -126,17 +130,29 @@ jobs:
             
             docker compose pull
             
-            docker compose up -d --remove-orphans
+            # docker compose up -d --remove-orphans
             
-            docker system prune -a -f
+            # docker system prune -a -f
             
-            echo "Waiting 10 seconds for containers to initialize..."
-            sleep 10
+            # echo "Waiting 10 seconds for containers to initialize..."
+            # sleep 10
             
-            if [ $(docker ps -q | wc -l) -gt 0 ]; then
-              echo "✅ Deployment Successful! Current live containers:"
-              docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+            # if [ $(docker ps -q | wc -l) -gt 0 ]; then
+            #   echo "✅ Deployment Successful! Current live containers:"
+            #   docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+            # else
+            #   echo "❌ Health Check Failed! No containers are running."
+            #   exit 1
+            # fi
+
+            if docker compose up -d --remove-orphans --wait --wait-timeout 240; then
+    
+                docker image prune -f 
+                
+                echo "✅ Deployment Successful! Current live containers:"
+                docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+                
             else
-              echo "❌ Health Check Failed! No containers are running."
-              exit 1
+                echo "❌ Deployment Failed or Timed Out! Check container logs."
+                exit 1
             fi
