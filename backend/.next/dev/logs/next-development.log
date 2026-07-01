@@ -187,3 +187,204 @@
 {"timestamp":"03:12:52.993","source":"Server","level":"ERROR","message":"Handler error: Error: connect ENETUNREACH 3.0.167.45:5432"}
 {"timestamp":"03:12:56.557","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
 {"timestamp":"03:12:56.562","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"04:30:44.544","source":"Server","level":"LOG","message":"[2026-07-01T20:28:19.082Z] GET /api/analytics/stats"}
+{"timestamp":"04:30:44.551","source":"Server","level":"LOG","message":"[2026-07-01T20:28:19.089Z] GET /api/analytics/violations"}
+{"timestamp":"04:30:44.559","source":"Server","level":"LOG","message":"[2026-07-01T20:28:19.096Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"04:30:44.569","source":"Server","level":"LOG","message":"[2026-07-01T20:28:19.107Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"04:30:45.486","source":"Server","level":"LOG","message":"[2026-07-01T20:28:20.024Z] GET /api/analytics/stats"}
+{"timestamp":"04:30:45.497","source":"Server","level":"LOG","message":"[2026-07-01T20:28:20.034Z] GET /api/analytics/violations"}
+{"timestamp":"04:30:45.500","source":"Server","level":"LOG","message":"[2026-07-01T20:28:20.037Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"04:30:45.506","source":"Server","level":"LOG","message":"[2026-07-01T20:28:20.044Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"04:30:45.510","source":"Server","level":"LOG","message":"[2026-07-01T20:28:20.047Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"04:30:45.539","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"04:30:45.550","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"04:30:45.560","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"04:30:45.569","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"04:30:45.579","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"04:30:46.658","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"04:30:46.659","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"04:30:46.659","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"04:30:46.660","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"04:30:46.660","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"04:30:46.792","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"04:30:46.795","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"04:30:46.798","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"04:30:46.801","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"04:30:46.804","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"04:36:19.587","source":"Server","level":"LOG","message":"[2026-07-01T20:33:54.125Z] GET /api/analytics/stats"}
+{"timestamp":"04:36:19.596","source":"Server","level":"LOG","message":"[2026-07-01T20:33:54.133Z] GET /api/analytics/violations"}
+{"timestamp":"04:36:20.630","source":"Server","level":"LOG","message":"[2026-07-01T20:33:55.167Z] GET /api/analytics/stats"}
+{"timestamp":"04:36:20.642","source":"Server","level":"LOG","message":"[2026-07-01T20:33:55.179Z] GET /api/analytics/violations"}
+{"timestamp":"04:36:20.645","source":"Server","level":"LOG","message":"[2026-07-01T20:33:55.182Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"04:36:20.656","source":"Server","level":"LOG","message":"[2026-07-01T20:33:55.194Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"04:36:20.666","source":"Server","level":"LOG","message":"[2026-07-01T20:33:55.203Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"04:36:20.697","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"04:36:20.709","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"04:36:20.715","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"04:36:20.725","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"04:36:20.734","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"04:36:22.931","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"04:36:22.931","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"04:36:23.069","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"04:36:23.074","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"04:36:23.388","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"04:36:23.397","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"04:36:23.397","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"04:36:23.649","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"04:36:23.688","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"04:36:23.730","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"05:23:21.594","source":"Server","level":"LOG","message":"[2026-07-01T21:20:56.132Z] GET /api/signals/state"}
+{"timestamp":"05:23:22.076","source":"Server","level":"LOG","message":"[2026-07-01T21:20:56.613Z] GET /api/signals/state"}
+{"timestamp":"05:23:22.576","source":"Server","level":"LOG","message":"[2026-07-01T21:20:57.113Z] GET /api/signals/state"}
+{"timestamp":"05:23:23.076","source":"Server","level":"LOG","message":"[2026-07-01T21:20:57.613Z] GET /api/signals/state"}
+{"timestamp":"05:23:23.576","source":"Server","level":"LOG","message":"[2026-07-01T21:20:58.113Z] GET /api/signals/state"}
+{"timestamp":"05:23:24.077","source":"Server","level":"LOG","message":"[2026-07-01T21:20:58.614Z] GET /api/signals/state"}
+{"timestamp":"05:23:24.576","source":"Server","level":"LOG","message":"[2026-07-01T21:20:59.114Z] GET /api/signals/state"}
+{"timestamp":"05:23:25.076","source":"Server","level":"LOG","message":"[2026-07-01T21:20:59.613Z] GET /api/signals/state"}
+{"timestamp":"05:23:25.576","source":"Server","level":"LOG","message":"[2026-07-01T21:21:00.114Z] GET /api/signals/state"}
+{"timestamp":"05:23:26.076","source":"Server","level":"LOG","message":"[2026-07-01T21:21:00.614Z] GET /api/signals/state"}
+{"timestamp":"05:23:26.575","source":"Server","level":"LOG","message":"[2026-07-01T21:21:01.113Z] GET /api/signals/state"}
+{"timestamp":"05:23:27.075","source":"Server","level":"LOG","message":"[2026-07-01T21:21:01.613Z] GET /api/signals/state"}
+{"timestamp":"05:23:27.576","source":"Server","level":"LOG","message":"[2026-07-01T21:21:02.113Z] GET /api/signals/state"}
+{"timestamp":"05:23:28.076","source":"Server","level":"LOG","message":"[2026-07-01T21:21:02.613Z] GET /api/signals/state"}
+{"timestamp":"05:23:28.576","source":"Server","level":"LOG","message":"[2026-07-01T21:21:03.113Z] GET /api/signals/state"}
+{"timestamp":"05:23:29.078","source":"Server","level":"LOG","message":"[2026-07-01T21:21:03.616Z] GET /api/signals/state"}
+{"timestamp":"05:23:29.575","source":"Server","level":"LOG","message":"[2026-07-01T21:21:04.113Z] GET /api/signals/state"}
+{"timestamp":"05:23:30.076","source":"Server","level":"LOG","message":"[2026-07-01T21:21:04.613Z] GET /api/signals/state"}
+{"timestamp":"05:23:30.575","source":"Server","level":"LOG","message":"[2026-07-01T21:21:05.113Z] GET /api/signals/state"}
+{"timestamp":"05:23:31.076","source":"Server","level":"LOG","message":"[2026-07-01T21:21:05.613Z] GET /api/signals/state"}
+{"timestamp":"05:23:31.576","source":"Server","level":"LOG","message":"[2026-07-01T21:21:06.113Z] GET /api/signals/state"}
+{"timestamp":"05:23:32.075","source":"Server","level":"LOG","message":"[2026-07-01T21:21:06.613Z] GET /api/signals/state"}
+{"timestamp":"05:23:32.576","source":"Server","level":"LOG","message":"[2026-07-01T21:21:07.113Z] GET /api/signals/state"}
+{"timestamp":"05:23:33.075","source":"Server","level":"LOG","message":"[2026-07-01T21:21:07.613Z] GET /api/signals/state"}
+{"timestamp":"05:23:33.577","source":"Server","level":"LOG","message":"[2026-07-01T21:21:08.114Z] GET /api/signals/state"}
+{"timestamp":"05:23:34.076","source":"Server","level":"LOG","message":"[2026-07-01T21:21:08.614Z] GET /api/signals/state"}
+{"timestamp":"05:23:34.576","source":"Server","level":"LOG","message":"[2026-07-01T21:21:09.113Z] GET /api/signals/state"}
+{"timestamp":"05:23:35.076","source":"Server","level":"LOG","message":"[2026-07-01T21:21:09.614Z] GET /api/signals/state"}
+{"timestamp":"05:23:36.023","source":"Server","level":"LOG","message":"[2026-07-01T21:21:10.560Z] GET /api/signals/state"}
+{"timestamp":"05:23:37.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:11.558Z] GET /api/signals/state"}
+{"timestamp":"05:23:38.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:12.559Z] GET /api/signals/state"}
+{"timestamp":"05:23:39.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:13.558Z] GET /api/signals/state"}
+{"timestamp":"05:23:40.022","source":"Server","level":"LOG","message":"[2026-07-01T21:21:14.559Z] GET /api/signals/state"}
+{"timestamp":"05:23:41.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:15.558Z] GET /api/signals/state"}
+{"timestamp":"05:23:42.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:16.558Z] GET /api/signals/state"}
+{"timestamp":"05:23:43.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:17.559Z] GET /api/signals/state"}
+{"timestamp":"05:23:44.022","source":"Server","level":"LOG","message":"[2026-07-01T21:21:18.559Z] GET /api/signals/state"}
+{"timestamp":"05:23:45.020","source":"Server","level":"LOG","message":"[2026-07-01T21:21:19.558Z] GET /api/signals/state"}
+{"timestamp":"05:23:46.020","source":"Server","level":"LOG","message":"[2026-07-01T21:21:20.558Z] GET /api/signals/state"}
+{"timestamp":"05:23:47.020","source":"Server","level":"LOG","message":"[2026-07-01T21:21:21.558Z] GET /api/signals/state"}
+{"timestamp":"05:23:48.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:22.558Z] GET /api/signals/state"}
+{"timestamp":"05:23:49.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:23.559Z] GET /api/signals/state"}
+{"timestamp":"05:23:50.022","source":"Server","level":"LOG","message":"[2026-07-01T21:21:24.560Z] GET /api/signals/state"}
+{"timestamp":"05:23:51.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:25.558Z] GET /api/signals/state"}
+{"timestamp":"05:23:52.022","source":"Server","level":"LOG","message":"[2026-07-01T21:21:26.559Z] GET /api/signals/state"}
+{"timestamp":"05:23:53.022","source":"Server","level":"LOG","message":"[2026-07-01T21:21:27.559Z] GET /api/signals/state"}
+{"timestamp":"05:23:54.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:28.559Z] GET /api/signals/state"}
+{"timestamp":"05:23:55.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:29.559Z] GET /api/signals/state"}
+{"timestamp":"05:23:56.023","source":"Server","level":"LOG","message":"[2026-07-01T21:21:30.560Z] GET /api/signals/state"}
+{"timestamp":"05:23:57.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:31.559Z] GET /api/signals/state"}
+{"timestamp":"05:23:58.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:32.558Z] GET /api/signals/state"}
+{"timestamp":"05:23:59.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:33.558Z] GET /api/signals/state"}
+{"timestamp":"05:24:00.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:34.559Z] GET /api/signals/state"}
+{"timestamp":"05:24:01.023","source":"Server","level":"LOG","message":"[2026-07-01T21:21:35.560Z] GET /api/signals/state"}
+{"timestamp":"05:24:02.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:36.558Z] GET /api/signals/state"}
+{"timestamp":"05:24:03.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:37.558Z] GET /api/signals/state"}
+{"timestamp":"05:24:04.055","source":"Server","level":"LOG","message":"[2026-07-01T21:21:38.592Z] GET /api/signals/state"}
+{"timestamp":"05:24:05.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:39.558Z] GET /api/signals/state"}
+{"timestamp":"05:24:06.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:40.558Z] GET /api/signals/state"}
+{"timestamp":"05:24:07.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:41.559Z] GET /api/signals/state"}
+{"timestamp":"05:24:08.022","source":"Server","level":"LOG","message":"[2026-07-01T21:21:42.559Z] GET /api/signals/state"}
+{"timestamp":"05:24:09.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:43.559Z] GET /api/signals/state"}
+{"timestamp":"05:24:10.022","source":"Server","level":"LOG","message":"[2026-07-01T21:21:44.559Z] GET /api/signals/state"}
+{"timestamp":"05:24:11.023","source":"Server","level":"LOG","message":"[2026-07-01T21:21:45.560Z] GET /api/signals/state"}
+{"timestamp":"05:24:12.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:46.558Z] GET /api/signals/state"}
+{"timestamp":"05:24:13.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:47.559Z] GET /api/signals/state"}
+{"timestamp":"05:24:14.022","source":"Server","level":"LOG","message":"[2026-07-01T21:21:48.559Z] GET /api/signals/state"}
+{"timestamp":"05:24:15.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:49.558Z] GET /api/signals/state"}
+{"timestamp":"05:24:16.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:50.559Z] GET /api/signals/state"}
+{"timestamp":"05:24:17.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:51.558Z] GET /api/signals/state"}
+{"timestamp":"05:24:18.024","source":"Server","level":"LOG","message":"[2026-07-01T21:21:52.562Z] GET /api/signals/state"}
+{"timestamp":"05:24:19.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:53.558Z] GET /api/signals/state"}
+{"timestamp":"05:24:20.022","source":"Server","level":"LOG","message":"[2026-07-01T21:21:54.559Z] GET /api/signals/state"}
+{"timestamp":"05:24:21.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:55.558Z] GET /api/signals/state"}
+{"timestamp":"05:24:22.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:56.559Z] GET /api/signals/state"}
+{"timestamp":"05:24:23.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:57.559Z] GET /api/signals/state"}
+{"timestamp":"05:24:24.022","source":"Server","level":"LOG","message":"[2026-07-01T21:21:58.559Z] GET /api/signals/state"}
+{"timestamp":"05:24:25.021","source":"Server","level":"LOG","message":"[2026-07-01T21:21:59.559Z] GET /api/signals/state"}
+{"timestamp":"05:24:26.021","source":"Server","level":"LOG","message":"[2026-07-01T21:22:00.558Z] GET /api/signals/state"}
+{"timestamp":"05:24:27.021","source":"Server","level":"LOG","message":"[2026-07-01T21:22:01.558Z] GET /api/signals/state"}
+{"timestamp":"05:24:28.022","source":"Server","level":"LOG","message":"[2026-07-01T21:22:02.559Z] GET /api/signals/state"}
+{"timestamp":"05:24:29.024","source":"Server","level":"LOG","message":"[2026-07-01T21:22:03.561Z] GET /api/signals/state"}
+{"timestamp":"05:24:30.021","source":"Server","level":"LOG","message":"[2026-07-01T21:22:04.559Z] GET /api/signals/state"}
+{"timestamp":"05:24:31.020","source":"Server","level":"LOG","message":"[2026-07-01T21:22:05.558Z] GET /api/signals/state"}
+{"timestamp":"05:24:32.026","source":"Server","level":"LOG","message":"[2026-07-01T21:22:06.563Z] GET /api/signals/state"}
+{"timestamp":"05:24:33.021","source":"Server","level":"LOG","message":"[2026-07-01T21:22:07.559Z] GET /api/signals/state"}
+{"timestamp":"05:24:34.021","source":"Server","level":"LOG","message":"[2026-07-01T21:22:08.559Z] GET /api/signals/state"}
+{"timestamp":"05:24:35.021","source":"Server","level":"LOG","message":"[2026-07-01T21:22:09.558Z] GET /api/signals/state"}
+{"timestamp":"05:25:04.059","source":"Server","level":"LOG","message":"[2026-07-01T21:22:38.597Z] GET /api/signals/state"}
+{"timestamp":"05:26:04.047","source":"Server","level":"LOG","message":"[2026-07-01T21:23:38.584Z] GET /api/signals/state"}
+{"timestamp":"05:27:04.044","source":"Server","level":"LOG","message":"[2026-07-01T21:24:38.582Z] GET /api/signals/state"}
+{"timestamp":"05:28:04.051","source":"Server","level":"LOG","message":"[2026-07-01T21:25:38.588Z] GET /api/signals/state"}
+{"timestamp":"05:29:04.053","source":"Server","level":"LOG","message":"[2026-07-01T21:26:38.590Z] GET /api/signals/state"}
+{"timestamp":"05:29:53.823","source":"Server","level":"LOG","message":"[2026-07-01T21:27:28.360Z] GET /api/signals/state"}
+{"timestamp":"05:29:55.027","source":"Server","level":"LOG","message":"[2026-07-01T21:27:29.565Z] GET /api/signals/state"}
+{"timestamp":"05:29:56.021","source":"Server","level":"LOG","message":"[2026-07-01T21:27:30.559Z] GET /api/signals/state"}
+{"timestamp":"05:29:57.023","source":"Server","level":"LOG","message":"[2026-07-01T21:27:31.561Z] GET /api/signals/state"}
+{"timestamp":"05:29:58.023","source":"Server","level":"LOG","message":"[2026-07-01T21:27:32.560Z] GET /api/signals/state"}
+{"timestamp":"05:29:59.022","source":"Server","level":"LOG","message":"[2026-07-01T21:27:33.560Z] GET /api/signals/state"}
+{"timestamp":"05:30:00.022","source":"Server","level":"LOG","message":"[2026-07-01T21:27:34.560Z] GET /api/signals/state"}
+{"timestamp":"05:30:01.022","source":"Server","level":"LOG","message":"[2026-07-01T21:27:35.559Z] GET /api/signals/state"}
+{"timestamp":"05:30:02.023","source":"Server","level":"LOG","message":"[2026-07-01T21:27:36.561Z] GET /api/signals/state"}
+{"timestamp":"05:30:03.022","source":"Server","level":"LOG","message":"[2026-07-01T21:27:37.559Z] GET /api/signals/state"}
+{"timestamp":"05:30:04.040","source":"Server","level":"LOG","message":"[2026-07-01T21:27:38.578Z] GET /api/signals/state"}
+{"timestamp":"05:30:05.022","source":"Server","level":"LOG","message":"[2026-07-01T21:27:39.559Z] GET /api/signals/state"}
+{"timestamp":"05:30:06.023","source":"Server","level":"LOG","message":"[2026-07-01T21:27:40.560Z] GET /api/signals/state"}
+{"timestamp":"05:30:07.022","source":"Server","level":"LOG","message":"[2026-07-01T21:27:41.560Z] GET /api/signals/state"}
+{"timestamp":"05:30:08.022","source":"Server","level":"LOG","message":"[2026-07-01T21:27:42.559Z] GET /api/signals/state"}
+{"timestamp":"05:30:09.022","source":"Server","level":"LOG","message":"[2026-07-01T21:27:43.559Z] GET /api/signals/state"}
+{"timestamp":"05:30:10.021","source":"Server","level":"LOG","message":"[2026-07-01T21:27:44.559Z] GET /api/signals/state"}
+{"timestamp":"05:30:11.023","source":"Server","level":"LOG","message":"[2026-07-01T21:27:45.561Z] GET /api/signals/state"}
+{"timestamp":"05:30:12.022","source":"Server","level":"LOG","message":"[2026-07-01T21:27:46.559Z] GET /api/signals/state"}
+{"timestamp":"05:30:13.021","source":"Server","level":"LOG","message":"[2026-07-01T21:27:47.558Z] GET /api/signals/state"}
+{"timestamp":"05:30:14.023","source":"Server","level":"LOG","message":"[2026-07-01T21:27:48.561Z] GET /api/signals/state"}
+{"timestamp":"05:30:15.022","source":"Server","level":"LOG","message":"[2026-07-01T21:27:49.559Z] GET /api/signals/state"}
+{"timestamp":"05:30:16.022","source":"Server","level":"LOG","message":"[2026-07-01T21:27:50.559Z] GET /api/signals/state"}
+{"timestamp":"05:30:17.022","source":"Server","level":"LOG","message":"[2026-07-01T21:27:51.560Z] GET /api/signals/state"}
+{"timestamp":"05:30:18.024","source":"Server","level":"LOG","message":"[2026-07-01T21:27:52.561Z] GET /api/signals/state"}
+{"timestamp":"05:30:19.021","source":"Server","level":"LOG","message":"[2026-07-01T21:27:53.559Z] GET /api/signals/state"}
+{"timestamp":"05:30:20.022","source":"Server","level":"LOG","message":"[2026-07-01T21:27:54.560Z] GET /api/signals/state"}
+{"timestamp":"05:30:21.027","source":"Server","level":"LOG","message":"[2026-07-01T21:27:55.565Z] GET /api/signals/state"}
+{"timestamp":"05:30:22.022","source":"Server","level":"LOG","message":"[2026-07-01T21:27:56.559Z] GET /api/signals/state"}
+{"timestamp":"05:30:23.024","source":"Server","level":"LOG","message":"[2026-07-01T21:27:57.562Z] GET /api/signals/state"}
+{"timestamp":"05:30:24.023","source":"Server","level":"LOG","message":"[2026-07-01T21:27:58.561Z] GET /api/signals/state"}
+{"timestamp":"05:30:25.024","source":"Server","level":"LOG","message":"[2026-07-01T21:27:59.562Z] GET /api/signals/state"}
+{"timestamp":"05:30:26.022","source":"Server","level":"LOG","message":"[2026-07-01T21:28:00.560Z] GET /api/signals/state"}
+{"timestamp":"05:30:27.021","source":"Server","level":"LOG","message":"[2026-07-01T21:28:01.559Z] GET /api/signals/state"}
+{"timestamp":"05:30:28.023","source":"Server","level":"LOG","message":"[2026-07-01T21:28:02.561Z] GET /api/signals/state"}
+{"timestamp":"05:30:29.022","source":"Server","level":"LOG","message":"[2026-07-01T21:28:03.560Z] GET /api/signals/state"}
+{"timestamp":"05:30:30.022","source":"Server","level":"LOG","message":"[2026-07-01T21:28:04.560Z] GET /api/signals/state"}
+{"timestamp":"05:30:31.021","source":"Server","level":"LOG","message":"[2026-07-01T21:28:05.558Z] GET /api/signals/state"}
+{"timestamp":"05:30:32.026","source":"Server","level":"LOG","message":"[2026-07-01T21:28:06.564Z] GET /api/signals/state"}
+{"timestamp":"05:30:33.022","source":"Server","level":"LOG","message":"[2026-07-01T21:28:07.559Z] GET /api/signals/state"}
+{"timestamp":"05:30:34.022","source":"Server","level":"LOG","message":"[2026-07-01T21:28:08.559Z] GET /api/signals/state"}
+{"timestamp":"05:30:35.023","source":"Server","level":"LOG","message":"[2026-07-01T21:28:09.561Z] GET /api/signals/state"}
+{"timestamp":"05:30:36.022","source":"Server","level":"LOG","message":"[2026-07-01T21:28:10.559Z] GET /api/signals/state"}
+{"timestamp":"05:30:37.021","source":"Server","level":"LOG","message":"[2026-07-01T21:28:11.559Z] GET /api/signals/state"}
+{"timestamp":"05:30:38.025","source":"Server","level":"LOG","message":"[2026-07-01T21:28:12.563Z] GET /api/signals/state"}
+{"timestamp":"05:30:39.022","source":"Server","level":"LOG","message":"[2026-07-01T21:28:13.559Z] GET /api/signals/state"}
+{"timestamp":"05:30:40.022","source":"Server","level":"LOG","message":"[2026-07-01T21:28:14.559Z] GET /api/signals/state"}
+{"timestamp":"05:30:41.021","source":"Server","level":"LOG","message":"[2026-07-01T21:28:15.559Z] GET /api/signals/state"}
+{"timestamp":"05:30:42.022","source":"Server","level":"LOG","message":"[2026-07-01T21:28:16.560Z] GET /api/signals/state"}
+{"timestamp":"05:30:43.024","source":"Server","level":"LOG","message":"[2026-07-01T21:28:17.562Z] GET /api/signals/state"}
+{"timestamp":"05:30:44.022","source":"Server","level":"LOG","message":"[2026-07-01T21:28:18.559Z] GET /api/signals/state"}
+{"timestamp":"05:30:45.021","source":"Server","level":"LOG","message":"[2026-07-01T21:28:19.559Z] GET /api/signals/state"}
+{"timestamp":"05:30:46.024","source":"Server","level":"LOG","message":"[2026-07-01T21:28:20.562Z] GET /api/signals/state"}
+{"timestamp":"05:30:47.021","source":"Server","level":"LOG","message":"[2026-07-01T21:28:21.558Z] GET /api/signals/state"}
+{"timestamp":"05:30:48.022","source":"Server","level":"LOG","message":"[2026-07-01T21:28:22.559Z] GET /api/signals/state"}
+{"timestamp":"05:30:49.022","source":"Server","level":"LOG","message":"[2026-07-01T21:28:23.559Z] GET /api/signals/state"}
+{"timestamp":"05:30:50.021","source":"Server","level":"LOG","message":"[2026-07-01T21:28:24.558Z] GET /api/signals/state"}
+{"timestamp":"05:30:51.023","source":"Server","level":"LOG","message":"[2026-07-01T21:28:25.561Z] GET /api/signals/state"}
+{"timestamp":"05:30:52.022","source":"Server","level":"LOG","message":"[2026-07-01T21:28:26.559Z] GET /api/signals/state"}
+{"timestamp":"05:30:53.027","source":"Server","level":"LOG","message":"[2026-07-01T21:28:27.564Z] GET /api/signals/state"}
+{"timestamp":"05:31:04.044","source":"Server","level":"LOG","message":"[2026-07-01T21:28:38.581Z] GET /api/signals/state"}
+{"timestamp":"05:32:04.047","source":"Server","level":"LOG","message":"[2026-07-01T21:29:38.585Z] GET /api/signals/state"}

@@ -3,6 +3,8 @@ import Link from 'next/link';
 import React from 'react'
 import { CgMenuGridR } from "react-icons/cg";
 import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
+import { IoMdListBox } from 'react-icons/io';
+import { MdOutlineMonitor } from 'react-icons/md';
 
 const Sidebar = () => {
   return (
@@ -14,10 +16,13 @@ const Sidebar = () => {
         <nav>
           <ul>
             <li>
-              <HiOutlineClipboardDocumentList/>
+              <HiOutlineClipboardDocumentList className="h-5 w-5"/>
             </li>
             <li>
-              <HiOutlineClipboardDocumentList/>
+              <MdOutlineMonitor className="h-5 w-5"/>
+            </li>
+            <li>
+              <IoMdListBox className="h-5 w-5"/>
             </li>
           </ul>
         </nav>
