@@ -11,6 +11,7 @@ export interface SimulationPartitionStatus {
   resolution?: string
   streamUrl?: string
   startedAt?: number
+  error?: string
 }
 
 export interface SimulationStatusResponse {

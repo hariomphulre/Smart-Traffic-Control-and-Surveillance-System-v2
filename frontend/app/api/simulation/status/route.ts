@@ -15,11 +15,9 @@ export async function GET() {
       process.env.NEXT_PUBLIC_ML_WS_URL ||
       `${(process.env.NEXT_PUBLIC_ML_SERVICE_URL || ML_SERVICE_URL).replace(/^http/, 'ws').replace(/\/$/, '')}/ws/analytics`
     const status = payload?.status || {}
-    const starting = Boolean(payload?.starting)
-    const signalRunning = Boolean(payload?.signalSimulationRunning)
     for (const key of ['1', '2', '3', '4']) {
       const partition = status[key] || { running: false }
-      if (partition.running || starting || signalRunning) {
+      if (partition.running) {
         partition.streamUrl = `/streams/partition${key}/index.m3u8`
       } else {
         delete partition.streamUrl

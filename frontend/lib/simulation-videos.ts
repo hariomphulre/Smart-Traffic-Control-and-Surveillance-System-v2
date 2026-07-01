@@ -39,7 +39,7 @@ export async function fetchAvailableVideos(): Promise<SimulationVideo[]> {
 const FALLBACK_VIDEOS: SimulationVideo[] = [
   { id: 'video2', label: 'video2.mp4', file: 'video2.mp4' },
   { id: 'video3', label: 'video3.mp4', file: 'video3.mp4' },
-  { id: 'video4', label: 'video4.mp4', file: 'video4.mp4' },
+  { id: 'video11', label: 'video11.mp4', file: 'video11.mp4' },
   { id: 'video9', label: 'video9.mp4', file: 'video9.mp4' },
 ]
 
@@ -68,7 +68,7 @@ export async function getDefaultVideoByLane(): Promise<Record<1 | 2 | 3 | 4, str
   const defaults: Record<1 | 2 | 3 | 4, string> = {
     1: videos[0]?.file || 'video2.mp4',
     2: videos[1]?.file || 'video3.mp4',
-    3: videos[2]?.file || 'video4.mp4',
+    3: videos[2]?.file || 'video11.mp4',
     4: videos[3]?.file || 'video9.mp4',
   }
 

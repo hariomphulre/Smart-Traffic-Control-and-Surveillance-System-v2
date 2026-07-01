@@ -54,6 +54,8 @@ interface SimulationPartitionProps {
   state: TrafficState | null
   streamUrl?: string
   streamStartedAt?: number
+  partitionRunning?: boolean
+  partitionError?: string
   simulationRunning?: boolean
   usedVideos: string[]
   availableVideos: SimulationVideo[]
@@ -67,6 +69,8 @@ export default function SimulationPartition({
   state,
   streamUrl,
   streamStartedAt,
+  partitionRunning = false,
+  partitionError,
   simulationRunning = false,
   usedVideos,
   availableVideos,
@@ -81,15 +85,29 @@ export default function SimulationPartition({
   const [streamStalled, setStreamStalled] = useState(false)
 
   const activeVideoFile = simulationRunning && lockedVideo ? lockedVideo : selectedVideo
-  const showLiveStream = simulationRunning && Boolean(streamUrl)
+  const showLiveStream = simulationRunning && partitionRunning && Boolean(streamUrl)
 
-  // No stream URL while running → pipeline failed for this partition
+  // Pipeline failed or not up yet while simulation is marked running
   useEffect(() => {
-    if (simulationRunning && !streamUrl) {
+    if (!simulationRunning) return
+    if (partitionError) {
+      setVideoError(true)
+      setStreamLoading(false)
+      return
+    }
+    if (!partitionRunning && !streamUrl) {
+      setStreamLoading(true)
+      setVideoError(false)
+    }
+  }, [simulationRunning, partitionRunning, streamUrl, partitionError])
+
+  // No stream URL while running → pipeline not ready for this partition
+  useEffect(() => {
+    if (simulationRunning && partitionRunning && !streamUrl) {
       setVideoError(true)
       setStreamLoading(false)
     }
-  }, [simulationRunning, streamUrl])
+  }, [simulationRunning, partitionRunning, streamUrl])
 
   // Preview mode: static MP4 from API
   useEffect(() => {
@@ -114,7 +132,7 @@ export default function SimulationPartition({
 
   // Live mode: wait for HLS manifest, then autoplay (no extra click)
   useEffect(() => {
-    if (!simulationRunning || !streamUrl) {
+    if (!simulationRunning || !partitionRunning || !streamUrl) {
       setStreamLoading(false)
       return
     }
@@ -230,7 +248,7 @@ export default function SimulationPartition({
       }
       // Do not clear video.src here — React strict mode remount caused blank panels
     }
-  }, [simulationRunning, streamUrl, streamStartedAt])
+  }, [simulationRunning, partitionRunning, streamUrl, streamStartedAt])
 
   const togglePlay = useCallback(async () => {
     if (simulationRunning) return
@@ -369,7 +387,7 @@ export default function SimulationPartition({
 
           {streamLoading && simulationRunning && !videoError && (
             <div className="absolute inset-0 flex items-center justify-center bg-black/50 text-sm text-white px-4 text-center">
-              Starting live stream…
+              {partitionRunning ? 'Starting live stream…' : 'Starting camera pipeline…'}
             </div>
           )}
 
@@ -382,8 +400,9 @@ export default function SimulationPartition({
 
           {videoError ? (
             <div className="absolute inset-0 flex items-center justify-center bg-black/70 text-sm text-[#f28b82] px-4 text-center">
-              Could not load live stream. Ensure ml_service is running, rebuild the image
-              after dependency changes, and wait for detection to start.
+              {partitionError
+                ? `Camera pipeline failed: ${partitionError}`
+                : 'Could not load live stream. Ensure ml_service is running, rebuild the image after dependency changes, and wait for detection to start.'}
             </div>
           ) : !simulationRunning ? (
             <button

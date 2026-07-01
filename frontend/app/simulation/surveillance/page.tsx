@@ -190,9 +190,12 @@ export default function SimulationPage() {
             lane,
             {
               running: Boolean(response.status?.[lane]?.running),
-              streamUrl: `/streams/partition${lane}/index.m3u8`,
+              streamUrl: response.status?.[lane]?.running
+                ? `/streams/partition${lane}/index.m3u8`
+                : undefined,
               startedAt: response.status?.[lane]?.startedAt ?? batchStartedAt,
               video: locked[lane],
+              error: response.status?.[lane]?.error,
             },
           ])
         ) as Record<number, SimulationPartitionStatus>
@@ -217,7 +220,12 @@ export default function SimulationPage() {
         const nextStatus = applyStreamStatus(finalStatus.status || {})
         const anyRunning = LANES.some((lane) => nextStatus[lane]?.running)
         if (!anyRunning) {
-          setError('Simulation pipelines did not start. Check ml_service logs (docker compose logs ml-service).')
+          const errors = LANES.map((lane) => nextStatus[lane]?.error).filter(Boolean)
+          setError(
+            errors.length > 0
+              ? `Simulation pipelines failed: ${errors[0]}`
+              : 'Simulation pipelines did not start. Check ml_service logs (docker compose logs ml-service).'
+          )
           setLockedVideos(null)
           setIsRunning(false)
           return
@@ -454,8 +462,10 @@ export default function SimulationPage() {
                   selectedVideo={videoByLane[lane]}
                   lockedVideo={lockedVideos?.[lane]}
                   state={displayTrafficState}
-                  streamUrl={streamStatus[lane].streamUrl}
+                  streamUrl={streamStatus[lane].running ? streamStatus[lane].streamUrl : undefined}
                   streamStartedAt={streamStatus[lane].startedAt}
+                  partitionError={streamStatus[lane].error}
+                  partitionRunning={streamStatus[lane].running}
                   simulationRunning={isRunning}
                   usedVideos={usedVideos}
                   availableVideos={availableVideos}

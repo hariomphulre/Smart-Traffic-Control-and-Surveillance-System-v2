@@ -38,8 +38,7 @@ SCRIPT_BY_PARTITION = {
     4: "partition4_stream.py",
 }
 
-# DEFAULT_MODEL = os.getenv("ML_DEFAULT_MODEL", "yolov8s.pt")
-DEFAULT_MODEL ="yolov8n.pt"
+DEFAULT_MODEL = os.getenv("ML_DEFAULT_MODEL", "new_car4_with_helmet.pt")
 DEFAULT_RESOLUTION = os.getenv("ML_DEFAULT_RESOLUTION", "500x300")
 REDIS_URL = os.getenv("REDIS_URL", "")
 STATS_CHANNEL = "simulation:stats"
@@ -76,6 +75,7 @@ class ProcessManager:
         self._stats_thread: Optional[threading.Thread] = None
         self._batch_started_at: Optional[float] = None
         self._run_in_progress = False
+        self._partition_errors: Dict[int, str] = {}
 
     def signal_simulation_running(self) -> bool:
         with self._lock:
@@ -150,12 +150,21 @@ class ProcessManager:
                 return
             self._stop_process(runtime.detector)
 
+    def _clear_partition_stream(self, partition: int) -> None:
+        stream_dir = STREAMS_DIR / f"partition{partition}"
+        if stream_dir.exists():
+            shutil.rmtree(stream_dir)
+        stream_dir.mkdir(parents=True, exist_ok=True)
+
     def run_partition(
         self,
         partition: int,
         cfg: PartitionRunConfig,
         started_at: Optional[float] = None,
     ) -> None:
+        self.stop_partition(partition)
+        self._clear_partition_stream(partition)
+
         script_name = SCRIPT_BY_PARTITION.get(partition)
         if not script_name:
             raise ValueError(f"Unsupported partition: {partition}")
@@ -172,14 +181,9 @@ class ProcessManager:
         if not script_path.exists():
             raise ValueError(f"Script not found: {script_name}")
 
-        self.stop_partition(partition)
-        stream_dir = STREAMS_DIR / f"partition{partition}"
-        if stream_dir.exists():
-            shutil.rmtree(stream_dir)
-        stream_dir.mkdir(parents=True, exist_ok=True)
-
         batch_ts = started_at if started_at is not None else self._batch_started_at
         launch_ts = batch_ts if batch_ts is not None else time.time()
+        stream_dir = STREAMS_DIR / f"partition{partition}"
 
         detector = subprocess.Popen(
             [
@@ -205,6 +209,7 @@ class ProcessManager:
         ).start()
 
         with self._lock:
+            self._partition_errors.pop(partition, None)
             self._partition_runtime[partition] = PartitionRuntime(
                 detector=detector,
                 video=cfg.video,
@@ -214,6 +219,16 @@ class ProcessManager:
             )
         if not DISABLE_ML_STATS_LOOP:
             self._ensure_stats_loop()
+
+        # Detect fast crashes (bad model, OOM, missing deps) before callers poll status.
+        time.sleep(0.75)
+        if detector.poll() is not None:
+            code = detector.returncode
+            with self._lock:
+                self._partition_runtime.pop(partition, None)
+                self._partition_errors[partition] = f"partition process exited immediately (code {code})"
+            self._clear_partition_stream(partition)
+            raise RuntimeError(self._partition_errors[partition])
 
     def running_partition_count(self) -> int:
         with self._lock:
@@ -229,16 +244,24 @@ class ProcessManager:
             for partition in range(1, 5):
                 runtime = self._partition_runtime.get(partition)
                 if not runtime:
-                    payload[partition] = {"running": False}
+                    err = self._partition_errors.get(partition)
+                    payload[partition] = (
+                        {"running": False, "error": err} if err else {"running": False}
+                    )
                     continue
-                payload[partition] = {
-                    "running": runtime.detector.poll() is None,
+                running = runtime.detector.poll() is None
+                part_status: Dict[str, object] = {
+                    "running": running,
                     "video": runtime.video,
                     "model": runtime.model,
                     "resolution": runtime.resolution,
-                    "streamPath": f"/streams/partition{partition}/index.m3u8",
                     "startedAt": runtime.started_at,
                 }
+                if running:
+                    part_status["streamPath"] = f"/streams/partition{partition}/index.m3u8"
+                elif partition in self._partition_errors:
+                    part_status["error"] = self._partition_errors[partition]
+                payload[partition] = part_status
 
         return {
             "partitions": payload,
@@ -304,6 +327,7 @@ class ProcessManager:
                 self._signal_process = None
             self._batch_started_at = None
             self._run_in_progress = False
+            self._partition_errors.clear()
         self._stop_event.set()
 
     def start_simulation_batch(self, req: RunRequest) -> float:
@@ -312,41 +336,38 @@ class ProcessManager:
         with self._lock:
             self._batch_started_at = batch_started_at
             self._run_in_progress = True
+            self._partition_errors.clear()
+
+        for partition in range(1, 5):
+            self._clear_partition_stream(partition)
 
         self.ensure_signal_simulation(started_at=batch_started_at)
 
         items = sorted(req.partitions.items(), key=lambda x: x[0])
 
-        def _start_partition(partition: int, cfg: PartitionRunConfig) -> None:
-            while True:
-                if self.running_partition_count() < ML_MAX_PARTITIONS:
-                    break
-                time.sleep(0.05)
-            try:
-                self.run_partition(partition, cfg, started_at=batch_started_at)
-            except Exception as exc:
-                print(f"[partition {partition}] failed to start: {exc}", flush=True)
-
-        threads: list[threading.Thread] = []
-        for idx, (partition, cfg) in enumerate(items):
-            thread = threading.Thread(
-                target=_start_partition,
-                args=(partition, cfg),
-                daemon=True,
-                name=f"start-partition-{partition}",
-            )
-            threads.append(thread)
-            thread.start()
-            if idx < len(items) - 1 and ML_PARTITION_STAGGER_SEC > 0:
-                time.sleep(ML_PARTITION_STAGGER_SEC)
-
-        def _finalize() -> None:
-            for thread in threads:
-                thread.join()
+        def _start_all_partitions() -> None:
+            for idx, (partition, cfg) in enumerate(items):
+                while True:
+                    if self.running_partition_count() < ML_MAX_PARTITIONS:
+                        break
+                    time.sleep(0.1)
+                try:
+                    self.run_partition(partition, cfg, started_at=batch_started_at)
+                except Exception as exc:
+                    msg = str(exc)
+                    with self._lock:
+                        self._partition_errors[partition] = msg
+                    print(f"[partition {partition}] failed to start: {msg}", flush=True)
+                if idx < len(items) - 1 and ML_PARTITION_STAGGER_SEC > 0:
+                    time.sleep(ML_PARTITION_STAGGER_SEC)
             with self._lock:
                 self._run_in_progress = False
 
-        threading.Thread(target=_finalize, daemon=True, name="simulation-batch-finalize").start()
+        threading.Thread(
+            target=_start_all_partitions,
+            daemon=True,
+            name="simulation-batch-start",
+        ).start()
         return batch_started_at
 
 
