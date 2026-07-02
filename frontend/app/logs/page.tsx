@@ -381,34 +381,6 @@ export default function Logs() {
         </div>
       </div>
       
-      {/* <div className="w-full relative font-sans z-0">
-        <LocationBar />
-        {isMapOpen && (
-          <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/80 backdrop-blur-sm">
-            <div className="bg-[#131314] w-[95vw] h-[94vh] border-2 border-[#3c4043] rounded-2xl flex flex-col shadow-2xl overflow-hidden relative">
-              <div className="h-12 border-b border-[#3c4043] bg-black flex items-center justify-between px-5 z-10 shrink-0">
-                <h2 className="text-[#8AB4F8] font-mono text-lg flex items-center gap-3">
-                  <span className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
-                  Global Signal Radar
-                </h2>
-                <button 
-                  onClick={() => setIsMapOpen(false)}
-                  className="text-[#9aa0a6] hover:text-white transition-colors font-bold text-xl"
-                >
-                  ✕
-                </button>
-              </div>
-              <div className="flex-1 relative z-0">
-                <DynamicMap 
-                  signals={MAP_SIGNALS} 
-                  pathSegments={pathSegments} 
-                  onPinClick={handleMapPinClick} 
-                />
-              </div>
-            </div>
-          </div>
-        )}
-      </div> */}
       {/* 1. MAP MODAL: Moved outside of the z-0 wrapper so it can float above all navbars */}
       {isMapOpen && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-sm">
