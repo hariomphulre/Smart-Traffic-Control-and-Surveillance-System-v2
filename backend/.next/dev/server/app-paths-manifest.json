@@ -1,3 +1,9 @@
 {
-  "/api/analytics/[slug]/route": "app/api/analytics/[slug]/route.js"
+  "/api/analytics/[slug]/route": "app/api/analytics/[slug]/route.js",
+  "/api/challans/route": "app/api/challans/route.js",
+  "/api/challans/stats/route": "app/api/challans/stats/route.js",
+  "/api/iam/identities/route": "app/api/iam/identities/route.js",
+  "/api/logs/route": "app/api/logs/route.js",
+  "/api/sessions/route": "app/api/sessions/route.js",
+  "/api/signals/state/route": "app/api/signals/state/route.js"
 }

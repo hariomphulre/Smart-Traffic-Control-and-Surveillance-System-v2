@@ -752,7 +752,7 @@ export default function Logs() {
 
         {/* Detail Modal */}
         {selectedLog && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-60 p-0" onClick={() => setSelectedLog(null)}>
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-100 p-0" onClick={() => setSelectedLog(null)}>
             <div className="bg-white dark:bg-[#131314] shadow-2xl rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
               <div className="sticky top-0 bg-white dark:bg-[#131314] border-b border-[#dadce0] dark:border-[#3c4043] px-6 py-2 flex justify-between items-center rounded-t-lg">
                 <div className="flex gap-5 items-center">
