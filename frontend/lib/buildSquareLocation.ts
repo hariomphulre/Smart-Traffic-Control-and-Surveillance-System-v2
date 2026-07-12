@@ -10,10 +10,12 @@ import {
 import type { LatLng, SquareLocation, SquareWay } from '@/map/squareLocations';
 import type { MapSignal } from '@/map/MapData';
 
+type SquareWayInput = Pick<SquareWay, 'id' | 'bearing' | 'coordinates' | 'color'>;
+
 export function normalizeSquareWays(
   lat: number,
   lng: number,
-  ways: SquareWay[],
+  ways: SquareWayInput[],
 ): SquareWay[] {
   const center: LatLng = [lat, lng];
 
@@ -37,7 +39,7 @@ export function buildSquareLocationFromSignal(
   signal: MapSignal,
   lat: number,
   lng: number,
-  ways: SquareWay[],
+  ways: SquareWayInput[],
   options?: {
     snapped?: boolean;
     isSaved?: boolean;

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
+import type { Formatter } from 'recharts/types/component/DefaultTooltipContent';
 import { toPng } from 'html-to-image';
 import { ChartDurationPicker } from './ChartDurationPicker';
 
@@ -72,7 +73,7 @@ interface AnalyticsPieChartPanelProps<T extends { count: number }> {
   nameKey?: keyof T & string;
   dataKey?: keyof T & string;
   label?: (props: { name?: string; percent?: number }) => string;
-  tooltipFormatter?: (value: number, name: string, item: { payload?: T }) => [string, string];
+  tooltipFormatter?: Formatter;
   footer: React.ReactNode;
   className?: string;
   csvHeaders: [string, string];
