@@ -13,6 +13,9 @@ const backendApiPrefixes = [
   'analytics',
   'ambulance',
   'signals',
+  'auth',
+  'iam',
+  'sessions',
 ] as const
 
 const nextConfig: NextConfig = {

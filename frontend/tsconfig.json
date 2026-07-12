@@ -35,7 +35,7 @@
     "**/*.d.ts",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
-  ],
+, "components/analytics/charts/TrafficVol.jsx"  ],
   "exclude": [
     "node_modules"
   ]

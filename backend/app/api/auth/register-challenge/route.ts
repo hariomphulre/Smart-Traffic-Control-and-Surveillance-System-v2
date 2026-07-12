@@ -1,28 +1,34 @@
-import { NextResponse } from "next/server";
-import { generateRegistrationOptions } from "@simplewebauthn/server";
-import { userStore, challengeStore } from "@/app/lib/store";
+import { NextResponse } from 'next/server';
+import { generateRegistrationOptions } from '@simplewebauthn/server';
+import { UserModel } from '@/src/models/user.model';
+import { setChallenge } from '@/src/lib/challenge-store';
 
 export async function POST(req: Request) {
-  const rpid=process.env.WEBAUTHN_RPID || "localhost";
-  const rpname=process.env.WEBAUTHN_RPNAME || "My localhost machine";
+  try {
+    const rpid = process.env.WEBAUTHN_RPID || 'localhost';
+    const rpname = process.env.WEBAUTHN_RPNAME || 'Signal-X';
 
-  const { userId } = await req.json();
+    const { userId } = await req.json();
+    const user = await UserModel.findById(userId);
 
-  const user = userStore[userId];
+    if (!user) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
 
-  if (!user)
+    const options = await generateRegistrationOptions({
+      rpID: rpid,
+      rpName: rpname,
+      userName: user.username,
+    });
+
+    await setChallenge(userId, options.challenge);
+
+    return NextResponse.json({ options });
+  } catch (err) {
+    console.error('Register challenge error:', err);
     return NextResponse.json(
-      { error: "User not found" },
-      { status: 404 }
+      { error: err instanceof Error ? err.message : 'Challenge failed' },
+      { status: 500 }
     );
-
-  const options = await generateRegistrationOptions({
-    rpID: rpid,
-    rpName: rpname,
-    userName: user.username,
-  });
-
-  challengeStore[userId] = options.challenge;
-
-  return NextResponse.json({ options });
+  }
 }

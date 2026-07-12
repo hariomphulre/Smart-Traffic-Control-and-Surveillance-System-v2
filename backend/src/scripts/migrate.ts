@@ -136,6 +136,65 @@ const migrate = async (): Promise<void> => {
     `);
     console.log(' [7/7] accident_media');
 
+    // ── 8. IAM: users ─────────────────────────────────────────────────────────
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS users (
+        id            VARCHAR(50)  PRIMARY KEY,
+        username      VARCHAR(100) UNIQUE NOT NULL,
+        password_hash VARCHAR(200) NOT NULL,
+        role          VARCHAR(30)  DEFAULT 'user' CHECK (role IN ('user', 'admin', 'operator')),
+        created_at    TIMESTAMPTZ  DEFAULT CURRENT_TIMESTAMP,
+        updated_at    TIMESTAMPTZ  DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+    console.log(' [8/10] users');
+
+    // ── 9. IAM: passkeys ──────────────────────────────────────────────────────
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS passkeys (
+        id            SERIAL       PRIMARY KEY,
+        user_id       VARCHAR(50)  REFERENCES users(id) ON DELETE CASCADE,
+        credential_id TEXT         UNIQUE NOT NULL,
+        public_key    TEXT         NOT NULL,
+        counter       BIGINT       DEFAULT 0,
+        transports    TEXT[],
+        device_name   VARCHAR(100) DEFAULT 'Passkey',
+        created_at    TIMESTAMPTZ  DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+    console.log(' [9/10] passkeys');
+
+    // ── 10. IAM: user_sessions ────────────────────────────────────────────────
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS user_sessions (
+        session_id    VARCHAR(64)  PRIMARY KEY,
+        user_id       VARCHAR(50)  REFERENCES users(id) ON DELETE CASCADE,
+        username      VARCHAR(100) NOT NULL,
+        passkey_label VARCHAR(100),
+        ip_address    VARCHAR(45),
+        location      VARCHAR(150),
+        login_at      TIMESTAMPTZ  DEFAULT CURRENT_TIMESTAMP,
+        expires_at    TIMESTAMPTZ  NOT NULL,
+        is_active     BOOLEAN      DEFAULT TRUE
+      );
+    `);
+    console.log(' [10/10] user_sessions');
+
+    await client.query(`
+      ALTER TABLE users
+        ALTER COLUMN created_at TYPE TIMESTAMPTZ USING created_at AT TIME ZONE 'UTC',
+        ALTER COLUMN updated_at TYPE TIMESTAMPTZ USING updated_at AT TIME ZONE 'UTC';
+    `).catch(() => undefined);
+    await client.query(`
+      ALTER TABLE passkeys
+        ALTER COLUMN created_at TYPE TIMESTAMPTZ USING created_at AT TIME ZONE 'UTC';
+    `).catch(() => undefined);
+    await client.query(`
+      ALTER TABLE user_sessions
+        ALTER COLUMN login_at TYPE TIMESTAMPTZ USING login_at AT TIME ZONE 'UTC',
+        ALTER COLUMN expires_at TYPE TIMESTAMPTZ USING expires_at AT TIME ZONE 'UTC';
+    `).catch(() => undefined);
+
     // ── INDEXES (Critical for Performance) ─────────────────────────────────────
     console.log('\n📊 Creating indexes...');
     
@@ -204,6 +263,16 @@ const migrate = async (): Promise<void> => {
     await client.query(`CREATE INDEX IF NOT EXISTS idx_accident_media_accident_id 
       ON accident_media(accident_id)`);
     console.log('  ✓ idx_accident_media_accident_id');
+
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_users_username ON users(username)`);
+    console.log('  ✓ idx_users_username');
+
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_passkeys_user_id ON passkeys(user_id)`);
+    console.log('  ✓ idx_passkeys_user_id');
+
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_user_sessions_active
+      ON user_sessions(is_active, expires_at DESC) WHERE is_active = TRUE`);
+    console.log('  ✓ idx_user_sessions_active');
 
     console.log('\n🎉 All migrations complete!\n');
   } catch (err) {

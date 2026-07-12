@@ -7,10 +7,10 @@ export interface MapSignal {
 
 export const MAP_SIGNALS: MapSignal[] = [
   // Andhra Pradesh
-  { id: "AAG1", path: ["Andhra Pradesh", "Guntur", "Brodipet", "AAG1"], lat: 16.3067, lng: 80.4365 },
+  { id: "AAG1", path: ["Andhra Pradesh", "Guntur", "Brodipet", "AAG1"], lat: 16.3066, lng: 80.4366 },
   { id: "AAG2", path: ["Andhra Pradesh", "Guntur", "Lakshmipuram", "AAG2"], lat: 16.3140, lng: 80.4250 },
   { id: "AAG3", path: ["Andhra Pradesh", "Guntur", "Nallapadu", "AAG3"], lat: 16.2861, lng: 80.4542 },
-  { id: "AAG4", path: ["Andhra Pradesh", "Guntur", "Pattabhipuram", "AAG4"], lat: 16.3210, lng: 80.4178 },
+  { id: "AAG4", path: ["Andhra Pradesh", "Guntur", "Pattabhipuram", "AAG4"], lat: 16.3211, lng: 80.4179 },
   { id: "AAG5", path: ["Andhra Pradesh", "Guntur", "Sampath Nagar", "AAG5"], lat: 16.2994, lng: 80.4421 },
   { id: "AAG6", path: ["Andhra Pradesh", "Guntur", "Arundelpet", "AAG6"], lat: 16.2990, lng: 80.4380 },
   { id: "AAG7", path: ["Andhra Pradesh", "Guntur", "Kothapet", "AAG7"], lat: 16.3031, lng: 80.4455 },
@@ -30,7 +30,7 @@ export const MAP_SIGNALS: MapSignal[] = [
   { id: "AAK10", path: ["Andhra Pradesh", "Kakinada", "Cinema Road", "AAK10"], lat: 16.9432, lng: 82.2324 },
 
   // Gujarat
-  { id: "GAA1", path: ["Gujarat", "Ahmedabad", "Ashram Road", "GAA1"], lat: 23.0395, lng: 72.5660 },
+  { id: "GAA1", path: ["Gujarat", "Ahmedabad", "Ashram Road", "GAA1"], lat: 23.0395, lng: 72.5639 },
   { id: "GAA2", path: ["Gujarat", "Ahmedabad", "CG Road", "GAA2"], lat: 23.0330, lng: 72.5615 },
   { id: "GAA3", path: ["Gujarat", "Ahmedabad", "Iskcon", "GAA3"], lat: 23.0273, lng: 72.5066 },
   { id: "GAA4", path: ["Gujarat", "Ahmedabad", "Maninagar", "GAA4"], lat: 22.9950, lng: 72.6040 },
@@ -70,7 +70,7 @@ export const MAP_SIGNALS: MapSignal[] = [
   { id: "KABN4", path: ["Karnataka", "Bengaluru", "KR Puram", "KABN4"], lat: 13.0077, lng: 77.6950 },
   { id: "KABN5", path: ["Karnataka", "Bengaluru", "Majestic", "KABN5"], lat: 12.9767, lng: 77.5713 },
   { id: "KABN6", path: ["Karnataka", "Bengaluru", "Marathahalli", "KABN6"], lat: 12.9591, lng: 77.6974 },
-  { id: "Karnataka", path: ["Karnataka", "Bengaluru", "Silk Board", "KABN7"], lat: 12.9175, lng: 77.6228 },
+  { id: "KABN7", path: ["Karnataka", "Bengaluru", "Silk Board", "KABN7"], lat: 12.9175, lng: 77.6228 },
   { id: "KABN8", path: ["Karnataka", "Bengaluru", "Whitefield", "KABN8"], lat: 12.9698, lng: 77.7499 },
   { id: "KABN9", path: ["Karnataka", "Bengaluru", "Yelahanka", "KABN9"], lat: 13.1007, lng: 77.5963 },
   { id: "KABN10", path: ["Karnataka", "Bengaluru", "Banashankari", "KABN10"], lat: 12.9255, lng: 77.5468 },
@@ -101,7 +101,7 @@ export const MAP_SIGNALS: MapSignal[] = [
   // Madhya Pradesh
   { id: "MPB1", path: ["Madhya Pradesh", "Bhopal", "Board Office Square", "MPB1"], lat: 23.2336, lng: 77.4343 },
   { id: "MPB2", path: ["Madhya Pradesh", "Bhopal", "DB Mall Square", "MPB2"], lat: 23.2415, lng: 77.4331 },
-  { id: "MPB3", path: ["Madhya Pradesh", "Bhopal", "Jyoti Talkies", "MPB3"], lat: 23.2599, lng: 77.4126 },
+  { id: "MPB3", path: ["Madhya Pradesh", "Bhopal", "Jyoti Talkies", "MPB3"], lat: 23.2332, lng: 77.4346 },
   { id: "MPB4", path: ["Madhya Pradesh", "Bhopal", "MP Nagar Zone 1", "MPB4"], lat: 23.2330, lng: 77.4378 },
   { id: "MPB5", path: ["Madhya Pradesh", "Bhopal", "New Market", "MPB5"], lat: 23.2328, lng: 77.4009 },
   { id: "MPB6", path: ["Madhya Pradesh", "Bhopal", "Roshanpura", "MPB6"], lat: 23.2349, lng: 77.4017 },

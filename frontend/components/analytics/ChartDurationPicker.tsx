@@ -105,7 +105,7 @@ export function ChartDurationPicker({
   return (
     <div
       ref={containerRef}
-      className="relative z-50"
+      className={`relative ${open ? 'z-[500]' : 'z-40'}`}
       onMouseEnter={openMenu}
       onMouseLeave={scheduleClose}
     >
@@ -139,7 +139,7 @@ export function ChartDurationPicker({
 
       {/* pt-1 bridges the gap so the pointer does not leave the hover target */}
       <div
-        className={`absolute right-0 top-full pt-1 w-44 transition-all duration-150 ${
+        className={`absolute right-0 top-full pt-1 w-44 z-[500] transition-all duration-150 ${
           open
             ? 'opacity-100 visible pointer-events-auto'
             : 'opacity-0 invisible pointer-events-none'

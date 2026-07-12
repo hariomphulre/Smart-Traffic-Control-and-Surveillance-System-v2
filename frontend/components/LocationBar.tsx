@@ -27,9 +27,9 @@ export default function LocationBar() {
   };
 
   return (
-    <div className="w-full relative font-sans" ref={wrapperRef}>
+    <div className="w-full relative font-sans z-50" ref={wrapperRef}>
       {/* TOP LOCATION BAR */}
-      <div className="flex w-full border-b border-[#3c4043] h-8 bg-black mb-0 items-center justify-between">
+      <div className="relative z-50 flex w-full border-b border-[#3c4043] h-8 bg-black mb-0 items-center justify-between">
         
         <div 
           onClick={() => inputRef.current?.focus()}
@@ -68,7 +68,7 @@ export default function LocationBar() {
               />
 
               {showSuggestions && suggestions.length > 0 && !isLocked && (
-                <div className="absolute top-full text-sm mt-0 left-0 w-max min-w-[200px] bg-[#202124] border border-[#3c4043] rounded-sm shadow-2xl z-[999] py-0 overflow-hidden">
+                <div className="absolute top-full text-sm mt-0 left-0 w-max min-w-[200px] bg-[#202124] border border-[#3c4043] rounded-sm shadow-2xl z-[120] py-0 overflow-hidden">
                   {suggestions.map((s, idx) => (
                     <div 
                       key={idx}

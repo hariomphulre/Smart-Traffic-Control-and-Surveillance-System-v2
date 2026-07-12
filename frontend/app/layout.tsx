@@ -97,18 +97,26 @@ export default function RootLayout({
               <Navbar />
             </div>
 
-            <div className="fixed left-0 top-13 bottom-0">
-              <Sidebar />
+            <div className="min-[1150px]:hidden pt-13 min-h-screen flex items-center justify-center px-6 bg-[#f8f9fa] dark:bg-[#131314]">
+              <p className="max-w-md text-center text-base sm:text-lg font-medium text-[#5f6368] dark:text-[#9aa0a6] leading-relaxed">
+                This website is designed for laptops, and desktop computers.
+              </p>
             </div>
 
-            <div className="ml-12 pt-13 h-screen flex flex-col">
-              <div className="sticky top-0 z-40">
-                <SecondaryNavbar items={secondaryNavItems} dropdowns={secondaryNavDropdowns} />
+            <div className="hidden min-[1150px]:block">
+              <div className="fixed left-0 top-13 bottom-0">
+                <Sidebar />
               </div>
 
-              <main className="flex-1 overflow-y-auto">
-                {children}
-              </main>
+              <div className="ml-12 pt-13 h-screen flex flex-col">
+                <div className="sticky top-0 z-40">
+                  <SecondaryNavbar items={secondaryNavItems} dropdowns={secondaryNavDropdowns} />
+                </div>
+
+                <main className="flex-1 overflow-y-auto">
+                  {children}
+                </main>
+              </div>
             </div>
 
           </LocationFilterProvider>

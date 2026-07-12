@@ -33,16 +33,16 @@ const Sidebar = () => {
         <nav className="pr-0.5">
           <ul>
             <li>
-              <RiShieldUserFill onClick={handleIAM} className="mt-4 h-5 w-5" title="IAM"/>
+              <RiShieldUserFill onClick={handleIAM} className="mt-4.5 h-5 w-5" title="IAM"/>
             </li>
             <li>
-              <MdOutlineMonitor onClick={handleSessions} className="mt-4 h-5 w-5" title="Sessions"/>
+              <MdOutlineMonitor onClick={handleSessions} className="mt-4.5 h-5 w-5" title="Sessions"/>
             </li>
             <li>
-              <IoMdListBox onClick={handleAuditLogs} className="mt-4 h-5 w-5" title="Audit Logs"/>
+              <IoMdListBox onClick={handleAuditLogs} className="mt-4.5 h-5 w-5" title="Audit Logs"/>
             </li>
             <li>
-              <RiKeyFill className="mt-4 h-5 w-5" title="Passkeys"/>
+              <RiKeyFill className="mt-4.5 h-5 w-5" title="Passkeys"/>
             </li>
     
           </ul>

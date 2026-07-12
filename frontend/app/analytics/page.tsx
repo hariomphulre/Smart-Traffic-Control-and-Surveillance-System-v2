@@ -43,7 +43,12 @@ import {
   MdWarningAmber,
 } from 'react-icons/md';
 import { FaAmbulance } from 'react-icons/fa';
-
+import TrafficVol from '@/components/analytics/charts/TrafficVol';
+import Violations from '@/components/analytics/charts/Violations';
+import AnalyticsPieChartPanel from '@/components/analytics/AnalyticsPieChartPanel';
+import SquareLocationMap from '@/components/analytics/SquareLocationMap';
+import { useSquareLocation } from '@/hooks/useSquareLocation';
+import { formatWayList, distributeMetricAcrossWays, wayWaitMultiplier, wayQueueMultiplier } from '@/map/squareLocations';
 import { toPng } from "html-to-image";
 // Generate high-resolution mock data (every 15 seconds)
 const generateDenseData = () => {
@@ -87,8 +92,8 @@ const formatXAxis = (tickItem: string) => tickItem.replace(/:\d{2}\s/, ' ');
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-[#1e1e1e] border border-gray-700 p-3 rounded shadow-lg text-sm">
-        <p className="text-gray-300 mb-2 font-medium">{label}</p>
+      <div className="bg-[#1a202c] border border-[#2d3748] rounded shadow-lg p-3 min-w-[120px]">
+        <p className="text-gray-100 font-medium mb-2 text-sm">{label}</p>
         {[...payload].reverse().map((entry: any, index: number) => (
           <p key={`item-${index}`} style={{ color: entry.color }}>
             {entry.name}: {formatYAxis(entry.value)}
@@ -117,6 +122,11 @@ const CHART_COLORS = {
 
 const VIOLATION_COLORS = ['#ea4335', '#fbbc04', '#34a853', '#1a73e8'];
 const VEHICLE_COLORS = ['#1a73e8', '#34a853', '#fbbc04', '#ea4335', '#8ab4f8'];
+
+const EMERGENCY_METRICS = [
+  { key: 'p50', label: 'Fire Brigade', color: '#2b6cb0' },
+  { key: 'p95', label: 'Ambulance', color: '#ed6363' },
+];
 
 const DynamicMap = dynamic(() => import('@/components/RealMap'), { 
   ssr: false, 
@@ -273,7 +283,8 @@ export default function Analytics() {
     }
   };
 
-  const { isMapOpen, setIsMapOpen, pathSegments, handleMapPinClick } = useLocationFilter();
+  const { isMapOpen, setIsMapOpen, pathSegments, handleMapPinClick, isLocked } = useLocationFilter();
+  const { square, analyticsWays, loading: squareLoading, error: squareError, updateSquare, applySavedCoordinates, mapSignals } = useSquareLocation();
 
   const [violationsData, setViolationsData] = useState<Violation[]>([]);
   const [vehicleTypeData, setVehicleTypeData] = useState<VehicleType[]>([]);
@@ -362,14 +373,9 @@ export default function Analytics() {
   // --- DYNAMIC HEADLINE DATA LOGIC ---
   const totalVehiclesCount = totalVehicles || 0;
 
-  // Proportional directional splits
-  const nVehicles = Math.floor(totalVehiclesCount * 0.3);
-  const eVehicles = Math.floor(totalVehiclesCount * 0.25);
-  const sVehicles = Math.floor(totalVehiclesCount * 0.2);
-  const wVehicles = totalVehiclesCount - nVehicles - eVehicles - sVehicles;
+  const wayCount = analyticsWays.length;
 
-  // Simulate waiting times and queues reacting to total volume
-  const avgWaitTime = Math.floor(40 + (totalVehiclesCount % 60)); 
+  const avgWaitTime = Math.floor(40 + (totalVehiclesCount % 60));
   const avgQueueLength = Math.floor(20 + (totalVehiclesCount % 30));
 
   // Growth rate fluctuation
@@ -468,7 +474,7 @@ export default function Analytics() {
         onApply={handleCustomApply}
       />
 
-      <div className="w-full flex items-center justify-between h-13 mb-0 border-b border-[#3c4043] bg-[#131314] p-1 shadow-xl">
+      <div className="w-full flex items-center justify-between h-13 mb-0 border-b border-[#3c4043] bg-[#131314] p-1 shadow-xl relative z-40">
         <div className="flex items-center min-w-170 flex-1">
           <div>
             <p className="text-[#ffffff] font-mono text-xl ml-4">Analytics Dashboard</p>
@@ -507,7 +513,7 @@ export default function Analytics() {
         </div>
       </div>
 
-      <div className="w-full relative font-sans">
+      <div className="w-full relative font-sans z-50">
         {/* LOCATION BAR */}
         <LocationBar />
 
@@ -531,7 +537,7 @@ export default function Analytics() {
 
               <div className="flex-1 relative z-0">
                 <DynamicMap 
-                  signals={MAP_SIGNALS} 
+                  signals={mapSignals} 
                   pathSegments={pathSegments} 
                   onPinClick={handleMapPinClick} 
                 />
@@ -563,7 +569,7 @@ export default function Analytics() {
         )}
 
       {/* Headline Data*/}
-      <div className="flex border-r border-[#3c4043] p-2 justify-between items-center bg-[#131314]">
+      <div className="relative z-10 flex border-r border-[#3c4043] p-2 justify-between items-center bg-[#131314]">
 
         <p className="text-xl pl-2 font-[450] text-[#ffffff]">
           {currentLocationName}
@@ -604,12 +610,21 @@ export default function Analytics() {
             <span className="text-3xl font-mono text-[#e8eaed]">{totalVehiclesCount}</span>
             <div className="flex text-[15px] text-[#8AB4F8] gap-x-3 font-mono">
               <div className="flex-cols">
-                <p>N: {nVehicles}</p>
-                <p>S: {sVehicles}</p>
+                {analyticsWays.slice(0, Math.ceil(wayCount / 2)).map((way, i) => (
+                  <p key={way.id}>
+                    {way.label}: {distributeMetricAcrossWays(totalVehiclesCount, i, wayCount)}
+                  </p>
+                ))}
               </div>
               <div className="flex-cols">
-                <p>E: {eVehicles}</p>
-                <p>W: {wVehicles}</p>
+                {analyticsWays.slice(Math.ceil(wayCount / 2)).map((way, i) => {
+                  const idx = Math.ceil(wayCount / 2) + i;
+                  return (
+                    <p key={way.id}>
+                      {way.label}: {distributeMetricAcrossWays(totalVehiclesCount, idx, wayCount)}
+                    </p>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -628,12 +643,21 @@ export default function Analytics() {
             </div>
             <div className="flex text-[15px] text-[#8AB4F8] gap-x-3 font-mono">
               <div className="flex-cols">
-                <p>N: {Math.floor(avgWaitTime * 1.2)}s</p>
-                <p>S: {Math.floor(avgWaitTime * 1.5)}s</p>
+                {analyticsWays.slice(0, Math.ceil(wayCount / 2)).map((way, i) => (
+                  <p key={way.id}>
+                    {way.label}: {Math.floor(avgWaitTime * wayWaitMultiplier(i))}s
+                  </p>
+                ))}
               </div>
               <div className="flex-cols">
-                <p>E: {Math.floor(avgWaitTime * 0.9)}s</p>
-                <p>W: {Math.floor(avgWaitTime * 0.8)}s</p>
+                {analyticsWays.slice(Math.ceil(wayCount / 2)).map((way, i) => {
+                  const idx = Math.ceil(wayCount / 2) + i;
+                  return (
+                    <p key={way.id}>
+                      {way.label}: {Math.floor(avgWaitTime * wayWaitMultiplier(idx))}s
+                    </p>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -652,12 +676,21 @@ export default function Analytics() {
             </div>
             <div className="flex text-[15px] text-[#8AB4F8] gap-x-3 font-mono">
               <div className="flex-cols">
-                <p>N: {Math.floor(avgQueueLength * 1.1)}m</p>
-                <p>S: {Math.floor(avgQueueLength * 1.3)}m</p>
+                {analyticsWays.slice(0, Math.ceil(wayCount / 2)).map((way, i) => (
+                  <p key={way.id}>
+                    {way.label}: {Math.floor(avgQueueLength * wayQueueMultiplier(i))}m
+                  </p>
+                ))}
               </div>
               <div className="flex-cols">
-                <p>E: {Math.floor(avgQueueLength * 0.8)}m</p>
-                <p>W: {Math.floor(avgQueueLength * 0.9)}m</p>
+                {analyticsWays.slice(Math.ceil(wayCount / 2)).map((way, i) => {
+                  const idx = Math.ceil(wayCount / 2) + i;
+                  return (
+                    <p key={way.id}>
+                      {way.label}: {Math.floor(avgQueueLength * wayQueueMultiplier(idx))}m
+                    </p>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -700,8 +733,8 @@ export default function Analytics() {
               </span>
             </div>
             <div className="flex-cols pl-6 pt-2 text-[16px] text-[#8AB4F8] gap-x-3 font-mono">
-              <p>In dir: S, W</p>
-              <p>Out dir: E</p>
+              <p>In dir: {formatWayList(square, ['south', 'west'])}</p>
+              <p>Out dir: {formatWayList(square, ['east'])}</p>
             </div>
           </div>
         </div>
@@ -778,798 +811,35 @@ export default function Analytics() {
 
 
 
-      {/* Chart div 1*/}
-      <div className="flex w-full mt-0 border-r border-[#3c4043]">
-
-        <div 
-          ref={cardRef}
-          className={`w-full font-sans transition-all duration-150 ${
-            isFullscreen ? "p-10 h-screen flex flex-col justify-center" : "max-w-4xl h-88.5 pt-3 pb-0 pl-2 pr-6"
-          } bg-[#131314]`}
-          
-        >
-
-          {/* Header Panel Containing Controls */}
-          <div className="flex justify-between items-center mb-5">
-            <h2 className="text-gray-200 text-lg ml-5">
-              Overall Traffic Volume
-            </h2>
-            
-            {/* Action Button Strip */}
-            <div className="chart-actions flex items-center gap-3.5 text-xs">
-              <ChartDurationPicker
-                selectedDuration={getDuration(ANALYTICS_CHART_IDS.overallTraffic)}
-                onSelect={(d) =>
-                  handleDurationSelect(ANALYTICS_CHART_IDS.overallTraffic, d)
-                }
-              />
-              {/* CSV Export Button */}
-              <button 
-                onClick={exportCSV}
-                className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
-                title="Download CSV Data"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-              </button>
-
-              {/* Snapshot Image Button */}
-              <button 
-                onClick={saveAsImage}
-                className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
-                title="Save as PNG"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 002-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-              </button>
-
-              {/* Fullscreen Toggle Button */}
-              <button 
-                onClick={toggleFullscreen}
-                className="text-gray-400 hover:text-[#AECBFA] transition-colors"
-                title={isFullscreen ? "Exit Fullscreen" : "View Fullscreen"}
-              >
-                {isFullscreen ? (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 14h6m0 0v6m0-6L3 21m17-7h-6m0 0v6m0-6l7 7M16 10h6m0 0v-6m0 6l3-3M4 10h6m0 0V4m0 6L3 3" />
-                  </svg>
-                ) : (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5h-4m4 0v-4m0 4l-5-5" />
-                  </svg>
-                )}
-              </button>
-            </div>
-          </div>
-          
-          {/* Chart Canvas Area */}
-          <div className={`w-full ${isFullscreen ? "h-[75vh]" : "h-[270px]"}`}>
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart
-                data={data}
-                margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
-              >
-                <CartesianGrid 
-                  vertical={false} 
-                  stroke="#2d3748" 
-                  strokeWidth={1}
-                />
-                <XAxis 
-                  dataKey="time" 
-                  stroke="#718096" 
-                  tick={{ fill: '#718096', fontSize: 12 }} 
-                  tickFormatter={formatXAxis}
-                  tickMargin={10}
-                  axisLine={false}
-                  tickLine={false}
-                  minTickGap={60}
-                />
-                <YAxis 
-                  stroke="#718096" 
-                  tickFormatter={formatYAxis}
-                  tick={{ fill: '#718096', fontSize: 12 }}
-                  axisLine={false}
-                  tickLine={false}
-                />
-                <Tooltip content={<CustomTooltip />} />
-                
-                {/* <Line type="monotone" dataKey="p99" stroke="#e2e8f0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} /> */}
-                {/* <Line type="monotone" dataKey="p95" stroke="#63b3ed" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} /> */}
-                <Line type="monotone" dataKey="vehicles" stroke="#3182ce" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
-                {/* <Line type="monotone" dataKey="p50" stroke="#2b6cb0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} /> */}
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
+      {/* Chart div 1 — Traffic Volume + Square Map */}
+      <div className="relative z-20 flex w-full mt-0 border-r border-[#3c4043] isolate">
+        <div className="w-[66.6%] min-w-0">
+          <TrafficVol activeWays={analyticsWays} />
         </div>
-
-        <div 
-          ref={cardRef}
-          className={`w-full font-sans transition-all duration-150 ${
-            isFullscreen ? "p-10 h-screen flex flex-col justify-center" : "max-w-4xl border-l border-r border-[#3c4043] h-88.5 pt-3 pb-0 pl-2 pr-6"
-          } bg-[#131314]`}
-          
-        >
-          {/* Header Panel Containing Controls */}
-          <div className="flex justify-between items-center mb-5">
-            <h2 className="text-gray-200 text-lg ml-5">
-              Dir. Wise Traffic Volume
-            </h2>
-            
-            {/* Action Button Strip */}
-            <div className="chart-actions flex items-center gap-3.5 text-xs">
-              <ChartDurationPicker
-                selectedDuration={getDuration(ANALYTICS_CHART_IDS.separateTraffic1)}
-                onSelect={(d) =>
-                  handleDurationSelect(ANALYTICS_CHART_IDS.separateTraffic1, d)
-                }
-              />
-              {/* CSV Export Button */}
-              <button 
-                onClick={exportCSV}
-                className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
-                title="Download CSV Data"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-              </button>
-
-              {/* Snapshot Image Button */}
-              <button 
-                onClick={saveAsImage}
-                className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
-                title="Save as PNG"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 002-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-              </button>
-
-              {/* Fullscreen Toggle Button */}
-              <button 
-                onClick={toggleFullscreen}
-                className="text-gray-400 hover:text-[#AECBFA] transition-colors"
-                title={isFullscreen ? "Exit Fullscreen" : "View Fullscreen"}
-              >
-                {isFullscreen ? (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 14h6m0 0v6m0-6L3 21m17-7h-6m0 0v6m0-6l7 7M16 10h6m0 0v-6m0 6l3-3M4 10h6m0 0V4m0 6L3 3" />
-                  </svg>
-                ) : (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5h-4m4 0v-4m0 4l-5-5" />
-                  </svg>
-                )}
-              </button>
-            </div>
-          </div>
-          
-          {/* Chart Canvas Area */}
-          <div className={`w-full ${isFullscreen ? "h-[75vh]" : "h-[270px]"}`}>
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart
-                data={data}
-                margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
-              >
-                <CartesianGrid 
-                  vertical={false} 
-                  stroke="#2d3748" 
-                  strokeWidth={1}
-                />
-                <XAxis 
-                  dataKey="time" 
-                  stroke="#718096" 
-                  tick={{ fill: '#718096', fontSize: 12 }} 
-                  tickFormatter={formatXAxis}
-                  tickMargin={10}
-                  axisLine={false}
-                  tickLine={false}
-                  minTickGap={60}
-                />
-                <YAxis 
-                  stroke="#718096" 
-                  tickFormatter={formatYAxis}
-                  tick={{ fill: '#718096', fontSize: 12 }}
-                  axisLine={false}
-                  tickLine={false}
-                />
-                <Tooltip content={<CustomTooltip />} />
-                
-                <Line type="monotone" dataKey="p99" stroke="#e2e8f0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
-//                 <Line type="monotone" dataKey="p95" stroke="#63b3ed" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
-//                 <Line type="monotone" dataKey="vehicles" stroke="#3182ce" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
-//                 <Line type="monotone" dataKey="p50" stroke="#2b6cb0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-        <div 
-          ref={cardRef}
-          className={`w-full font-sans transition-all duration-150 ${
-            isFullscreen ? "p-10 h-screen flex flex-col justify-center" : "max-w-4xl h-88.5 pt-3 pb-0 pl-2 pr-6"
-          } bg-[#131314]`}
-          
-        >
-          {/* Header Panel Containing Controls */}
-          <div className="flex justify-between items-center mb-5">
-            <h2 className="text-gray-200 text-lg ml-5">
-              Emergency Vehicles
-            </h2>
-            
-            {/* Action Button Strip */}
-            <div className="chart-actions flex items-center gap-3.5 text-xs">
-              <ChartDurationPicker
-                selectedDuration={getDuration(ANALYTICS_CHART_IDS.emergency1)}
-                onSelect={(d) =>
-                  handleDurationSelect(ANALYTICS_CHART_IDS.emergency1, d)
-                }
-              />
-              {/* CSV Export Button */}
-              <button 
-                onClick={exportCSV}
-                className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
-                title="Download CSV Data"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-              </button>
-
-              {/* Snapshot Image Button */}
-              <button 
-                onClick={saveAsImage}
-                className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
-                title="Save as PNG"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 002-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-              </button>
-
-              {/* Fullscreen Toggle Button */}
-              <button 
-                onClick={toggleFullscreen}
-                className="text-gray-400 hover:text-[#AECBFA] transition-colors"
-                title={isFullscreen ? "Exit Fullscreen" : "View Fullscreen"}
-              >
-                {isFullscreen ? (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 14h6m0 0v6m0-6L3 21m17-7h-6m0 0v6m0-6l7 7M16 10h6m0 0v-6m0 6l3-3M4 10h6m0 0V4m0 6L3 3" />
-                  </svg>
-                ) : (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5h-4m4 0v-4m0 4l-5-5" />
-                  </svg>
-                )}
-              </button>
-            </div>
-          </div>
-          
-          <div className={`w-full ${isFullscreen ? "h-[75vh]" : "h-[270px]"}`}>
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart
-                data={data}
-                margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
-              >
-                <CartesianGrid 
-                  vertical={false} 
-                  stroke="#2d3748" 
-                  strokeWidth={1}
-                />
-                <XAxis 
-                  dataKey="time" 
-                  stroke="#718096" 
-                  tick={{ fill: '#718096', fontSize: 12 }} 
-                  tickFormatter={formatXAxis}
-                  tickMargin={10}
-                  axisLine={false}
-                  tickLine={false}
-                  minTickGap={60}
-                />
-                <YAxis 
-                  stroke="#718096" 
-                  tickFormatter={formatYAxis}
-                  tick={{ fill: '#718096', fontSize: 12 }}
-                  axisLine={false}
-                  tickLine={false}
-                />
-                <Tooltip content={<CustomTooltip />} />
-                
-                {/* <Line type="monotone" dataKey="p99" stroke="#e2e8f0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} /> */}
-                <Line type="monotone" dataKey="p95" stroke="#ed6363" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
-                {/* <Line type="monotone" dataKey="vehicles" stroke="#ce3131" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} /> */}
-                <Line type="monotone" dataKey="p50" stroke="#2b6cb0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
+        <div className="w-[33.4%] min-w-0">
+          <SquareLocationMap
+            square={square}
+            isLocked={isLocked}
+            loading={squareLoading}
+            error={squareError}
+            onSquareSaved={updateSquare}
+            onCoordinatesSaved={applySavedCoordinates}
+          />
         </div>
       </div>
       
       {/* chart div 2*/}
       <div className="flex w-full">
 
-        <div className="flex-cols bg-[#131314] w-[33.4%]">
-
-          <div className="w-full min-w-0 border-t border-r border-[#3c4043] !bg-[#131314] py-5 relative">
-            <div className="flex justify-between items-center mb-4 pl-6 pr-6">
-              <h2 className="text-gray-200 text-lg">Violations data</h2>
-              <div className="chart-actions flex items-center gap-3.5 text-xs">
-                <ChartDurationPicker
-                  selectedDuration={getDuration(ANALYTICS_CHART_IDS.violations)}
-                  onSelect={(d) =>
-                    handleDurationSelect(ANALYTICS_CHART_IDS.violations, d)
-                  }
-                />
-              </div>
-            </div>
-            <div className="flex-cols gap-4">
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie
-                    data={violationsData}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={({ name, percent }) => `${name}: ${((percent || 0) * 100).toFixed(0)}%`}
-                    outerRadius={100}
-                    fill="#1a73e8"
-                    dataKey="count"
-                  >
-                    {violationsData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={VIOLATION_COLORS[index % VIOLATION_COLORS.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: 'black', 
-                      color: 'white',
-                      padding:'0px',
-                      paddingLeft: '8px',
-                      paddingRight: '8px',
-                      borderRadius: '4px',
-                      border: '0px'
-                    }} 
-                  />
-                </PieChart>
-              </ResponsiveContainer>
-              <div className="w-full pl-4 flex justify-center">
-                    Total vehicles: {totalVehicles}
-
-              </div>
-            </div>
-          </div>
-          
-          <div className="w-full min-w-0 border-r border-t border-b border-[#3c4043] !bg-[#131314] py-5 relative">
-            <div className="flex justify-between items-center mb-4 pl-6 pr-6">
-              <h2 className="text-gray-200 text-lg">Vehicle Type Distribution</h2>
-              <div className="chart-actions flex items-center gap-3.5 text-xs">
-                <ChartDurationPicker
-                  selectedDuration={getDuration(ANALYTICS_CHART_IDS.vehicleTypes)}
-                  onSelect={(d) =>
-                    handleDurationSelect(ANALYTICS_CHART_IDS.vehicleTypes, d)
-                  }
-                />
-              </div>
-            </div>
-            <div className="flex-cols gap-4">
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie
-                    data={vehicleTypeData}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={({ name, percent }) => `${name}: ${((percent || 0) * 100).toFixed(0)}%`}
-                    outerRadius={100}
-                    fill="#1a73e8"
-                    dataKey="count"
-                  >
-                    {vehicleTypeData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={VEHICLE_COLORS[index % VEHICLE_COLORS.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: 'black', 
-                      color: 'white',
-                      padding:'0px',
-                      paddingLeft: '8px',
-                      paddingRight: '8px',
-                      borderRadius: '4px',
-                      border: '0px'
-                    }} 
-                  />
-                </PieChart>
-              </ResponsiveContainer>
-              <div className="w-full pl-4 flex justify-center">
-                    Total vehicles: {totalVehicles}
-
-              </div>
-            </div>
-          </div>
-          <div className="w-full min-w-0 border-b border-r border-[#3c4043] !bg-[#131314] py-5 relative">
-            <div className="flex justify-between items-center mb-4 pl-6 pr-6">
-              <h2 className="text-gray-200 text-lg">Speed Distribution</h2>
-              <div className="chart-actions flex items-center gap-3.5 text-xs">
-                <ChartDurationPicker
-                  selectedDuration={getDuration(ANALYTICS_CHART_IDS.speedDistributionPie)}
-                  onSelect={(d) =>
-                    handleDurationSelect(ANALYTICS_CHART_IDS.speedDistributionPie, d)
-                  }
-                />
-              </div>
-            </div>
-            <div className="flex-cols gap-4">
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie
-                    data={speedDistributionChartData}
-                    nameKey="range"
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    // FIX 1: Use 'name' instead of 'range' and type as 'any'
-                    label={({ name, percent }: any) =>
-                      `${name} km/h: ${((percent || 0) * 100).toFixed(0)}%`
-                    }
-                    outerRadius={100}
-                    dataKey="count"
-                  >
-                    {speedDistributionChartData.map((entry, index) => (
-                      <Cell
-                        key={`speed-${entry.range}`}
-                        fill={getSpeedRangeColor(entry.range, index)}
-                      />
-                    ))}
-                  </Pie>
-                  <Tooltip
-                    // FIX 2: Explicitly type the parameters as 'any'
-                    formatter={(value: any, _name: any, item: any) => [
-                      value,
-                      `${item?.payload?.range} km/h`,
-                    ]}
-                    contentStyle={{
-                      backgroundColor: 'black',
-                      color: 'white',
-                      padding: '0px',
-                      paddingLeft: '8px',
-                      paddingRight: '8px',
-                      borderRadius: '4px',
-                      border: '0px',
-                    }}
-                  />
-                </PieChart>
-              </ResponsiveContainer>
-              <div className="w-full pl-4 flex justify-center text-[#ffffff]">
-                Total vehicles: {speedDistributionTotal}
-              </div>
-            </div>
-          </div>
-        </div>
 
         <div className="flex-cols bg-[#131314] w-[66.6%]">
-          <div className="flex w-full">
-            <div className="w-[99.5%] h-43 p-3 pl-4 text-lg border-t border-r border-[#3c4043]">
-                <p>Latest Violation Logs</p>
-                
-            </div>
-            <div className="w-full p-3 text-lg border-t border-r border-[#3c4043]">
-                <p>Latest Incident Logs</p>
-            </div>
-          </div>
-          <div className="flex w-full">
-            <div 
-              ref={cardRef}
-              className={`w-[99.5%] font-sans transition-all duration-150 ${
-                isFullscreen ? "p-10 h-screen flex flex-col justify-center" : "border-t border-b border-[#3c4043] max-w-4xl h-88.5 pt-3 pb-0 pl-2 pr-6"
-              } bg-[#131314]`}
-              
-            >
-              {/* Header Panel Containing Controls */}
-              <div className="flex justify-between items-center mb-5">
-                <h2 className="text-gray-200 text-lg ml-5">
-                  Speed
-                </h2>
-                
-                {/* Action Button Strip */}
-                <div className="chart-actions flex items-center gap-3.5 text-xs">
-                  <ChartDurationPicker
-                    selectedDuration={getDuration(ANALYTICS_CHART_IDS.speedLine)}
-                    onSelect={(d) =>
-                      handleDurationSelect(ANALYTICS_CHART_IDS.speedLine, d)
-                    }
-                  />
-                  {/* CSV Export Button */}
-                  <button 
-                    onClick={exportCSV}
-                    className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
-                    title="Download CSV Data"
-                  >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                  </button>
-
-                  {/* Snapshot Image Button */}
-                  <button 
-                    onClick={saveAsImage}
-                    className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
-                    title="Save as PNG"
-                  >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 002-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </button>
-
-                  {/* Fullscreen Toggle Button */}
-                  <button 
-                    onClick={toggleFullscreen}
-                    className="text-gray-400 hover:text-[#AECBFA] transition-colors"
-                    title={isFullscreen ? "Exit Fullscreen" : "View Fullscreen"}
-                  >
-                    {isFullscreen ? (
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 14h6m0 0v6m0-6L3 21m17-7h-6m0 0v6m0-6l7 7M16 10h6m0 0v-6m0 6l3-3M4 10h6m0 0V4m0 6L3 3" />
-                      </svg>
-                    ) : (
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5h-4m4 0v-4m0 4l-5-5" />
-                      </svg>
-                    )}
-                  </button>
-                </div>
-              </div>
-              
-              {/* Chart Canvas Area */}
-              <div className={`w-full ${isFullscreen ? "h-[75vh]" : "h-[270px]"}`}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart
-                    data={data}
-                    margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
-                  >
-                    <CartesianGrid 
-                      vertical={false} 
-                      stroke="#2d3748" 
-                      strokeWidth={1}
-                    />
-                    <XAxis 
-                      dataKey="time" 
-                      stroke="#718096" 
-                      tick={{ fill: '#718096', fontSize: 12 }} 
-                      tickFormatter={formatXAxis}
-                      tickMargin={10}
-                      axisLine={false}
-                      tickLine={false}
-                      minTickGap={60}
-                    />
-                    <YAxis 
-                      stroke="#718096" 
-                      tickFormatter={formatYAxis}
-                      tick={{ fill: '#718096', fontSize: 12 }}
-                      axisLine={false}
-                      tickLine={false}
-                    />
-                    <Tooltip content={<CustomTooltip />} />
-                    
-                    {/* <Line type="monotone" dataKey="p99" stroke="#e2e8f0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} /> */}
-                    <Line type="monotone" dataKey="p95" stroke="#ed6363" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
-                    {/* <Line type="monotone" dataKey="vehicles" stroke="#ce3131" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} /> */}
-                    <Line type="monotone" dataKey="p50" stroke="#2b6cb0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-            <div 
-              ref={cardRef}
-              className={`w-full font-sans transition-all duration-150 ${
-                isFullscreen ? "p-10 h-screen flex flex-col justify-center" : "border border-[#3c4043] max-w-4xl h-88.5 pt-3 pb-0 pl-2 pr-6"
-              } bg-[#131314]`}
-              
-            >
-              {/* Header Panel Containing Controls */}
-              <div className="flex justify-between items-center mb-5">
-                <h2 className="text-gray-200 text-lg ml-5">
-                  Helmet
-                </h2>
-                
-                {/* Action Button Strip */}
-                <div className="chart-actions flex items-center gap-3.5 text-xs">
-                  <ChartDurationPicker
-                    selectedDuration={getDuration(ANALYTICS_CHART_IDS.separateTraffic2)}
-                    onSelect={(d) =>
-                      handleDurationSelect(ANALYTICS_CHART_IDS.separateTraffic2, d)
-                    }
-                  />
-                  {/* CSV Export Button */}
-                  <button 
-                    onClick={exportCSV}
-                    className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
-                    title="Download CSV Data"
-                  >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                  </button>
-
-                  {/* Snapshot Image Button */}
-                  <button 
-                    onClick={saveAsImage}
-                    className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
-                    title="Save as PNG"
-                  >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 002-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </button>
-
-                  {/* Fullscreen Toggle Button */}
-                  <button 
-                    onClick={toggleFullscreen}
-                    className="text-gray-400 hover:text-[#AECBFA] transition-colors"
-                    title={isFullscreen ? "Exit Fullscreen" : "View Fullscreen"}
-                  >
-                    {isFullscreen ? (
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 14h6m0 0v6m0-6L3 21m17-7h-6m0 0v6m0-6l7 7M16 10h6m0 0v-6m0 6l3-3M4 10h6m0 0V4m0 6L3 3" />
-                      </svg>
-                    ) : (
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5h-4m4 0v-4m0 4l-5-5" />
-                      </svg>
-                    )}
-                  </button>
-                </div>
-              </div>
-              
-              {/* Chart Canvas Area */}
-              <div className={`w-full ${isFullscreen ? "h-[75vh]" : "h-[270px]"}`}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart
-                    data={data}
-                    margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
-                  >
-                    <CartesianGrid 
-                      vertical={false} 
-                      stroke="#2d3748" 
-                      strokeWidth={1}
-                    />
-                    <XAxis 
-                      dataKey="time" 
-                      stroke="#718096" 
-                      tick={{ fill: '#718096', fontSize: 12 }} 
-                      tickFormatter={formatXAxis}
-                      tickMargin={10}
-                      axisLine={false}
-                      tickLine={false}
-                      minTickGap={60}
-                    />
-                    <YAxis 
-                      stroke="#718096" 
-                      tickFormatter={formatYAxis}
-                      tick={{ fill: '#718096', fontSize: 12 }}
-                      axisLine={false}
-                      tickLine={false}
-                    />
-                    <Tooltip content={<CustomTooltip />} />
-                    
-                    {/* <Line type="monotone" dataKey="p99" stroke="#e2e8f0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} /> */}
-                    <Line type="monotone" dataKey="p95" stroke="#ed6363" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
-                    {/* <Line type="monotone" dataKey="vehicles" stroke="#ce3131" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} /> */}
-                    <Line type="monotone" dataKey="p50" stroke="#2b6cb0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-          </div>
+          <Violations activeWays={analyticsWays} />
 
           <div className="flex w-full">
             <div 
               ref={cardRef}
               className={`w-[99.5%] font-sans transition-all duration-150 ${
                 isFullscreen ? "p-10 h-screen flex flex-col justify-center" : "border-b border-[#3c4043] h-88.5 pt-3 pb-0 pl-2 pr-6"
-              } bg-[#131314]`}
-              
-            >
-              {/* Header Panel Containing Controls */}
-              <div className="flex justify-between items-center mb-5">
-                <h2 className="text-gray-200 text-lg ml-5">
-                  Tripling
-                </h2>
-                
-                {/* Action Button Strip */}
-                <div className="chart-actions flex items-center gap-3.5 text-xs">
-                  <ChartDurationPicker
-                    selectedDuration={getDuration(ANALYTICS_CHART_IDS.emergency2)}
-                    onSelect={(d) =>
-                      handleDurationSelect(ANALYTICS_CHART_IDS.emergency2, d)
-                    }
-                  />
-                  {/* CSV Export Button */}
-                  <button 
-                    onClick={exportCSV}
-                    className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
-                    title="Download CSV Data"
-                  >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                  </button>
-
-                  {/* Snapshot Image Button */}
-                  <button 
-                    onClick={saveAsImage}
-                    className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
-                    title="Save as PNG"
-                  >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 002-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </button>
-
-                  {/* Fullscreen Toggle Button */}
-                  <button 
-                    onClick={toggleFullscreen}
-                    className="text-gray-400 hover:text-[#AECBFA] transition-colors"
-                    title={isFullscreen ? "Exit Fullscreen" : "View Fullscreen"}
-                  >
-                    {isFullscreen ? (
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 14h6m0 0v6m0-6L3 21m17-7h-6m0 0v6m0-6l7 7M16 10h6m0 0v-6m0 6l3-3M4 10h6m0 0V4m0 6L3 3" />
-                      </svg>
-                    ) : (
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5h-4m4 0v-4m0 4l-5-5" />
-                      </svg>
-                    )}
-                  </button>
-                </div>
-              </div>
-              
-              {/* Chart Canvas Area */}
-              <div className={`w-full ${isFullscreen ? "h-[75vh]" : "h-[270px]"}`}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart
-                    data={data}
-                    margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
-                  >
-                    <CartesianGrid 
-                      vertical={false} 
-                      stroke="#2d3748" 
-                      strokeWidth={1}
-                    />
-                    <XAxis 
-                      dataKey="time" 
-                      stroke="#718096" 
-                      tick={{ fill: '#718096', fontSize: 12 }} 
-                      tickFormatter={formatXAxis}
-                      tickMargin={10}
-                      axisLine={false}
-                      tickLine={false}
-                      minTickGap={60}
-                    />
-                    <YAxis 
-                      stroke="#718096" 
-                      tickFormatter={formatYAxis}
-                      tick={{ fill: '#718096', fontSize: 12 }}
-                      axisLine={false}
-                      tickLine={false}
-                    />
-                    <Tooltip content={<CustomTooltip />} />
-                    
-                    {/* <Line type="monotone" dataKey="p99" stroke="#e2e8f0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} /> */}
-                    <Line type="monotone" dataKey="p95" stroke="#ed6363" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
-                    {/* <Line type="monotone" dataKey="vehicles" stroke="#ce3131" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} /> */}
-                    <Line type="monotone" dataKey="p50" stroke="#2b6cb0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-            <div 
-              ref={cardRef}
-              className={`w-full font-sans transition-all duration-150 ${
-                isFullscreen ? "p-10 h-screen flex flex-col justify-center" : "border-b border-l border-r border-[#3c4043] w-full h-88.5 pt-3 pb-0 pl-2 pr-6"
               } bg-[#131314]`}
               
             >
@@ -1580,110 +850,7 @@ export default function Analytics() {
                 </h2>
                 
                 {/* Action Button Strip */}
-                <div className="chart-actions flex items-center gap-3.5 text-xs">
-                  <ChartDurationPicker
-                    selectedDuration={getDuration(ANALYTICS_CHART_IDS.emergency2)}
-                    onSelect={(d) =>
-                      handleDurationSelect(ANALYTICS_CHART_IDS.emergency2, d)
-                    }
-                  />
-                  {/* CSV Export Button */}
-                  <button 
-                    onClick={exportCSV}
-                    className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
-                    title="Download CSV Data"
-                  >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                  </button>
-
-                  {/* Snapshot Image Button */}
-                  <button 
-                    onClick={saveAsImage}
-                    className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
-                    title="Save as PNG"
-                  >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 002-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </button>
-
-                  {/* Fullscreen Toggle Button */}
-                  <button 
-                    onClick={toggleFullscreen}
-                    className="text-gray-400 hover:text-[#AECBFA] transition-colors"
-                    title={isFullscreen ? "Exit Fullscreen" : "View Fullscreen"}
-                  >
-                    {isFullscreen ? (
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 14h6m0 0v6m0-6L3 21m17-7h-6m0 0v6m0-6l7 7M16 10h6m0 0v-6m0 6l3-3M4 10h6m0 0V4m0 6L3 3" />
-                      </svg>
-                    ) : (
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5h-4m4 0v-4m0 4l-5-5" />
-                      </svg>
-                    )}
-                  </button>
-                </div>
-              </div>
-              
-              {/* Chart Canvas Area */}
-              <div className={`w-full ${isFullscreen ? "h-[75vh]" : "h-[270px]"}`}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart
-                    data={data}
-                    margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
-                  >
-                    <CartesianGrid 
-                      vertical={false} 
-                      stroke="#2d3748" 
-                      strokeWidth={1}
-                    />
-                    <XAxis 
-                      dataKey="time" 
-                      stroke="#718096" 
-                      tick={{ fill: '#718096', fontSize: 12 }} 
-                      tickFormatter={formatXAxis}
-                      tickMargin={10}
-                      axisLine={false}
-                      tickLine={false}
-                      minTickGap={60}
-                    />
-                    <YAxis 
-                      stroke="#718096" 
-                      tickFormatter={formatYAxis}
-                      tick={{ fill: '#718096', fontSize: 12 }}
-                      axisLine={false}
-                      tickLine={false}
-                    />
-                    <Tooltip content={<CustomTooltip />} />
-                    
-                    {/* <Line type="monotone" dataKey="p99" stroke="#e2e8f0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} /> */}
-                    <Line type="monotone" dataKey="p95" stroke="#ed6363" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
-                    {/* <Line type="monotone" dataKey="vehicles" stroke="#ce3131" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} /> */}
-                    <Line type="monotone" dataKey="p50" stroke="#2b6cb0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-          </div>
-          <div className="flex w-full">
-            <div 
-              ref={cardRef}
-              className={`w-[99.5%] font-sans transition-all duration-150 ${
-                isFullscreen ? "p-10 h-screen flex flex-col justify-center" : "border-b border-[#3c4043] h-88.5 pt-3 pb-0 pl-2 pr-6"
-              } bg-[#131314]`}
-              
-            >
-              {/* Header Panel Containing Controls */}
-              <div className="flex justify-between items-center mb-5">
-                <h2 className="text-gray-200 text-lg ml-5">
-                  Red Light Jump
-                </h2>
-                
-                {/* Action Button Strip */}
-                <div className="chart-actions flex items-center gap-3.5 text-xs">
+                <div className="relative z-40 chart-actions flex items-center gap-3.5 text-xs overflow-visible">
                   <ChartDurationPicker
                     selectedDuration={getDuration(ANALYTICS_CHART_IDS.emergency2)}
                     onSelect={(d) =>
@@ -1784,7 +951,7 @@ export default function Analytics() {
                 </h2>
                 
                 {/* Action Button Strip */}
-                <div className="chart-actions flex items-center gap-3.5 text-xs">
+                <div className="relative z-40 chart-actions flex items-center gap-3.5 text-xs overflow-visible">
                   <ChartDurationPicker
                     selectedDuration={getDuration(ANALYTICS_CHART_IDS.emergency2)}
                     onSelect={(d) =>
@@ -1871,6 +1038,154 @@ export default function Analytics() {
                 </ResponsiveContainer>
               </div>
             </div>
+          </div>
+        </div>
+        <div className="flex-cols bg-[#131314] w-[33.4%]">
+
+          <AnalyticsPieChartPanel
+            title="Violations data"
+            data={violationsData}
+            colors={VIOLATION_COLORS}
+            footer={<>Total vehicles: {totalVehicles}</>}
+            csvHeaders={['Violation', 'Count']}
+            exportBaseName="violations_data"
+            selectedDuration={getDuration(ANALYTICS_CHART_IDS.violations)}
+            onDurationSelect={(d) => handleDurationSelect(ANALYTICS_CHART_IDS.violations, d)}
+          />
+
+          <AnalyticsPieChartPanel
+            title="Vehicle Type Distribution"
+            data={vehicleTypeData}
+            colors={VEHICLE_COLORS}
+            className="w-full min-w-0 border-r border-t border-b border-[#3c4043] !bg-[#131314] py-5 relative overflow-visible"
+            footer={<>Total vehicles: {totalVehicles}</>}
+            csvHeaders={['Vehicle Type', 'Count']}
+            exportBaseName="vehicle_type_distribution"
+            selectedDuration={getDuration(ANALYTICS_CHART_IDS.vehicleTypes)}
+            onDurationSelect={(d) => handleDurationSelect(ANALYTICS_CHART_IDS.vehicleTypes, d)}
+          />
+
+          <AnalyticsPieChartPanel
+            title="Speed Distribution"
+            data={speedDistributionChartData}
+            nameKey="range"
+            colors={[]}
+            label={({ name, percent }: { name?: string; percent?: number }) =>
+              `${name} km/h: ${((percent || 0) * 100).toFixed(0)}%`
+            }
+            tooltipFormatter={(value, _name, item) => [
+              String(value),
+              `${item?.payload?.range} km/h`,
+            ]}
+            getCellColor={(entry, index) => getSpeedRangeColor(String(entry.range), index)}
+            className="w-full min-w-0 border-b border-r border-[#3c4043] !bg-[#131314] py-5 relative overflow-visible"
+            footer={<span className="text-[#ffffff]">Total vehicles: {speedDistributionTotal}</span>}
+            csvHeaders={['Speed Range', 'Count']}
+            exportBaseName="speed_distribution"
+            selectedDuration={getDuration(ANALYTICS_CHART_IDS.speedDistributionPie)}
+            onDurationSelect={(d) => handleDurationSelect(ANALYTICS_CHART_IDS.speedDistributionPie, d)}
+          />
+        </div>
+      </div>
+
+      {/* Emergency Vehicles — bottom row */}
+      <div className="flex w-full border-t border-r border-[#3c4043]">
+        <div
+          ref={cardRef}
+          className={`w-full font-sans transition-all duration-150 flex flex-col ${
+            isFullscreen ? 'p-10 h-screen justify-center' : 'h-100 pt-3 pb-2.5 pl-2 pr-6'
+          } bg-[#131314]`}
+        >
+          <div className="flex justify-between items-center mb-5">
+            <h2 className="text-gray-200 text-lg ml-5">Emergency Vehicles</h2>
+            <div className="chart-actions flex items-center gap-3.5 text-xs">
+              <ChartDurationPicker
+                selectedDuration={getDuration(ANALYTICS_CHART_IDS.emergency1)}
+                onSelect={(d) => handleDurationSelect(ANALYTICS_CHART_IDS.emergency1, d)}
+              />
+              <button
+                onClick={exportCSV}
+                className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
+                title="Download CSV Data"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </button>
+              <button
+                onClick={saveAsImage}
+                className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
+                title="Save as PNG"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 002-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </button>
+              <button
+                onClick={toggleFullscreen}
+                className="text-gray-400 hover:text-[#AECBFA] transition-colors"
+                title={isFullscreen ? 'Exit Fullscreen' : 'View Fullscreen'}
+              >
+                {isFullscreen ? (
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 14h6m0 0v6m0-6L3 21m17-7h-6m0 0v6m0-6l7 7M16 10h6m0 0v-6m0 6l3-3M4 10h6m0 0V4m0 6L3 3" />
+                  </svg>
+                ) : (
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5h-4m4 0v-4m0 4l-5-5" />
+                  </svg>
+                )}
+              </button>
+            </div>
+          </div>
+          <div className={`flex-1 w-full ${isFullscreen ? 'min-h-[75vh]' : 'min-h-[280px]'}`}>
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={data} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
+                <CartesianGrid vertical={false} stroke="#2d3748" strokeWidth={1} />
+                <XAxis
+                  dataKey="time"
+                  stroke="#718096"
+                  tick={{ fill: '#718096', fontSize: 12 }}
+                  tickFormatter={formatXAxis}
+                  tickMargin={10}
+                  axisLine={false}
+                  tickLine={false}
+                  minTickGap={60}
+                />
+                <YAxis
+                  stroke="#718096"
+                  tickFormatter={formatYAxis}
+                  tick={{ fill: '#718096', fontSize: 12 }}
+                  axisLine={false}
+                  tickLine={false}
+                />
+                <Tooltip content={<CustomTooltip />} />
+                {EMERGENCY_METRICS.map((metric) => (
+                  <Line
+                    key={metric.key}
+                    type="monotone"
+                    name={metric.label}
+                    dataKey={metric.key}
+                    stroke={metric.color}
+                    strokeWidth={1.5}
+                    dot={false}
+                    activeDot={{ r: 4, fill: metric.color, stroke: '#fff', strokeWidth: 2 }}
+                  />
+                ))}
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="mt-2 flex flex-wrap justify-center gap-4">
+            {EMERGENCY_METRICS.map((metric) => (
+              <button
+                key={metric.key}
+                disabled
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-normal transition-all cursor-default"
+              >
+                <span className="w-4.5 h-1.5 rounded" style={{ backgroundColor: metric.color }} />
+                {metric.label}
+              </button>
+            ))}
           </div>
         </div>
       </div>

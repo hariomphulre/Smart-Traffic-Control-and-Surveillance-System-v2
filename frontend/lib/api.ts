@@ -383,3 +383,45 @@ export const getTrafficState = async (): Promise<TrafficState> => {
   const response = await axiosInstance.get('/api/signals/state');
   return response.data ?? {};
 };
+
+// ── IAM & Sessions ────────────────────────────────────────────────────────────
+
+export interface Identity {
+  id: string;
+  username: string;
+  role: string;
+  passkeyCount: number;
+  hasPasskey: boolean;
+  createdAt: string;
+}
+
+export interface IdentitiesResponse {
+  data: Identity[];
+  total: number;
+}
+
+export interface UserSession {
+  sno: number;
+  sessionId: string;
+  loginTime: string;
+  loginId: string;
+  username: string;
+  passkey: string;
+  location: string;
+  duration: string;
+}
+
+export interface SessionsResponse {
+  data: UserSession[];
+  total: number;
+}
+
+export const getIdentities = async (): Promise<IdentitiesResponse> => {
+  const response = await axiosInstance.get('/api/iam/identities');
+  return response.data;
+};
+
+export const getSessions = async (): Promise<SessionsResponse> => {
+  const response = await axiosInstance.get('/api/sessions');
+  return response.data;
+};
