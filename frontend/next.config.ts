@@ -12,7 +12,6 @@ const backendApiPrefixes = [
   'images',
   'analytics',
   'ambulance',
-  'signals',
   'auth',
   'iam',
   'sessions',
@@ -33,6 +32,12 @@ const nextConfig: NextConfig = {
         destination: `${backendInternal}/api/${prefix}/:path*`,
       })
     }
+
+    // Only signal state lives on the backend; coordinates are a frontend route.
+    rules.push({
+      source: '/api/signals/state',
+      destination: `${backendInternal}/api/signals/state`,
+    })
 
     rules.push({
       source: '/streams/:path*',

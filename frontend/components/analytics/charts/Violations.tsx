@@ -49,6 +49,10 @@ const OVERVIEW_AVG_COLORS: Record<ViolationType, string> = {
 
 const AVG_LINE_COLOR = '#fc8181';
 
+function isAvgMetric(metric: MetricConfig): boolean {
+  return metric.label === 'Avg.' || metric.label.endsWith(' Avg.');
+}
+
 const TYPE_BASE: Record<ViolationType, number> = {
   speed: 40,
   helmet: 30,
@@ -61,10 +65,18 @@ function seriesKey(type: ViolationType, series: 'avg' | string): string {
 }
 
 function generateViolationData(activeWays: AnalyticsWay[]): ViolationDataRow[] {
-  return Array.from({ length: 60 }, (_, i) => {
-    const isSpike = i > 40 && i < 50;
-    const sec = i < 10 ? `0${i}` : `${i}`;
-    const timeStr = `2:04:${sec} PM`;
+  const data: ViolationDataRow[] = [];
+  const startTime = new Date();
+  startTime.setHours(14, 4, 0, 0);
+  const pointCount = 181;
+
+  for (let i = 0; i < pointCount; i += 1) {
+    const isSpike = i > 120 && i < 150;
+    const timeStr = startTime.toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+      second: '2-digit',
+    });
 
     const row: ViolationDataRow = { time: timeStr };
 
@@ -91,8 +103,11 @@ function generateViolationData(activeWays: AnalyticsWay[]): ViolationDataRow[] {
       });
     }
 
-    return row;
-  });
+    data.push(row);
+    startTime.setSeconds(startTime.getSeconds() + 15);
+  }
+
+  return data;
 }
 
 function buildMetrics(view: ViolationView, activeWays: AnalyticsWay[]): MetricConfig[] {
@@ -126,6 +141,8 @@ const formatYAxis = (tickItem: number) => {
   return `${Math.round(tickItem)}`;
 };
 
+const formatXAxis = (tickItem: string) => tickItem.replace(/:\d{2}\s/, ' ');
+
 const CustomTooltip = ({
   active,
   payload,
@@ -152,9 +169,14 @@ const CustomTooltip = ({
 interface ViolationsProps {
   square?: SquareLocation | null;
   activeWays?: AnalyticsWay[];
+  durationPickerDisabled?: boolean;
 }
 
-export default function Violations({ square = null, activeWays: activeWaysProp }: ViolationsProps) {
+export default function Violations({
+  square = null,
+  activeWays: activeWaysProp,
+  durationPickerDisabled = false,
+}: ViolationsProps) {
   const activeWays = useMemo(
     () => activeWaysProp ?? getAnalyticsWays(square),
     [activeWaysProp, square],
@@ -271,7 +293,7 @@ export default function Violations({ square = null, activeWays: activeWaysProp }
                   type="monotone"
                   dataKey={metric.key}
                   stroke={metric.color}
-                  strokeWidth={view === 'overview' ? 1.5 : 1}
+                  strokeWidth={isAvgMetric(metric) ? 2 : 1.5}
                   dot={false}
                   animationDuration={0}
                 />
@@ -328,6 +350,7 @@ export default function Violations({ square = null, activeWays: activeWaysProp }
             <ChartDurationPicker
               selectedDuration={getDuration(ANALYTICS_CHART_IDS.speedLine)}
               onSelect={(d) => handleDurationSelect(ANALYTICS_CHART_IDS.speedLine, d)}
+              disabled={durationPickerDisabled}
             />
 
             <button
@@ -370,16 +393,17 @@ export default function Violations({ square = null, activeWays: activeWaysProp }
 
         <div className="flex-1 w-full min-h-[280px]">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={chartData} margin={{ top: 5, right: 30, left: 10, bottom: 0 }}>
+            <LineChart data={chartData} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
               <CartesianGrid vertical={false} stroke="#2d3748" strokeWidth={1} />
               <XAxis
                 dataKey="time"
                 stroke="#718096"
                 tick={{ fill: '#718096', fontSize: 12 }}
-                tickMargin={12}
+                tickFormatter={formatXAxis}
+                tickMargin={10}
                 axisLine={false}
                 tickLine={false}
-                minTickGap={40}
+                minTickGap={60}
               />
               <YAxis
                 stroke="#718096"
@@ -387,9 +411,8 @@ export default function Violations({ square = null, activeWays: activeWaysProp }
                 tickFormatter={formatYAxis}
                 axisLine={false}
                 tickLine={false}
-                tickMargin={12}
               />
-              <Tooltip content={<CustomTooltip />} cursor={{ stroke: '#a0aec0', strokeWidth: 1 }} />
+              <Tooltip content={<CustomTooltip />} />
 
               {metrics.map((metric) => (
                 <Line
@@ -398,15 +421,9 @@ export default function Violations({ square = null, activeWays: activeWaysProp }
                   name={metric.label}
                   dataKey={metric.key}
                   stroke={metric.color}
-                  strokeWidth={activeView === 'overview' ? 2 : metric.label === 'Avg.' ? 2 : 1.5}
+                  strokeWidth={isAvgMetric(metric) ? 2 : 1.5}
                   dot={false}
-                  activeDot={{
-                    r: 4,
-                    fill: metric.color,
-                    stroke: '#fff',
-                    strokeWidth: 2,
-                  }}
-                  animationDuration={800}
+                  activeDot={{ r: 4, fill: metric.color, stroke: '#fff', strokeWidth: 2 }}
                 />
               ))}
             </LineChart>

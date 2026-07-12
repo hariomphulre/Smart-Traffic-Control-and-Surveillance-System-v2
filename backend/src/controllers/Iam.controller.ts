@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { getRedis, CACHE_TTL } from '../config/redis';
+import { isDbSchemaError } from '../lib/db-errors';
 import { UserModel } from '../models/user.model';
 
 export const getIdentities = async (
@@ -35,6 +36,10 @@ export const getIdentities = async (
 
     res.json({ data, total: data.length });
   } catch (err) {
+    if (isDbSchemaError(err)) {
+      res.json({ data: [], total: 0 });
+      return;
+    }
     next(err);
   }
 };

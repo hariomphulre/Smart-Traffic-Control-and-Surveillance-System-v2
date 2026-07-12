@@ -16,8 +16,8 @@ import {
   type SquareWay,
 } from '@/map/squareLocations';
 import { MdEdit } from 'react-icons/md';
-import { FiPlus } from 'react-icons/fi';
-
+import { FiPlus, FiSave } from 'react-icons/fi';
+import { BiError } from "react-icons/bi";
 const EditableSquareMap = dynamic(() => import('./EditableSquareMap'), {
   ssr: false,
   loading: () => (
@@ -35,33 +35,77 @@ interface SquareLocationMapProps {
   isLocked: boolean;
   loading?: boolean;
   error?: string | null;
+  wayVehicleCounts?: Record<string, number>;
   onSquareSaved?: (square: SquareLocation) => void;
   onCoordinatesSaved?: (signalId: string, lat: number, lng: number) => void;
 }
 
-function OrientationBadge() {
+function MapDirectionOverlay() {
+  const stroke = 'rgba(232, 234, 237, 0.72)';
+  const accent = 'rgba(251, 188, 4, 0.95)';
+  const labelFill = 'rgba(232, 234, 237, 0.92)';
+
   return (
     <div className="absolute top-3 right-3 z-20 pointer-events-none select-none">
-      <div className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-[#131314]/95 border border-[#3c4043] shadow-lg backdrop-blur-sm">
-        <div className="relative flex items-center justify-center w-7 h-7 rounded-md bg-[#1a202c] border border-[#2d3748]">
-          <svg viewBox="0 0 24 24" className="w-4 h-4" aria-hidden>
-            <path
-              d="M12 4 L18 18 L12 14 L6 18 Z"
-              fill="#fc8181"
-              stroke="#feb2b2"
-              strokeWidth="0.5"
-              strokeLinejoin="round"
-            />
-          </svg>
-          <span className="absolute -top-1.5 left-1/2 -translate-x-1/2 text-[7px] font-bold text-[#fc8181] leading-none">
-            N
-          </span>
-        </div>
-        <div className="flex flex-col leading-none">
-          <span className="text-[9px] font-semibold text-[#e8eaed] tracking-wide">North</span>
-          <span className="text-[8px] text-[#5f6368] font-mono mt-0.5">Map bearing</span>
-        </div>
-      </div>
+      <svg
+        viewBox="0 0 72 72"
+        className="w-[72px] h-[72px]"
+        aria-label="Map directions"
+        role="img"
+      >
+        <line x1="36" y1="18" x2="36" y2="54" stroke={stroke} strokeWidth="1.25" strokeLinecap="round" />
+        <line x1="18" y1="36" x2="54" y2="36" stroke={stroke} strokeWidth="1.25" strokeLinecap="round" />
+
+        <polygon points="36,10 40,20 36,17 32,20" fill="#8AB4F8" stroke="none" />
+        <polygon points="36,62 40,52 36,55 32,52" fill={stroke} stroke="none" />
+        <polygon points="62,36 52,32 55,36 52,40" fill={stroke} stroke="none" />
+        <polygon points="10,36 20,32 17,36 20,40" fill={stroke} stroke="none" />
+
+        <text
+          x="36"
+          y="7"
+          textAnchor="middle"
+          fontSize="10"
+          fontWeight="700"
+          fill="#8AB4F8"
+          fontFamily="Roboto, system-ui, sans-serif"
+        >
+          N
+        </text>
+        <text
+          x="36"
+          y="69"
+          textAnchor="middle"
+          fontSize="9"
+          fontWeight="600"
+          fill={labelFill}
+          fontFamily="Roboto, system-ui, sans-serif"
+        >
+          S
+        </text>
+        <text
+          x="67"
+          y="39"
+          textAnchor="middle"
+          fontSize="9"
+          fontWeight="600"
+          fill={labelFill}
+          fontFamily="Roboto, system-ui, sans-serif"
+        >
+          E
+        </text>
+        <text
+          x="5"
+          y="39"
+          textAnchor="middle"
+          fontSize="9"
+          fontWeight="600"
+          fill={labelFill}
+          fontFamily="Roboto, system-ui, sans-serif"
+        >
+          W
+        </text>
+      </svg>
     </div>
   );
 }
@@ -117,7 +161,7 @@ function MapPlaceholder({
   error?: string | null;
 }) {
   return (
-    <div className="flex-1 flex flex-col items-center justify-center h-100 min-h-[280px] bg-[#0a0f14] px-8 text-center">
+    <div className="flex-1 flex flex-col items-center justify-center h-100 min-h-[400px] bg-[#131314] px-8 text-center">
       {loading ? (
         <>
           <div className="w-10 h-10 border-2 border-[#3c4043] border-t-[#8AB4F8] rounded-full animate-spin mb-4" />
@@ -125,21 +169,18 @@ function MapPlaceholder({
         </>
       ) : (
         <>
-          <div className="w-16 h-16 rounded-lg border border-[#3c4043] bg-[#131314] flex items-center justify-center mb-4 opacity-60">
-            <svg className="w-8 h-8 text-[#5f6368]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-            </svg>
+          <div className="h-full">
+            <BiError className="text-[#5f6368] h-10 w-10 justify-self-center"></BiError>
+            <p className="text-[#5f6368] text-sm max-w-[260px]">
+              {error
+                ? error
+                : notFound
+                  ? 'Signal not found in location data'
+                  : isLocked
+                    ? 'Waiting for intersection data…'
+                    : 'Complete the location path to view the square map'}
+            </p>
           </div>
-          <p className="text-[#9aa0a6] text-sm font-medium mb-1">Square Map</p>
-          <p className="text-[#5f6368] text-xs max-w-[260px]">
-            {error
-              ? error
-              : notFound
-                ? 'Signal not found in location data'
-                : isLocked
-                  ? 'Waiting for intersection data…'
-                  : 'Complete the location path to view the real square map'}
-          </p>
         </>
       )}
     </div>
@@ -175,6 +216,7 @@ export default function SquareLocationMap({
   isLocked,
   loading,
   error,
+  wayVehicleCounts,
   onSquareSaved,
   onCoordinatesSaved,
 }: SquareLocationMapProps) {
@@ -341,107 +383,91 @@ export default function SquareLocationMap({
   return (
     <div className="w-full flex flex-col h-100 bg-[#131314] overflow-hidden relative z-10 isolate">
       <div className="relative z-30 flex justify-between items-start pl-4 pr-3 pt-2 pb-2 shrink-0 gap-3 bg-[#131314]">
-        <div className="w-1/3">
-          <h2 className="text-lg font-medium text-gray-200 tracking-wide">Square Map</h2>
-          <p className="text-[12px] text-[#5f6368] font-mono mt-0.5 truncate">
+        <div className="flex flex-col gap-1 min-w-0 flex-1">
+          <div className="flex items-center gap-3 flex-wrap">
+            <h2 className="text-lg font-medium text-gray-200 tracking-wide">Square Map</h2>
+
+            <div className="flex items-center gap-2 flex-wrap">
+              {!isEditing ? (
+                <div
+                  className="group flex items-center gap-1 px-1 justify-center hover:bg-[#202124] rounded-sm transition-all cursor-pointer"
+                  onClick={startEditing}
+                >
+                  <MdEdit className="h-3.5 w-3.5 text-[#669DF6] group-hover:text-[#AECBFA]" />
+                  <button
+                    type="button"
+                    className="py-0.5 text-[13px] font-medium transition-all text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg"
+                  >
+                    Edit
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <div
+                    className="group flex items-center gap-1 px-1 py-[1px] justify-center hover:bg-[#202124] rounded-sm transition-all cursor-pointer"
+                    onClick={handleAddWay}
+                  >
+                    <FiPlus className="h-4 w-4 text-[#669DF6] group-hover:text-[#AECBFA]" />
+                    <button
+                      type="button"
+                      className="py-0.5 text-[13px] font-medium transition-all text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg"
+                      disabled={displaySquare.ways.length >= 6}
+                    >
+                      Add way
+                    </button>
+                  </div>
+                  <div
+                    className="group flex items-center gap-1 px-1 py-[2px] justify-center hover:bg-[#202124] rounded-sm transition-all cursor-pointer"
+                    onClick={cancelEditing}
+                  >
+                    <svg className="group-hover:text-[#AECBFA] w-4 h-4 text-[#669DF6]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    <button
+                      type="button"
+                      className="pr-0.5 text-[13px] font-medium transition-all text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                  {isDirty && (
+                    <div
+                      className={`group flex items-center gap-1 px-1 py-[1px] justify-center hover:bg-[#202124] rounded-sm transition-all ${saving ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
+                      onClick={saving ? undefined : handleSave}
+                    >
+                      <FiSave className="h-3.5 w-3.5 text-[#669DF6] group-hover:text-[#AECBFA]" />
+                      <button
+                        type="button"
+                        disabled={saving}
+                        className="py-0.5 text-[13px] font-medium transition-all text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg disabled:cursor-not-allowed"
+                      >
+                        {saving ? 'Saving…' : 'Save'}
+                      </button>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+          </div>
+
+          <p className="text-[12px] text-[#5f6368] font-mono truncate">
             {displaySquare.name} · {displaySquare.signalId} · {displaySquare.wayCount} way
             {displaySquare.wayCount !== 1 ? 's' : ''}
-            {/* {displaySquare.isSaved ? ' · saved layout' : displaySquare.snapped ? ' · snapped' : ''} */}
             {isEditing ? ' · Editing' : ''}
           </p>
+
           {editHint && (
-            <p className="text-[12px] text-[#fbbc04] font-mono mt-1">{editHint}</p>
+            <p className="text-[12px] text-[#fbbc04] font-mono">{editHint}</p>
           )}
-          {/* {isEditing && (
-            <div className="flex items-center gap-2 mt-2">
-              <label className="text-[10px] font-mono text-[#9aa0a6]">
-                Lat
-                <input
-                  type="number"
-                  step="0.00001"
-                  value={displaySquare.lat}
-                  onChange={(e) => {
-                    const lat = parseFloat(e.target.value);
-                    if (Number.isFinite(lat)) handleCenterDragEnd(lat, displaySquare.lng);
-                  }}
-                  className="ml-1 w-24 px-1.5 py-0.5 rounded bg-[#0a0f14] border border-[#3c4043] text-[#e8eaed] text-[10px] font-mono"
-                />
-              </label>
-              <label className="text-[10px] font-mono text-[#9aa0a6]">
-                Lng
-                <input
-                  type="number"
-                  step="0.00001"
-                  value={displaySquare.lng}
-                  onChange={(e) => {
-                    const lng = parseFloat(e.target.value);
-                    if (Number.isFinite(lng)) handleCenterDragEnd(displaySquare.lat, lng);
-                  }}
-                  className="ml-1 w-24 px-1.5 py-0.5 rounded bg-[#0a0f14] border border-[#3c4043] text-[#e8eaed] text-[10px] font-mono"
-                />
-              </label>
-            </div>
-          )} */}
           {saveError && (
-            <p className="text-[10px] text-[#f28b82] font-mono mt-1">{saveError}</p>
+            <p className="text-[10px] text-[#f28b82] font-mono">{saveError}</p>
           )}
         </div>
 
-        <div className="w-2/3 flex flex-col items-end gap-2 shrink-0">
-          <div className="flex items-center gap-2">
-            {!isEditing ? (
-              <div className="group flex items-center gap-1 px-1 justify-center hover:bg-[#202124] rounded-sm transition-all"
-                onClick={startEditing}
-              >
-                <MdEdit className="h-3.5 w-3.5 text-[#669DF6] group-hover:text-[#AECBFA]"></MdEdit>
-                <button 
-                  className="py-0.5 text-[13px] font-medium transition-all text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg"
-                  >
-                  Edit
-                </button>
-              </div>
-            ) : (
-              <>
-                <div className="group flex items-center gap-1 px-1 py-[1px] justify-center hover:bg-[#202124] rounded-sm transition-all"
-                  onClick={handleAddWay}
-                >
-                  <FiPlus className="h-4 w-4 text-[#669DF6] group-hover:text-[#AECBFA]" />
-                  <button 
-                    className="py-0.5 text-[13px] font-medium transition-all text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg"
-                    disabled={displaySquare.ways.length >= 6}
-                  >
-                    Add way
-                  </button>
-                </div>
-                <div className="group flex items-center gap-1 px-1 py-[2px] justify-center hover:bg-[#202124] rounded-sm transition-all"
-                  onClick={cancelEditing}
-                >
-                  <svg className="group-hover:text-[#AECBFA] w-4 h-4 text-[#669DF6]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                  <button 
-                    className="pr-0.5 text-[13px] font-medium transition-all text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg"
-                    disabled={displaySquare.ways.length >= 6}
-                  >
-                    Cancel
-                  </button>
-                </div>
-                {isDirty && (
-                  <button
-                    type="button"
-                    onClick={handleSave}
-                    disabled={saving}
-                    className="text-[11px] font-medium px-3 py-1 rounded bg-[#34a853] text-white hover:bg-[#2d9249] disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
-                  >
-                    {saving ? 'Saving…' : 'Save'}
-                  </button>
-                )}
-              </>
-            )}
-            <span className="text-[12px] font-mono text-[#AECBFA] bg-[#060606] px-2 py-1 rounded">
-              {displaySquare.lat.toFixed(5)}°, {displaySquare.lng.toFixed(5)}°
-            </span>
-          </div>
+        <div className="flex flex-col items-end gap-2 shrink-0">
+          <span className="text-[12px] font-mono text-[#AECBFA] bg-[#060606] px-2 py-1 rounded">
+            {displaySquare.lat.toFixed(5)}°, {displaySquare.lng.toFixed(5)}°
+          </span>
 
           <WayLegend
             ways={displaySquare.ways}
@@ -452,10 +478,11 @@ export default function SquareLocationMap({
       </div>
 
       <div className="relative z-0 flex-1 mx-0 mb-0 min-h-[280px] overflow-hidden border border-[#2d3748]/60 shadow-inner isolate">
-        <OrientationBadge />
+        <MapDirectionOverlay />
         <EditableSquareMap
           square={displaySquare}
           isEditing={isEditing}
+          wayVehicleCounts={wayVehicleCounts}
           onWayDragEnd={handleWayDragEnd}
           onCenterDragEnd={handleCenterDragEnd}
         />

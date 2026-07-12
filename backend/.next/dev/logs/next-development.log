@@ -1,81 +1,48 @@
-{"timestamp":"00:00:00.521","source":"Server","level":"WARN","message":"⚠ The \"middleware\" file convention is deprecated. Please use \"proxy\" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy"}
-{"timestamp":"00:00:00.686","source":"Server","level":"LOG","message":""}
-{"timestamp":"00:00:04.920","source":"Server","level":"LOG","message":"[2026-07-12T16:05:18.100Z] GET /api/sessions"}
-{"timestamp":"00:00:05.093","source":"Server","level":"ERROR","message":"(node:289557) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.\n(Use `node --trace-deprecation ...` to show where the warning was created)"}
-{"timestamp":"00:00:05.113","source":"Server","level":"WARN","message":"⚠️ Redis error: \"Invalid IP address: undefined\""}
-{"timestamp":"00:00:05.320","source":"Server","level":"WARN","message":"⚠️ Redis error: \"Invalid IP address: undefined\""}
-{"timestamp":"00:00:05.727","source":"Server","level":"WARN","message":"⚠️ Redis error: \"Invalid IP address: undefined\""}
-{"timestamp":"00:00:06.333","source":"Server","level":"WARN","message":"⚠️ Redis error: \"Invalid IP address: undefined\""}
-{"timestamp":"00:00:06.346","source":"Server","level":"LOG","message":"🔗 Neon: using NEON_HOST_IP 3.0.167.45"}
-{"timestamp":"00:00:21.495","source":"Server","level":"ERROR","message":"Handler error: Error: Connection terminated due to connection timeout"}
-{"timestamp":"00:00:24.230","source":"Server","level":"LOG","message":"[2026-07-12T16:05:37.411Z] GET /api/iam/identities"}
-{"timestamp":"00:00:39.477","source":"Server","level":"ERROR","message":"Handler error: Error: Connection terminated due to connection timeout"}
-{"timestamp":"00:00:41.098","source":"Server","level":"LOG","message":"[2026-07-12T16:05:54.279Z] GET /api/analytics/stats"}
-{"timestamp":"00:00:41.101","source":"Server","level":"LOG","message":"[2026-07-12T16:05:54.282Z] GET /api/analytics/violations"}
-{"timestamp":"00:00:41.103","source":"Server","level":"LOG","message":"[2026-07-12T16:05:54.284Z] GET /api/analytics/vehicle-types"}
-{"timestamp":"00:00:41.106","source":"Server","level":"LOG","message":"[2026-07-12T16:05:54.287Z] GET /api/analytics/hourly-traffic"}
-{"timestamp":"00:00:41.112","source":"Server","level":"LOG","message":"[2026-07-12T16:05:54.294Z] GET /api/analytics/speed-distribution"}
-{"timestamp":"00:00:41.663","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:41.665","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:41.666","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:41.666","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:41.666","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:56.666","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
-{"timestamp":"00:00:56.669","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
-{"timestamp":"00:00:56.671","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
-{"timestamp":"00:00:56.675","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
-{"timestamp":"00:00:56.677","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
-{"timestamp":"00:02:47.421","source":"Server","level":"LOG","message":"[2026-07-12T16:08:00.602Z] GET /api/logs"}
-{"timestamp":"00:03:02.493","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/logs"}
-{"timestamp":"00:03:29.560","source":"Server","level":"LOG","message":"[2026-07-12T16:08:42.741Z] GET /api/analytics/stats"}
-{"timestamp":"00:03:29.563","source":"Server","level":"LOG","message":"[2026-07-12T16:08:42.744Z] GET /api/analytics/violations"}
-{"timestamp":"00:03:29.565","source":"Server","level":"LOG","message":"[2026-07-12T16:08:42.747Z] GET /api/analytics/vehicle-types"}
-{"timestamp":"00:03:29.567","source":"Server","level":"LOG","message":"[2026-07-12T16:08:42.749Z] GET /api/analytics/hourly-traffic"}
-{"timestamp":"00:03:29.569","source":"Server","level":"LOG","message":"[2026-07-12T16:08:42.750Z] GET /api/analytics/speed-distribution"}
-{"timestamp":"00:03:29.593","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:03:29.601","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:03:29.605","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:03:29.609","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:03:29.614","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:03:30.765","source":"Server","level":"LOG","message":"[2026-07-12T16:08:43.946Z] GET /api/logs"}
-{"timestamp":"00:03:44.607","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
-{"timestamp":"00:03:44.609","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
-{"timestamp":"00:03:44.611","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
-{"timestamp":"00:03:44.615","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
-{"timestamp":"00:03:44.618","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
-{"timestamp":"00:03:44.720","source":"Server","level":"LOG","message":"[2026-07-12T16:08:57.901Z] GET /api/analytics/stats"}
-{"timestamp":"00:03:44.739","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:03:44.743","source":"Server","level":"LOG","message":"[2026-07-12T16:08:57.925Z] GET /api/analytics/violations"}
-{"timestamp":"00:03:44.745","source":"Server","level":"LOG","message":"[2026-07-12T16:08:57.927Z] GET /api/analytics/vehicle-types"}
-{"timestamp":"00:03:44.751","source":"Server","level":"LOG","message":"[2026-07-12T16:08:57.933Z] GET /api/analytics/hourly-traffic"}
-{"timestamp":"00:03:44.755","source":"Server","level":"LOG","message":"[2026-07-12T16:08:57.936Z] GET /api/analytics/speed-distribution"}
-{"timestamp":"00:03:44.768","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:03:44.772","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:03:44.777","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:03:44.785","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:03:45.776","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/logs"}
-{"timestamp":"00:03:59.754","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
-{"timestamp":"00:03:59.769","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
-{"timestamp":"00:03:59.774","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
-{"timestamp":"00:03:59.778","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
-{"timestamp":"00:03:59.786","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
-{"timestamp":"00:25:57.132","source":"Server","level":"LOG","message":"[2026-07-12T17:34:50.250Z] GET /api/analytics/stats"}
-{"timestamp":"00:25:57.135","source":"Server","level":"LOG","message":"[2026-07-12T17:34:50.254Z] GET /api/analytics/violations"}
-{"timestamp":"00:25:57.140","source":"Server","level":"LOG","message":"[2026-07-12T17:34:50.258Z] GET /api/analytics/vehicle-types"}
-{"timestamp":"00:25:57.149","source":"Server","level":"LOG","message":"[2026-07-12T17:34:50.268Z] GET /api/analytics/hourly-traffic"}
-{"timestamp":"00:25:57.167","source":"Server","level":"LOG","message":"[2026-07-12T17:34:50.285Z] GET /api/analytics/speed-distribution"}
-{"timestamp":"00:25:57.229","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:25:57.241","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:25:57.253","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:25:57.268","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:25:57.279","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:25:59.199","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
-{"timestamp":"00:25:59.201","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
-{"timestamp":"00:25:59.201","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
-{"timestamp":"00:25:59.217","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
-{"timestamp":"00:25:59.218","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
-{"timestamp":"00:25:59.345","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
-{"timestamp":"00:25:59.349","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
-{"timestamp":"00:25:59.354","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
-{"timestamp":"00:25:59.359","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
-{"timestamp":"00:25:59.366","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"00:00:00.534","source":"Server","level":"WARN","message":"⚠ The \"middleware\" file convention is deprecated. Please use \"proxy\" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy"}
+{"timestamp":"00:00:00.681","source":"Server","level":"LOG","message":""}
+{"timestamp":"00:00:08.037","source":"Server","level":"LOG","message":"[2026-07-12T23:20:21.416Z] GET /api/analytics/stats"}
+{"timestamp":"00:00:08.041","source":"Server","level":"LOG","message":"[2026-07-12T23:20:21.419Z] GET /api/analytics/violations"}
+{"timestamp":"00:00:08.043","source":"Server","level":"LOG","message":"[2026-07-12T23:20:21.422Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:00:08.047","source":"Server","level":"LOG","message":"[2026-07-12T23:20:21.425Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:00:08.051","source":"Server","level":"LOG","message":"[2026-07-12T23:20:21.430Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:00:08.802","source":"Server","level":"ERROR","message":"(node:941143) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.\n(Use `node --trace-deprecation ...` to show where the warning was created)"}
+{"timestamp":"00:00:08.833","source":"Server","level":"WARN","message":"⚠️ Redis error: \"Invalid IP address: undefined\""}
+{"timestamp":"00:00:09.043","source":"Server","level":"WARN","message":"⚠️ Redis error: \"Invalid IP address: undefined\""}
+{"timestamp":"00:00:09.458","source":"Server","level":"WARN","message":"⚠️ Redis error: \"Invalid IP address: undefined\""}
+{"timestamp":"00:00:10.069","source":"Server","level":"WARN","message":"⚠️ Redis error: \"Invalid IP address: undefined\""}
+{"timestamp":"00:00:10.069","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:00:10.070","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:00:10.071","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:00:10.071","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:00:10.071","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:00:10.086","source":"Server","level":"LOG","message":"🔗 Neon: using NEON_HOST_IP 3.0.167.45"}
+{"timestamp":"00:00:11.291","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"00:00:11.292","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"00:00:11.299","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"00:00:11.300","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"00:00:11.498","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"00:00:11.509","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"00:00:11.511","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"00:00:11.514","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"00:00:11.514","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"00:00:11.605","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"00:19:52.234","source":"Server","level":"LOG","message":"[2026-07-12T23:40:05.612Z] GET /api/analytics/stats"}
+{"timestamp":"00:19:52.241","source":"Server","level":"LOG","message":"[2026-07-12T23:40:05.619Z] GET /api/analytics/violations"}
+{"timestamp":"00:19:52.244","source":"Server","level":"LOG","message":"[2026-07-12T23:40:05.622Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:19:52.253","source":"Server","level":"LOG","message":"[2026-07-12T23:40:05.632Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:19:52.257","source":"Server","level":"LOG","message":"[2026-07-12T23:40:05.635Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:19:52.298","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:19:52.307","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:19:52.316","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:19:52.325","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:19:52.335","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:19:53.403","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"00:19:53.403","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"00:19:53.404","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"00:19:53.529","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"00:19:53.537","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"00:19:53.547","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"00:19:53.886","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"00:19:53.886","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"00:19:53.972","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"00:19:53.975","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}

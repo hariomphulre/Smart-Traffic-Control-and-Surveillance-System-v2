@@ -1,6 +1,3 @@
 {
-  "/api/analytics/[slug]/route": "app/api/analytics/[slug]/route.js",
-  "/api/iam/identities/route": "app/api/iam/identities/route.js",
-  "/api/logs/route": "app/api/logs/route.js",
-  "/api/sessions/route": "app/api/sessions/route.js"
+  "/api/analytics/[slug]/route": "app/api/analytics/[slug]/route.js"
 }

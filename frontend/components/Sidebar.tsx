@@ -30,7 +30,7 @@ const Sidebar = () => {
           <CgMenuGridR className="h-8 w-8 text-gray-300"/>
       </div>
       <div className="flex justify-center">
-        <nav className="pr-0.5">
+        <nav className="pr-0.5 text-[#9aa0a6]">
           <ul>
             <li>
               <RiShieldUserFill onClick={handleIAM} className="mt-4.5 h-5 w-5" title="IAM"/>

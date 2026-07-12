@@ -14,12 +14,10 @@ import { ANALYTICS_CHART_IDS, useChartDurations } from '../useChartDurations';
 import type { AnalyticsWay } from '@/map/squareLocations';
 import { getAnalyticsWays } from '@/map/squareLocations';
 import type { SquareLocation } from '@/map/squareLocations';
-
-interface TrafficData {
-  time: string;
-  overall: number;
-  [key: string]: string | number;
-}
+import {
+  buildAnalyticsTrafficData,
+  type TrafficTimeRow,
+} from '@/lib/analyticsTrafficData';
 
 interface MetricConfig {
   key: string;
@@ -45,29 +43,8 @@ interface TrafficVolProps {
   wayLabels?: never;
   square?: SquareLocation | null;
   activeWays?: AnalyticsWay[];
-}
-
-function generateStaticData(activeWays: AnalyticsWay[]): TrafficData[] {
-  return Array.from({ length: 60 }, (_, i) => {
-    const isSpike = i > 40 && i < 50;
-    const sec = i < 10 ? `0${i}` : i;
-    const timeStr = `1:00:${sec} PM`;
-
-    const row: TrafficData = {
-      time: timeStr,
-      overall: isSpike
-        ? Math.floor(Math.random() * 800 + 400)
-        : Math.floor(Math.random() * 50 + 100),
-    };
-
-    activeWays.forEach((way, wi) => {
-      row[way.id] = isSpike
-        ? Math.floor(Math.random() * (280 - wi * 30) + 80)
-        : Math.floor(Math.random() * 30 + 35 + wi * 2);
-    });
-
-    return row;
-  });
+  trafficTimeSeries?: TrafficTimeRow[];
+  durationPickerDisabled?: boolean;
 }
 
 const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string> & { payload?: Array<{ name?: string; value?: number; color?: string }>; label?: string }) => {
@@ -86,14 +63,22 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string> 
   return null;
 };
 
-export default function TrafficVol({ square = null, activeWays: activeWaysProp }: TrafficVolProps) {
+export default function TrafficVol({
+  square = null,
+  activeWays: activeWaysProp,
+  trafficTimeSeries,
+  durationPickerDisabled = false,
+}: TrafficVolProps) {
   const activeWays = useMemo(
     () => activeWaysProp ?? getAnalyticsWays(square),
     [activeWaysProp, square],
   );
 
   const METRICS = useMemo(() => buildMetrics(activeWays), [activeWays]);
-  const chartData = useMemo(() => generateStaticData(activeWays), [activeWays]);
+  const chartData = useMemo(
+    () => trafficTimeSeries ?? buildAnalyticsTrafficData(activeWays).timeSeries,
+    [trafficTimeSeries, activeWays],
+  );
 
   const exportCSV = () => {
     const wayHeaders = activeWays.map((w) => w.label);
@@ -280,6 +265,7 @@ export default function TrafficVol({ square = null, activeWays: activeWaysProp }
             <ChartDurationPicker
               selectedDuration={getDuration(ANALYTICS_CHART_IDS.overallTraffic)}
               onSelect={(d) => handleDurationSelect(ANALYTICS_CHART_IDS.overallTraffic, d)}
+              disabled={durationPickerDisabled}
             />
 
             <button

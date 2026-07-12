@@ -18,6 +18,31 @@ services:
       retries: 10
     restart: unless-stopped
 
+  db-migrate:
+    image: postgres:16-alpine
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PGHOST: postgres
+      PGUSER: ${POSTGRES_USER:-traffic}
+      PGPASSWORD: ${POSTGRES_PASSWORD:-traffic}
+      PGDATABASE: ${POSTGRES_DB:-traffic_db}
+    volumes:
+      - ./postgres/migrations:/migrations:ro
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        set -e
+        echo "Applying SQL migrations..."
+        for f in /migrations/*.sql; do
+          [ -f "$$f" ] || continue
+          echo "Running $$f"
+          psql -v ON_ERROR_STOP=1 -f "$$f"
+        done
+        echo "Migrations complete."
+    restart: "no"
+
   redis:
     image: redis:7-alpine
     command: redis-server --appendonly yes --maxmemory 128mb --maxmemory-policy allkeys-lru
@@ -93,6 +118,8 @@ services:
     volumes:
       - ./local_data:/local_data:ro
     depends_on:
+      db-migrate:
+        condition: service_completed_successfully
       postgres:
         condition: service_healthy
       redis:
@@ -113,6 +140,8 @@ services:
       NODE_ENV: production
       BACKEND_INTERNAL_URL: http://backend:3001
       ML_SERVICE_URL: http://ml-service:8000
+    volumes:
+      - ./frontend/data:/app/data
     depends_on:
       - backend
       - ml-service

@@ -13,6 +13,8 @@ import { VehicleTypeFilter } from '@/components/logs/VehicleTypeFilter';
 import { useDurationFilter } from '@/hooks/useDurationFilter';
 import type { LogVehicleTypeFilter } from '@/lib/logFilters';
 
+type SelectedVehicleType = Exclude<LogVehicleTypeFilter, 'All'>;
+
 const DynamicMap = dynamic(() => import('@/components/RealMap'), { 
   ssr: false, 
   loading: () => <div className="flex-1 flex items-center justify-center bg-[#0a0a0a] text-[#8AB4F8] font-mono animate-pulse">Initializing Satellite Uplink...</div> 
@@ -41,11 +43,11 @@ export default function Logs() {
   });
   const [searchInput, setSearchInput] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
-  const [vehicleTypeFilter, setVehicleTypeFilter] =
-    useState<LogVehicleTypeFilter>('All');
+  const [vehicleTypeFilter, setVehicleTypeFilter] = useState<SelectedVehicleType[]>([]);
   const [initialLoading, setInitialLoading] = useState(true);
   const [tableLoading, setTableLoading] = useState(false);
   const [sectionRefreshing, setSectionRefreshing] = useState(false);
+  const [contentRefreshKey, setContentRefreshKey] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
@@ -109,7 +111,7 @@ export default function Logs() {
     filters.redLight,
     filters.tripling,
     debouncedSearch,
-    vehicleTypeFilter,
+    vehicleTypeFilter.join(','),
     selectedDuration,
     dateRange.from,
     dateRange.to,
@@ -135,7 +137,7 @@ export default function Logs() {
         if (filters.redLight) params.redLight = true;
         if (filters.tripling) params.tripling = true;
         if (debouncedSearch) params.search = debouncedSearch;
-        if (vehicleTypeFilter !== 'All') params.vehicleType = vehicleTypeFilter;
+        if (vehicleTypeFilter.length > 0) params.vehicleType = vehicleTypeFilter.join(',');
         if (dateRange.from) params.from = dateRange.from;
         if (dateRange.to) params.to = dateRange.to;
 
@@ -150,6 +152,9 @@ export default function Logs() {
         setInitialLoading(false);
         setTableLoading(false);
         setSectionRefreshing(false);
+        if (loadMode === 'section') {
+          setContentRefreshKey((key) => key + 1);
+        }
       }
     },
     [
@@ -273,7 +278,7 @@ export default function Logs() {
 
   const violationFilterCount = Object.values(filters).filter(Boolean).length;
   const intervalFilterCount = isDefaultDuration ? 0 : 1;
-  const vehicleTypeFilterCount = vehicleTypeFilter !== 'All' ? 1 : 0;
+  const vehicleTypeFilterCount = vehicleTypeFilter.length;
   const activeFilterCount =
     violationFilterCount + intervalFilterCount + vehicleTypeFilterCount;
 
@@ -284,9 +289,19 @@ export default function Logs() {
       redLight: false,
       tripling: false,
     });
-    setVehicleTypeFilter('All');
+    setVehicleTypeFilter([]);
     resetDuration();
     setPage(1);
+  };
+
+  const handleVehicleTypeToggle = (value: SelectedVehicleType) => {
+    setVehicleTypeFilter((prev) =>
+      prev.includes(value) ? prev.filter((item) => item !== value) : [...prev, value],
+    );
+  };
+
+  const handleVehicleTypeClear = () => {
+    setVehicleTypeFilter([]);
   };
 
   const sectionBusy = initialLoading || sectionRefreshing;
@@ -303,8 +318,7 @@ export default function Logs() {
         onApply={handleCustomApply}
       />
 
-      {/* Added relative and z-[60] here to fix dropdown overlap issues */}
-      <div className="w-full flex items-center justify-between h-13 mb-0 border-b border-[#3c4043] bg-[#131314] p-1 shadow-xl relative z-[60]">
+      <div className="w-full flex items-center justify-between h-13 mb-0 border-b border-[#3c4043] bg-[#131314] p-1 shadow-xl relative z-[100]">
         <div className="flex items-center min-w-170 flex-1">
           <div>
             <p className="text-[#ffffff] font-mono text-xl ml-4">System Logs</p>
@@ -411,14 +425,9 @@ export default function Logs() {
         </div>
       )}
 
-      {/* 2. LOCATION BAR: Left in its original wrapper */}
-      <div className="w-full relative font-sans z-[55]">
-        <LocationBar />
-      </div>
-
-      <div className="py-5 px-4 dark:bg-[#131314] relative min-h-[320px]">
+      <div key={contentRefreshKey} className="relative min-h-[320px]">
         {sectionBusy && (
-          <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-[#131314]/90 backdrop-blur-[1px]">
+          <div className="absolute inset-0 z-[90] flex flex-col items-center justify-center bg-[#131314]/90 backdrop-blur-[1px]">
             <div className="w-10 h-10 border-4 border-[#3c4043] border-t-[#8AB4F8] rounded-full animate-spin mb-3" />
             <p className="text-[#9aa0a6] font-mono text-sm">
               {initialLoading ? 'Loading logs...' : 'Refreshing logs...'}
@@ -426,6 +435,10 @@ export default function Logs() {
           </div>
         )}
 
+        <div className={sectionBusy ? 'pointer-events-none select-none' : undefined}>
+          <LocationBar />
+
+      <div className="py-5 px-4 dark:bg-[#131314] relative">
         {error && !sectionBusy && (
           <div className="mb-4 px-4 py-3 rounded-md border border-[#d93025]/40 bg-[#d93025]/10 text-[#f28b82] text-sm">
             {error}
@@ -440,11 +453,13 @@ export default function Logs() {
                 isActive={!isDefaultDuration}
                 selectedDuration={selectedDuration}
                 onSelect={handleDurationSelect}
+                disabled={sectionBusy}
               />
 
               <VehicleTypeFilter
                 selected={vehicleTypeFilter}
-                onSelect={setVehicleTypeFilter}
+                onToggle={handleVehicleTypeToggle}
+                onClear={handleVehicleTypeClear}
               />
 
               <button
@@ -911,6 +926,9 @@ export default function Logs() {
             </div>
           </div>
         )}
+      </div>
+
+        </div>
       </div>
     </div>
   );

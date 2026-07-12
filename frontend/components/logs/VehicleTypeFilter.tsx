@@ -9,18 +9,19 @@ import {
 } from '@/lib/logFilters';
 
 type VehicleTypeFilterProps = {
-  selected: LogVehicleTypeFilter;
-  onSelect: (value: LogVehicleTypeFilter) => void;
+  selected: Exclude<LogVehicleTypeFilter, 'All'>[];
+  onToggle: (value: Exclude<LogVehicleTypeFilter, 'All'>) => void;
+  onClear: () => void;
 };
 
 const CLOSE_DELAY_MS = 200;
 
-export function VehicleTypeFilter({ selected, onSelect }: VehicleTypeFilterProps) {
+export function VehicleTypeFilter({ selected, onToggle, onClear }: VehicleTypeFilterProps) {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const isActive = selected !== 'All';
+  const isActive = selected.length > 0;
 
   const clearCloseTimer = () => {
     if (closeTimerRef.current) {
@@ -58,8 +59,13 @@ export function VehicleTypeFilter({ selected, onSelect }: VehicleTypeFilterProps
   useEffect(() => () => clearCloseTimer(), []);
 
   const handleSelect = (value: LogVehicleTypeFilter) => {
-    onSelect(value);
-    setOpen(false);
+    if (value === 'All') {
+      onClear();
+      setOpen(false);
+      return;
+    }
+
+    onToggle(value);
   };
 
   return (
@@ -81,7 +87,13 @@ export function VehicleTypeFilter({ selected, onSelect }: VehicleTypeFilterProps
         aria-haspopup="listbox"
       >
         <FiFilter className="inline shrink-0" />
-        <span>{isActive ? selected : 'Vehicle Type'}</span>
+        <span>
+          {isActive
+            ? selected.length === 1
+              ? selected[0]
+              : `${selected[0]} +${selected.length - 1}`
+            : 'Vehicle Type'}
+        </span>
         <FaCaretDown className="w-3 h-3 shrink-0 opacity-80" />
       </button>
 
@@ -94,21 +106,29 @@ export function VehicleTypeFilter({ selected, onSelect }: VehicleTypeFilterProps
         role="listbox"
       >
         <ul className="py-1 text-sm text-gray-300 bg-[#1e1e1e] border border-gray-700 rounded-md shadow-xl">
-          {LOG_VEHICLE_TYPE_OPTIONS.map((option) => (
+          {LOG_VEHICLE_TYPE_OPTIONS.map((option) => {
+            const isAllSelected = option === 'All' && selected.length === 0;
+            const isSelected = option !== 'All' && selected.includes(option);
+
+            return (
             <li
               key={option}
               role="option"
-              aria-selected={selected === option}
+              aria-selected={isAllSelected || isSelected}
               onClick={() => handleSelect(option)}
-              className={`px-4 py-2 cursor-pointer transition-colors hover:bg-[#303134] hover:text-white ${
-                selected === option
+              className={`px-4 py-2 cursor-pointer transition-colors hover:bg-[#303134] hover:text-white flex items-center justify-between gap-3 ${
+                isAllSelected || isSelected
                   ? 'bg-[#2a2b2f] text-white font-medium'
                   : ''
               }`}
             >
-              {option}
+              <span>{option}</span>
+              {isAllSelected || isSelected ? (
+                <span className="text-[#34a853] font-bold">✓</span>
+              ) : null}
             </li>
-          ))}
+            );
+          })}
         </ul>
       </div>
     </div>

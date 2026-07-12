@@ -48,7 +48,8 @@ import Violations from '@/components/analytics/charts/Violations';
 import AnalyticsPieChartPanel from '@/components/analytics/AnalyticsPieChartPanel';
 import SquareLocationMap from '@/components/analytics/SquareLocationMap';
 import { useSquareLocation } from '@/hooks/useSquareLocation';
-import { formatWayList, distributeMetricAcrossWays, wayWaitMultiplier, wayQueueMultiplier } from '@/map/squareLocations';
+import { formatWayList, wayWaitMultiplier, wayQueueMultiplier, getAnalyticsWays } from '@/map/squareLocations';
+import { buildAnalyticsTrafficData } from '@/lib/analyticsTrafficData';
 import { toPng } from "html-to-image";
 // Generate high-resolution mock data (every 15 seconds)
 const generateDenseData = () => {
@@ -183,9 +184,9 @@ const renderActiveShape = (props: any) => {
         startAngle={startAngle}
         endAngle={endAngle}
         fill={fill}
-        stroke="#ffffff"  
+        stroke="#ffffff"
         strokeWidth={1}
-        style={{ 
+        style={{
           transition: 'all 0.3s ease-in-out',
           outline: 'none',
         }}
@@ -373,7 +374,19 @@ export default function Analytics() {
   // --- DYNAMIC HEADLINE DATA LOGIC ---
   const totalVehiclesCount = totalVehicles || 0;
 
-  const wayCount = analyticsWays.length;
+  const analyticsTrafficData = useMemo(
+    () =>
+      buildAnalyticsTrafficData(getAnalyticsWays(square), {
+        seed: chartDataSeed,
+        locationKey: `${pathSegments.join('/')}:${square?.signalId ?? 'pending'}`,
+      }),
+    [square, pathSegments, chartDataSeed],
+  );
+
+  const trafficWays = analyticsTrafficData.ways;
+  const wayCount = trafficWays.length;
+
+  const headlineVehicleTotal = analyticsTrafficData.total;
 
   const avgWaitTime = Math.floor(40 + (totalVehiclesCount % 60));
   const avgQueueLength = Math.floor(20 + (totalVehiclesCount % 30));
@@ -474,7 +487,7 @@ export default function Analytics() {
         onApply={handleCustomApply}
       />
 
-      <div className="w-full flex items-center justify-between h-13 mb-0 border-b border-[#3c4043] bg-[#131314] p-1 shadow-xl relative z-40">
+      <div className="w-full flex items-center justify-between h-13 mb-0 border-b border-[#3c4043] bg-[#131314] p-1 shadow-xl relative z-[100]">
         <div className="flex items-center min-w-170 flex-1">
           <div>
             <p className="text-[#ffffff] font-mono text-xl ml-4">Analytics Dashboard</p>
@@ -513,48 +526,45 @@ export default function Analytics() {
         </div>
       </div>
 
-      <div className="w-full relative font-sans z-50">
-        {/* LOCATION BAR */}
-        <LocationBar />
-
-        {/* MAP MODAL */}
-        {isMapOpen && (
-          <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/80 backdrop-blur-sm">
-            <div className="bg-[#131314] w-[95vw] h-[94vh] border-2 border-[#3c4043] rounded-2xl flex flex-col shadow-2xl overflow-hidden relative">
-              
-              <div className="h-12 border-b border-[#3c4043] bg-black flex items-center justify-between px-5 z-10 shrink-0">
-                <h2 className="text-[#8AB4F8] font-mono text-lg flex items-center gap-3">
-                  <span className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
-                  Global Signal Radar
-                </h2>
-                <button 
-                  onClick={() => setIsMapOpen(false)}
-                  className="text-[#9aa0a6] hover:text-white transition-colors font-bold text-xl"
-                >
-                  ✕
-                </button>
-              </div>
-
-              <div className="flex-1 relative z-0">
-                <DynamicMap 
-                  signals={mapSignals} 
-                  pathSegments={pathSegments} 
-                  onPinClick={handleMapPinClick} 
-                />
-              </div>
-
+      {isMapOpen && (
+        <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/80 backdrop-blur-sm">
+          <div className="bg-[#131314] w-[95vw] h-[94vh] border-2 border-[#3c4043] rounded-2xl flex flex-col shadow-2xl overflow-hidden relative">
+            
+            <div className="h-12 border-b border-[#3c4043] bg-black flex items-center justify-between px-5 z-10 shrink-0">
+              <h2 className="text-[#8AB4F8] font-mono text-lg flex items-center gap-3">
+                <span className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+                Global Signal Radar
+              </h2>
+              <button 
+                onClick={() => setIsMapOpen(false)}
+                className="text-[#9aa0a6] hover:text-white transition-colors font-bold text-xl"
+              >
+                ✕
+              </button>
             </div>
+
+            <div className="flex-1 relative z-0">
+              <DynamicMap 
+                signals={mapSignals} 
+                pathSegments={pathSegments} 
+                onPinClick={handleMapPinClick} 
+              />
+            </div>
+
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       <div key={contentRefreshKey} className="relative min-h-[480px]">
         {sectionRefreshing && (
-          <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-[#131314]/90 backdrop-blur-[1px]">
+          <div className="absolute inset-0 z-[90] flex flex-col items-center justify-center bg-[#131314]/90 backdrop-blur-[1px]">
             <div className="w-10 h-10 border-4 border-[#3c4043] border-t-[#8AB4F8] rounded-full animate-spin mb-3" />
             <p className="text-[#9aa0a6] font-mono text-sm">Refreshing analytics...</p>
           </div>
         )}
+
+        <div className={sectionRefreshing ? 'pointer-events-none select-none' : undefined}>
+          <LocationBar />
 
         {error && hasInitiallyLoaded.current && !sectionRefreshing && (
           <div className="mx-4 mt-4 px-4 py-3 rounded-md border border-[#d93025]/40 bg-[#d93025]/10 text-[#f28b82] text-sm">
@@ -607,24 +617,21 @@ export default function Analytics() {
             <span className="text-sm uppercase font-medium tracking-wide">Total Vehicles</span>
           </div>
           <div className="flex px-0 justify-between items-center">
-            <span className="text-3xl font-mono text-[#e8eaed]">{totalVehiclesCount}</span>
+            <span className="text-3xl font-mono text-[#e8eaed]">{headlineVehicleTotal}</span>
             <div className="flex text-[15px] text-[#8AB4F8] gap-x-3 font-mono">
               <div className="flex-cols">
-                {analyticsWays.slice(0, Math.ceil(wayCount / 2)).map((way, i) => (
+                {trafficWays.slice(0, Math.ceil(wayCount / 2)).map((way) => (
                   <p key={way.id}>
-                    {way.label}: {distributeMetricAcrossWays(totalVehiclesCount, i, wayCount)}
+                    {way.label}: {way.vehicleCount}
                   </p>
                 ))}
               </div>
               <div className="flex-cols">
-                {analyticsWays.slice(Math.ceil(wayCount / 2)).map((way, i) => {
-                  const idx = Math.ceil(wayCount / 2) + i;
-                  return (
-                    <p key={way.id}>
-                      {way.label}: {distributeMetricAcrossWays(totalVehiclesCount, idx, wayCount)}
-                    </p>
-                  );
-                })}
+                {trafficWays.slice(Math.ceil(wayCount / 2)).map((way) => (
+                  <p key={way.id}>
+                    {way.label}: {way.vehicleCount}
+                  </p>
+                ))}
               </div>
             </div>
           </div>
@@ -814,7 +821,11 @@ export default function Analytics() {
       {/* Chart div 1 — Traffic Volume + Square Map */}
       <div className="relative z-20 flex w-full mt-0 border-r border-[#3c4043] isolate">
         <div className="w-[66.6%] min-w-0">
-          <TrafficVol activeWays={analyticsWays} />
+          <TrafficVol
+            activeWays={trafficWays}
+            trafficTimeSeries={analyticsTrafficData.timeSeries}
+            durationPickerDisabled={sectionRefreshing}
+          />
         </div>
         <div className="w-[33.4%] min-w-0">
           <SquareLocationMap
@@ -822,6 +833,7 @@ export default function Analytics() {
             isLocked={isLocked}
             loading={squareLoading}
             error={squareError}
+            wayVehicleCounts={analyticsTrafficData.byWay}
             onSquareSaved={updateSquare}
             onCoordinatesSaved={applySavedCoordinates}
           />
@@ -833,7 +845,7 @@ export default function Analytics() {
 
 
         <div className="flex-cols bg-[#131314] w-[66.6%]">
-          <Violations activeWays={analyticsWays} />
+          <Violations activeWays={analyticsWays} durationPickerDisabled={sectionRefreshing} />
 
           <div className="flex w-full">
             <div 
@@ -856,6 +868,7 @@ export default function Analytics() {
                     onSelect={(d) =>
                       handleDurationSelect(ANALYTICS_CHART_IDS.emergency2, d)
                     }
+                    disabled={sectionRefreshing}
                   />
                   {/* CSV Export Button */}
                   <button 
@@ -957,6 +970,7 @@ export default function Analytics() {
                     onSelect={(d) =>
                       handleDurationSelect(ANALYTICS_CHART_IDS.emergency2, d)
                     }
+                    disabled={sectionRefreshing}
                   />
                   {/* CSV Export Button */}
                   <button 
@@ -1051,6 +1065,7 @@ export default function Analytics() {
             exportBaseName="violations_data"
             selectedDuration={getDuration(ANALYTICS_CHART_IDS.violations)}
             onDurationSelect={(d) => handleDurationSelect(ANALYTICS_CHART_IDS.violations, d)}
+            durationPickerDisabled={sectionRefreshing}
           />
 
           <AnalyticsPieChartPanel
@@ -1063,6 +1078,7 @@ export default function Analytics() {
             exportBaseName="vehicle_type_distribution"
             selectedDuration={getDuration(ANALYTICS_CHART_IDS.vehicleTypes)}
             onDurationSelect={(d) => handleDurationSelect(ANALYTICS_CHART_IDS.vehicleTypes, d)}
+            durationPickerDisabled={sectionRefreshing}
           />
 
           <AnalyticsPieChartPanel
@@ -1084,6 +1100,7 @@ export default function Analytics() {
             exportBaseName="speed_distribution"
             selectedDuration={getDuration(ANALYTICS_CHART_IDS.speedDistributionPie)}
             onDurationSelect={(d) => handleDurationSelect(ANALYTICS_CHART_IDS.speedDistributionPie, d)}
+            durationPickerDisabled={sectionRefreshing}
           />
         </div>
       </div>
@@ -1102,6 +1119,7 @@ export default function Analytics() {
               <ChartDurationPicker
                 selectedDuration={getDuration(ANALYTICS_CHART_IDS.emergency1)}
                 onSelect={(d) => handleDurationSelect(ANALYTICS_CHART_IDS.emergency1, d)}
+                disabled={sectionRefreshing}
               />
               <button
                 onClick={exportCSV}
@@ -1190,8 +1208,7 @@ export default function Analytics() {
         </div>
       </div>
 
-
-      
+        </div>
       </div>
     </div>
   )

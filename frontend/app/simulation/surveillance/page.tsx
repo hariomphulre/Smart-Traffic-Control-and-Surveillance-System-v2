@@ -45,6 +45,8 @@ export default function SimulationPage() {
     4: '',
   })
   const [isLoading, setIsLoading] = useState(true)
+  const [sectionRefreshing, setSectionRefreshing] = useState(false)
+  const [contentRefreshKey, setContentRefreshKey] = useState(0)
   const [isRunning, setIsRunning] = useState(false)
   const [isStarting, setIsStarting] = useState(false)
   const [isStopping, setIsStopping] = useState(false)
@@ -340,9 +342,78 @@ export default function SimulationPage() {
     return state ?? trafficLiveSnapshot
   }, [isRunning, state, trafficLiveSnapshot])
 
+  const refreshPageData = useCallback(async () => {
+    setSectionRefreshing(true)
+    setError(null)
+
+    try {
+      const results = await Promise.allSettled([
+        getSimulationVideos(),
+        getDefaultVideoByLane(),
+        getSimulationStatus(),
+        getTrafficState(),
+      ])
+
+      if (results[0].status === 'fulfilled') {
+        setAvailableVideos(results[0].value)
+      }
+
+      if (results[1].status === 'fulfilled' && !isRunning) {
+        const defaults = results[1].value
+        setVideoByLane({
+          1: defaults[1],
+          2: defaults[2],
+          3: defaults[3],
+          4: defaults[4],
+        })
+      }
+
+      if (results[2].status === 'fulfilled') {
+        const status = results[2].value
+        setWsUrl(status.wsUrl || null)
+        const nextStatus = applyStreamStatus(status.status || {})
+        const hasRunning = LANES.some((lane) => nextStatus[lane]?.running)
+        setIsRunning(hasRunning)
+
+        if (hasRunning) {
+          const locked = {} as Record<LaneId, string>
+          for (const lane of LANES) {
+            const video = nextStatus[lane]?.video
+            if (typeof video === 'string' && video) locked[lane] = video
+          }
+          if (Object.keys(locked).length > 0) {
+            setLockedVideos(locked)
+            setVideoByLane((prev) => ({ ...prev, ...locked }))
+          }
+        } else {
+          setLockedVideos(null)
+        }
+      }
+
+      if (results[3].status === 'fulfilled') {
+        setState(results[3].value)
+      }
+
+      if (results.every((result) => result.status === 'rejected')) {
+        setError('Failed to refresh surveillance data')
+      }
+
+      setContentRefreshKey((key) => key + 1)
+    } catch {
+      setError('Failed to refresh surveillance data')
+    } finally {
+      setIsLoading(false)
+      setSectionRefreshing(false)
+    }
+  }, [applyStreamStatus, isRunning])
+
+  const handleRefresh = () => {
+    refreshPageData()
+  }
+
   return (
     <div className="max-w-full px-0 py-0">
-      <div className="w-full flex items-center justify-between h-13 mb-0 border-b border-[#3c4043] bg-[#131314] p-1 shadow-xl">
+      <div className="w-full flex items-center justify-between h-13 mb-0 border-b border-[#3c4043] bg-[#131314] p-1 shadow-xl relative z-[100]">
         <div className="flex items-center min-w-0 flex-1">
           <div>
             <p className="text-[#ffffff] font-mono text-xl ml-4">Live Surveillance</p>
@@ -391,16 +462,18 @@ export default function SimulationPage() {
               </div>
             )}
           </div>
-          <div className="group flex items-center gap-1 px-2 mr-3 justify-center hover:bg-[#202124] rounded-sm transition-all"
+          <div
+            className="group flex items-center gap-1 px-2 mr-3 justify-center hover:bg-[#202124] rounded-sm transition-all"
+            onClick={handleRefresh}
           >
-            {/* onClick={handleRefresh} */}
             <IoMdRefresh
-              className={`h-5 w-5 text-[#669DF6] group-hover:text-[#AECBFA]
-              `}
+              className={`h-5 w-5 text-[#669DF6] group-hover:text-[#AECBFA] ${
+                sectionRefreshing ? 'animate-spin' : ''
+              }`}
             />
             <button
               type="button"
-              // disabled={sectionRefreshing}
+              disabled={sectionRefreshing}
               className="py-1 font-medium transition-all text-[#669DF6] group-hover:text-[#AECBFA] shadow-lg disabled:opacity-50"
             >
               Refresh
@@ -409,42 +482,53 @@ export default function SimulationPage() {
         </div>
       </div>
 
-      <div className="w-full relative font-sans">
-        {/* LOCATION BAR */}
-        <LocationBar />
-
-        {/* MAP MODAL */}
-        {isMapOpen && (
-          <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/80 backdrop-blur-sm">
-            <div className="bg-[#131314] w-[95vw] h-[94vh] border-2 border-[#3c4043] rounded-2xl flex flex-col shadow-2xl overflow-hidden relative">
-              
-              <div className="h-12 border-b border-[#3c4043] bg-black flex items-center justify-between px-5 z-10 shrink-0">
-                <h2 className="text-[#8AB4F8] font-mono text-lg flex items-center gap-3">
-                  <span className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
-                  Global Signal Radar
-                </h2>
-                <button 
-                  onClick={() => setIsMapOpen(false)}
-                  className="text-[#9aa0a6] hover:text-white transition-colors font-bold text-xl"
-                >
-                  ✕
-                </button>
-              </div>
-
-              <div className="flex-1 relative z-0">
-                <DynamicMap 
-                  signals={MAP_SIGNALS} 
-                  pathSegments={pathSegments} 
-                  onPinClick={handleMapPinClick} 
-                />
-              </div>
-
+      {isMapOpen && (
+        <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/80 backdrop-blur-sm">
+          <div className="bg-[#131314] w-[95vw] h-[94vh] border-2 border-[#3c4043] rounded-2xl flex flex-col shadow-2xl overflow-hidden relative">
+            
+            <div className="h-12 border-b border-[#3c4043] bg-black flex items-center justify-between px-5 z-10 shrink-0">
+              <h2 className="text-[#8AB4F8] font-mono text-lg flex items-center gap-3">
+                <span className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+                Global Signal Radar
+              </h2>
+              <button 
+                onClick={() => setIsMapOpen(false)}
+                className="text-[#9aa0a6] hover:text-white transition-colors font-bold text-xl"
+              >
+                ✕
+              </button>
             </div>
+
+            <div className="flex-1 relative z-0">
+              <DynamicMap 
+                signals={MAP_SIGNALS} 
+                pathSegments={pathSegments} 
+                onPinClick={handleMapPinClick} 
+              />
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      <div key={contentRefreshKey} className="relative min-h-[320px]">
+        {sectionRefreshing && (
+          <div className="absolute inset-0 z-[90] flex flex-col items-center justify-center bg-[#131314]/90 backdrop-blur-[1px]">
+            <div className="w-10 h-10 border-4 border-[#3c4043] border-t-[#8AB4F8] rounded-full animate-spin mb-3" />
+            <p className="text-[#9aa0a6] font-mono text-sm">Refreshing surveillance...</p>
           </div>
         )}
-      </div>
 
-      {isLoading && 
+        <div className={sectionRefreshing ? 'pointer-events-none select-none' : undefined}>
+          <LocationBar />
+
+      {error && !sectionRefreshing && (
+        <div className="mx-4 mt-4 px-4 py-3 rounded-md border border-[#d93025]/40 bg-[#d93025]/10 text-[#f28b82] text-sm">
+          {error}
+        </div>
+      )}
+
+      {isLoading && !sectionRefreshing &&
         <div className="text-center py-8 text-[#5f6368] dark:text-[#9aa0a6]">
           Loading videos...
         </div>
@@ -484,32 +568,8 @@ export default function SimulationPage() {
         )
       }
 
-
-      
-
-      {/* {isLoading ? (
-        <div className="text-center py-8 text-[#5f6368] dark:text-[#9aa0a6]">
-          Loading videos...
         </div>
-      ) : (
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-0">
-          {LANES.map((lane) => (
-            <SimulationPartition
-              key={lane}
-              lane={lane}
-              selectedVideo={videoByLane[lane]}
-              lockedVideo={lockedVideos?.[lane]}
-              state={displayTrafficState}
-              streamUrl={streamStatus[lane].streamUrl}
-              streamStartedAt={streamStatus[lane].startedAt}
-              simulationRunning={isRunning}
-              usedVideos={usedVideos}
-              availableVideos={availableVideos}
-              onVideoChange={handleVideoChange}
-            />
-          ))}
-        </div>
-      )} */}
+      </div>
     </div>
   )
 }

@@ -13,6 +13,12 @@ export function isDbConnectionError(error: unknown): boolean {
   );
 }
 
+export function isDbSchemaError(error: unknown): boolean {
+  if (!(error instanceof Error)) return false;
+  const pgCode = (error as { code?: string }).code;
+  return pgCode === '42P01' || error.message.includes('does not exist');
+}
+
 export function shouldUseMockOnDbError(): boolean {
   if (process.env.USE_MOCK_DATA === 'true') return true;
   if (process.env.USE_MOCK_DATA === 'false') return false;

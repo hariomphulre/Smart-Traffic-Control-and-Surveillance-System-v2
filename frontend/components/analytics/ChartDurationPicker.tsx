@@ -23,6 +23,8 @@ type ChartDurationPickerProps = {
   variant?: 'chart' | 'logs';
   /** Highlight logs interval button when a non-default range is selected */
   isActive?: boolean;
+  /** Keep menu closed and below page refresh overlay */
+  disabled?: boolean;
 };
 
 function isDurationSelected(selected: string, option: string) {
@@ -39,6 +41,7 @@ export function ChartDurationPicker({
   onSelect,
   variant = 'chart',
   isActive = false,
+  disabled = false,
 }: ChartDurationPickerProps) {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -55,6 +58,7 @@ export function ChartDurationPicker({
   };
 
   const openMenu = () => {
+    if (disabled) return;
     clearCloseTimer();
     setOpen(true);
   };
@@ -84,6 +88,12 @@ export function ChartDurationPicker({
     return () => clearCloseTimer();
   }, []);
 
+  useEffect(() => {
+    if (disabled) setOpen(false);
+  }, [disabled]);
+
+  const menuOpen = open && !disabled;
+
   const handleSelect = (duration: string) => {
     onSelect(duration);
     setOpen(false);
@@ -105,20 +115,21 @@ export function ChartDurationPicker({
   return (
     <div
       ref={containerRef}
-      className={`relative ${open ? 'z-[500]' : 'z-40'}`}
+      className={`relative ${menuOpen ? 'z-[500]' : 'z-40'}`}
       onMouseEnter={openMenu}
       onMouseLeave={scheduleClose}
     >
       <button
         type="button"
-        onClick={() => setOpen((prev) => !prev)}
+        onClick={() => !disabled && setOpen((prev) => !prev)}
         className={
           variant === 'logs'
             ? `px-4 py-[6.5px] text-sm font-medium transition-colors rounded flex items-center ${logsButtonClass}`
             : 'flex items-center gap-3.5 pl-3 rounded-md text-gray-400 hover:text-[#AECBFA] transition-colors'
         }
         aria-label="Select time range"
-        aria-expanded={open}
+        aria-expanded={menuOpen}
+        disabled={disabled}
         aria-haspopup="listbox"
       >
         {variant === 'logs' && (
@@ -140,7 +151,7 @@ export function ChartDurationPicker({
       {/* pt-1 bridges the gap so the pointer does not leave the hover target */}
       <div
         className={`absolute right-0 top-full pt-1 w-44 z-[500] transition-all duration-150 ${
-          open
+          menuOpen
             ? 'opacity-100 visible pointer-events-auto'
             : 'opacity-0 invisible pointer-events-none'
         }`}

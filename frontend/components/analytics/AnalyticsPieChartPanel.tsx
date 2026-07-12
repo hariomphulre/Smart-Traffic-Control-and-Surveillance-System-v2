@@ -13,6 +13,7 @@ interface ChartActionButtonsProps {
   onExportCsv: () => void;
   onSaveImage: () => void;
   onToggleFullscreen: () => void;
+  durationPickerDisabled?: boolean;
 }
 
 function ChartActionButtons({
@@ -22,12 +23,14 @@ function ChartActionButtons({
   onExportCsv,
   onSaveImage,
   onToggleFullscreen,
+  durationPickerDisabled = false,
 }: ChartActionButtonsProps) {
   return (
     <div className="relative z-40 chart-actions flex items-center gap-3.5 text-xs overflow-visible">
       <ChartDurationPicker
         selectedDuration={selectedDuration}
         onSelect={onDurationSelect}
+        disabled={durationPickerDisabled}
       />
       <button
         onClick={onExportCsv}
@@ -81,6 +84,7 @@ interface AnalyticsPieChartPanelProps<T extends { count: number }> {
   getCellColor?: (entry: T, index: number) => string;
   selectedDuration: string;
   onDurationSelect: (duration: string) => void;
+  durationPickerDisabled?: boolean;
 }
 
 export default function AnalyticsPieChartPanel<T extends { count: number }>({
@@ -98,6 +102,7 @@ export default function AnalyticsPieChartPanel<T extends { count: number }>({
   getCellColor,
   selectedDuration,
   onDurationSelect,
+  durationPickerDisabled = false,
 }: AnalyticsPieChartPanelProps<T>) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -179,6 +184,7 @@ export default function AnalyticsPieChartPanel<T extends { count: number }>({
           onExportCsv={exportCSV}
           onSaveImage={saveAsImage}
           onToggleFullscreen={toggleFullscreen}
+          durationPickerDisabled={durationPickerDisabled}
         />
       </div>
       <div className={`flex-cols gap-4 ${isFullscreen ? 'flex-1' : ''}`}>

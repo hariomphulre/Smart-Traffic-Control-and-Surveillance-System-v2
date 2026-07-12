@@ -12,7 +12,10 @@ import {
 } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { FiMinus, FiPlus } from 'react-icons/fi';
 import type { SquareLocation } from '@/map/squareLocations';
+import { getHeaderWayVehicleCount } from '@/lib/analyticsTrafficData';
+import { trafficVehicleCountColor } from '@/utils/mapColors';
 
 const DARK_TILES = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
 const SQUARE_ZOOM = 18;
@@ -34,21 +37,48 @@ function MapFocus({
   return null;
 }
 
-function wayLabelIcon(id: string, color: string) {
+function SquareMapZoomControls({ disabled }: { disabled: boolean }) {
+  const map = useMap();
+
+  return (
+    <div className="square-map-zoom-controls">
+      <button
+        type="button"
+        className="square-map-zoom-btn"
+        onClick={() => map.zoomIn()}
+        disabled={disabled}
+        aria-label="Zoom in"
+      >
+        <FiPlus size={16} />
+      </button>
+      <button
+        type="button"
+        className="square-map-zoom-btn"
+        onClick={() => map.zoomOut()}
+        disabled={disabled}
+        aria-label="Zoom out"
+      >
+        <FiMinus size={16} />
+      </button>
+    </div>
+  );
+}
+
+function wayLabelIcon(id: string, wayColor: string) {
   return L.divIcon({
     className: 'square-way-label',
     html: `
       <div style="
         padding: 2px 8px;
         border-radius: 4px;
-        background: rgba(10, 15, 20, 0.92);
-        border: 1px solid ${color};
-        color: ${color};
+        background: ${wayColor};
+        border: 1px solid rgba(0, 0, 0, 0.18);
+        color: #1a1a1a;
         font-family: 'Roboto Mono', monospace;
         font-size: 11px;
-        font-weight: 600;
+        font-weight: 700;
         white-space: nowrap;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.35);
         pointer-events: none;
       ">${id}</div>
     `,
@@ -84,18 +114,18 @@ function centerDragIcon() {
     className: 'square-center-handle',
     html: `
       <div class="square-center-handle-inner" style="
-        width: 32px;
-        height: 32px;
+        width: 20px;
+        height: 20px;
         border-radius: 50%;
-        border: 3px solid #fbbc04;
+        border: 2px solid #fbbc04;
         background: rgba(138, 180, 248, 0.92);
-        box-shadow: 0 0 14px rgba(251, 188, 4, 0.65);
+        box-shadow: 0 0 8px rgba(251, 188, 4, 0.55);
         cursor: grab;
         pointer-events: auto;
       "></div>
     `,
-    iconSize: [32, 32],
-    iconAnchor: [16, 16],
+    iconSize: [20, 20],
+    iconAnchor: [10, 10],
   });
 }
 
@@ -185,6 +215,7 @@ function CenterDragHandle({ position, onDragEnd }: CenterDragHandleProps) {
 interface EditableSquareMapProps {
   square: SquareLocation;
   isEditing: boolean;
+  wayVehicleCounts?: Record<string, number>;
   onWayDragEnd: (wayId: string, lat: number, lng: number) => void;
   onCenterDragEnd: (lat: number, lng: number) => void;
 }
@@ -192,6 +223,7 @@ interface EditableSquareMapProps {
 export default function EditableSquareMap({
   square,
   isEditing,
+  wayVehicleCounts = {},
   onWayDragEnd,
   onCenterDragEnd,
 }: EditableSquareMapProps) {
@@ -230,6 +262,44 @@ export default function EditableSquareMap({
         .square-leaflet-map .leaflet-interactive {
           pointer-events: ${isEditing ? 'none' : 'auto'};
         }
+        .square-map-zoom-controls {
+          position: absolute;
+          top: 50%;
+          right: 12px;
+          transform: translateY(-50%);
+          z-index: 1000;
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+          background: #1a202c;
+          border-radius: 8px;
+          border: 1px solid #3c4043;
+          box-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+          overflow: hidden;
+        }
+        .square-map-zoom-btn {
+          width: 36px;
+          height: 36px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #1a202c;
+          color: #e8eaed;
+          border: none;
+          border-bottom: 1px solid #3c4043;
+          cursor: pointer;
+          transition: background 0.15s;
+        }
+        .square-map-zoom-btn:last-child {
+          border-bottom: none;
+        }
+        .square-map-zoom-btn:hover:not(:disabled) {
+          background: #2d3748;
+        }
+        .square-map-zoom-btn:disabled {
+          opacity: 0.45;
+          cursor: not-allowed;
+        }
       `}</style>
 
       <MapContainer
@@ -237,6 +307,7 @@ export default function EditableSquareMap({
         zoom={SQUARE_ZOOM}
         minZoom={15}
         maxZoom={20}
+        zoomControl={false}
         scrollWheelZoom={!isEditing}
         dragging={!isEditing}
         doubleClickZoom={!isEditing}
@@ -251,6 +322,7 @@ export default function EditableSquareMap({
         />
 
         <MapFocus lat={square.lat} lng={square.lng} enabled={!isEditing} />
+        <SquareMapZoomControls disabled={isEditing} />
 
         <Polygon
           positions={square.intersectionBounds}
@@ -264,33 +336,26 @@ export default function EditableSquareMap({
           }}
         />
 
-        {square.ways.map((way) => (
-          <Polyline
-            key={way.id}
-            positions={way.coordinates}
-            pathOptions={{
-              color: way.color,
-              weight: isEditing ? 9 : 7,
-              opacity: isEditing ? 0.9 : 0.75,
-              lineCap: 'round',
-              interactive: false,
-            }}
-          />
-        ))}
+        {square.ways.map((way) => {
+          const vehicleCount = getHeaderWayVehicleCount(way.id, wayVehicleCounts);
+          const densityColor = trafficVehicleCountColor(vehicleCount);
+          const stripWeight = isEditing ? 10 : 8;
 
-        {square.ways.map((way) => (
-          <Polyline
-            key={`dash-${way.id}`}
-            positions={way.coordinates}
-            pathOptions={{
-              color: '#e8eaed',
-              weight: 1,
-              opacity: 0.35,
-              dashArray: '6 10',
-              interactive: false,
-            }}
-          />
-        ))}
+          return (
+            <Polyline
+              key={way.id}
+              positions={way.coordinates}
+              pathOptions={{
+                color: densityColor,
+                weight: stripWeight,
+                opacity: 0.92,
+                lineCap: 'round',
+                lineJoin: 'round',
+                interactive: false,
+              }}
+            />
+          );
+        })}
 
         {!isEditing &&
           square.ways.map((way) => (

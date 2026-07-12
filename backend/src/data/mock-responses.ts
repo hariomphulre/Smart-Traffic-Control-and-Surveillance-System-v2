@@ -56,9 +56,12 @@ function filterMockLogs(items: MockLog[], searchParams: URLSearchParams): MockLo
     filtered = filtered.filter((log) => new Date(log.dateTime).getTime() <= toMs);
   }
 
-  const vehicleType = searchParams.get('vehicleType');
-  if (vehicleType) {
-    filtered = filtered.filter((log) => log.vehicleType === vehicleType);
+  const vehicleTypes = (searchParams.get('vehicleType') ?? '')
+    .split(',')
+    .map((item) => item.trim())
+    .filter(Boolean);
+  if (vehicleTypes.length > 0) {
+    filtered = filtered.filter((log) => vehicleTypes.includes(log.vehicleType));
   }
 
   return filtered;
@@ -197,6 +200,14 @@ export function getMockResponse(pathname: string, searchParams: URLSearchParams)
 
   if (pathname === '/api/signals/state') {
     return { R1: true, R2: true, R3: true, R4: true, G1: false, G2: false, G3: false, G4: false };
+  }
+
+  if (pathname === '/api/iam/identities') {
+    return { data: [], total: 0 };
+  }
+
+  if (pathname === '/api/sessions') {
+    return { data: [], total: 0 };
   }
 
   return null;

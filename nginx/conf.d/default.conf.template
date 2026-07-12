@@ -4,7 +4,7 @@ server {
     
     server_name ${PUBLIC_DOMAIN};
 
-    # Frontend Next API (simulation proxy, videos)
+    # Frontend Next.js API routes (must come before the backend /api/ catch-all)
     location ^~ /api/simulation/ {
         proxy_pass http://frontend:3000;
         proxy_http_version 1.1;
@@ -12,6 +12,18 @@ server {
     }
 
     location ^~ /api/videos {
+        proxy_pass http://frontend:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+    }
+
+    location ^~ /api/signals/coordinates {
+        proxy_pass http://frontend:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+    }
+
+    location ^~ /api/intersection/ {
         proxy_pass http://frontend:3000;
         proxy_http_version 1.1;
         proxy_set_header Host $host;

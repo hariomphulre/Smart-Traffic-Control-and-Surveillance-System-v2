@@ -20,6 +20,14 @@ interface LogQuery extends PaginationQuery {
   vehicleType?:  string;
 }
 
+const parseVehicleTypes = (value?: string): string[] =>
+  value
+    ? value
+        .split(',')
+        .map((item) => item.trim())
+        .filter(Boolean)
+    : [];
+
 export class LogModel {
   static async getAll(query: LogQuery): Promise<PaginatedResponse<VehicleLogResponse>> {
     const limit  = Math.min(parseInt(String(query.limit ?? 20)), 100);
@@ -52,9 +60,10 @@ export class LogModel {
       conditions.push(`detected_at <= $${idx++}`);
       values.push(query.to);
     }
-    if (query.vehicleType) {
-      conditions.push(`vehicle_type = $${idx++}`);
-      values.push(query.vehicleType);
+    const vehicleTypes = parseVehicleTypes(query.vehicleType);
+    if (vehicleTypes.length > 0) {
+      conditions.push(`vehicle_type = ANY($${idx++}::text[])`);
+      values.push(vehicleTypes);
     }
 
     const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
