@@ -112,7 +112,8 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.VPS_SSH_KEY }}
           port: 2222
-          source: "docker-compose.yml,postgres/,mediamtx/,frontend/data/"
+          # source: "docker-compose.yml,postgres/,mediamtx/,frontend/data/"
+          source: "docker-compose.yml,postgres/,mediamtx/"
           target: "CodingWorkspace/Projects/signal-x/"
 
       - name: Pull Images and Restart Containers on VPS
