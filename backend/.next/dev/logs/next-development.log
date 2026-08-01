@@ -1,81 +1,1256 @@
-{"timestamp":"00:00:00.486","source":"Server","level":"WARN","message":"⚠ The \"middleware\" file convention is deprecated. Please use \"proxy\" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy"}
-{"timestamp":"00:00:00.642","source":"Server","level":"LOG","message":""}
-{"timestamp":"00:00:15.181","source":"Server","level":"LOG","message":"[2026-07-13T09:01:36.265Z] GET /api/analytics/stats"}
-{"timestamp":"00:00:15.184","source":"Server","level":"LOG","message":"[2026-07-13T09:01:36.268Z] GET /api/analytics/violations"}
-{"timestamp":"00:00:15.185","source":"Server","level":"LOG","message":"[2026-07-13T09:01:36.270Z] GET /api/analytics/vehicle-types"}
-{"timestamp":"00:00:15.187","source":"Server","level":"LOG","message":"[2026-07-13T09:01:36.271Z] GET /api/analytics/hourly-traffic"}
-{"timestamp":"00:00:15.189","source":"Server","level":"LOG","message":"[2026-07-13T09:01:36.273Z] GET /api/analytics/speed-distribution"}
-{"timestamp":"00:00:15.883","source":"Server","level":"ERROR","message":"(node:1930745) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.\n(Use `node --trace-deprecation ...` to show where the warning was created)"}
-{"timestamp":"00:00:15.900","source":"Server","level":"WARN","message":"⚠️ Redis error: \"Invalid IP address: undefined\""}
-{"timestamp":"00:00:16.113","source":"Server","level":"WARN","message":"⚠️ Redis error: \"Invalid IP address: undefined\""}
-{"timestamp":"00:00:16.521","source":"Server","level":"WARN","message":"⚠️ Redis error: \"Invalid IP address: undefined\""}
-{"timestamp":"00:00:17.128","source":"Server","level":"WARN","message":"⚠️ Redis error: \"Invalid IP address: undefined\""}
-{"timestamp":"00:00:17.129","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:17.131","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:17.132","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:17.132","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:17.133","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:17.148","source":"Server","level":"LOG","message":"🔗 Neon: using NEON_HOST_IP 3.0.167.45"}
-{"timestamp":"00:00:18.960","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
-{"timestamp":"00:00:18.961","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
-{"timestamp":"00:00:19.101","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
-{"timestamp":"00:00:19.115","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
-{"timestamp":"00:00:19.281","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
-{"timestamp":"00:00:19.282","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
-{"timestamp":"00:00:19.282","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
-{"timestamp":"00:00:19.488","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
-{"timestamp":"00:00:19.494","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
-{"timestamp":"00:00:19.500","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
-{"timestamp":"00:00:26.129","source":"Server","level":"LOG","message":"[2026-07-13T09:01:47.214Z] GET /api/signals/state"}
-{"timestamp":"00:00:26.607","source":"Server","level":"LOG","message":"[2026-07-13T09:01:47.691Z] GET /api/signals/state"}
-{"timestamp":"00:00:27.106","source":"Server","level":"LOG","message":"[2026-07-13T09:01:48.191Z] GET /api/signals/state"}
-{"timestamp":"00:00:27.605","source":"Server","level":"LOG","message":"[2026-07-13T09:01:48.689Z] GET /api/signals/state"}
-{"timestamp":"00:00:28.105","source":"Server","level":"LOG","message":"[2026-07-13T09:01:49.190Z] GET /api/signals/state"}
-{"timestamp":"00:00:28.604","source":"Server","level":"LOG","message":"[2026-07-13T09:01:49.689Z] GET /api/signals/state"}
-{"timestamp":"00:00:29.106","source":"Server","level":"LOG","message":"[2026-07-13T09:01:50.190Z] GET /api/signals/state"}
-{"timestamp":"00:00:29.604","source":"Server","level":"LOG","message":"[2026-07-13T09:01:50.689Z] GET /api/signals/state"}
-{"timestamp":"00:00:30.109","source":"Server","level":"LOG","message":"[2026-07-13T09:01:51.194Z] GET /api/signals/state"}
-{"timestamp":"00:00:30.604","source":"Server","level":"LOG","message":"[2026-07-13T09:01:51.688Z] GET /api/signals/state"}
-{"timestamp":"00:00:31.105","source":"Server","level":"LOG","message":"[2026-07-13T09:01:52.190Z] GET /api/signals/state"}
-{"timestamp":"00:00:31.604","source":"Server","level":"LOG","message":"[2026-07-13T09:01:52.689Z] GET /api/signals/state"}
-{"timestamp":"00:00:32.105","source":"Server","level":"LOG","message":"[2026-07-13T09:01:53.189Z] GET /api/signals/state"}
-{"timestamp":"00:00:32.604","source":"Server","level":"LOG","message":"[2026-07-13T09:01:53.688Z] GET /api/signals/state"}
-{"timestamp":"00:00:33.104","source":"Server","level":"LOG","message":"[2026-07-13T09:01:54.189Z] GET /api/signals/state"}
-{"timestamp":"00:00:33.604","source":"Server","level":"LOG","message":"[2026-07-13T09:01:54.688Z] GET /api/signals/state"}
-{"timestamp":"00:00:34.104","source":"Server","level":"LOG","message":"[2026-07-13T09:01:55.189Z] GET /api/signals/state"}
-{"timestamp":"00:00:34.604","source":"Server","level":"LOG","message":"[2026-07-13T09:01:55.689Z] GET /api/signals/state"}
-{"timestamp":"00:00:34.963","source":"Server","level":"LOG","message":"[2026-07-13T09:01:56.047Z] GET /api/logs"}
-{"timestamp":"00:00:41.164","source":"Server","level":"LOG","message":"[2026-07-13T09:02:02.248Z] GET /api/analytics/stats"}
-{"timestamp":"00:00:41.167","source":"Server","level":"LOG","message":"[2026-07-13T09:02:02.252Z] GET /api/analytics/violations"}
-{"timestamp":"00:00:41.172","source":"Server","level":"LOG","message":"[2026-07-13T09:02:02.257Z] GET /api/analytics/vehicle-types"}
-{"timestamp":"00:00:41.178","source":"Server","level":"LOG","message":"[2026-07-13T09:02:02.262Z] GET /api/analytics/hourly-traffic"}
-{"timestamp":"00:00:41.196","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:41.198","source":"Server","level":"LOG","message":"[2026-07-13T09:02:02.283Z] GET /api/analytics/speed-distribution"}
-{"timestamp":"00:00:41.209","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:41.214","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:41.221","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:41.228","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:41.382","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
-{"timestamp":"00:00:41.385","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
-{"timestamp":"00:00:42.222","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
-{"timestamp":"00:00:42.223","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
-{"timestamp":"00:00:42.224","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
-{"timestamp":"00:00:42.428","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
-{"timestamp":"00:00:42.429","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
-{"timestamp":"00:00:42.432","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
-{"timestamp":"00:00:46.328","source":"Server","level":"LOG","message":"[2026-07-13T09:02:07.413Z] GET /api/logs"}
-{"timestamp":"00:00:47.465","source":"Server","level":"LOG","message":"[2026-07-13T09:02:08.549Z] GET /api/analytics/stats"}
-{"timestamp":"00:00:47.466","source":"Server","level":"LOG","message":"[2026-07-13T09:02:08.551Z] GET /api/analytics/violations"}
-{"timestamp":"00:00:47.471","source":"Server","level":"LOG","message":"[2026-07-13T09:02:08.555Z] GET /api/analytics/vehicle-types"}
-{"timestamp":"00:00:47.475","source":"Server","level":"LOG","message":"[2026-07-13T09:02:08.559Z] GET /api/analytics/hourly-traffic"}
-{"timestamp":"00:00:47.480","source":"Server","level":"LOG","message":"[2026-07-13T09:02:08.565Z] GET /api/analytics/speed-distribution"}
-{"timestamp":"00:00:47.502","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:47.507","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:47.511","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:47.514","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:47.518","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:00:47.752","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
-{"timestamp":"00:00:47.754","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
-{"timestamp":"00:00:47.756","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
-{"timestamp":"00:00:47.759","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
-{"timestamp":"00:00:47.760","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"00:00:00.722","source":"Server","level":"WARN","message":"⚠ The \"middleware\" file convention is deprecated. Please use \"proxy\" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy"}
+{"timestamp":"00:00:00.945","source":"Server","level":"LOG","message":""}
+{"timestamp":"00:00:04.545","source":"Server","level":"LOG","message":"[2026-07-28T13:28:35.693Z] GET /api/analytics/stats"}
+{"timestamp":"00:00:04.550","source":"Server","level":"LOG","message":"[2026-07-28T13:28:35.699Z] GET /api/analytics/violations"}
+{"timestamp":"00:00:04.553","source":"Server","level":"LOG","message":"[2026-07-28T13:28:35.701Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:00:04.555","source":"Server","level":"LOG","message":"[2026-07-28T13:28:35.703Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:00:04.557","source":"Server","level":"LOG","message":"[2026-07-28T13:28:35.706Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:00:05.408","source":"Server","level":"ERROR","message":"(node:153822) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.\n(Use `node --trace-deprecation ...` to show where the warning was created)"}
+{"timestamp":"00:00:05.433","source":"Server","level":"WARN","message":"⚠️ Redis error: \"Invalid IP address: undefined\""}
+{"timestamp":"00:00:05.642","source":"Server","level":"WARN","message":"⚠️ Redis error: \"Invalid IP address: undefined\""}
+{"timestamp":"00:00:06.046","source":"Server","level":"WARN","message":"⚠️ Redis error: \"Invalid IP address: undefined\""}
+{"timestamp":"00:00:06.654","source":"Server","level":"WARN","message":"⚠️ Redis error: \"Invalid IP address: undefined\""}
+{"timestamp":"00:00:06.655","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:00:06.657","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:00:06.658","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:00:06.659","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:00:06.659","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:00:06.693","source":"Server","level":"LOG","message":"🔗 Neon: using NEON_HOST_IP 3.0.167.45"}
+{"timestamp":"00:00:21.705","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:00:21.716","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:00:21.720","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:00:21.723","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:00:21.725","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:00:57.126","source":"Server","level":"LOG","message":"[2026-07-28T13:29:28.274Z] GET /api/analytics/stats"}
+{"timestamp":"00:00:57.135","source":"Server","level":"LOG","message":"[2026-07-28T13:29:28.283Z] GET /api/analytics/violations"}
+{"timestamp":"00:00:57.141","source":"Server","level":"LOG","message":"[2026-07-28T13:29:28.290Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:00:57.146","source":"Server","level":"LOG","message":"[2026-07-28T13:29:28.294Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:00:57.160","source":"Server","level":"LOG","message":"[2026-07-28T13:29:28.309Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:00:57.198","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:00:57.207","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:00:57.215","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:00:57.223","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:00:57.235","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:01:12.213","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:01:12.216","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:01:12.221","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:01:12.225","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:01:12.237","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:01:36.882","source":"Server","level":"LOG","message":"[2026-07-28T13:30:08.030Z] GET /api/analytics/stats"}
+{"timestamp":"00:01:36.884","source":"Server","level":"LOG","message":"[2026-07-28T13:30:08.033Z] GET /api/analytics/violations"}
+{"timestamp":"00:01:36.887","source":"Server","level":"LOG","message":"[2026-07-28T13:30:08.035Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:01:36.892","source":"Server","level":"LOG","message":"[2026-07-28T13:30:08.040Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:01:36.895","source":"Server","level":"LOG","message":"[2026-07-28T13:30:08.044Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:01:36.932","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:01:36.938","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:01:36.944","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:01:36.952","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:01:36.959","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:01:51.945","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:01:51.947","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:01:51.949","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:01:51.954","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:01:51.960","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:02:02.028","source":"Server","level":"LOG","message":"[2026-07-28T13:30:33.177Z] GET /api/analytics/stats"}
+{"timestamp":"00:02:02.055","source":"Server","level":"LOG","message":"[2026-07-28T13:30:33.203Z] GET /api/analytics/violations"}
+{"timestamp":"00:02:02.072","source":"Server","level":"LOG","message":"[2026-07-28T13:30:33.221Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:02:02.090","source":"Server","level":"LOG","message":"[2026-07-28T13:30:33.238Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:02:02.109","source":"Server","level":"LOG","message":"[2026-07-28T13:30:33.258Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:02:02.148","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:02.169","source":"Server","level":"LOG","message":"[2026-07-28T13:30:33.318Z] GET /api/analytics/stats"}
+{"timestamp":"00:02:02.179","source":"Server","level":"LOG","message":"[2026-07-28T13:30:33.328Z] GET /api/analytics/violations"}
+{"timestamp":"00:02:02.183","source":"Server","level":"LOG","message":"[2026-07-28T13:30:33.331Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:02:02.190","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:02.199","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:02.220","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:02.226","source":"Server","level":"LOG","message":"[2026-07-28T13:30:33.375Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:02:02.234","source":"Server","level":"LOG","message":"[2026-07-28T13:30:33.382Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:02:02.245","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:02.282","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:02.300","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:02.309","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:02.320","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:02.327","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:05.914","source":"Server","level":"LOG","message":"[2026-07-28T13:30:37.062Z] GET /api/analytics/violations"}
+{"timestamp":"00:02:05.923","source":"Server","level":"LOG","message":"[2026-07-28T13:30:37.071Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:02:06.003","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:06.018","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:06.076","source":"Server","level":"LOG","message":"[2026-07-28T13:30:37.224Z] GET /api/analytics/violations"}
+{"timestamp":"00:02:06.085","source":"Server","level":"LOG","message":"[2026-07-28T13:30:37.233Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:02:06.100","source":"Server","level":"LOG","message":"[2026-07-28T13:30:37.248Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:02:06.125","source":"Server","level":"LOG","message":"[2026-07-28T13:30:37.273Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:02:06.143","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:06.145","source":"Server","level":"LOG","message":"[2026-07-28T13:30:37.294Z] GET /api/analytics/stats"}
+{"timestamp":"00:02:06.153","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:06.170","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:06.191","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:06.213","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:06.495","source":"Server","level":"LOG","message":"[2026-07-28T13:30:37.643Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:02:10.830","source":"Server","level":"LOG","message":"[2026-07-28T13:30:41.978Z] GET /api/analytics/stats"}
+{"timestamp":"00:02:10.837","source":"Server","level":"LOG","message":"[2026-07-28T13:30:41.985Z] GET /api/analytics/violations"}
+{"timestamp":"00:02:10.841","source":"Server","level":"LOG","message":"[2026-07-28T13:30:41.989Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:02:10.853","source":"Server","level":"LOG","message":"[2026-07-28T13:30:42.001Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:02:10.898","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:10.911","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:10.925","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:10.940","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:10.950","source":"Server","level":"LOG","message":"[2026-07-28T13:30:42.098Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:02:10.994","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:17.156","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:02:17.192","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:02:17.201","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:02:17.222","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:02:17.247","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:02:17.285","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:02:17.295","source":"Server","level":"LOG","message":"[2026-07-28T13:30:48.444Z] GET /api/analytics/stats"}
+{"timestamp":"00:02:17.312","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:17.313","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:02:17.316","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:02:17.322","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:02:17.329","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:02:17.341","source":"Server","level":"LOG","message":"[2026-07-28T13:30:48.489Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:02:17.349","source":"Server","level":"LOG","message":"[2026-07-28T13:30:48.498Z] GET /api/analytics/violations"}
+{"timestamp":"00:02:17.356","source":"Server","level":"LOG","message":"[2026-07-28T13:30:48.504Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:02:17.380","source":"Server","level":"LOG","message":"[2026-07-28T13:30:48.529Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:02:17.393","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:17.401","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:17.409","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:17.415","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:21.237","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:21.364","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:21.466","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:21.564","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:21.673","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:21.768","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:21.861","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:25.982","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:26.100","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:26.230","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:26.334","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:26.442","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:26.450","source":"Server","level":"LOG","message":"[2026-07-28T13:30:57.599Z] GET /api/analytics/stats"}
+{"timestamp":"00:02:26.453","source":"Server","level":"LOG","message":"[2026-07-28T13:30:57.602Z] GET /api/analytics/violations"}
+{"timestamp":"00:02:26.463","source":"Server","level":"LOG","message":"[2026-07-28T13:30:57.611Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:02:26.467","source":"Server","level":"LOG","message":"[2026-07-28T13:30:57.615Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:02:26.469","source":"Server","level":"LOG","message":"[2026-07-28T13:30:57.618Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:02:26.492","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:26.498","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:26.504","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:26.512","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:26.516","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:30.952","source":"Server","level":"LOG","message":"[2026-07-28T13:31:02.101Z] GET /api/analytics/stats"}
+{"timestamp":"00:02:30.972","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:32.019","source":"Server","level":"LOG","message":"[2026-07-28T13:31:03.167Z] GET /api/analytics/stats"}
+{"timestamp":"00:02:32.036","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:32.414","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:32.568","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:32.695","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:32.813","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:32.921","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:32.931","source":"Server","level":"LOG","message":"[2026-07-28T13:31:04.080Z] GET /api/analytics/violations"}
+{"timestamp":"00:02:32.934","source":"Server","level":"LOG","message":"[2026-07-28T13:31:04.083Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:02:32.940","source":"Server","level":"LOG","message":"[2026-07-28T13:31:04.088Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:02:32.946","source":"Server","level":"LOG","message":"[2026-07-28T13:31:04.095Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:02:32.977","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:32.981","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:33.002","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:33.007","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:40.649","source":"Server","level":"LOG","message":"[2026-07-28T13:31:11.797Z] GET /api/analytics/violations"}
+{"timestamp":"00:02:40.697","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:40.705","source":"Server","level":"LOG","message":"[2026-07-28T13:31:11.853Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:02:40.710","source":"Server","level":"LOG","message":"[2026-07-28T13:31:11.859Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:02:40.714","source":"Server","level":"LOG","message":"[2026-07-28T13:31:11.862Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:02:40.732","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:40.738","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:40.744","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:41.680","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:41.804","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:41.910","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:42.039","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:42.165","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:43.995","source":"Server","level":"LOG","message":"[2026-07-28T13:31:15.143Z] GET /api/analytics/stats"}
+{"timestamp":"00:02:43.998","source":"Server","level":"LOG","message":"[2026-07-28T13:31:15.146Z] GET /api/analytics/violations"}
+{"timestamp":"00:02:44.001","source":"Server","level":"LOG","message":"[2026-07-28T13:31:15.149Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:02:44.003","source":"Server","level":"LOG","message":"[2026-07-28T13:31:15.151Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:02:44.005","source":"Server","level":"LOG","message":"[2026-07-28T13:31:15.153Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:02:44.033","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:44.039","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:44.045","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:44.050","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:44.054","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:02:46.053","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:47.122","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:48.097","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:48.249","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:48.340","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:48.434","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:55.820","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:56.024","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:56.198","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:56.312","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:59.228","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:59.368","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:59.485","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:59.569","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:02:59.665","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:03:24.852","source":"Server","level":"LOG","message":"[2026-07-28T13:31:56.000Z] GET /api/analytics/stats"}
+{"timestamp":"00:03:24.865","source":"Server","level":"LOG","message":"[2026-07-28T13:31:56.013Z] GET /api/analytics/violations"}
+{"timestamp":"00:03:24.872","source":"Server","level":"LOG","message":"[2026-07-28T13:31:56.017Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:03:24.890","source":"Server","level":"LOG","message":"[2026-07-28T13:31:56.038Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:03:24.901","source":"Server","level":"LOG","message":"[2026-07-28T13:31:56.049Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:03:24.951","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:03:24.982","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:03:24.989","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:03:25.001","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:03:25.008","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:03:26.052","source":"Server","level":"LOG","message":"[2026-07-28T13:31:57.201Z] GET /api/analytics/stats"}
+{"timestamp":"00:03:26.056","source":"Server","level":"LOG","message":"[2026-07-28T13:31:57.204Z] GET /api/analytics/violations"}
+{"timestamp":"00:03:26.062","source":"Server","level":"LOG","message":"[2026-07-28T13:31:57.211Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:03:26.066","source":"Server","level":"LOG","message":"[2026-07-28T13:31:57.214Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:03:26.071","source":"Server","level":"LOG","message":"[2026-07-28T13:31:57.219Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:03:26.121","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:03:26.129","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:03:26.138","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:03:26.149","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:03:26.158","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:03:39.963","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:03:39.977","source":"Server","level":"LOG","message":"[2026-07-28T13:32:11.125Z] GET /api/analytics/stats"}
+{"timestamp":"00:03:39.983","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:03:40.005","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:03:40.008","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:03:40.012","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:03:40.017","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:03:40.021","source":"Server","level":"LOG","message":"[2026-07-28T13:32:11.169Z] GET /api/analytics/violations"}
+{"timestamp":"00:03:40.028","source":"Server","level":"LOG","message":"[2026-07-28T13:32:11.177Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:03:40.036","source":"Server","level":"LOG","message":"[2026-07-28T13:32:11.185Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:03:40.040","source":"Server","level":"LOG","message":"[2026-07-28T13:32:11.189Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:03:40.055","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:03:40.064","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:03:40.077","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:03:40.086","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:03:41.122","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:03:41.130","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:03:41.139","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:03:41.151","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:03:41.159","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:03:44.827","source":"Server","level":"LOG","message":"[2026-07-28T13:32:15.975Z] GET /api/analytics/stats"}
+{"timestamp":"00:03:44.843","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:03:55.015","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:03:55.025","source":"Server","level":"LOG","message":"[2026-07-28T13:32:26.174Z] GET /api/analytics/violations"}
+{"timestamp":"00:03:55.046","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:03:55.057","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:03:55.066","source":"Server","level":"LOG","message":"[2026-07-28T13:32:26.215Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:03:55.071","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:03:55.083","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:03:55.085","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:03:55.091","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:03:55.105","source":"Server","level":"LOG","message":"[2026-07-28T13:32:26.253Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:03:55.110","source":"Server","level":"LOG","message":"[2026-07-28T13:32:26.259Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:03:55.122","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:03:55.129","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:03:56.884","source":"Server","level":"LOG","message":"[2026-07-28T13:32:28.033Z] GET /api/analytics/stats"}
+{"timestamp":"00:03:56.896","source":"Server","level":"LOG","message":"[2026-07-28T13:32:28.045Z] GET /api/analytics/violations"}
+{"timestamp":"00:03:56.905","source":"Server","level":"LOG","message":"[2026-07-28T13:32:28.054Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:03:56.909","source":"Server","level":"LOG","message":"[2026-07-28T13:32:28.058Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:03:56.917","source":"Server","level":"LOG","message":"[2026-07-28T13:32:28.066Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:03:56.954","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:03:56.967","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:03:56.977","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:03:56.986","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:03:57.006","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:03:57.412","source":"Server","level":"LOG","message":"[2026-07-28T13:32:28.561Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:03:57.433","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:03:59.846","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:04:03.868","source":"Server","level":"LOG","message":"[2026-07-28T13:32:35.017Z] GET /api/analytics/violations"}
+{"timestamp":"00:04:03.872","source":"Server","level":"LOG","message":"[2026-07-28T13:32:35.021Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:04:03.876","source":"Server","level":"LOG","message":"[2026-07-28T13:32:35.024Z] GET /api/analytics/stats"}
+{"timestamp":"00:04:03.886","source":"Server","level":"LOG","message":"[2026-07-28T13:32:35.034Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:04:03.901","source":"Server","level":"LOG","message":"[2026-07-28T13:32:35.049Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:04:03.943","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:04:03.965","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:04:03.977","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:04:04.027","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:04:04.050","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:04:10.053","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:04:10.084","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:04:10.123","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:04:10.131","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:04:11.958","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:04:11.969","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:04:11.979","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:04:11.989","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:04:12.007","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:04:12.636","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:04:19.077","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:04:19.201","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:04:19.313","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:04:19.413","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:04:19.539","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:04:19.551","source":"Server","level":"LOG","message":"[2026-07-28T13:32:50.699Z] GET /api/analytics/violations"}
+{"timestamp":"00:04:19.557","source":"Server","level":"LOG","message":"[2026-07-28T13:32:50.706Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:04:19.561","source":"Server","level":"LOG","message":"[2026-07-28T13:32:50.709Z] GET /api/analytics/stats"}
+{"timestamp":"00:04:19.569","source":"Server","level":"LOG","message":"[2026-07-28T13:32:50.718Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:04:19.574","source":"Server","level":"LOG","message":"[2026-07-28T13:32:50.723Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:04:19.615","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:04:19.686","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:04:19.694","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:04:19.702","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:04:19.709","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:04:24.131","source":"Server","level":"LOG","message":"[2026-07-28T13:32:55.279Z] GET /api/analytics/stats"}
+{"timestamp":"00:04:24.149","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:04:34.620","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:04:34.629","source":"Server","level":"LOG","message":"[2026-07-28T13:33:05.778Z] GET /api/analytics/violations"}
+{"timestamp":"00:04:34.657","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:04:34.688","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:04:34.697","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:04:34.703","source":"Server","level":"LOG","message":"[2026-07-28T13:33:05.852Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:04:34.706","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:04:34.710","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:04:34.718","source":"Server","level":"LOG","message":"[2026-07-28T13:33:05.866Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:04:34.727","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:04:34.735","source":"Server","level":"LOG","message":"[2026-07-28T13:33:05.884Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:04:34.743","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:04:34.754","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:04:39.266","source":"Server","level":"ERROR","message":"Handler error: Error: timeout exceeded when trying to connect"}
+{"timestamp":"00:04:49.664","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:04:49.729","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:04:49.744","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:04:49.755","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:05:08.791","source":"Server","level":"LOG","message":"[2026-07-28T13:33:39.940Z] GET /api/analytics/stats"}
+{"timestamp":"00:05:08.801","source":"Server","level":"LOG","message":"[2026-07-28T13:33:39.949Z] GET /api/analytics/violations"}
+{"timestamp":"00:05:08.806","source":"Server","level":"LOG","message":"[2026-07-28T13:33:39.954Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:05:08.810","source":"Server","level":"LOG","message":"[2026-07-28T13:33:39.958Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:05:08.816","source":"Server","level":"LOG","message":"[2026-07-28T13:33:39.965Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:05:08.840","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:05:08.857","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:05:08.864","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:05:08.870","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:05:08.877","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:05:23.854","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:05:23.857","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:05:23.865","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:05:23.871","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:05:23.879","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:05:27.374","source":"Server","level":"LOG","message":"[2026-07-28T13:33:58.523Z] GET /api/analytics/stats"}
+{"timestamp":"00:05:27.409","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:05:27.430","source":"Server","level":"LOG","message":"[2026-07-28T13:33:58.577Z] GET /api/analytics/violations"}
+{"timestamp":"00:05:27.437","source":"Server","level":"LOG","message":"[2026-07-28T13:33:58.586Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:05:27.442","source":"Server","level":"LOG","message":"[2026-07-28T13:33:58.591Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:05:27.446","source":"Server","level":"LOG","message":"[2026-07-28T13:33:58.595Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:05:27.463","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:05:27.472","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:05:27.482","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:05:27.490","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:05:42.423","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:05:42.464","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:05:42.474","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:05:42.484","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:05:42.492","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:07:00.808","source":"Server","level":"LOG","message":"[2026-07-28T13:35:31.956Z] GET /api/analytics/stats"}
+{"timestamp":"00:07:00.824","source":"Server","level":"LOG","message":"[2026-07-28T13:35:31.972Z] GET /api/analytics/violations"}
+{"timestamp":"00:07:00.830","source":"Server","level":"LOG","message":"[2026-07-28T13:35:31.978Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:07:00.840","source":"Server","level":"LOG","message":"[2026-07-28T13:35:31.989Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:07:00.845","source":"Server","level":"LOG","message":"[2026-07-28T13:35:31.993Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:07:00.870","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:07:00.882","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:07:00.890","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:07:00.898","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:07:00.905","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:07:15.885","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:07:15.890","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:07:15.894","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:07:15.899","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:07:15.907","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:10:10.751","source":"Server","level":"LOG","message":"[2026-07-28T13:38:41.899Z] GET /api/analytics/stats"}
+{"timestamp":"00:10:10.774","source":"Server","level":"LOG","message":"[2026-07-28T13:38:41.922Z] GET /api/analytics/violations"}
+{"timestamp":"00:10:10.777","source":"Server","level":"LOG","message":"[2026-07-28T13:38:41.926Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:10:10.784","source":"Server","level":"LOG","message":"[2026-07-28T13:38:41.932Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:10:10.788","source":"Server","level":"LOG","message":"[2026-07-28T13:38:41.936Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:10:10.861","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:10:10.888","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:10:10.895","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:10:10.904","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:10:10.912","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:10:25.877","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:10:25.889","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:10:25.897","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:10:25.906","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:10:25.915","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:14:20.504","source":"Server","level":"LOG","message":"[2026-07-28T13:42:51.653Z] GET /api/analytics/stats"}
+{"timestamp":"00:14:20.517","source":"Server","level":"LOG","message":"[2026-07-28T13:42:51.665Z] GET /api/analytics/violations"}
+{"timestamp":"00:14:20.532","source":"Server","level":"LOG","message":"[2026-07-28T13:42:51.681Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:14:20.538","source":"Server","level":"LOG","message":"[2026-07-28T13:42:51.687Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:14:20.544","source":"Server","level":"LOG","message":"[2026-07-28T13:42:51.692Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:14:20.580","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:14:20.590","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:14:20.609","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:14:20.619","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:14:20.626","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:14:35.587","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:14:35.591","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:14:35.611","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:14:35.620","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:14:35.628","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:20:15.787","source":"Server","level":"LOG","message":"[2026-07-28T13:48:46.936Z] GET /api/analytics/stats"}
+{"timestamp":"00:20:15.822","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:20:15.866","source":"Server","level":"LOG","message":"[2026-07-28T13:48:47.015Z] GET /api/analytics/violations"}
+{"timestamp":"00:20:15.870","source":"Server","level":"LOG","message":"[2026-07-28T13:48:47.019Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:20:15.878","source":"Server","level":"LOG","message":"[2026-07-28T13:48:47.027Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:20:15.887","source":"Server","level":"LOG","message":"[2026-07-28T13:48:47.036Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:20:15.912","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:20:15.933","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:20:15.973","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:20:15.989","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:20:30.836","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:20:30.916","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:20:30.934","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:20:30.975","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:20:30.992","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:20:46.202","source":"Server","level":"LOG","message":"[2026-07-28T13:49:17.351Z] GET /api/analytics/stats"}
+{"timestamp":"00:20:46.206","source":"Server","level":"LOG","message":"[2026-07-28T13:49:17.354Z] GET /api/analytics/violations"}
+{"timestamp":"00:20:46.209","source":"Server","level":"LOG","message":"[2026-07-28T13:49:17.358Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:20:46.212","source":"Server","level":"LOG","message":"[2026-07-28T13:49:17.361Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:20:46.217","source":"Server","level":"LOG","message":"[2026-07-28T13:49:17.364Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:20:46.259","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:20:46.272","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:20:46.291","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:20:46.300","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:20:46.307","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:21:01.260","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:21:01.277","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:21:01.294","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:21:01.301","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:21:01.308","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:21:03.835","source":"Server","level":"LOG","message":"[2026-07-28T13:49:34.983Z] GET /api/analytics/stats"}
+{"timestamp":"00:21:03.872","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:21:03.890","source":"Server","level":"LOG","message":"[2026-07-28T13:49:35.038Z] GET /api/analytics/violations"}
+{"timestamp":"00:21:03.893","source":"Server","level":"LOG","message":"[2026-07-28T13:49:35.041Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:21:03.898","source":"Server","level":"LOG","message":"[2026-07-28T13:49:35.046Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:21:03.906","source":"Server","level":"LOG","message":"[2026-07-28T13:49:35.054Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:21:03.930","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:21:03.939","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:21:03.944","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:21:03.961","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:21:18.888","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:21:18.932","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:21:18.940","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:21:18.945","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:21:18.963","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:21:23.658","source":"Server","level":"LOG","message":"[2026-07-28T13:49:54.806Z] GET /api/analytics/stats"}
+{"timestamp":"00:21:23.664","source":"Server","level":"LOG","message":"[2026-07-28T13:49:54.813Z] GET /api/analytics/violations"}
+{"timestamp":"00:21:23.669","source":"Server","level":"LOG","message":"[2026-07-28T13:49:54.817Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:21:23.672","source":"Server","level":"LOG","message":"[2026-07-28T13:49:54.820Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:21:23.676","source":"Server","level":"LOG","message":"[2026-07-28T13:49:54.824Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:21:23.713","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:21:23.730","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:21:23.742","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:21:23.752","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:21:23.759","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:21:38.722","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:21:38.732","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:21:38.746","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:21:38.754","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:21:38.760","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:22:17.685","source":"Server","level":"LOG","message":"[2026-07-28T13:50:48.834Z] GET /api/analytics/stats"}
+{"timestamp":"00:22:17.689","source":"Server","level":"LOG","message":"[2026-07-28T13:50:48.837Z] GET /api/analytics/violations"}
+{"timestamp":"00:22:17.692","source":"Server","level":"LOG","message":"[2026-07-28T13:50:48.841Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:22:17.698","source":"Server","level":"LOG","message":"[2026-07-28T13:50:48.846Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:22:17.701","source":"Server","level":"LOG","message":"[2026-07-28T13:50:48.849Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:22:17.748","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:22:17.768","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:22:17.775","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:22:17.780","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:22:17.797","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:22:32.751","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:22:32.771","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:22:32.778","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:22:32.783","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:22:32.802","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:22:34.990","source":"Server","level":"LOG","message":"[2026-07-28T13:51:06.138Z] GET /api/analytics/stats"}
+{"timestamp":"00:22:35.033","source":"Server","level":"LOG","message":"[2026-07-28T13:51:06.182Z] GET /api/analytics/violations"}
+{"timestamp":"00:22:35.037","source":"Server","level":"LOG","message":"[2026-07-28T13:51:06.185Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:22:35.049","source":"Server","level":"LOG","message":"[2026-07-28T13:51:06.194Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:22:35.076","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:22:35.084","source":"Server","level":"LOG","message":"[2026-07-28T13:51:06.232Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:22:35.110","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:22:35.117","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:22:35.127","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:22:35.141","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:22:50.091","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:22:50.112","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:22:50.118","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:22:50.128","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:22:50.142","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:23:13.592","source":"Server","level":"LOG","message":"[2026-07-28T13:51:44.741Z] GET /api/analytics/stats"}
+{"timestamp":"00:23:13.606","source":"Server","level":"LOG","message":"[2026-07-28T13:51:44.754Z] GET /api/analytics/violations"}
+{"timestamp":"00:23:13.610","source":"Server","level":"LOG","message":"[2026-07-28T13:51:44.758Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:23:13.614","source":"Server","level":"LOG","message":"[2026-07-28T13:51:44.762Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:23:13.618","source":"Server","level":"LOG","message":"[2026-07-28T13:51:44.766Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:23:13.664","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:23:13.796","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:23:13.834","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:23:13.877","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:23:13.884","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:23:28.680","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:23:28.798","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:23:28.840","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:23:28.878","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:23:28.887","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:23:31.726","source":"Server","level":"LOG","message":"[2026-07-28T13:52:02.874Z] GET /api/analytics/stats"}
+{"timestamp":"00:23:31.729","source":"Server","level":"LOG","message":"[2026-07-28T13:52:02.877Z] GET /api/analytics/violations"}
+{"timestamp":"00:23:31.732","source":"Server","level":"LOG","message":"[2026-07-28T13:52:02.881Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:23:31.740","source":"Server","level":"LOG","message":"[2026-07-28T13:52:02.888Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:23:31.744","source":"Server","level":"LOG","message":"[2026-07-28T13:52:02.892Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:23:31.788","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:23:31.809","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:23:31.826","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:23:31.831","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:23:31.838","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:23:46.802","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:23:46.812","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:23:46.826","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:23:46.832","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:23:46.839","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:24:02.106","source":"Server","level":"LOG","message":"[2026-07-28T13:52:33.255Z] GET /api/analytics/stats"}
+{"timestamp":"00:24:02.123","source":"Server","level":"LOG","message":"[2026-07-28T13:52:33.272Z] GET /api/analytics/violations"}
+{"timestamp":"00:24:02.128","source":"Server","level":"LOG","message":"[2026-07-28T13:52:33.277Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:24:02.132","source":"Server","level":"LOG","message":"[2026-07-28T13:52:33.280Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:24:02.144","source":"Server","level":"LOG","message":"[2026-07-28T13:52:33.292Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:24:02.181","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:24:02.199","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:24:02.208","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:24:02.216","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:24:02.230","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:24:17.196","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:24:17.202","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:24:17.211","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:24:17.218","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:24:17.231","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:24:34.858","source":"Server","level":"LOG","message":"[2026-07-28T13:53:06.007Z] GET /api/analytics/stats"}
+{"timestamp":"00:24:34.863","source":"Server","level":"LOG","message":"[2026-07-28T13:53:06.011Z] GET /api/analytics/violations"}
+{"timestamp":"00:24:34.866","source":"Server","level":"LOG","message":"[2026-07-28T13:53:06.014Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:24:34.870","source":"Server","level":"LOG","message":"[2026-07-28T13:53:06.018Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:24:34.881","source":"Server","level":"LOG","message":"[2026-07-28T13:53:06.029Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:24:34.951","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:24:34.963","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:24:34.973","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:24:35.000","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:24:35.020","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:24:49.968","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:24:49.970","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:24:49.975","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:24:50.002","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:24:50.021","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:25:03.575","source":"Server","level":"LOG","message":"[2026-07-28T13:53:34.723Z] GET /api/analytics/stats"}
+{"timestamp":"00:25:03.582","source":"Server","level":"LOG","message":"[2026-07-28T13:53:34.730Z] GET /api/analytics/violations"}
+{"timestamp":"00:25:03.588","source":"Server","level":"LOG","message":"[2026-07-28T13:53:34.737Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:25:03.597","source":"Server","level":"LOG","message":"[2026-07-28T13:53:34.745Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:25:03.600","source":"Server","level":"LOG","message":"[2026-07-28T13:53:34.748Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:25:03.640","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:25:03.650","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:25:03.657","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:25:03.666","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:25:03.677","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:25:18.654","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:25:18.656","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:25:18.658","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:25:18.668","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:25:18.679","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:25:22.463","source":"Server","level":"LOG","message":"[2026-07-28T13:53:53.611Z] GET /api/analytics/stats"}
+{"timestamp":"00:25:22.466","source":"Server","level":"LOG","message":"[2026-07-28T13:53:53.614Z] GET /api/analytics/violations"}
+{"timestamp":"00:25:22.468","source":"Server","level":"LOG","message":"[2026-07-28T13:53:53.617Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:25:22.475","source":"Server","level":"LOG","message":"[2026-07-28T13:53:53.623Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:25:22.480","source":"Server","level":"LOG","message":"[2026-07-28T13:53:53.628Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:25:22.544","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:25:22.559","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:25:22.567","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:25:22.574","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:25:22.582","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:25:37.556","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:25:37.560","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:25:37.569","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:25:37.575","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:25:37.583","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:25:59.300","source":"Server","level":"LOG","message":"[2026-07-28T13:54:30.448Z] GET /api/analytics/stats"}
+{"timestamp":"00:25:59.306","source":"Server","level":"LOG","message":"[2026-07-28T13:54:30.454Z] GET /api/analytics/violations"}
+{"timestamp":"00:25:59.309","source":"Server","level":"LOG","message":"[2026-07-28T13:54:30.458Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:25:59.313","source":"Server","level":"LOG","message":"[2026-07-28T13:54:30.462Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:25:59.318","source":"Server","level":"LOG","message":"[2026-07-28T13:54:30.466Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:25:59.371","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:25:59.382","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:25:59.391","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:25:59.399","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:25:59.408","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:26:14.385","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:26:14.387","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:26:14.393","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:26:14.401","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:26:14.410","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:26:44.007","source":"Server","level":"LOG","message":"[2026-07-28T13:55:15.155Z] GET /api/analytics/stats"}
+{"timestamp":"00:26:44.017","source":"Server","level":"LOG","message":"[2026-07-28T13:55:15.165Z] GET /api/analytics/violations"}
+{"timestamp":"00:26:44.054","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:26:44.063","source":"Server","level":"LOG","message":"[2026-07-28T13:55:15.211Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:26:44.076","source":"Server","level":"LOG","message":"[2026-07-28T13:55:15.225Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:26:44.085","source":"Server","level":"LOG","message":"[2026-07-28T13:55:15.233Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:26:44.104","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:26:44.125","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:26:44.135","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:26:44.143","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:26:59.069","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:26:59.106","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:26:59.126","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:26:59.137","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:26:59.145","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:27:19.719","source":"Server","level":"LOG","message":"[2026-07-28T13:55:50.866Z] GET /api/analytics/stats"}
+{"timestamp":"00:27:19.737","source":"Server","level":"LOG","message":"[2026-07-28T13:55:50.886Z] GET /api/analytics/violations"}
+{"timestamp":"00:27:19.741","source":"Server","level":"LOG","message":"[2026-07-28T13:55:50.889Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:27:19.747","source":"Server","level":"LOG","message":"[2026-07-28T13:55:50.895Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:27:19.751","source":"Server","level":"LOG","message":"[2026-07-28T13:55:50.899Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:27:19.823","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:27:19.900","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:27:19.910","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:27:19.919","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:27:19.927","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:27:34.828","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:27:34.903","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:27:34.911","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:27:34.921","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:27:34.928","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:28:56.063","source":"Server","level":"LOG","message":"[2026-07-28T13:57:27.210Z] GET /api/analytics/stats"}
+{"timestamp":"00:28:56.078","source":"Server","level":"LOG","message":"[2026-07-28T13:57:27.226Z] GET /api/analytics/violations"}
+{"timestamp":"00:28:56.088","source":"Server","level":"LOG","message":"[2026-07-28T13:57:27.236Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:28:56.100","source":"Server","level":"LOG","message":"[2026-07-28T13:57:27.249Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:28:56.113","source":"Server","level":"LOG","message":"[2026-07-28T13:57:27.262Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:28:56.157","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:28:56.179","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:28:56.189","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:28:56.219","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:28:56.246","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:29:11.167","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:29:11.181","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:29:11.190","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:29:11.221","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:29:11.249","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:32:28.348","source":"Server","level":"LOG","message":"[2026-07-28T14:00:59.496Z] GET /api/analytics/stats"}
+{"timestamp":"00:32:28.351","source":"Server","level":"LOG","message":"[2026-07-28T14:00:59.499Z] GET /api/analytics/violations"}
+{"timestamp":"00:32:28.353","source":"Server","level":"LOG","message":"[2026-07-28T14:00:59.502Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:32:28.358","source":"Server","level":"LOG","message":"[2026-07-28T14:00:59.507Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:32:28.361","source":"Server","level":"LOG","message":"[2026-07-28T14:00:59.509Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:32:28.394","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:32:28.405","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:32:28.411","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:32:28.417","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:32:28.425","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:32:43.407","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:32:43.409","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:32:43.412","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:32:43.419","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:32:43.427","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:33:15.170","source":"Server","level":"LOG","message":"[2026-07-28T14:01:46.319Z] GET /api/analytics/stats"}
+{"timestamp":"00:33:15.174","source":"Server","level":"LOG","message":"[2026-07-28T14:01:46.323Z] GET /api/analytics/violations"}
+{"timestamp":"00:33:15.178","source":"Server","level":"LOG","message":"[2026-07-28T14:01:46.327Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:33:15.180","source":"Server","level":"LOG","message":"[2026-07-28T14:01:46.329Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:33:15.182","source":"Server","level":"LOG","message":"[2026-07-28T14:01:46.331Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:33:15.209","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:33:15.219","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:33:15.224","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:33:15.229","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:33:15.235","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:33:30.222","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:33:30.223","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:33:30.227","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:33:30.231","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:33:30.236","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:33:35.571","source":"Server","level":"LOG","message":"[2026-07-28T14:02:06.720Z] GET /api/analytics/stats"}
+{"timestamp":"00:33:35.619","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:33:35.646","source":"Server","level":"LOG","message":"[2026-07-28T14:02:06.794Z] GET /api/analytics/violations"}
+{"timestamp":"00:33:35.652","source":"Server","level":"LOG","message":"[2026-07-28T14:02:06.801Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:33:35.659","source":"Server","level":"LOG","message":"[2026-07-28T14:02:06.807Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:33:35.674","source":"Server","level":"LOG","message":"[2026-07-28T14:02:06.823Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:33:35.695","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:33:35.704","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:33:35.714","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:33:35.757","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:33:50.634","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:33:50.697","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:33:50.706","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:33:50.714","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:33:50.759","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:33:56.385","source":"Server","level":"LOG","message":"[2026-07-28T14:02:27.534Z] GET /api/analytics/stats"}
+{"timestamp":"00:33:56.388","source":"Server","level":"LOG","message":"[2026-07-28T14:02:27.537Z] GET /api/analytics/violations"}
+{"timestamp":"00:33:56.393","source":"Server","level":"LOG","message":"[2026-07-28T14:02:27.541Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:33:56.401","source":"Server","level":"LOG","message":"[2026-07-28T14:02:27.549Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:33:56.407","source":"Server","level":"LOG","message":"[2026-07-28T14:02:27.555Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:33:56.438","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:33:56.449","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:33:56.457","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:33:56.468","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:33:56.474","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:34:11.449","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:34:11.451","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:34:11.460","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:34:11.469","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:34:11.475","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:34:18.769","source":"Server","level":"LOG","message":"[2026-07-28T14:02:49.917Z] GET /api/analytics/stats"}
+{"timestamp":"00:34:18.771","source":"Server","level":"LOG","message":"[2026-07-28T14:02:49.920Z] GET /api/analytics/violations"}
+{"timestamp":"00:34:18.776","source":"Server","level":"LOG","message":"[2026-07-28T14:02:49.924Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:34:18.784","source":"Server","level":"LOG","message":"[2026-07-28T14:02:49.933Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:34:18.789","source":"Server","level":"LOG","message":"[2026-07-28T14:02:49.937Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:34:18.828","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:34:18.838","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:34:18.849","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:34:18.857","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:34:18.865","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:34:33.831","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:34:33.840","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:34:33.850","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:34:33.859","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:34:33.867","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:36:34.282","source":"Server","level":"LOG","message":"[2026-07-28T14:05:05.431Z] GET /api/analytics/stats"}
+{"timestamp":"00:36:34.291","source":"Server","level":"LOG","message":"[2026-07-28T14:05:05.438Z] GET /api/analytics/violations"}
+{"timestamp":"00:36:34.294","source":"Server","level":"LOG","message":"[2026-07-28T14:05:05.443Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:36:34.297","source":"Server","level":"LOG","message":"[2026-07-28T14:05:05.446Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:36:34.300","source":"Server","level":"LOG","message":"[2026-07-28T14:05:05.448Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:36:34.343","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:36:34.358","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:36:34.372","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:36:34.378","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:36:34.430","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:36:49.358","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:36:49.361","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:36:49.374","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:36:49.380","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:36:49.437","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:36:56.289","source":"Server","level":"LOG","message":"[2026-07-28T14:05:27.438Z] GET /api/analytics/stats"}
+{"timestamp":"00:36:56.293","source":"Server","level":"LOG","message":"[2026-07-28T14:05:27.441Z] GET /api/analytics/violations"}
+{"timestamp":"00:36:56.295","source":"Server","level":"LOG","message":"[2026-07-28T14:05:27.444Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:36:56.300","source":"Server","level":"LOG","message":"[2026-07-28T14:05:27.449Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:36:56.303","source":"Server","level":"LOG","message":"[2026-07-28T14:05:27.452Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:36:56.336","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:36:56.342","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:36:56.354","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:36:56.361","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:36:56.369","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:37:11.346","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:37:11.349","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:37:11.354","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:37:11.361","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:37:11.370","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:37:13.870","source":"Server","level":"LOG","message":"[2026-07-28T14:05:45.018Z] GET /api/analytics/stats"}
+{"timestamp":"00:37:13.872","source":"Server","level":"LOG","message":"[2026-07-28T14:05:45.020Z] GET /api/analytics/violations"}
+{"timestamp":"00:37:13.875","source":"Server","level":"LOG","message":"[2026-07-28T14:05:45.024Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:37:13.879","source":"Server","level":"LOG","message":"[2026-07-28T14:05:45.027Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:37:13.881","source":"Server","level":"LOG","message":"[2026-07-28T14:05:45.030Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:37:13.938","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:37:13.953","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:37:13.960","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:37:13.968","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:37:13.976","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:37:28.952","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:37:28.955","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:37:28.962","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:37:28.969","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:37:28.978","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:37:33.267","source":"Server","level":"LOG","message":"[2026-07-28T14:06:04.415Z] GET /api/analytics/stats"}
+{"timestamp":"00:37:33.271","source":"Server","level":"LOG","message":"[2026-07-28T14:06:04.420Z] GET /api/analytics/violations"}
+{"timestamp":"00:37:33.274","source":"Server","level":"LOG","message":"[2026-07-28T14:06:04.422Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:37:33.276","source":"Server","level":"LOG","message":"[2026-07-28T14:06:04.425Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:37:33.279","source":"Server","level":"LOG","message":"[2026-07-28T14:06:04.428Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:37:33.327","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:37:33.337","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:37:33.344","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:37:33.353","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:37:33.359","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:37:48.342","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:37:48.344","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:37:48.348","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:37:48.354","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:37:48.361","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:38:00.673","source":"Server","level":"LOG","message":"[2026-07-28T14:06:31.822Z] GET /api/analytics/stats"}
+{"timestamp":"00:38:00.680","source":"Server","level":"LOG","message":"[2026-07-28T14:06:31.829Z] GET /api/analytics/violations"}
+{"timestamp":"00:38:00.691","source":"Server","level":"LOG","message":"[2026-07-28T14:06:31.840Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:38:00.700","source":"Server","level":"LOG","message":"[2026-07-28T14:06:31.848Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:38:00.705","source":"Server","level":"LOG","message":"[2026-07-28T14:06:31.854Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:38:00.740","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:38:00.749","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:38:00.770","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:38:00.779","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:38:00.787","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:38:15.755","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:38:15.756","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:38:15.771","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:38:15.780","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:38:15.788","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:38:47.884","source":"Server","level":"LOG","message":"[2026-07-28T14:07:19.032Z] GET /api/analytics/stats"}
+{"timestamp":"00:38:47.925","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:38:47.931","source":"Server","level":"LOG","message":"[2026-07-28T14:07:19.080Z] GET /api/analytics/violations"}
+{"timestamp":"00:38:47.937","source":"Server","level":"LOG","message":"[2026-07-28T14:07:19.085Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:38:47.948","source":"Server","level":"LOG","message":"[2026-07-28T14:07:19.096Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:38:47.957","source":"Server","level":"LOG","message":"[2026-07-28T14:07:19.106Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:38:47.979","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:38:47.992","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:38:48.002","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:38:48.010","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:39:02.927","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:39:02.980","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:39:02.995","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:39:03.005","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:39:03.014","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:39:06.339","source":"Server","level":"LOG","message":"[2026-07-28T14:07:37.487Z] GET /api/analytics/stats"}
+{"timestamp":"00:39:06.343","source":"Server","level":"LOG","message":"[2026-07-28T14:07:37.492Z] GET /api/analytics/violations"}
+{"timestamp":"00:39:06.351","source":"Server","level":"LOG","message":"[2026-07-28T14:07:37.499Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:39:06.357","source":"Server","level":"LOG","message":"[2026-07-28T14:07:37.506Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:39:06.368","source":"Server","level":"LOG","message":"[2026-07-28T14:07:37.514Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:39:06.404","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:39:06.418","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:39:06.498","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:39:06.535","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:39:06.601","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:39:21.418","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:39:21.421","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:39:21.499","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:39:21.537","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:39:21.620","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:40:09.636","source":"Server","level":"LOG","message":"[2026-07-28T14:08:40.784Z] GET /api/analytics/stats"}
+{"timestamp":"00:40:09.639","source":"Server","level":"LOG","message":"[2026-07-28T14:08:40.788Z] GET /api/analytics/violations"}
+{"timestamp":"00:40:09.652","source":"Server","level":"LOG","message":"[2026-07-28T14:08:40.800Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:40:09.656","source":"Server","level":"LOG","message":"[2026-07-28T14:08:40.804Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:40:09.666","source":"Server","level":"LOG","message":"[2026-07-28T14:08:40.814Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:40:09.697","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:40:09.706","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:40:09.716","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:40:09.724","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:40:09.731","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:40:24.711","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:40:24.713","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:40:24.718","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:40:24.726","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:40:24.733","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:41:34.187","source":"Server","level":"LOG","message":"[2026-07-28T14:10:05.335Z] GET /api/analytics/stats"}
+{"timestamp":"00:41:34.191","source":"Server","level":"LOG","message":"[2026-07-28T14:10:05.339Z] GET /api/analytics/violations"}
+{"timestamp":"00:41:34.193","source":"Server","level":"LOG","message":"[2026-07-28T14:10:05.341Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:41:34.195","source":"Server","level":"LOG","message":"[2026-07-28T14:10:05.344Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:41:34.199","source":"Server","level":"LOG","message":"[2026-07-28T14:10:05.347Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:41:34.226","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:41:34.241","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:41:34.247","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:41:34.256","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:41:34.262","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:41:49.240","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:41:49.242","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:41:49.249","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:41:49.257","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:41:49.263","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"00:42:05.557","source":"Server","level":"LOG","message":"[2026-07-28T14:10:36.706Z] GET /api/analytics/stats"}
+{"timestamp":"00:42:05.586","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:42:05.600","source":"Server","level":"LOG","message":"[2026-07-28T14:10:36.749Z] GET /api/analytics/violations"}
+{"timestamp":"00:42:05.603","source":"Server","level":"LOG","message":"[2026-07-28T14:10:36.751Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"00:42:05.606","source":"Server","level":"LOG","message":"[2026-07-28T14:10:36.754Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"00:42:05.609","source":"Server","level":"LOG","message":"[2026-07-28T14:10:36.757Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"00:42:05.629","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:42:05.636","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:42:05.643","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:42:05.651","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"00:42:20.600","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/stats"}
+{"timestamp":"00:42:20.632","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/violations"}
+{"timestamp":"00:42:20.637","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/vehicle-types"}
+{"timestamp":"00:42:20.644","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/hourly-traffic"}
+{"timestamp":"00:42:20.653","source":"Server","level":"WARN","message":"⚠️ DB unavailable — serving mock data for /api/analytics/speed-distribution"}
+{"timestamp":"50:14:26.402","source":"Server","level":"LOG","message":"[2026-08-01T18:06:56.006Z] GET /api/logs"}
+{"timestamp":"50:14:29.879","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"50:14:29.880","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"50:15:00.494","source":"Server","level":"LOG","message":"[2026-08-01T18:07:30.098Z] GET /api/analytics/stats"}
+{"timestamp":"50:15:00.500","source":"Server","level":"LOG","message":"[2026-08-01T18:07:30.104Z] GET /api/analytics/violations"}
+{"timestamp":"50:15:00.504","source":"Server","level":"LOG","message":"[2026-08-01T18:07:30.108Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"50:15:00.510","source":"Server","level":"LOG","message":"[2026-08-01T18:07:30.114Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"50:15:00.513","source":"Server","level":"LOG","message":"[2026-08-01T18:07:30.117Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"50:15:00.536","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"50:15:00.547","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"50:15:00.553","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"50:15:00.560","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"50:15:00.566","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"50:15:01.411","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"50:15:01.411","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"50:15:01.412","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"50:15:01.412","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"50:15:01.412","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"50:15:01.618","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"50:15:01.620","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"50:15:01.622","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"50:15:01.625","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"50:15:01.627","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"50:15:47.230","source":"Server","level":"LOG","message":"[2026-08-01T18:08:16.835Z] GET /api/signals/state"}
+{"timestamp":"50:15:47.555","source":"Server","level":"LOG","message":"[2026-08-01T18:08:17.159Z] GET /api/signals/state"}
+{"timestamp":"50:15:48.053","source":"Server","level":"LOG","message":"[2026-08-01T18:08:17.657Z] GET /api/signals/state"}
+{"timestamp":"50:15:48.552","source":"Server","level":"LOG","message":"[2026-08-01T18:08:18.156Z] GET /api/signals/state"}
+{"timestamp":"50:15:49.053","source":"Server","level":"LOG","message":"[2026-08-01T18:08:18.658Z] GET /api/signals/state"}
+{"timestamp":"50:15:49.553","source":"Server","level":"LOG","message":"[2026-08-01T18:08:19.157Z] GET /api/signals/state"}
+{"timestamp":"50:15:50.053","source":"Server","level":"LOG","message":"[2026-08-01T18:08:19.657Z] GET /api/signals/state"}
+{"timestamp":"50:15:50.553","source":"Server","level":"LOG","message":"[2026-08-01T18:08:20.158Z] GET /api/signals/state"}
+{"timestamp":"50:15:51.056","source":"Server","level":"LOG","message":"[2026-08-01T18:08:20.661Z] GET /api/signals/state"}
+{"timestamp":"50:15:51.552","source":"Server","level":"LOG","message":"[2026-08-01T18:08:21.157Z] GET /api/signals/state"}
+{"timestamp":"50:15:52.052","source":"Server","level":"LOG","message":"[2026-08-01T18:08:21.657Z] GET /api/signals/state"}
+{"timestamp":"50:15:52.553","source":"Server","level":"LOG","message":"[2026-08-01T18:08:22.157Z] GET /api/signals/state"}
+{"timestamp":"50:15:53.052","source":"Server","level":"LOG","message":"[2026-08-01T18:08:22.656Z] GET /api/signals/state"}
+{"timestamp":"50:15:53.553","source":"Server","level":"LOG","message":"[2026-08-01T18:08:23.157Z] GET /api/signals/state"}
+{"timestamp":"50:15:54.052","source":"Server","level":"LOG","message":"[2026-08-01T18:08:23.657Z] GET /api/signals/state"}
+{"timestamp":"50:15:54.552","source":"Server","level":"LOG","message":"[2026-08-01T18:08:24.157Z] GET /api/signals/state"}
+{"timestamp":"50:15:54.927","source":"Server","level":"LOG","message":"[2026-08-01T18:08:24.531Z] GET /api/logs"}
+{"timestamp":"50:15:56.081","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"50:15:56.081","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"50:16:01.190","source":"Server","level":"LOG","message":"[2026-08-01T18:08:30.795Z] GET /api/challans"}
+{"timestamp":"50:16:01.199","source":"Server","level":"LOG","message":"[2026-08-01T18:08:30.803Z] GET /api/challans/stats"}
+{"timestamp":"50:16:02.631","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"50:16:02.716","source":"Server","level":"LOG","message":"[2026-08-01T18:08:32.321Z] GET /api/logs"}
+{"timestamp":"50:16:03.226","source":"Server","level":"LOG","message":"[2026-08-01T18:08:32.830Z] GET /api/signals/state"}
+{"timestamp":"50:16:03.664","source":"Server","level":"LOG","message":"[2026-08-01T18:08:33.268Z] GET /api/analytics/stats"}
+{"timestamp":"50:16:03.665","source":"Server","level":"LOG","message":"[2026-08-01T18:08:33.270Z] GET /api/analytics/violations"}
+{"timestamp":"50:16:03.667","source":"Server","level":"LOG","message":"[2026-08-01T18:08:33.272Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"50:16:03.672","source":"Server","level":"LOG","message":"[2026-08-01T18:08:33.277Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"50:16:03.675","source":"Server","level":"LOG","message":"[2026-08-01T18:08:33.280Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"50:16:03.708","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"50:16:03.712","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"50:16:03.716","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"50:16:03.721","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"50:16:03.733","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"50:16:03.814","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"50:16:03.817","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"50:16:03.821","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"50:16:04.337","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"50:16:04.337","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"50:16:04.432","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"50:16:04.434","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:34:08.701","source":"Server","level":"LOG","message":"[2026-08-01T20:26:38.305Z] GET /api/analytics/stats"}
+{"timestamp":"52:34:08.709","source":"Server","level":"LOG","message":"[2026-08-01T20:26:38.313Z] GET /api/analytics/violations"}
+{"timestamp":"52:34:08.713","source":"Server","level":"LOG","message":"[2026-08-01T20:26:38.317Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"52:34:08.716","source":"Server","level":"LOG","message":"[2026-08-01T20:26:38.321Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"52:34:08.720","source":"Server","level":"LOG","message":"[2026-08-01T20:26:38.324Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"52:34:08.760","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:34:08.772","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:34:08.780","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:34:08.796","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:34:08.804","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:34:09.974","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:34:09.977","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:34:10.104","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:34:10.108","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:34:10.489","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:34:10.489","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:34:10.489","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:34:10.598","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:34:10.601","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:34:10.604","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:37:03.404","source":"Server","level":"LOG","message":"[2026-08-01T20:29:33.009Z] GET /api/analytics/stats"}
+{"timestamp":"52:37:03.418","source":"Server","level":"LOG","message":"[2026-08-01T20:29:33.023Z] GET /api/analytics/violations"}
+{"timestamp":"52:37:03.441","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:37:03.464","source":"Server","level":"LOG","message":"[2026-08-01T20:29:33.068Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"52:37:03.468","source":"Server","level":"LOG","message":"[2026-08-01T20:29:33.072Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"52:37:03.473","source":"Server","level":"LOG","message":"[2026-08-01T20:29:33.077Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"52:37:03.520","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:37:03.532","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:37:03.542","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:37:03.552","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:37:04.544","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:37:04.749","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:37:04.755","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:37:04.755","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:37:04.758","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:37:04.758","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:37:04.888","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:37:04.901","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:37:04.910","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:37:04.924","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:40:28.229","source":"Server","level":"LOG","message":"[2026-08-01T20:32:57.833Z] GET /api/analytics/stats"}
+{"timestamp":"52:40:28.236","source":"Server","level":"LOG","message":"[2026-08-01T20:32:57.841Z] GET /api/analytics/violations"}
+{"timestamp":"52:40:28.257","source":"Server","level":"LOG","message":"[2026-08-01T20:32:57.861Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"52:40:28.263","source":"Server","level":"LOG","message":"[2026-08-01T20:32:57.868Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"52:40:28.266","source":"Server","level":"LOG","message":"[2026-08-01T20:32:57.870Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"52:40:28.290","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:40:28.306","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:40:28.318","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:40:28.324","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:40:28.333","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:40:29.153","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:40:29.246","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:40:29.246","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:40:29.247","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:40:29.250","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:40:29.250","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:40:29.332","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:40:29.337","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:40:29.341","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:40:29.346","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:41:47.268","source":"Server","level":"LOG","message":"[2026-08-01T20:34:16.872Z] GET /api/analytics/stats"}
+{"timestamp":"52:41:47.271","source":"Server","level":"LOG","message":"[2026-08-01T20:34:16.876Z] GET /api/analytics/violations"}
+{"timestamp":"52:41:47.274","source":"Server","level":"LOG","message":"[2026-08-01T20:34:16.878Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"52:41:47.281","source":"Server","level":"LOG","message":"[2026-08-01T20:34:16.885Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"52:41:47.284","source":"Server","level":"LOG","message":"[2026-08-01T20:34:16.889Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"52:41:47.321","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:41:47.333","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:41:47.343","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:41:47.353","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:41:47.362","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:41:48.398","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:41:48.399","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:41:48.400","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:41:48.400","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:41:48.400","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:41:48.603","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:41:48.607","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:41:48.610","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:41:48.613","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:41:48.620","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:42:05.135","source":"Server","level":"LOG","message":"[2026-08-01T20:34:34.740Z] GET /api/analytics/stats"}
+{"timestamp":"52:42:05.144","source":"Server","level":"LOG","message":"[2026-08-01T20:34:34.748Z] GET /api/analytics/violations"}
+{"timestamp":"52:42:05.152","source":"Server","level":"LOG","message":"[2026-08-01T20:34:34.756Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"52:42:05.155","source":"Server","level":"LOG","message":"[2026-08-01T20:34:34.759Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"52:42:05.164","source":"Server","level":"LOG","message":"[2026-08-01T20:34:34.768Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"52:42:05.185","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:42:05.202","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:42:05.222","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:42:05.235","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:42:05.240","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:42:05.396","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:42:05.401","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:42:05.411","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:42:05.423","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:42:05.429","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:42:15.656","source":"Server","level":"LOG","message":"[2026-08-01T20:34:45.261Z] GET /api/analytics/stats"}
+{"timestamp":"52:42:15.682","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:42:15.708","source":"Server","level":"LOG","message":"[2026-08-01T20:34:45.312Z] GET /api/analytics/violations"}
+{"timestamp":"52:42:15.729","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:42:15.743","source":"Server","level":"LOG","message":"[2026-08-01T20:34:45.347Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"52:42:15.747","source":"Server","level":"LOG","message":"[2026-08-01T20:34:45.351Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"52:42:15.751","source":"Server","level":"LOG","message":"[2026-08-01T20:34:45.355Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"52:42:15.780","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:42:15.797","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:42:15.807","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:42:15.829","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:42:15.845","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:42:16.056","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:42:16.072","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:42:16.081","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:42:21.011","source":"Server","level":"LOG","message":"[2026-08-01T20:34:50.614Z] GET /api/analytics/stats"}
+{"timestamp":"52:42:21.076","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:42:21.143","source":"Server","level":"LOG","message":"[2026-08-01T20:34:50.747Z] GET /api/analytics/violations"}
+{"timestamp":"52:42:21.150","source":"Server","level":"LOG","message":"[2026-08-01T20:34:50.754Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"52:42:21.155","source":"Server","level":"LOG","message":"[2026-08-01T20:34:50.760Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"52:42:21.185","source":"Server","level":"LOG","message":"[2026-08-01T20:34:50.790Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"52:42:21.202","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:42:21.340","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:42:21.349","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:42:21.358","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:42:21.365","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:42:21.438","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:42:21.450","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:42:21.459","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:42:21.463","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:43:26.199","source":"Server","level":"LOG","message":"[2026-08-01T20:35:55.803Z] GET /api/analytics/stats"}
+{"timestamp":"52:43:26.204","source":"Server","level":"LOG","message":"[2026-08-01T20:35:55.809Z] GET /api/analytics/violations"}
+{"timestamp":"52:43:26.220","source":"Server","level":"LOG","message":"[2026-08-01T20:35:55.824Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"52:43:26.225","source":"Server","level":"LOG","message":"[2026-08-01T20:35:55.829Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"52:43:26.230","source":"Server","level":"LOG","message":"[2026-08-01T20:35:55.834Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"52:43:26.254","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:43:26.272","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:43:26.285","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:43:26.312","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:43:26.325","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:43:27.413","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:43:27.413","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:43:27.414","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:43:27.414","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:43:27.415","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:43:27.515","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:43:27.522","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:43:27.525","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:43:27.529","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:43:27.533","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:43:40.556","source":"Server","level":"LOG","message":"[2026-08-01T20:36:10.160Z] GET /api/analytics/stats"}
+{"timestamp":"52:43:40.559","source":"Server","level":"LOG","message":"[2026-08-01T20:36:10.163Z] GET /api/analytics/violations"}
+{"timestamp":"52:43:40.561","source":"Server","level":"LOG","message":"[2026-08-01T20:36:10.166Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"52:43:40.564","source":"Server","level":"LOG","message":"[2026-08-01T20:36:10.168Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"52:43:40.571","source":"Server","level":"LOG","message":"[2026-08-01T20:36:10.175Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"52:43:40.638","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:43:40.655","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:43:40.673","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:43:40.679","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:43:40.686","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:43:40.837","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:43:40.845","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:43:40.858","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:43:40.871","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:43:40.878","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:43:45.110","source":"Server","level":"LOG","message":"[2026-08-01T20:36:14.715Z] GET /api/analytics/stats"}
+{"timestamp":"52:43:45.116","source":"Server","level":"LOG","message":"[2026-08-01T20:36:14.720Z] GET /api/analytics/violations"}
+{"timestamp":"52:43:45.120","source":"Server","level":"LOG","message":"[2026-08-01T20:36:14.725Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"52:43:45.123","source":"Server","level":"LOG","message":"[2026-08-01T20:36:14.727Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"52:43:45.128","source":"Server","level":"LOG","message":"[2026-08-01T20:36:14.732Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"52:43:45.164","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:43:45.175","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:43:45.180","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:43:45.187","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:43:45.195","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:43:45.262","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:43:45.273","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:43:45.284","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:43:45.290","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:43:45.296","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:43:50.983","source":"Server","level":"LOG","message":"[2026-08-01T20:36:20.588Z] GET /api/analytics/stats"}
+{"timestamp":"52:43:50.995","source":"Server","level":"LOG","message":"[2026-08-01T20:36:20.599Z] GET /api/analytics/violations"}
+{"timestamp":"52:43:51.011","source":"Server","level":"LOG","message":"[2026-08-01T20:36:20.614Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"52:43:51.020","source":"Server","level":"LOG","message":"[2026-08-01T20:36:20.624Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"52:43:51.028","source":"Server","level":"LOG","message":"[2026-08-01T20:36:20.632Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"52:43:51.060","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:43:51.106","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:43:51.125","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:43:51.136","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:43:51.143","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:43:51.176","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:43:51.277","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:43:51.283","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:43:51.288","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:43:51.291","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:44:04.974","source":"Server","level":"LOG","message":"[2026-08-01T20:36:34.579Z] GET /api/analytics/stats"}
+{"timestamp":"52:44:06.055","source":"Server","level":"LOG","message":"[2026-08-01T20:36:35.659Z] GET /api/analytics/stats"}
+{"timestamp":"52:44:06.077","source":"Server","level":"LOG","message":"[2026-08-01T20:36:35.681Z] GET /api/analytics/violations"}
+{"timestamp":"52:44:06.080","source":"Server","level":"LOG","message":"[2026-08-01T20:36:35.685Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"52:44:06.086","source":"Server","level":"LOG","message":"[2026-08-01T20:36:35.690Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"52:44:06.116","source":"Server","level":"LOG","message":"[2026-08-01T20:36:35.719Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"52:44:06.209","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:44:06.222","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:44:06.235","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:44:06.242","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:44:06.255","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:44:06.436","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:44:06.443","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:44:06.455","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:44:06.474","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:44:06.481","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:45:51.676","source":"Server","level":"LOG","message":"[2026-08-01T20:38:21.280Z] GET /api/analytics/stats"}
+{"timestamp":"52:45:51.681","source":"Server","level":"LOG","message":"[2026-08-01T20:38:21.285Z] GET /api/analytics/violations"}
+{"timestamp":"52:45:51.684","source":"Server","level":"LOG","message":"[2026-08-01T20:38:21.289Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"52:45:51.688","source":"Server","level":"LOG","message":"[2026-08-01T20:38:21.292Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"52:45:51.704","source":"Server","level":"LOG","message":"[2026-08-01T20:38:21.308Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"52:45:51.747","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:45:51.755","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:45:51.765","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:45:51.773","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:45:51.781","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:45:52.350","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:45:52.351","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:45:52.352","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:45:52.389","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:45:52.389","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:45:52.453","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:45:52.468","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:45:52.474","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:45:52.496","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:45:52.505","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:48:14.491","source":"Server","level":"LOG","message":"[2026-08-01T20:40:44.095Z] GET /api/analytics/stats"}
+{"timestamp":"52:48:14.497","source":"Server","level":"LOG","message":"[2026-08-01T20:40:44.099Z] GET /api/analytics/violations"}
+{"timestamp":"52:48:14.504","source":"Server","level":"LOG","message":"[2026-08-01T20:40:44.109Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"52:48:14.511","source":"Server","level":"LOG","message":"[2026-08-01T20:40:44.116Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"52:48:14.524","source":"Server","level":"LOG","message":"[2026-08-01T20:40:44.129Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"52:48:14.623","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:48:14.631","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:48:14.638","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:48:14.646","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:48:14.652","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:48:15.243","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:48:15.244","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:48:15.244","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:48:15.244","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:48:15.245","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:48:15.346","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:48:15.352","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:48:15.358","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:48:15.363","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:48:15.370","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:48:30.850","source":"Server","level":"LOG","message":"[2026-08-01T20:41:00.454Z] GET /api/analytics/stats"}
+{"timestamp":"52:48:30.856","source":"Server","level":"LOG","message":"[2026-08-01T20:41:00.460Z] GET /api/analytics/violations"}
+{"timestamp":"52:48:30.862","source":"Server","level":"LOG","message":"[2026-08-01T20:41:00.467Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"52:48:30.868","source":"Server","level":"LOG","message":"[2026-08-01T20:41:00.473Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"52:48:30.925","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:48:30.937","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:48:31.142","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:48:31.146","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:48:33.108","source":"Server","level":"LOG","message":"[2026-08-01T20:41:02.712Z] GET /api/analytics/stats"}
+{"timestamp":"52:48:33.175","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:48:33.185","source":"Server","level":"LOG","message":"[2026-08-01T20:41:02.789Z] GET /api/analytics/violations"}
+{"timestamp":"52:48:33.194","source":"Server","level":"LOG","message":"[2026-08-01T20:41:02.798Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"52:48:33.208","source":"Server","level":"LOG","message":"[2026-08-01T20:41:02.810Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"52:48:33.259","source":"Server","level":"LOG","message":"[2026-08-01T20:41:02.859Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"52:48:33.291","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:48:33.359","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:48:33.414","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:48:33.424","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:48:33.443","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:48:33.543","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:48:33.553","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:48:33.557","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:48:33.563","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:53:50.797","source":"Server","level":"LOG","message":"[2026-08-01T20:46:20.402Z] GET /api/analytics/stats"}
+{"timestamp":"52:53:50.801","source":"Server","level":"LOG","message":"[2026-08-01T20:46:20.405Z] GET /api/analytics/violations"}
+{"timestamp":"52:53:50.805","source":"Server","level":"LOG","message":"[2026-08-01T20:46:20.409Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"52:53:50.809","source":"Server","level":"LOG","message":"[2026-08-01T20:46:20.413Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"52:53:50.813","source":"Server","level":"LOG","message":"[2026-08-01T20:46:20.417Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"52:53:50.870","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:53:50.882","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:53:50.890","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:53:50.898","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:53:50.912","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:53:51.576","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:53:51.576","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:53:51.604","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:53:51.605","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:53:51.606","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL"}
+{"timestamp":"52:53:51.664","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:53:51.681","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:53:51.703","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:53:51.716","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:53:51.755","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:53:51.805","source":"Server","level":"LOG","message":"[2026-08-01T20:46:21.406Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"52:53:51.832","source":"Server","level":"LOG","message":"[2026-08-01T20:46:21.420Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"52:53:51.873","source":"Server","level":"LOG","message":"[2026-08-01T20:46:21.470Z] GET /api/analytics/stats"}
+{"timestamp":"52:53:52.007","source":"Server","level":"LOG","message":"[2026-08-01T20:46:21.612Z] GET /api/analytics/violations"}
+{"timestamp":"52:53:52.013","source":"Server","level":"LOG","message":"[2026-08-01T20:46:21.617Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"52:53:52.031","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:53:52.040","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:53:52.053","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:53:52.063","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:53:52.070","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:53:52.133","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:53:52.357","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:53:52.363","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:53:52.369","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:53:52.375","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:53:52.477","source":"Server","level":"LOG","message":"[2026-08-01T20:46:22.081Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"52:53:52.484","source":"Server","level":"LOG","message":"[2026-08-01T20:46:22.088Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"52:53:52.487","source":"Server","level":"LOG","message":"[2026-08-01T20:46:22.091Z] GET /api/analytics/stats"}
+{"timestamp":"52:53:52.491","source":"Server","level":"LOG","message":"[2026-08-01T20:46:22.095Z] GET /api/analytics/violations"}
+{"timestamp":"52:53:52.508","source":"Server","level":"LOG","message":"[2026-08-01T20:46:22.112Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"52:53:52.531","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:53:52.538","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:53:52.546","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:53:52.554","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:53:52.564","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:53:52.646","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:53:52.652","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:53:52.655","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:53:52.657","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:53:52.666","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:53:59.931","source":"Server","level":"LOG","message":"[2026-08-01T20:46:29.535Z] GET /api/analytics/stats"}
+{"timestamp":"52:53:59.962","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:54:00.035","source":"Server","level":"LOG","message":"[2026-08-01T20:46:29.639Z] GET /api/analytics/violations"}
+{"timestamp":"52:54:00.084","source":"Server","level":"LOG","message":"[2026-08-01T20:46:29.688Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"52:54:00.103","source":"Server","level":"LOG","message":"[2026-08-01T20:46:29.707Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"52:54:00.135","source":"Server","level":"LOG","message":"[2026-08-01T20:46:29.739Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"52:54:00.142","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:54:00.173","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:54:00.270","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:54:00.282","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:54:00.299","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"52:54:00.406","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:54:00.413","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:54:00.416","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"52:54:00.420","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}

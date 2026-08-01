@@ -120,7 +120,7 @@ function WayLegend({
   onRemoveWay: (wayId: string) => void;
 }) {
   return (
-    <div className="flex w-99% flex-wrap justify-end gap-1">
+    <div className="flex w-60 flex-wrap justify-end gap-1">
       {ways.map((way) => (
         <span
           key={way.id}

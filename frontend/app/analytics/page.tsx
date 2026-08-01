@@ -47,10 +47,13 @@ import TrafficVol from '@/components/analytics/charts/TrafficVol';
 import Violations from '@/components/analytics/charts/Violations';
 import AnalyticsPieChartPanel from '@/components/analytics/AnalyticsPieChartPanel';
 import SquareLocationMap from '@/components/analytics/SquareLocationMap';
+import StateAnalytics from '@/components/analytics/dashboards/StateAnalytics';
 import { useSquareLocation } from '@/hooks/useSquareLocation';
 import { formatWayList, wayWaitMultiplier, wayQueueMultiplier, getAnalyticsWays } from '@/map/squareLocations';
 import { buildAnalyticsTrafficData } from '@/lib/analyticsTrafficData';
 import { toPng } from "html-to-image";
+import CityAnalytics from '@/components/analytics/dashboards/CityAnalytics';
+import NationalAnalytics from '@/components/analytics/dashboards/NationalAnalytics';
 // Generate high-resolution mock data (every 15 seconds)
 const generateDenseData = () => {
   const data = [];
@@ -127,6 +130,10 @@ const VEHICLE_COLORS = ['#1a73e8', '#34a853', '#fbbc04', '#ea4335', '#8ab4f8'];
 const EMERGENCY_METRICS = [
   { key: 'p50', label: 'Fire Brigade', color: '#2b6cb0' },
   { key: 'p95', label: 'Ambulance', color: '#ed6363' },
+];
+const INCIDENTS_METRICS = [
+  { key: 'p50', label: 'Fire', color: '#2b6cb0' },
+  { key: 'p95', label: 'Accident', color: '#ed6363' },
 ];
 
 const DynamicMap = dynamic(() => import('@/components/RealMap'), { 
@@ -453,6 +460,8 @@ export default function Analytics() {
     ? pathSegments[pathSegments.length - 1] 
     : '-';
 
+  const currentCity = pathSegments && pathSegments.length>=2 ? pathSegments[1] : '-';
+
   if (initialLoading && !hasInitiallyLoaded.current) {
     return (
       <div className="w-full h-screen flex flex-col items-center justify-center bg-[#0a0a0a]">
@@ -578,638 +587,573 @@ export default function Analytics() {
           </p>
         )}
 
-      {/* Headline Data*/}
-      <div className="relative z-10 flex border-r border-[#3c4043] p-2 justify-between items-center bg-[#131314]">
+      {
+        // (!pathSegments) || (pathSegments && pathSegments.length==0) && (
+        //   <div className="flex h-150 w-full items-center justify-center gap-1">
+        //       {/* <div className="text-gray-500 text-xl font-medium self-center justify-self">Invalid location path.</div> */}
+        //       <div className="text-gray-500 text-xl font-medium">Please select a location path in above location bar or using map.</div>
+        //   </div>
+        // )
+        (!pathSegments) || (pathSegments && pathSegments.length==0) && (
+          <NationalAnalytics/>
+        )
+      }
+      {
+        pathSegments && pathSegments.length==1 && (
+          <StateAnalytics/>
+        )
+      }
+      {
+        pathSegments && pathSegments.length>=2 && pathSegments.length<=3 && (
+          <CityAnalytics/>
+        )
+      }
+      {
+        pathSegments && pathSegments.length==4 && (
+          <>
+            {/* Headline Data*/}
+            <div className="relative z-10 flex border-r border-[#3c4043] p-2 justify-between items-center bg-[#131314]">
 
-        <p className="text-xl pl-2 font-[450] text-[#ffffff]">
-          {currentLocationName}
-        </p>
-        <div className="flex items-center gap-1 bg-[#131314]" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-          {['Today', 'Yesterday', '1 week', '1 month', '1 year', 'all time', 'custom duration'].map((duration) => {
-            
-            const currentDur = getDuration(('headlineData' as any)) || 'Today';
-            const isActive = currentDur === duration || (currentDur === 'custom' && duration === 'custom duration');
-            
-            return (
-              <button
-                key={duration}
-                onClick={() => handleDurationSelect(('headlineData' as any), duration)}
-                className={`px-4 py-1.5 text-sm rounded-md whitespace-nowrap transition-all ${
-                  isActive
-                    ? 'bg-[#8AB4F8]/10 text-[#8AB4F8] font-medium'
-                    : 'text-[#9aa0a6] hover:bg-[#202124] hover:text-[#e8eaed]'
-                } capitalize`}
-              >
-                {duration}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Headline Data Ribbon */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 border-t border-[#3c4043] mt-0 bg-[#131314]">
-        
-        {/* 1. Total Vehicles Count */}
-        <div className="pt-3 pb-4 pl-4 pr-4 border-b border-r border-[#3c4043] flex flex-col justify-between transition-colors group">
-          <div className="flex items-center gap-2 mb-3 text-[#9aa0a6] transition-colors">
-            <MdDirectionsCar className="w-5 h-5" />
-            <span className="text-sm uppercase font-medium tracking-wide">Total Vehicles</span>
-          </div>
-          <div className="flex px-0 justify-between items-center">
-            <span className="text-3xl font-mono text-[#e8eaed]">{headlineVehicleTotal}</span>
-            <div className="flex text-[15px] text-[#8AB4F8] gap-x-3 font-mono">
-              <div className="flex-cols">
-                {trafficWays.slice(0, Math.ceil(wayCount / 2)).map((way) => (
-                  <p key={way.id}>
-                    {way.label}: {way.vehicleCount}
-                  </p>
-                ))}
-              </div>
-              <div className="flex-cols">
-                {trafficWays.slice(Math.ceil(wayCount / 2)).map((way) => (
-                  <p key={way.id}>
-                    {way.label}: {way.vehicleCount}
-                  </p>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* 2. Avg. Waiting Time */}
-        <div className="pt-3 pb-4 pl-4 pr-4 border-b border-r border-[#3c4043] flex flex-col justify-between transition-colors group">
-          <div className="flex items-center gap-2 mb-3 text-[#9aa0a6] transition-colors">
-            <MdAccessTime className="w-4.5 h-4.5" />
-            <span className="text-sm uppercase font-medium tracking-wide">Avg Wait Time</span>
-          </div>
-          <div className="flex px-0 justify-between items-center">
-            <div className="flex items-baseline gap-1">
-              <span className="text-3xl font-mono text-[#e8eaed]">{avgWaitTime}</span>
-              <span className="text-sm text-[#ffffff]">sec</span>
-            </div>
-            <div className="flex text-[15px] text-[#8AB4F8] gap-x-3 font-mono">
-              <div className="flex-cols">
-                {analyticsWays.slice(0, Math.ceil(wayCount / 2)).map((way, i) => (
-                  <p key={way.id}>
-                    {way.label}: {Math.floor(avgWaitTime * wayWaitMultiplier(i))}s
-                  </p>
-                ))}
-              </div>
-              <div className="flex-cols">
-                {analyticsWays.slice(Math.ceil(wayCount / 2)).map((way, i) => {
-                  const idx = Math.ceil(wayCount / 2) + i;
+              <p className="text-xl pl-2 font-[450] text-[#ffffff]">
+                {currentLocationName}
+              </p>
+              <div className="flex items-center gap-1 bg-[#131314]" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                {['Today', 'Yesterday', '1 week', '1 month', '1 year', 'all time', 'custom duration'].map((duration) => {
+                  
+                  const currentDur = getDuration(('headlineData' as any)) || 'Today';
+                  const isActive = currentDur === duration || (currentDur === 'custom' && duration === 'custom duration');
+                  
                   return (
-                    <p key={way.id}>
-                      {way.label}: {Math.floor(avgWaitTime * wayWaitMultiplier(idx))}s
-                    </p>
+                    <button
+                      key={duration}
+                      onClick={() => handleDurationSelect(('headlineData' as any), duration)}
+                      className={`px-4 py-1.5 text-sm rounded-md whitespace-nowrap transition-all ${
+                        isActive
+                          ? 'bg-[#8AB4F8]/10 text-[#8AB4F8] font-medium'
+                          : 'text-[#9aa0a6] hover:bg-[#202124] hover:text-[#e8eaed]'
+                      } capitalize`}
+                    >
+                      {duration}
+                    </button>
                   );
                 })}
               </div>
             </div>
-          </div>
-        </div>
 
-        {/* 3. Avg. Queue Length */}
-        <div className="pt-3 pb-4 pl-4 pr-4 border-b border-r border-[#3c4043] flex flex-col justify-between transition-colors group">
-          <div className="flex items-center gap-2 mb-3 text-[#9aa0a6] transition-colors">
-            <MdOutlineQueue className="w-4.5 h-4.5" />
-            <span className="text-sm uppercase font-medium tracking-wide">Avg Queue Length</span>
-          </div>
-          <div className="flex px-0 justify-between items-center">
-            <div className="flex items-baseline gap-1">
-              <span className="text-3xl font-mono text-[#e8eaed]">{avgQueueLength}</span>
-              <span className="text-sm text-[#ffffff]">m</span>
-            </div>
-            <div className="flex text-[15px] text-[#8AB4F8] gap-x-3 font-mono">
-              <div className="flex-cols">
-                {analyticsWays.slice(0, Math.ceil(wayCount / 2)).map((way, i) => (
-                  <p key={way.id}>
-                    {way.label}: {Math.floor(avgQueueLength * wayQueueMultiplier(i))}m
-                  </p>
-                ))}
-              </div>
-              <div className="flex-cols">
-                {analyticsWays.slice(Math.ceil(wayCount / 2)).map((way, i) => {
-                  const idx = Math.ceil(wayCount / 2) + i;
-                  return (
-                    <p key={way.id}>
-                      {way.label}: {Math.floor(avgQueueLength * wayQueueMultiplier(idx))}m
-                    </p>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* 4. Peak Traffic (Inline Donut Chart) */}
-        <div className="pt-3 pb-0 pl-2 pr-2 border-b border-r border-[#3c4043] flex flex-col justify-between transition-colors group">
-          <div className="flex items-center px-2 gap-2 mb-0 text-[#9aa0a6] transition-colors">
-            <MdOutlineInsights className="w-4.5 h-4.5" />
-            <span className="text-sm uppercase font-medium tracking-wide">Peak Traffic</span>
-          </div>
-          <div className="flex items-center h-full">
-            <div className="w-20 h-20 relative  flex items-center justify-center cursor-crosshair">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie 
-                    data={peakTrafficData} 
-                    innerRadius={20} 
-                    outerRadius={28} 
-                    dataKey="value" 
-                    stroke="none"
-                    startAngle={90}
-                    endAngle={-270}
-                    
-                    // @ts-expect-error Recharts type definitions mismatch
-                    activeIndex={peakActiveIndex} 
-                    
-                    activeShape={renderActiveShape as any}
-                    onMouseEnter={(data: any, index: number) => {
-                      if (peakTrafficData[index] && !peakTrafficData[index].isFuture) {
-                        setPeakActiveIndex(index);
-                      }
-                    }}
-                    onMouseLeave={() => setPeakActiveIndex(-1)}
-                  />
-                </PieChart>
-              </ResponsiveContainer>
-              <span className="absolute text-[12px] font-mono text-[#e8eaed] pointer-events-none">
-                {new Date().getHours()}h
-              </span>
-            </div>
-            <div className="flex-cols pl-6 pt-2 text-[16px] text-[#8AB4F8] gap-x-3 font-mono">
-              <p>In dir: {formatWayList(square, ['south', 'west'])}</p>
-              <p>Out dir: {formatWayList(square, ['east'])}</p>
-            </div>
-          </div>
-        </div>
-
-        {/* 5. Traffic Growth Rate (Inline Sparkline) */}
-        <div className="pt-3 pb-4 pl-4 pr-4 border-b border-r border-[#3c4043] flex flex-col justify-between transition-colors group">
-          <div className="flex items-center gap-2 mb-2 text-[#9aa0a6] transition-colors">
-            {isGrowthPositive ? <MdTrendingUp className="w-5 h-5" /> : <MdTrendingDown className="w-4.5 h-4.5" />}
-            <span className="text-sm uppercase font-medium tracking-wide">Traffic Growth Rate</span>
-          </div>
-          <div className="flex justify-between items-center h-full gap-4 w-full">
-            <span className={`text-2xl font-mono flex items-center gap-0.5 ${isGrowthPositive ? 'text-[#f28b82]' : 'text-[#81c995]'}`}>
-              {isGrowthPositive ? '↑' : '↓'} {Math.abs(growthRate)}%
-            </span>
-            <div className="flex-1 h-10 w-full pr-1">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={sparklineData}>
-                  <YAxis domain={['dataMin - 5', 'dataMax + 5']} hide />
-                  <Tooltip 
-                    content={<SparklineTooltip />} 
-                    cursor={{ stroke: '#5f6368', strokeWidth: 1, strokeDasharray: '3 3' }} 
-                  />
-                  <Line 
-                    type="monotone" 
-                    dataKey="value" 
-                    stroke={isGrowthPositive ? '#f28b82' : '#81c995'} 
-                    strokeWidth={2} 
-                    dot={{ r: 0 }}
-                    activeDot={{ r: 3 }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-        </div>
-
-        {/* 6. Accidents & Fire Events */}
-        <div className="pt-3 pb-4 pl-4 pr-4 border-b border-r border-[#3c4043] flex flex-col justify-between transition-colors group">
-          <div className="flex items-center gap-2 mb-2 text-[#9aa0a6] transition-colors">
-            <MdWarningAmber className="w-4.5 h-4.5" />
-            <span className="text-sm uppercase font-medium tracking-wide">Incidents</span>
-          </div>
-          <div className="flex flex-col gap-1.5 mt-1 justify-end h-full">
-            <div className="flex justify-between items-center text-[11px] font-mono bg-[#1a1a1c] px-2 py-1 rounded border border-[#3c4043]">
-              <span className="text-[#9aa0a6]">Accidents</span>
-              <span className={accidentsCount > 0 ? "text-[#f28b82] font-bold" : "text-[#81c995]"}>{accidentsCount}</span>
-            </div>
-            <div className="flex justify-between items-center text-[11px] font-mono bg-[#1a1a1c] px-2 py-1 rounded border border-[#3c4043]">
-              <span className="text-[#9aa0a6]">Fire Events</span>
-              <span className={fireCount > 0 ? "text-[#f28b82] font-bold" : "text-[#81c995]"}>{fireCount}</span>
-            </div>
-          </div>
-        </div>
-
-        {/* 7. Emergency Vehicles Count */}
-        <div className="pt-3 pb-4 pl-4 pr-4 border-b border-r border-[#3c4043] flex flex-col justify-between transition-colors group">
-          <div className="flex items-center gap-2 mb-2 text-[#9aa0a6] transition-colors">
-            <MdOutlineEmergency className="w-4.5 h-4.5" />
-            <span className="text-sm uppercase font-medium tracking-wide">Emergency</span>
-          </div>
-          <div className="flex flex-col gap-1.5 mt-1 justify-end h-full">
-            <div className="flex justify-between items-center text-[11px] font-mono bg-[#1a1a1c] px-2 py-1 rounded border border-[#3c4043]">
-              <span className="text-[#9aa0a6]">Ambulance</span>
-              <span className="text-[#8AB4F8] font-bold">{ambCount}</span>
-            </div>
-            <div className="flex justify-between items-center text-[11px] font-mono bg-[#1a1a1c] px-2 py-1 rounded border border-[#3c4043]">
-              <span className="text-[#9aa0a6]">Fire Brigade</span>
-              <span className="text-[#8AB4F8] font-bold">{fireBrigadeCount}</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-
-
-      {/* Chart div 1 — Traffic Volume + Square Map */}
-      <div className="relative z-20 flex w-full mt-0 border-r border-[#3c4043] isolate">
-        <div className="w-[66.6%] min-w-0">
-          <TrafficVol
-            activeWays={trafficWays}
-            trafficTimeSeries={analyticsTrafficData.timeSeries}
-            durationPickerDisabled={sectionRefreshing}
-          />
-        </div>
-        <div className="w-[33.4%] min-w-0">
-          <SquareLocationMap
-            square={square}
-            isLocked={isLocked}
-            loading={squareLoading}
-            error={squareError}
-            wayVehicleCounts={analyticsTrafficData.byWay}
-            onSquareSaved={updateSquare}
-            onCoordinatesSaved={applySavedCoordinates}
-          />
-        </div>
-      </div>
-      
-      {/* chart div 2*/}
-      <div className="flex w-full">
-
-
-        <div className="flex-cols bg-[#131314] w-[66.6%]">
-          <Violations activeWays={analyticsWays} durationPickerDisabled={sectionRefreshing} />
-
-          <div className="flex w-full">
-            <div 
-              ref={cardRef}
-              className={`w-[99.5%] font-sans transition-all duration-150 ${
-                isFullscreen ? "p-10 h-screen flex flex-col justify-center" : "border-b border-[#3c4043] h-88.5 pt-3 pb-0 pl-2 pr-6"
-              } bg-[#131314]`}
+            {/* Headline Data Ribbon */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 border-t border-[#3c4043] mt-0 bg-[#131314]">
               
-            >
-              {/* Header Panel Containing Controls */}
-              <div className="flex justify-between items-center mb-5">
-                <h2 className="text-gray-200 text-lg ml-5">
-                  Incidents
-                </h2>
-                
-                {/* Action Button Strip */}
-                <div className="relative z-40 chart-actions flex items-center gap-3.5 text-xs overflow-visible">
-                  <ChartDurationPicker
-                    selectedDuration={getDuration(ANALYTICS_CHART_IDS.emergency2)}
-                    onSelect={(d) =>
-                      handleDurationSelect(ANALYTICS_CHART_IDS.emergency2, d)
-                    }
-                    disabled={sectionRefreshing}
-                  />
-                  {/* CSV Export Button */}
-                  <button 
-                    onClick={exportCSV}
-                    className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
-                    title="Download CSV Data"
-                  >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                  </button>
-
-                  {/* Snapshot Image Button */}
-                  <button 
-                    onClick={saveAsImage}
-                    className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
-                    title="Save as PNG"
-                  >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 002-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </button>
-
-                  {/* Fullscreen Toggle Button */}
-                  <button 
-                    onClick={toggleFullscreen}
-                    className="text-gray-400 hover:text-[#AECBFA] transition-colors"
-                    title={isFullscreen ? "Exit Fullscreen" : "View Fullscreen"}
-                  >
-                    {isFullscreen ? (
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 14h6m0 0v6m0-6L3 21m17-7h-6m0 0v6m0-6l7 7M16 10h6m0 0v-6m0 6l3-3M4 10h6m0 0V4m0 6L3 3" />
-                      </svg>
-                    ) : (
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5h-4m4 0v-4m0 4l-5-5" />
-                      </svg>
-                    )}
-                  </button>
+              {/* 1. Total Vehicles Count */}
+              <div className="pt-3 pb-4 pl-4 pr-4 border-b border-r border-[#3c4043] flex flex-col justify-between transition-colors group">
+                <div className="flex items-center gap-2 mb-3 text-[#9aa0a6] transition-colors">
+                  <MdDirectionsCar className="w-5 h-5" />
+                  <span className="text-sm uppercase font-medium tracking-wide">Total Vehicles</span>
+                </div>
+                <div className="flex px-0 justify-between items-center">
+                  <span className="text-3xl font-mono text-[#e8eaed]">{headlineVehicleTotal}</span>
+                  <div className="flex text-[15px] text-[#8AB4F8] gap-x-3 font-mono">
+                    <div className="flex-cols">
+                      {trafficWays.slice(0, Math.ceil(wayCount / 2)).map((way) => (
+                        <p key={way.id}>
+                          {way.label}: {way.vehicleCount}
+                        </p>
+                      ))}
+                    </div>
+                    <div className="flex-cols">
+                      {trafficWays.slice(Math.ceil(wayCount / 2)).map((way) => (
+                        <p key={way.id}>
+                          {way.label}: {way.vehicleCount}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
-              
-              {/* Chart Canvas Area */}
-              <div className={`w-full ${isFullscreen ? "h-[75vh]" : "h-[270px]"}`}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart
-                    data={data}
-                    margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
-                  >
-                    <CartesianGrid 
-                      vertical={false} 
-                      stroke="#2d3748" 
-                      strokeWidth={1}
-                    />
-                    <XAxis 
-                      dataKey="time" 
-                      stroke="#718096" 
-                      tick={{ fill: '#718096', fontSize: 12 }} 
-                      tickFormatter={formatXAxis}
-                      tickMargin={10}
-                      axisLine={false}
-                      tickLine={false}
-                      minTickGap={60}
-                    />
-                    <YAxis 
-                      stroke="#718096" 
-                      tickFormatter={formatYAxis}
-                      tick={{ fill: '#718096', fontSize: 12 }}
-                      axisLine={false}
-                      tickLine={false}
-                    />
-                    <Tooltip content={<CustomTooltip />} />
-                    
-                    {/* <Line type="monotone" dataKey="p99" stroke="#e2e8f0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} /> */}
-                    <Line type="monotone" dataKey="p95" stroke="#ed6363" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
-                    {/* <Line type="monotone" dataKey="vehicles" stroke="#ce3131" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} /> */}
-                    <Line type="monotone" dataKey="p50" stroke="#2b6cb0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-            <div 
-              ref={cardRef}
-              className={`w-full font-sans transition-all duration-150 ${
-                isFullscreen ? "p-10 h-screen flex flex-col justify-center" : "border-b border-l border-r border-[#3c4043] w-full h-88.5 pt-3 pb-0 pl-2 pr-6"
-              } bg-[#131314]`}
-              
-            >
-              {/* Header Panel Containing Controls */}
-              <div className="flex justify-between items-center mb-5">
-                <h2 className="text-gray-200 text-lg ml-5">
-                  Queue Length
-                </h2>
-                
-                {/* Action Button Strip */}
-                <div className="relative z-40 chart-actions flex items-center gap-3.5 text-xs overflow-visible">
-                  <ChartDurationPicker
-                    selectedDuration={getDuration(ANALYTICS_CHART_IDS.emergency2)}
-                    onSelect={(d) =>
-                      handleDurationSelect(ANALYTICS_CHART_IDS.emergency2, d)
-                    }
-                    disabled={sectionRefreshing}
-                  />
-                  {/* CSV Export Button */}
-                  <button 
-                    onClick={exportCSV}
-                    className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
-                    title="Download CSV Data"
-                  >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                  </button>
 
-                  {/* Snapshot Image Button */}
-                  <button 
-                    onClick={saveAsImage}
-                    className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
-                    title="Save as PNG"
-                  >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 002-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </button>
-
-                  {/* Fullscreen Toggle Button */}
-                  <button 
-                    onClick={toggleFullscreen}
-                    className="text-gray-400 hover:text-[#AECBFA] transition-colors"
-                    title={isFullscreen ? "Exit Fullscreen" : "View Fullscreen"}
-                  >
-                    {isFullscreen ? (
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 14h6m0 0v6m0-6L3 21m17-7h-6m0 0v6m0-6l7 7M16 10h6m0 0v-6m0 6l3-3M4 10h6m0 0V4m0 6L3 3" />
-                      </svg>
-                    ) : (
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5h-4m4 0v-4m0 4l-5-5" />
-                      </svg>
-                    )}
-                  </button>
+              {/* 2. Avg. Waiting Time */}
+              <div className="pt-3 pb-4 pl-4 pr-4 border-b border-r border-[#3c4043] flex flex-col justify-between transition-colors group">
+                <div className="flex items-center gap-2 mb-3 text-[#9aa0a6] transition-colors">
+                  <MdAccessTime className="w-4.5 h-4.5" />
+                  <span className="text-sm uppercase font-medium tracking-wide">Avg Wait Time</span>
+                </div>
+                <div className="flex px-0 justify-between items-center">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-3xl font-mono text-[#e8eaed]">{avgWaitTime}</span>
+                    <span className="text-sm text-[#ffffff]">sec</span>
+                  </div>
+                  <div className="flex text-[15px] text-[#8AB4F8] gap-x-3 font-mono">
+                    <div className="flex-cols">
+                      {analyticsWays.slice(0, Math.ceil(wayCount / 2)).map((way, i) => (
+                        <p key={way.id}>
+                          {way.label}: {Math.floor(avgWaitTime * wayWaitMultiplier(i))}s
+                        </p>
+                      ))}
+                    </div>
+                    <div className="flex-cols">
+                      {analyticsWays.slice(Math.ceil(wayCount / 2)).map((way, i) => {
+                        const idx = Math.ceil(wayCount / 2) + i;
+                        return (
+                          <p key={way.id}>
+                            {way.label}: {Math.floor(avgWaitTime * wayWaitMultiplier(idx))}s
+                          </p>
+                        );
+                      })}
+                    </div>
+                  </div>
                 </div>
               </div>
-              
-              {/* Chart Canvas Area */}
-              <div className={`w-full ${isFullscreen ? "h-[75vh]" : "h-[270px]"}`}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart
-                    data={data}
-                    margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
-                  >
-                    <CartesianGrid 
-                      vertical={false} 
-                      stroke="#2d3748" 
-                      strokeWidth={1}
-                    />
-                    <XAxis 
-                      dataKey="time" 
-                      stroke="#718096" 
-                      tick={{ fill: '#718096', fontSize: 12 }} 
-                      tickFormatter={formatXAxis}
-                      tickMargin={10}
-                      axisLine={false}
-                      tickLine={false}
-                      minTickGap={60}
-                    />
-                    <YAxis 
-                      stroke="#718096" 
-                      tickFormatter={formatYAxis}
-                      tick={{ fill: '#718096', fontSize: 12 }}
-                      axisLine={false}
-                      tickLine={false}
-                    />
-                    <Tooltip content={<CustomTooltip />} />
-                    
-                    {/* <Line type="monotone" dataKey="p99" stroke="#e2e8f0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} /> */}
-                    <Line type="monotone" dataKey="p95" stroke="#ed6363" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
-                    {/* <Line type="monotone" dataKey="vehicles" stroke="#ce3131" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} /> */}
-                    <Line type="monotone" dataKey="p50" stroke="#2b6cb0" strokeWidth={1.5} dot={false} activeDot={{ r: 4 }} />
-                  </LineChart>
-                </ResponsiveContainer>
+
+              {/* 3. Avg. Queue Length */}
+              <div className="pt-3 pb-4 pl-4 pr-4 border-b border-r border-[#3c4043] flex flex-col justify-between transition-colors group">
+                <div className="flex items-center gap-2 mb-3 text-[#9aa0a6] transition-colors">
+                  <MdOutlineQueue className="w-4.5 h-4.5" />
+                  <span className="text-sm uppercase font-medium tracking-wide">Avg Queue Length</span>
+                </div>
+                <div className="flex px-0 justify-between items-center">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-3xl font-mono text-[#e8eaed]">{avgQueueLength}</span>
+                    <span className="text-sm text-[#ffffff]">m</span>
+                  </div>
+                  <div className="flex text-[15px] text-[#8AB4F8] gap-x-3 font-mono">
+                    <div className="flex-cols">
+                      {analyticsWays.slice(0, Math.ceil(wayCount / 2)).map((way, i) => (
+                        <p key={way.id}>
+                          {way.label}: {Math.floor(avgQueueLength * wayQueueMultiplier(i))}m
+                        </p>
+                      ))}
+                    </div>
+                    <div className="flex-cols">
+                      {analyticsWays.slice(Math.ceil(wayCount / 2)).map((way, i) => {
+                        const idx = Math.ceil(wayCount / 2) + i;
+                        return (
+                          <p key={way.id}>
+                            {way.label}: {Math.floor(avgQueueLength * wayQueueMultiplier(idx))}m
+                          </p>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 4. Peak Traffic (Inline Donut Chart) */}
+              <div className="pt-3 pb-0 pl-2 pr-2 border-b border-r border-[#3c4043] flex flex-col justify-between transition-colors group">
+                <div className="flex items-center px-2 gap-2 mb-0 text-[#9aa0a6] transition-colors">
+                  <MdOutlineInsights className="w-4.5 h-4.5" />
+                  <span className="text-sm uppercase font-medium tracking-wide">Peak Traffic</span>
+                </div>
+                <div className="flex items-center h-full">
+                  <div className="w-20 h-20 relative  flex items-center justify-center cursor-crosshair">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <PieChart>
+                        <Pie 
+                          data={peakTrafficData} 
+                          innerRadius={20} 
+                          outerRadius={28} 
+                          dataKey="value" 
+                          stroke="none"
+                          startAngle={90}
+                          endAngle={-270}
+                          
+                          // @ts-expect-error Recharts type definitions mismatch
+                          activeIndex={peakActiveIndex} 
+                          
+                          activeShape={renderActiveShape as any}
+                          onMouseEnter={(data: any, index: number) => {
+                            if (peakTrafficData[index] && !peakTrafficData[index].isFuture) {
+                              setPeakActiveIndex(index);
+                            }
+                          }}
+                          onMouseLeave={() => setPeakActiveIndex(-1)}
+                        />
+                      </PieChart>
+                    </ResponsiveContainer>
+                    <span className="absolute text-[12px] font-mono text-[#e8eaed] pointer-events-none">
+                      {new Date().getHours()}h
+                    </span>
+                  </div>
+                  <div className="flex-cols pl-6 pt-2 text-[16px] text-[#8AB4F8] gap-x-3 font-mono">
+                    <p>In dir: {formatWayList(square, ['south', 'west'])}</p>
+                    <p>Out dir: {formatWayList(square, ['east'])}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* 5. Traffic Growth Rate (Inline Sparkline) */}
+              <div className="pt-3 pb-4 pl-4 pr-4 border-b border-r border-[#3c4043] flex flex-col justify-between transition-colors group">
+                <div className="flex items-center gap-2 mb-2 text-[#9aa0a6] transition-colors">
+                  {isGrowthPositive ? <MdTrendingUp className="w-5 h-5" /> : <MdTrendingDown className="w-4.5 h-4.5" />}
+                  <span className="text-sm uppercase font-medium tracking-wide">Traffic Growth Rate</span>
+                </div>
+                <div className="flex justify-between items-center h-full gap-4 w-full">
+                  <span className={`text-2xl font-mono flex items-center gap-0.5 ${isGrowthPositive ? 'text-[#f28b82]' : 'text-[#81c995]'}`}>
+                    {isGrowthPositive ? '↑' : '↓'} {Math.abs(growthRate)}%
+                  </span>
+                  <div className="flex-1 h-10 w-full pr-1">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart data={sparklineData}>
+                        <YAxis domain={['dataMin - 5', 'dataMax + 5']} hide />
+                        <Tooltip 
+                          content={<SparklineTooltip />} 
+                          cursor={{ stroke: '#5f6368', strokeWidth: 1, strokeDasharray: '3 3' }} 
+                        />
+                        <Line 
+                          type="monotone" 
+                          dataKey="value" 
+                          stroke={isGrowthPositive ? '#f28b82' : '#81c995'} 
+                          strokeWidth={2} 
+                          dot={{ r: 0 }}
+                          activeDot={{ r: 3 }}
+                        />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+              </div>
+
+              {/* 6. Accidents & Fire Events */}
+              <div className="pt-3 pb-4 pl-4 pr-4 border-b border-r border-[#3c4043] flex flex-col justify-between transition-colors group">
+                <div className="flex items-center gap-2 mb-2 text-[#9aa0a6] transition-colors">
+                  <MdWarningAmber className="w-4.5 h-4.5" />
+                  <span className="text-sm uppercase font-medium tracking-wide">Incidents</span>
+                </div>
+                <div className="flex flex-col gap-1.5 mt-1 justify-end h-full">
+                  <div className="flex justify-between items-center text-[11px] font-mono bg-[#1a1a1c] px-2 py-1 rounded border border-[#3c4043]">
+                    <span className="text-[#9aa0a6]">Accidents</span>
+                    <span className={accidentsCount > 0 ? "text-[#f28b82] font-bold" : "text-[#81c995]"}>{accidentsCount}</span>
+                  </div>
+                  <div className="flex justify-between items-center text-[11px] font-mono bg-[#1a1a1c] px-2 py-1 rounded border border-[#3c4043]">
+                    <span className="text-[#9aa0a6]">Fire Events</span>
+                    <span className={fireCount > 0 ? "text-[#f28b82] font-bold" : "text-[#81c995]"}>{fireCount}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 7. Emergency Vehicles Count */}
+              <div className="pt-3 pb-4 pl-4 pr-4 border-b border-r border-[#3c4043] flex flex-col justify-between transition-colors group">
+                <div className="flex items-center gap-2 mb-2 text-[#9aa0a6] transition-colors">
+                  <MdOutlineEmergency className="w-4.5 h-4.5" />
+                  <span className="text-sm uppercase font-medium tracking-wide">Emergency</span>
+                </div>
+                <div className="flex flex-col gap-1.5 mt-1 justify-end h-full">
+                  <div className="flex justify-between items-center text-[11px] font-mono bg-[#1a1a1c] px-2 py-1 rounded border border-[#3c4043]">
+                    <span className="text-[#9aa0a6]">Ambulance</span>
+                    <span className="text-[#8AB4F8] font-bold">{ambCount}</span>
+                  </div>
+                  <div className="flex justify-between items-center text-[11px] font-mono bg-[#1a1a1c] px-2 py-1 rounded border border-[#3c4043]">
+                    <span className="text-[#9aa0a6]">Fire Brigade</span>
+                    <span className="text-[#8AB4F8] font-bold">{fireBrigadeCount}</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+
+
+            {/* Chart div 1 — Traffic Volume + Square Map */}
+            <div className="relative z-20 flex w-full mt-0 border-r border-[#3c4043] isolate">
+              <div className="w-[66.6%] min-w-0">
+                <TrafficVol
+                  activeWays={trafficWays}
+                  trafficTimeSeries={analyticsTrafficData.timeSeries}
+                  durationPickerDisabled={sectionRefreshing}
+                />
+              </div>
+              <div className="w-[33.4%] min-w-0">
+                <SquareLocationMap
+                  square={square}
+                  isLocked={isLocked}
+                  loading={squareLoading}
+                  error={squareError}
+                  wayVehicleCounts={analyticsTrafficData.byWay}
+                  onSquareSaved={updateSquare}
+                  onCoordinatesSaved={applySavedCoordinates}
+                />
               </div>
             </div>
-          </div>
-        </div>
-        <div className="flex-cols bg-[#131314] w-[33.4%]">
+            
+            {/* chart div 2*/}
+            <div className="flex w-full">
 
-          <AnalyticsPieChartPanel
-            title="Violations data"
-            data={violationsData}
-            colors={VIOLATION_COLORS}
-            footer={<>Total vehicles: {totalVehicles}</>}
-            csvHeaders={['Violation', 'Count']}
-            exportBaseName="violations_data"
-            selectedDuration={getDuration(ANALYTICS_CHART_IDS.violations)}
-            onDurationSelect={(d) => handleDurationSelect(ANALYTICS_CHART_IDS.violations, d)}
-            durationPickerDisabled={sectionRefreshing}
-          />
 
-          <AnalyticsPieChartPanel
-            title="Vehicle Type Distribution"
-            data={vehicleTypeData}
-            colors={VEHICLE_COLORS}
-            className="w-full min-w-0 border-r border-t border-b border-[#3c4043] !bg-[#131314] py-5 relative overflow-visible"
-            footer={<>Total vehicles: {totalVehicles}</>}
-            csvHeaders={['Vehicle Type', 'Count']}
-            exportBaseName="vehicle_type_distribution"
-            selectedDuration={getDuration(ANALYTICS_CHART_IDS.vehicleTypes)}
-            onDurationSelect={(d) => handleDurationSelect(ANALYTICS_CHART_IDS.vehicleTypes, d)}
-            durationPickerDisabled={sectionRefreshing}
-          />
+              <div className="flex-cols bg-[#131314] w-[66.6%]">
+                <Violations activeWays={analyticsWays} durationPickerDisabled={sectionRefreshing} />
 
-          <AnalyticsPieChartPanel
-            title="Speed Distribution"
-            data={speedDistributionChartData}
-            nameKey="range"
-            colors={[]}
-            label={({ name, percent }: { name?: string; percent?: number }) =>
-              `${name} km/h: ${((percent || 0) * 100).toFixed(0)}%`
-            }
-            tooltipFormatter={(value, _name, item) => [
-              String(value),
-              `${item?.payload?.range} km/h`,
-            ]}
-            getCellColor={(entry, index) => getSpeedRangeColor(String(entry.range), index)}
-            className="w-full min-w-0 border-b border-r border-[#3c4043] !bg-[#131314] py-5 relative overflow-visible"
-            footer={<span className="text-[#ffffff]">Total vehicles: {speedDistributionTotal}</span>}
-            csvHeaders={['Speed Range', 'Count']}
-            exportBaseName="speed_distribution"
-            selectedDuration={getDuration(ANALYTICS_CHART_IDS.speedDistributionPie)}
-            onDurationSelect={(d) => handleDurationSelect(ANALYTICS_CHART_IDS.speedDistributionPie, d)}
-            durationPickerDisabled={sectionRefreshing}
-          />
-        </div>
-      </div>
+                <div className="flex-cols h-100 w-full">
+                  <div
+                    ref={cardRef}
+                    className={`w-full font-sans transition-all duration-150 flex flex-col ${
+                      isFullscreen ? 'p-10 h-screen justify-center' : 'h-100 pt-3 border-r border-b border-[#3c4043] pb-2.5 pl-2 pr-6'
+                    } bg-[#131314]`}
+                  >
+                    <div className="flex justify-between items-center mb-5">
+                      <h2 className="text-gray-200 text-lg ml-5">Emergency Vehicles</h2>
+                      <div className="chart-actions flex items-center gap-3.5 text-xs">
+                        <ChartDurationPicker
+                          selectedDuration={getDuration(ANALYTICS_CHART_IDS.emergency1)}
+                          onSelect={(d) => handleDurationSelect(ANALYTICS_CHART_IDS.emergency1, d)}
+                          disabled={sectionRefreshing}
+                        />
+                        <button
+                          onClick={exportCSV}
+                          className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
+                          title="Download CSV Data"
+                        >
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                          </svg>
+                        </button>
+                        <button
+                          onClick={saveAsImage}
+                          className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
+                          title="Save as PNG"
+                        >
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 002-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                        </button>
+                        <button
+                          onClick={toggleFullscreen}
+                          className="text-gray-400 hover:text-[#AECBFA] transition-colors"
+                          title={isFullscreen ? 'Exit Fullscreen' : 'View Fullscreen'}
+                        >
+                          {isFullscreen ? (
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 14h6m0 0v6m0-6L3 21m17-7h-6m0 0v6m0-6l7 7M16 10h6m0 0v-6m0 6l3-3M4 10h6m0 0V4m0 6L3 3" />
+                            </svg>
+                          ) : (
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5h-4m4 0v-4m0 4l-5-5" />
+                            </svg>
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                    <div className={`flex-1 w-full ${isFullscreen ? 'min-h-[75vh]' : 'min-h-[280px]'}`}>
+                      <ResponsiveContainer width="100%" height="100%">
+                        <LineChart data={data} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
+                          <CartesianGrid vertical={false} stroke="#2d3748" strokeWidth={1} />
+                          <XAxis
+                            dataKey="time"
+                            stroke="#718096"
+                            tick={{ fill: '#718096', fontSize: 12 }}
+                            tickFormatter={formatXAxis}
+                            tickMargin={10}
+                            axisLine={false}
+                            tickLine={false}
+                            minTickGap={60}
+                          />
+                          <YAxis
+                            stroke="#718096"
+                            tickFormatter={formatYAxis}
+                            tick={{ fill: '#718096', fontSize: 12 }}
+                            axisLine={false}
+                            tickLine={false}
+                          />
+                          <Tooltip content={<CustomTooltip />} />
+                          {EMERGENCY_METRICS.map((metric) => (
+                            <Line
+                              key={metric.key}
+                              type="monotone"
+                              name={metric.label}
+                              dataKey={metric.key}
+                              stroke={metric.color}
+                              strokeWidth={1.5}
+                              dot={false}
+                              activeDot={{ r: 4, fill: metric.color, stroke: '#fff', strokeWidth: 2 }}
+                            />
+                          ))}
+                        </LineChart>
+                      </ResponsiveContainer>
+                    </div>
+                    <div className="mt-2 flex flex-wrap justify-center gap-4">
+                      {EMERGENCY_METRICS.map((metric) => (
+                        <button
+                          key={metric.key}
+                          disabled
+                          className="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-normal transition-all cursor-default"
+                        >
+                          <span className="w-4.5 h-1.5 rounded" style={{ backgroundColor: metric.color }} />
+                          {metric.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div
+                    ref={cardRef}
+                    className={`w-full font-sans transition-all duration-150 flex flex-col ${
+                      isFullscreen ? 'p-10 h-screen justify-center' : 'h-100 pt-3 border-r border-b border-[#3c4043] pb-2.5 pl-2 pr-6'
+                    } bg-[#131314]`}
+                  >
+                    <div className="flex justify-between items-center mb-5">
+                      <h2 className="text-gray-200 text-lg ml-5">Incidents</h2>
+                      <div className="chart-actions flex items-center gap-3.5 text-xs">
+                        <ChartDurationPicker
+                          selectedDuration={getDuration(ANALYTICS_CHART_IDS.emergency2)}
+                          onSelect={(d) =>
+                            handleDurationSelect(ANALYTICS_CHART_IDS.emergency2, d)
+                          }
+                          disabled={sectionRefreshing}
+                        />
+                        {/* CSV Export Button */}
+                        <button 
+                          onClick={exportCSV}
+                          className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
+                          title="Download CSV Data"
+                        >
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                          </svg>
+                        </button>
 
-      {/* Emergency Vehicles — bottom row */}
-      <div className="flex w-full border-t border-r border-[#3c4043]">
-        <div
-          ref={cardRef}
-          className={`w-full font-sans transition-all duration-150 flex flex-col ${
-            isFullscreen ? 'p-10 h-screen justify-center' : 'h-100 pt-3 pb-2.5 pl-2 pr-6'
-          } bg-[#131314]`}
-        >
-          <div className="flex justify-between items-center mb-5">
-            <h2 className="text-gray-200 text-lg ml-5">Emergency Vehicles</h2>
-            <div className="chart-actions flex items-center gap-3.5 text-xs">
-              <ChartDurationPicker
-                selectedDuration={getDuration(ANALYTICS_CHART_IDS.emergency1)}
-                onSelect={(d) => handleDurationSelect(ANALYTICS_CHART_IDS.emergency1, d)}
-                disabled={sectionRefreshing}
-              />
-              <button
-                onClick={exportCSV}
-                className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
-                title="Download CSV Data"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-              </button>
-              <button
-                onClick={saveAsImage}
-                className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
-                title="Save as PNG"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 002-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-              </button>
-              <button
-                onClick={toggleFullscreen}
-                className="text-gray-400 hover:text-[#AECBFA] transition-colors"
-                title={isFullscreen ? 'Exit Fullscreen' : 'View Fullscreen'}
-              >
-                {isFullscreen ? (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 14h6m0 0v6m0-6L3 21m17-7h-6m0 0v6m0-6l7 7M16 10h6m0 0v-6m0 6l3-3M4 10h6m0 0V4m0 6L3 3" />
-                  </svg>
-                ) : (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5h-4m4 0v-4m0 4l-5-5" />
-                  </svg>
-                )}
-              </button>
+                        {/* Snapshot Image Button */}
+                        <button 
+                          onClick={saveAsImage}
+                          className="flex items-center text-gray-400 hover:text-[#AECBFA] transition-colors"
+                          title="Save as PNG"
+                        >
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 002-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                        </button>
+
+                        {/* Fullscreen Toggle Button */}
+                        <button 
+                          onClick={toggleFullscreen}
+                          className="text-gray-400 hover:text-[#AECBFA] transition-colors"
+                          title={isFullscreen ? "Exit Fullscreen" : "View Fullscreen"}
+                        >
+                          {isFullscreen ? (
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 14h6m0 0v6m0-6L3 21m17-7h-6m0 0v6m0-6l7 7M16 10h6m0 0v-6m0 6l3-3M4 10h6m0 0V4m0 6L3 3" />
+                            </svg>
+                          ) : (
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5h-4m4 0v-4m0 4l-5-5" />
+                            </svg>
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                    
+                    {/* Chart Canvas Area */}
+                    <div className={`w-full ${isFullscreen ? "h-[75vh]" : "h-[270px]"}`}>
+                      <ResponsiveContainer width="100%" height="100%">
+                        <LineChart
+                          data={data}
+                          margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
+                        >
+                          <CartesianGrid 
+                            vertical={false} 
+                            stroke="#2d3748" 
+                            strokeWidth={1}
+                          />
+                          <XAxis 
+                            dataKey="time" 
+                            stroke="#718096" 
+                            tick={{ fill: '#718096', fontSize: 12 }} 
+                            tickFormatter={formatXAxis}
+                            tickMargin={10}
+                            axisLine={false}
+                            tickLine={false}
+                            minTickGap={60}
+                          />
+                          <YAxis 
+                            stroke="#718096" 
+                            tickFormatter={formatYAxis}
+                            tick={{ fill: '#718096', fontSize: 12 }}
+                            axisLine={false}
+                            tickLine={false}
+                          />
+                          <Tooltip content={<CustomTooltip />} />
+                          {INCIDENTS_METRICS.map((metric) => (
+                            <Line
+                              key={metric.key}
+                              type="monotone"
+                              name={metric.label}
+                              dataKey={metric.key}
+                              stroke={metric.color}
+                              strokeWidth={1.5}
+                              dot={false}
+                              activeDot={{ r: 4, fill: metric.color, stroke: '#fff', strokeWidth: 2 }}
+                            />
+                          ))}
+                        </LineChart>
+                      </ResponsiveContainer>
+                    </div>
+                    <div className="mt-2 flex flex-wrap justify-center gap-4">
+                      {INCIDENTS_METRICS.map((metric) => (
+                        <button
+                          key={metric.key}
+                          disabled
+                          className="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-normal transition-all cursor-default"
+                        >
+                          <span className="w-4.5 h-1.5 rounded" style={{ backgroundColor: metric.color }} />
+                          {metric.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex-cols bg-[#131314] w-[33.4%]">
+
+                <AnalyticsPieChartPanel
+                  title="Violations data"
+                  data={violationsData}
+                  colors={VIOLATION_COLORS}
+                  footer={<>Total vehicles: {totalVehicles}</>}
+                  csvHeaders={['Violation', 'Count']}
+                  exportBaseName="violations_data"
+                  selectedDuration={getDuration(ANALYTICS_CHART_IDS.violations)}
+                  onDurationSelect={(d) => handleDurationSelect(ANALYTICS_CHART_IDS.violations, d)}
+                  durationPickerDisabled={sectionRefreshing}
+                />
+
+                <AnalyticsPieChartPanel
+                  title="Vehicle Type Distribution"
+                  data={vehicleTypeData}
+                  colors={VEHICLE_COLORS}
+                  className="w-full min-w-0 border-r border-t border-b border-[#3c4043] !bg-[#131314] py-5 relative overflow-visible"
+                  footer={<>Total vehicles: {totalVehicles}</>}
+                  csvHeaders={['Vehicle Type', 'Count']}
+                  exportBaseName="vehicle_type_distribution"
+                  selectedDuration={getDuration(ANALYTICS_CHART_IDS.vehicleTypes)}
+                  onDurationSelect={(d) => handleDurationSelect(ANALYTICS_CHART_IDS.vehicleTypes, d)}
+                  durationPickerDisabled={sectionRefreshing}
+                />
+
+                <AnalyticsPieChartPanel
+                  title="Speed Distribution"
+                  data={speedDistributionChartData}
+                  nameKey="range"
+                  colors={[]}
+                  label={({ name, percent }: { name?: string; percent?: number }) =>
+                    `${name} km/h: ${((percent || 0) * 100).toFixed(0)}%`
+                  }
+                  tooltipFormatter={(value, _name, item) => [
+                    String(value),
+                    `${item?.payload?.range} km/h`,
+                  ]}
+                  getCellColor={(entry, index) => getSpeedRangeColor(String(entry.range), index)}
+                  className="w-full min-w-0 border-b border-r border-[#3c4043] !bg-[#131314] py-5 relative overflow-visible"
+                  footer={<span className="text-[#ffffff]">Total vehicles: {speedDistributionTotal}</span>}
+                  csvHeaders={['Speed Range', 'Count']}
+                  exportBaseName="speed_distribution"
+                  selectedDuration={getDuration(ANALYTICS_CHART_IDS.speedDistributionPie)}
+                  onDurationSelect={(d) => handleDurationSelect(ANALYTICS_CHART_IDS.speedDistributionPie, d)}
+                  durationPickerDisabled={sectionRefreshing}
+                />
+              </div>
             </div>
-          </div>
-          <div className={`flex-1 w-full ${isFullscreen ? 'min-h-[75vh]' : 'min-h-[280px]'}`}>
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={data} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
-                <CartesianGrid vertical={false} stroke="#2d3748" strokeWidth={1} />
-                <XAxis
-                  dataKey="time"
-                  stroke="#718096"
-                  tick={{ fill: '#718096', fontSize: 12 }}
-                  tickFormatter={formatXAxis}
-                  tickMargin={10}
-                  axisLine={false}
-                  tickLine={false}
-                  minTickGap={60}
-                />
-                <YAxis
-                  stroke="#718096"
-                  tickFormatter={formatYAxis}
-                  tick={{ fill: '#718096', fontSize: 12 }}
-                  axisLine={false}
-                  tickLine={false}
-                />
-                <Tooltip content={<CustomTooltip />} />
-                {EMERGENCY_METRICS.map((metric) => (
-                  <Line
-                    key={metric.key}
-                    type="monotone"
-                    name={metric.label}
-                    dataKey={metric.key}
-                    stroke={metric.color}
-                    strokeWidth={1.5}
-                    dot={false}
-                    activeDot={{ r: 4, fill: metric.color, stroke: '#fff', strokeWidth: 2 }}
-                  />
-                ))}
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-          <div className="mt-2 flex flex-wrap justify-center gap-4">
-            {EMERGENCY_METRICS.map((metric) => (
-              <button
-                key={metric.key}
-                disabled
-                className="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-normal transition-all cursor-default"
-              >
-                <span className="w-4.5 h-1.5 rounded" style={{ backgroundColor: metric.color }} />
-                {metric.label}
-              </button>
-            ))}
-          </div>
-        </div>
+          </>
+        )
+      }
+      </div>
       </div>
 
-        </div>
-      </div>
+
     </div>
   )
 }

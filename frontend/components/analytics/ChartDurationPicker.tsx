@@ -110,7 +110,7 @@ export function ChartDurationPicker({
             ? 'bg-[#202124]/20 dark:bg-[#060606] text-[#e8eaed]'
             : 'bg-[#060606] text-[#e8eaed]'
         }`
-      : 'bg-[#060606] px-2 py-1 rounded-md text-sm capitalize';
+      : 'bg-[#060606] px-2 py-0.5 rounded-md text-[13px] capitalize';
 
   return (
     <div
@@ -141,7 +141,7 @@ export function ChartDurationPicker({
         <span className={durationBadgeClass}>{displayLabel}</span>
         {variant === 'chart' && (
           <FaRegClock
-            className={`w-5 h-5 text-lg transition-colors ${
+            className={`w-4.5 h-4.5 text-lg transition-colors ${
               open ? 'text-[#AECBFA]' : 'group-hover:text-[#AECBFA]'
             }`}
           />
