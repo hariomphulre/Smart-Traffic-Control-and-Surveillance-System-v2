@@ -67,4 +67,48 @@ export class UserModel {
       };
     });
   }
+
+  static async deleteByIds(ids: string[]): Promise<number> {
+    if (ids.length === 0) return 0;
+    const result = await pool.query(
+      `DELETE FROM users WHERE id = ANY($1::varchar[])`,
+      [ids]
+    );
+    return result.rowCount ?? 0;
+  }
+
+  static async update(
+    id: string,
+    fields: { username?: string; passwordHash?: string; role?: string }
+  ): Promise<UserRow | null> {
+    const sets: string[] = [];
+    const values: unknown[] = [];
+    let i = 1;
+
+    if (fields.username !== undefined) {
+      sets.push(`username = $${i++}`);
+      values.push(fields.username);
+    }
+    if (fields.passwordHash !== undefined) {
+      sets.push(`password_hash = $${i++}`);
+      values.push(fields.passwordHash);
+    }
+    if (fields.role !== undefined) {
+      sets.push(`role = $${i++}`);
+      values.push(fields.role);
+    }
+
+    if (sets.length === 0) {
+      return this.findById(id);
+    }
+
+    sets.push(`updated_at = NOW()`);
+    values.push(id);
+
+    const result = await pool.query<UserRow>(
+      `UPDATE users SET ${sets.join(', ')} WHERE id = $${i} RETURNING *`,
+      values
+    );
+    return result.rows[0] ?? null;
+  }
 }

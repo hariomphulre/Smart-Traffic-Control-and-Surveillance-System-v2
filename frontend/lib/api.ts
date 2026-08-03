@@ -421,6 +421,31 @@ export const getIdentities = async (): Promise<IdentitiesResponse> => {
   return response.data;
 };
 
+export const registerIdentity = async (
+  username: string,
+  password: string
+): Promise<{ id: string; username: string }> => {
+  const response = await axiosInstance.post('/api/auth/register', { username, password });
+  return response.data;
+};
+
+export const deleteIdentities = async (
+  ids: string[]
+): Promise<{ deleted: number; ids: string[] }> => {
+  const response = await axiosInstance.delete('/api/iam/identities', { data: { ids } });
+  return response.data;
+};
+
+export const updateIdentity = async (payload: {
+  id: string;
+  username?: string;
+  password?: string;
+  role?: string;
+}): Promise<{ id: string; username: string; role: string }> => {
+  const response = await axiosInstance.patch('/api/iam/identities', payload);
+  return response.data;
+};
+
 export const getSessions = async (): Promise<SessionsResponse> => {
   const response = await axiosInstance.get('/api/sessions');
   return response.data;

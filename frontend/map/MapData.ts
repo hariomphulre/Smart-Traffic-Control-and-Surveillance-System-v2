@@ -48,8 +48,8 @@ export const MAP_SIGNALS: MapSignal[] = [
   { id: "GAB5", path: ["Gujarat", "Bhavnagar", "Rupani Circle", "GAB5"], lat: 21.7821, lng: 72.1585 },
   { id: "GAB6", path: ["Gujarat", "Bhavnagar", "Takhteshwar", "GAB6"], lat: 21.7828, lng: 72.1457 },
   { id: "GAB7", path: ["Gujarat", "Bhavnagar", "Waghawadi Road", "GAB7"], lat: 21.776, lng: 72.1544 },
-  { id: "GAB8", path: ["Gujarat", "Bhavnagar", "Jewels Circle", "GAB8"], lat: 21.7903, lng: 72.1640 },
-  { id: "GAB9", path: ["Gujarat", "Bhavnagar", "Crescent Circle", "GAB9"], lat: 21.7580, lng: 72.1488 },
+  { id: "GAB8", path: ["Gujarat", "Bhavnagar", "Jewels Circle", "GAB8"], lat: 21.7903, lng: 72.164 },
+  { id: "GAB9", path: ["Gujarat", "Bhavnagar", "Crescent Circle", "GAB9"], lat: 21.758, lng: 72.1488 },
   { id: "GAB10", path: ["Gujarat", "Bhavnagar", "Station Road", "GAB10"], lat: 21.7647, lng: 72.1472 },
 
   // Karnataka

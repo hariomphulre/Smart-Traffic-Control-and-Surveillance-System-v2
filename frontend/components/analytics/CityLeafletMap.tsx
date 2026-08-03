@@ -330,7 +330,7 @@ export default function CityLeafletMap({ signals, currentCity, onSquareClick }: 
           </div>
         ) : isBlocked ? (
           <div className="flex items-center gap-3 text-[#ea4335] font-mono text-sm">
-            <span>⚠️ API Rate Limit. Paused.</span>
+            <span>⚠️ Something went wrong.</span>
           </div>
         ) : (
           <div className="flex items-center gap-2 text-emerald-400 font-mono text-sm pr-1">
