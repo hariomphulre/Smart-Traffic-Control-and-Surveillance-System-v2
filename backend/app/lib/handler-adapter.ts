@@ -18,7 +18,7 @@ export async function handleRequest(
 ) {
   try {
     // Convert NextRequest to Express-like request object
-    const body = ['POST', 'PATCH', 'PUT'].includes(request.method)
+    const body = ['POST', 'PATCH', 'PUT', 'DELETE'].includes(request.method)
       ? await request.json().catch(() => ({}))
       : {};
 
@@ -28,7 +28,7 @@ export async function handleRequest(
       query: Object.fromEntries(request.nextUrl.searchParams),
       body,
       params: {},
-      headers: request.headers,
+      headers: Object.fromEntries(request.headers.entries()),
     };
 
     // Create a mock response object with proper error handling

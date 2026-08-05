@@ -428,6 +428,7 @@ export interface UserSession {
   loginId: string;
   username: string;
   passkey: string;
+  publicPasskey: string | null;
   location: string;
   duration: string;
 }
@@ -543,5 +544,16 @@ export const deleteRoles = async (
 
 export const getSessions = async (): Promise<SessionsResponse> => {
   const response = await axiosInstance.get('/api/sessions');
+  return response.data;
+};
+
+export const endSessions = async (
+  ids: string[],
+  sessionId: string
+): Promise<{ deleted: number; ids: string[] }> => {
+  const response = await axiosInstance.delete('/api/sessions', {
+    data: { ids },
+    headers: { 'X-Session-Id': sessionId },
+  });
   return response.data;
 };

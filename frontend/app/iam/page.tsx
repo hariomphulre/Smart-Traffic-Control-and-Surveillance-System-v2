@@ -68,8 +68,13 @@ function truncateKey(value: string, start = 14, end = 10) {
 }
 
 function identityRoles(identity: Identity): string[] {
-  if (Array.isArray(identity.roles) && identity.roles.length > 0) return identity.roles
-  return identity.role ? [identity.role] : []
+  const roles =
+    Array.isArray(identity.roles) && identity.roles.length > 0
+      ? [...identity.roles]
+      : identity.role
+        ? [identity.role]
+        : []
+  return roles.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }))
 }
 
 function identityPathFromLocation(identity: Identity): string[] {

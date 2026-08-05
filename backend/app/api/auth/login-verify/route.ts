@@ -11,11 +11,23 @@ function getClientIp(req: Request): string | undefined {
   return req.headers.get('x-real-ip') ?? undefined;
 }
 
+function normalizeRoles(roles: string[] | null | undefined, role?: string | null): string[] {
+  if (Array.isArray(roles) && roles.length > 0) {
+    return roles.map((r) => String(r).trim()).filter(Boolean);
+  }
+  if (role && String(role).trim()) return [String(role).trim()];
+  return ['User'];
+}
+
 export async function POST(req: Request) {
   try {
     const origin = process.env.WEBAUTHN_ORIGIN || 'http://localhost:3000';
     const rpid = process.env.WEBAUTHN_RPID || 'localhost';
     const { userId, cred } = await req.json();
+
+    if (!userId || typeof userId !== 'string') {
+      return NextResponse.json({ error: 'User id is required' }, { status: 400 });
+    }
 
     const user = await UserModel.findById(userId);
     if (!user) {
@@ -24,7 +36,7 @@ export async function POST(req: Request) {
 
     const passkey = await PasskeyModel.findByUserId(userId);
     if (!passkey) {
-      return NextResponse.json({ error: 'No passkey registered' }, { status: 400 });
+      return NextResponse.json({ error: 'No fingerprint registered' }, { status: 400 });
     }
 
     const challenge = await getChallenge(userId);
@@ -41,7 +53,7 @@ export async function POST(req: Request) {
     });
 
     if (!result.verified) {
-      return NextResponse.json({ error: 'Not authenticated successfully!' }, { status: 401 });
+      return NextResponse.json({ error: 'Fingerprint authentication failed' }, { status: 401 });
     }
 
     if (result.authenticationInfo?.newCounter !== undefined) {
@@ -49,12 +61,14 @@ export async function POST(req: Request) {
     }
 
     const passkeyLabel = await PasskeyModel.findLabelByUserId(userId);
+    const roles = normalizeRoles(user.roles, user.role);
     const session = await createSession({
       userId,
       username: user.username,
+      roles,
       passkeyLabel,
       ipAddress: getClientIp(req),
-      location: 'India',
+      location: user.location_path || 'India',
     });
 
     await clearChallenge(userId);
@@ -63,7 +77,10 @@ export async function POST(req: Request) {
       success: true,
       userId,
       username: user.username,
+      roles,
       sessionId: session.sessionId,
+      location: user.location_path || 'India',
+      loginAt: session.loginAt,
     });
   } catch (err) {
     console.error('Login verify error:', err);

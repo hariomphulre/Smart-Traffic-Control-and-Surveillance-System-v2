@@ -202,6 +202,28 @@ const migrate = async (): Promise<void> => {
         AND (role IS NULL OR role = '' OR role IS DISTINCT FROM roles[1])
     `).catch(() => undefined);
 
+    // Seed guest identity for guest login (no passkey required)
+    await client.query(`
+      INSERT INTO users (
+        id, username, role, roles, country, location_scope,
+        state, city, area, square_id, location_path
+      ) VALUES (
+        'user_guest', 'Guest', 'User', ARRAY['User']::TEXT[],
+        'India', 'national', NULL, NULL, NULL, NULL, 'India'
+      )
+      ON CONFLICT (id) DO NOTHING
+    `).catch(() => undefined);
+    await client.query(`
+      INSERT INTO users (
+        id, username, role, roles, country, location_scope,
+        state, city, area, square_id, location_path
+      ) VALUES (
+        'user_guest', 'Guest', 'User', ARRAY['User']::TEXT[],
+        'India', 'national', NULL, NULL, NULL, NULL, 'India'
+      )
+      ON CONFLICT (username) DO NOTHING
+    `).catch(() => undefined);
+
     // ── 9. IAM: passkeys ──────────────────────────────────────────────────────
     await client.query(`
       CREATE TABLE IF NOT EXISTS passkeys (

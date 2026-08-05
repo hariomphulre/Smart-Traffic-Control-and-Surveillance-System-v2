@@ -300,7 +300,7 @@ export default function RolesSection({
             <FiPlus className="h-4 w-4 text-[#8AB4F8] group-hover:text-[#AECBFA]" />
             <button
               type="button"
-              className="py-1 font-medium text-sm transition-all text-[#8AB4F8] group-hover:text-[#AECBFA] shadow-lg"
+              className="py-2 font-medium text-sm transition-all text-[#8AB4F8] group-hover:text-[#AECBFA] shadow-lg"
             >
               Create Custom Role
             </button>
@@ -325,7 +325,7 @@ export default function RolesSection({
             <button
               type="button"
               disabled={customSelected.length === 0 || removeLoading}
-              className={`py-1 font-medium text-sm transition-all shadow-lg disabled:cursor-not-allowed ${
+              className={`py-2 font-medium text-sm transition-all shadow-lg disabled:cursor-not-allowed ${
                 customSelected.length > 0
                   ? 'text-[#8AB4F8] group-hover:text-[#AECBFA]'
                   : 'text-[#e8eaed61]'
