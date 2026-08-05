@@ -19,6 +19,10 @@ export async function POST(req: Request) {
       rpID: rpid,
       rpName: rpname,
       userName: user.username,
+      authenticatorSelection: {
+        residentKey: 'preferred',
+        userVerification: 'preferred',
+      },
     });
 
     await setChallenge(userId, options.challenge);

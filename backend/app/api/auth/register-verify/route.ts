@@ -8,7 +8,7 @@ export async function POST(req: Request) {
   try {
     const origin = process.env.WEBAUTHN_ORIGIN || 'http://localhost:3000';
     const rpid = process.env.WEBAUTHN_RPID || 'localhost';
-    const { userId, cred } = await req.json();
+    const { userId, cred, deviceBindingId } = await req.json();
 
     const user = await UserModel.findById(userId);
     if (!user) {
@@ -31,10 +31,19 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'User could not be verified!' }, { status: 400 });
     }
 
+    const aaguid =
+      typeof (verifyResult.registrationInfo as { aaguid?: string }).aaguid === 'string'
+        ? (verifyResult.registrationInfo as { aaguid?: string }).aaguid
+        : null;
+
     await PasskeyModel.upsertForUser(
       userId,
       verifyResult.registrationInfo.credential,
-      'Primary Passkey'
+      'Primary Passkey',
+      {
+        deviceBindingId: typeof deviceBindingId === 'string' ? deviceBindingId : null,
+        aaguid: aaguid ?? null,
+      }
     );
     await clearChallenge(userId);
 

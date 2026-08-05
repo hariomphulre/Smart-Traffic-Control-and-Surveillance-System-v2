@@ -139,15 +139,68 @@ const migrate = async (): Promise<void> => {
     // ── 8. IAM: users ─────────────────────────────────────────────────────────
     await client.query(`
       CREATE TABLE IF NOT EXISTS users (
-        id            VARCHAR(50)  PRIMARY KEY,
-        username      VARCHAR(100) UNIQUE NOT NULL,
-        password_hash VARCHAR(200) NOT NULL,
-        role          VARCHAR(30)  DEFAULT 'user' CHECK (role IN ('user', 'admin', 'operator')),
-        created_at    TIMESTAMPTZ  DEFAULT CURRENT_TIMESTAMP,
-        updated_at    TIMESTAMPTZ  DEFAULT CURRENT_TIMESTAMP
+        id             VARCHAR(50)  PRIMARY KEY,
+        username       VARCHAR(100) UNIQUE NOT NULL,
+        role           VARCHAR(100) DEFAULT 'User',
+        roles          TEXT[]       NOT NULL DEFAULT ARRAY['User']::TEXT[],
+        country        VARCHAR(50)  NOT NULL DEFAULT 'India',
+        location_scope VARCHAR(20)  NOT NULL DEFAULT 'national'
+                         CHECK (location_scope IN ('national', 'state', 'city', 'square')),
+        state          VARCHAR(100),
+        city           VARCHAR(100),
+        area           VARCHAR(100),
+        square_id      VARCHAR(50),
+        location_path  TEXT         NOT NULL DEFAULT 'India',
+        created_at     TIMESTAMPTZ  DEFAULT CURRENT_TIMESTAMP,
+        updated_at     TIMESTAMPTZ  DEFAULT CURRENT_TIMESTAMP
       );
     `);
     console.log(' [8/10] users');
+
+    // Evolve existing users table (idempotent)
+    await client.query(`ALTER TABLE users DROP COLUMN IF EXISTS password_hash`).catch(() => undefined);
+    await client.query(`ALTER TABLE users DROP CONSTRAINT IF EXISTS users_role_check`).catch(() => undefined);
+    await client.query(`ALTER TABLE users ALTER COLUMN role TYPE VARCHAR(100)`).catch(() => undefined);
+    await client.query(`ALTER TABLE users ALTER COLUMN role SET DEFAULT 'User'`).catch(() => undefined);
+    await client.query(`UPDATE users SET role = 'Admin' WHERE lower(role) = 'admin'`).catch(() => undefined);
+    await client.query(`UPDATE users SET role = 'Operator' WHERE lower(role) = 'operator'`).catch(() => undefined);
+    await client.query(`UPDATE users SET role = 'User' WHERE lower(role) = 'user'`).catch(() => undefined);
+    await client.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS country VARCHAR(50) NOT NULL DEFAULT 'India'`).catch(() => undefined);
+    await client.query(`
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS location_scope VARCHAR(20) NOT NULL DEFAULT 'national'
+    `).catch(() => undefined);
+    await client.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS state VARCHAR(100)`).catch(() => undefined);
+    await client.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS city VARCHAR(100)`).catch(() => undefined);
+    await client.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS area VARCHAR(100)`).catch(() => undefined);
+    await client.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS square_id VARCHAR(50)`).catch(() => undefined);
+    await client.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS location_path TEXT`).catch(() => undefined);
+    await client.query(`
+      UPDATE users SET location_path = 'India', country = COALESCE(country, 'India'),
+                      location_scope = COALESCE(location_scope, 'national')
+      WHERE location_path IS NULL OR location_path = ''
+    `).catch(() => undefined);
+    await client.query(`
+      ALTER TABLE users ALTER COLUMN location_path SET DEFAULT 'India'
+    `).catch(() => undefined);
+    await client.query(`
+      ALTER TABLE users ALTER COLUMN location_path SET NOT NULL
+    `).catch(() => undefined);
+
+    await client.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS roles TEXT[]`).catch(() => undefined);
+    await client.query(`
+      UPDATE users
+      SET roles = ARRAY[COALESCE(NULLIF(role, ''), 'User')]::TEXT[]
+      WHERE roles IS NULL OR cardinality(roles) = 0
+    `).catch(() => undefined);
+    await client.query(`ALTER TABLE users ALTER COLUMN roles SET DEFAULT ARRAY['User']::TEXT[]`).catch(() => undefined);
+    await client.query(`UPDATE users SET roles = ARRAY['User']::TEXT[] WHERE roles IS NULL`).catch(() => undefined);
+    await client.query(`ALTER TABLE users ALTER COLUMN roles SET NOT NULL`).catch(() => undefined);
+    await client.query(`
+      UPDATE users
+      SET role = roles[1]
+      WHERE roles IS NOT NULL AND cardinality(roles) > 0
+        AND (role IS NULL OR role = '' OR role IS DISTINCT FROM roles[1])
+    `).catch(() => undefined);
 
     // ── 9. IAM: passkeys ──────────────────────────────────────────────────────
     await client.query(`
@@ -159,10 +212,16 @@ const migrate = async (): Promise<void> => {
         counter       BIGINT       DEFAULT 0,
         transports    TEXT[],
         device_name   VARCHAR(100) DEFAULT 'Passkey',
+        device_binding_id VARCHAR(64),
+        aaguid        VARCHAR(36),
         created_at    TIMESTAMPTZ  DEFAULT CURRENT_TIMESTAMP
       );
     `);
     console.log(' [9/10] passkeys');
+
+    await client.query(`ALTER TABLE passkeys ADD COLUMN IF NOT EXISTS device_binding_id VARCHAR(64)`).catch(() => undefined);
+    await client.query(`ALTER TABLE passkeys ADD COLUMN IF NOT EXISTS aaguid VARCHAR(36)`).catch(() => undefined);
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_passkeys_device_binding ON passkeys(device_binding_id)`).catch(() => undefined);
 
     // ── 10. IAM: user_sessions ────────────────────────────────────────────────
     await client.query(`
@@ -178,7 +237,82 @@ const migrate = async (): Promise<void> => {
         is_active     BOOLEAN      DEFAULT TRUE
       );
     `);
-    console.log(' [10/10] user_sessions');
+    console.log(' [10/11] user_sessions');
+
+    // ── 11. IAM: roles ────────────────────────────────────────────────────────
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS iam_roles (
+        id             VARCHAR(50)  PRIMARY KEY,
+        title          VARCHAR(100) UNIQUE NOT NULL,
+        description    TEXT         DEFAULT '',
+        services       TEXT[]       DEFAULT '{}',
+        role_type      VARCHAR(20)  NOT NULL DEFAULT 'custom'
+                         CHECK (role_type IN ('predefined', 'custom')),
+        country        VARCHAR(100) NOT NULL DEFAULT 'India',
+        location_scope VARCHAR(20)  NOT NULL DEFAULT 'national'
+                         CHECK (location_scope IN ('national', 'state', 'city', 'square')),
+        state          VARCHAR(100),
+        city           VARCHAR(100),
+        area           VARCHAR(100),
+        square_id      VARCHAR(100),
+        location_path  TEXT         NOT NULL DEFAULT 'India',
+        created_at     TIMESTAMPTZ  DEFAULT CURRENT_TIMESTAMP,
+        updated_at     TIMESTAMPTZ  DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+    console.log(' [11/11] iam_roles');
+
+    await client.query(`ALTER TABLE iam_roles ADD COLUMN IF NOT EXISTS country VARCHAR(100)`).catch(() => undefined);
+    await client.query(`ALTER TABLE iam_roles ADD COLUMN IF NOT EXISTS location_scope VARCHAR(20)`).catch(() => undefined);
+    await client.query(`ALTER TABLE iam_roles ADD COLUMN IF NOT EXISTS state VARCHAR(100)`).catch(() => undefined);
+    await client.query(`ALTER TABLE iam_roles ADD COLUMN IF NOT EXISTS city VARCHAR(100)`).catch(() => undefined);
+    await client.query(`ALTER TABLE iam_roles ADD COLUMN IF NOT EXISTS area VARCHAR(100)`).catch(() => undefined);
+    await client.query(`ALTER TABLE iam_roles ADD COLUMN IF NOT EXISTS square_id VARCHAR(100)`).catch(() => undefined);
+    await client.query(`ALTER TABLE iam_roles ADD COLUMN IF NOT EXISTS location_path TEXT`).catch(() => undefined);
+
+    await client.query(`
+      UPDATE iam_roles
+      SET country = COALESCE(country, 'India'),
+          location_scope = COALESCE(location_scope, 'national'),
+          location_path = COALESCE(NULLIF(location_path, ''), 'India')
+      WHERE country IS NULL OR location_scope IS NULL OR location_path IS NULL OR location_path = ''
+    `).catch(() => undefined);
+
+    await client.query(`
+      UPDATE iam_roles
+      SET country = 'India',
+          location_scope = 'national',
+          state = NULL,
+          city = NULL,
+          area = NULL,
+          square_id = NULL,
+          location_path = 'India'
+      WHERE role_type = 'predefined'
+    `).catch(() => undefined);
+
+    await client.query(`ALTER TABLE iam_roles ALTER COLUMN country SET DEFAULT 'India'`).catch(() => undefined);
+    await client.query(`ALTER TABLE iam_roles ALTER COLUMN location_scope SET DEFAULT 'national'`).catch(() => undefined);
+    await client.query(`ALTER TABLE iam_roles ALTER COLUMN location_path SET DEFAULT 'India'`).catch(() => undefined);
+    await client.query(`ALTER TABLE iam_roles ALTER COLUMN country SET NOT NULL`).catch(() => undefined);
+    await client.query(`ALTER TABLE iam_roles ALTER COLUMN location_scope SET NOT NULL`).catch(() => undefined);
+    await client.query(`ALTER TABLE iam_roles ALTER COLUMN location_path SET NOT NULL`).catch(() => undefined);
+
+    await client.query(`
+      INSERT INTO iam_roles (
+        id, title, description, services, role_type,
+        country, location_scope, state, city, area, square_id, location_path
+      ) VALUES
+        ('role_admin', 'Admin', 'Full access to all Signal-X services',
+          ARRAY['analytics','logs','images','challans','accidents','ambulance','sessions','iam','audit-logs','simulation'],
+          'predefined', 'India', 'national', NULL, NULL, NULL, NULL, 'India'),
+        ('role_operator', 'Operator', 'Operate traffic monitoring and incident workflows',
+          ARRAY['analytics','logs','images','challans','accidents','sessions'],
+          'predefined', 'India', 'national', NULL, NULL, NULL, NULL, 'India'),
+        ('role_user', 'User', 'Basic read access to core dashboards',
+          ARRAY['analytics','logs','sessions'],
+          'predefined', 'India', 'national', NULL, NULL, NULL, NULL, 'India')
+      ON CONFLICT (title) DO NOTHING
+    `).catch(() => undefined);
 
     await client.query(`
       ALTER TABLE users
@@ -266,6 +400,20 @@ const migrate = async (): Promise<void> => {
 
     await client.query(`CREATE INDEX IF NOT EXISTS idx_users_username ON users(username)`);
     console.log('  ✓ idx_users_username');
+
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_users_location_path ON users(location_path)`);
+    console.log('  ✓ idx_users_location_path');
+
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_users_location_scope ON users(location_scope, state, city, square_id)`);
+    console.log('  ✓ idx_users_location_scope');
+
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_iam_roles_title ON iam_roles(title)`);
+    console.log('  ✓ idx_iam_roles_title');
+
+    await client.query(
+      `CREATE INDEX IF NOT EXISTS idx_iam_roles_location_scope ON iam_roles(location_scope, state, city, square_id)`
+    );
+    console.log('  ✓ idx_iam_roles_location_scope');
 
     await client.query(`CREATE INDEX IF NOT EXISTS idx_passkeys_user_id ON passkeys(user_id)`);
     console.log('  ✓ idx_passkeys_user_id');

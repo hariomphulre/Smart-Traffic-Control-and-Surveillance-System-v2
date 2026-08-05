@@ -142,10 +142,37 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   type __Unused = __Check
 }
 
+// Validate ../../../app/api/iam/fingerprint-challenge/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/iam/fingerprint-challenge">> = Specific
+  const handler = {} as typeof import("../../../app/api/iam/fingerprint-challenge/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../app/api/iam/fingerprint-verify/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/iam/fingerprint-verify">> = Specific
+  const handler = {} as typeof import("../../../app/api/iam/fingerprint-verify/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
 // Validate ../../../app/api/iam/identities/route.ts
 {
   type __IsExpected<Specific extends RouteHandlerConfig<"/api/iam/identities">> = Specific
   const handler = {} as typeof import("../../../app/api/iam/identities/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../app/api/iam/roles/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/iam/roles">> = Specific
+  const handler = {} as typeof import("../../../app/api/iam/roles/route.js")
   type __Check = __IsExpected<typeof handler>
   // @ts-ignore
   type __Unused = __Check

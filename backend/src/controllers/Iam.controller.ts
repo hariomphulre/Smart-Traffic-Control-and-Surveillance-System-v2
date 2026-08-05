@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { getRedis, CACHE_TTL } from '../config/redis';
 import { isDbSchemaError } from '../lib/db-errors';
-import { hashPassword } from '../lib/password';
-import { UserModel } from '../models/user.model';
+import { RoleModel } from '../models/role.model';
+import { UserModel, type LocationScope, type UserLocation } from '../models/user.model';
 
 const IDENTITIES_CACHE_KEY = 'iam:identities:list';
 
@@ -10,25 +10,83 @@ async function invalidateIdentitiesCache() {
   const redis = getRedis();
   if (!redis) return;
   try {
-    await redis.del(IDENTITIES_CACHE_KEY);
+    const keys = await redis.keys(`${IDENTITIES_CACHE_KEY}*`);
+    if (keys.length > 0) await redis.del(...keys);
   } catch {
-    // ignore
+    try {
+      await redis.del(IDENTITIES_CACHE_KEY);
+    } catch {
+      // ignore
+    }
   }
 }
 
+function parseLocationFilter(query: Record<string, unknown>) {
+  const state = typeof query.state === 'string' && query.state ? query.state : null;
+  const city = typeof query.city === 'string' && query.city ? query.city : null;
+  const squareId =
+    typeof query.squareId === 'string' && query.squareId
+      ? query.squareId
+      : typeof query.square_id === 'string' && query.square_id
+        ? query.square_id
+        : null;
+
+  return { state, city, squareId };
+}
+
+function parseLocationBody(body: Record<string, unknown>): UserLocation | null {
+  const location = (body.location ?? body) as Record<string, unknown>;
+  const scope = location.scope as string | undefined;
+  const validScopes: LocationScope[] = ['national', 'state', 'city', 'square'];
+  if (!scope || !validScopes.includes(scope as LocationScope)) return null;
+
+  const country = String(location.country ?? 'India').trim() || 'India';
+  const state = location.state ? String(location.state).trim() : null;
+  const city = location.city ? String(location.city).trim() : null;
+  const area = location.area ? String(location.area).trim() : null;
+  const squareId = location.squareId
+    ? String(location.squareId).trim()
+    : location.square_id
+      ? String(location.square_id).trim()
+      : null;
+
+  const locationPath =
+    scope === 'national'
+      ? country
+      : scope === 'state'
+        ? state || ''
+        : scope === 'city'
+          ? [state, city].filter(Boolean).join('/')
+          : [state, city, area, squareId].filter(Boolean).join('/');
+
+  return {
+    scope: scope as LocationScope,
+    country,
+    state: scope === 'national' ? null : state,
+    city: scope === 'national' || scope === 'state' ? null : city,
+    area: scope === 'square' ? area : null,
+    squareId: scope === 'square' ? squareId : null,
+    locationPath,
+  };
+}
+
 export const getIdentities = async (
-  _req: Request,
+  req: Request,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
   try {
+    const filter = parseLocationFilter(req.query as Record<string, unknown>);
+    const cacheSuffix = [filter.state, filter.city, filter.squareId].filter(Boolean).join('|') || 'all';
+    const cacheKey = `${IDENTITIES_CACHE_KEY}:${cacheSuffix}`;
     const redis = getRedis();
 
     if (redis) {
       try {
-        const cached = await redis.get(IDENTITIES_CACHE_KEY);
+        const cached = await redis.get(cacheKey);
         if (cached) {
-          res.json({ data: JSON.parse(cached), total: JSON.parse(cached).length });
+          const data = JSON.parse(cached);
+          res.json({ data, total: data.length });
           return;
         }
       } catch {
@@ -36,11 +94,11 @@ export const getIdentities = async (
       }
     }
 
-    const data = await UserModel.listIdentities();
+    const data = await UserModel.listIdentities(filter);
 
     if (redis) {
       try {
-        await redis.setex(IDENTITIES_CACHE_KEY, CACHE_TTL.list, JSON.stringify(data));
+        await redis.setex(cacheKey, CACHE_TTL.list, JSON.stringify(data));
       } catch {
         // ignore
       }
@@ -85,7 +143,7 @@ export const updateIdentity = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const { id, username, password, role } = req.body ?? {};
+    const { id, username, role, roles, location } = req.body ?? {};
 
     if (!id || typeof id !== 'string') {
       res.status(400).json({ error: 'Identity id is required' });
@@ -98,7 +156,11 @@ export const updateIdentity = async (
       return;
     }
 
-    const fields: { username?: string; passwordHash?: string; role?: string } = {};
+    const fields: {
+      username?: string;
+      roles?: string[];
+      location?: UserLocation;
+    } = {};
 
     if (typeof username === 'string' && username.trim()) {
       const trimmed = username.trim();
@@ -112,20 +174,50 @@ export const updateIdentity = async (
       }
     }
 
-    if (typeof password === 'string' && password.trim()) {
-      fields.passwordHash = await hashPassword(password.trim());
+    const roleTitles: string[] = Array.isArray(roles)
+      ? roles.filter((r: unknown): r is string => typeof r === 'string' && r.trim().length > 0)
+          .map((r) => r.trim())
+      : typeof role === 'string' && role.trim()
+        ? [role.trim()]
+        : [];
+
+    if (roleTitles.length > 0) {
+      const resolved: string[] = [];
+      for (const title of roleTitles) {
+        const roleRow = await RoleModel.findByTitle(title);
+        if (!roleRow) {
+          res.status(400).json({ error: `Role not found: ${title}` });
+          return;
+        }
+        if (!resolved.includes(roleRow.title)) resolved.push(roleRow.title);
+      }
+      fields.roles = resolved;
     }
 
-    if (typeof role === 'string' && ['user', 'admin', 'operator'].includes(role)) {
-      fields.role = role;
+    if (location && typeof location === 'object') {
+      const parsed = parseLocationBody({ location });
+      if (!parsed) {
+        res.status(400).json({ error: 'Invalid location payload' });
+        return;
+      }
+      fields.location = parsed;
     }
 
     const updated = await UserModel.update(id, fields);
     await invalidateIdentitiesCache();
+    const updatedRoles =
+      updated?.roles && updated.roles.length > 0
+        ? updated.roles
+        : existing.roles && existing.roles.length > 0
+          ? existing.roles
+          : [updated?.role ?? existing.role];
     res.json({
       id: updated?.id ?? id,
       username: updated?.username ?? existing.username,
-      role: updated?.role ?? existing.role,
+      role: updatedRoles[0],
+      roles: updatedRoles,
+      locationPath: updated?.location_path ?? existing.location_path,
+      locationScope: updated?.location_scope ?? existing.location_scope,
     });
   } catch (err) {
     next(err);

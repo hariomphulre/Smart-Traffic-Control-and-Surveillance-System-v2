@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { startRegistration } from "@simplewebauthn/browser";
 import { FiKey, FiUser } from "react-icons/fi";
+import { getDeviceBindingId } from "@/lib/deviceBinding";
 
 interface ProfileClientProps {
   userId: string;
@@ -40,7 +41,11 @@ export default function ProfileClient({ userId }: ProfileClientProps) {
       const verifyRes = await fetch("/api/auth/register-verify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId, cred: authResult }),
+        body: JSON.stringify({
+          userId,
+          cred: authResult,
+          deviceBindingId: getDeviceBindingId(),
+        }),
       });
 
       const verifyResult = await verifyRes.json();

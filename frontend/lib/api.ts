@@ -386,13 +386,34 @@ export const getTrafficState = async (): Promise<TrafficState> => {
 
 // ── IAM & Sessions ────────────────────────────────────────────────────────────
 
+export type LocationScope = 'national' | 'state' | 'city' | 'square';
+
+export interface IdentityLocation {
+  scope: LocationScope;
+  country: string;
+  state: string | null;
+  city: string | null;
+  area: string | null;
+  squareId: string | null;
+}
+
 export interface Identity {
   id: string;
   username: string;
   role: string;
+  roles: string[];
   passkeyCount: number;
   hasPasskey: boolean;
+  publicPasskey: string | null;
   createdAt: string;
+  locationScope: LocationScope;
+  country: string;
+  state: string | null;
+  city: string | null;
+  area: string | null;
+  squareId: string | null;
+  locationPath: string;
+  locationLabel: string;
 }
 
 export interface IdentitiesResponse {
@@ -416,16 +437,20 @@ export interface SessionsResponse {
   total: number;
 }
 
-export const getIdentities = async (): Promise<IdentitiesResponse> => {
-  const response = await axiosInstance.get('/api/iam/identities');
+export const getIdentities = async (params?: {
+  state?: string;
+  city?: string;
+  squareId?: string;
+}): Promise<IdentitiesResponse> => {
+  const response = await axiosInstance.get('/api/iam/identities', { params });
   return response.data;
 };
 
 export const registerIdentity = async (
   username: string,
-  password: string
-): Promise<{ id: string; username: string }> => {
-  const response = await axiosInstance.post('/api/auth/register', { username, password });
+  location: IdentityLocation
+): Promise<{ id: string; username: string; locationScope: LocationScope; locationPath: string }> => {
+  const response = await axiosInstance.post('/api/auth/register', { username, location });
   return response.data;
 };
 
@@ -439,10 +464,80 @@ export const deleteIdentities = async (
 export const updateIdentity = async (payload: {
   id: string;
   username?: string;
-  password?: string;
   role?: string;
-}): Promise<{ id: string; username: string; role: string }> => {
+  roles?: string[];
+  location?: IdentityLocation;
+}): Promise<{
+  id: string;
+  username: string;
+  role: string;
+  roles: string[];
+  locationPath?: string;
+  locationScope?: LocationScope;
+}> => {
   const response = await axiosInstance.patch('/api/iam/identities', payload);
+  return response.data;
+};
+
+export type RoleType = 'predefined' | 'custom';
+
+export interface IamRole {
+  id: string;
+  title: string;
+  description: string;
+  services: string[];
+  roleType: RoleType;
+  locationScope: LocationScope;
+  country: string;
+  state: string | null;
+  city: string | null;
+  area: string | null;
+  squareId: string | null;
+  locationPath: string;
+  locationLabel: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface RolesResponse {
+  data: IamRole[];
+  total: number;
+}
+
+export const getRoles = async (params?: {
+  state?: string;
+  city?: string;
+  squareId?: string;
+}): Promise<RolesResponse> => {
+  const response = await axiosInstance.get('/api/iam/roles', { params });
+  return response.data;
+};
+
+export const createRole = async (payload: {
+  title: string;
+  description?: string;
+  services?: string[];
+  location: IdentityLocation;
+}): Promise<IamRole> => {
+  const response = await axiosInstance.post('/api/iam/roles', payload);
+  return response.data;
+};
+
+export const updateRole = async (payload: {
+  id: string;
+  title?: string;
+  description?: string;
+  services?: string[];
+  location?: IdentityLocation;
+}): Promise<IamRole> => {
+  const response = await axiosInstance.patch('/api/iam/roles', payload);
+  return response.data;
+};
+
+export const deleteRoles = async (
+  ids: string[]
+): Promise<{ deleted: number; ids: string[] }> => {
+  const response = await axiosInstance.delete('/api/iam/roles', { data: { ids } });
   return response.data;
 };
 
