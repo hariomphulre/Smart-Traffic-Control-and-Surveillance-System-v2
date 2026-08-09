@@ -3,6 +3,10 @@ import { generateAuthenticationOptions } from '@simplewebauthn/server';
 import { UserModel } from '@/src/models/user.model';
 import { PasskeyModel } from '@/src/models/passkey.model';
 import { setChallenge } from '@/src/lib/challenge-store';
+import { withDbRetry } from '@/src/lib/db-retry';
+import { authErrorResponse } from '@/src/lib/auth-api-response';
+import { ensurePool } from '@/src/config/db';
+import { verifyTurnstileToken } from '@/src/lib/verify-captcha';
 
 type LocationFilter = {
   state?: string | null;
@@ -42,8 +46,21 @@ function userMatchesFilter(
 
 export async function POST(req: Request) {
   try {
+    const body = await req.json().catch(() => ({}));
+    const { captchaToken } = body;
+
+    // 1. Verify CAPTCHA token first before database queries
+    if (!captchaToken) {
+      return NextResponse.json({ error: 'CAPTCHA token is required' }, { status: 400 });
+    }
+    const isCaptchaValid = await verifyTurnstileToken(captchaToken);
+    if (!isCaptchaValid) {
+      return NextResponse.json({ error: 'Invalid or expired CAPTCHA' }, { status: 400 });
+    }
+
+    await ensurePool();
     const rpid = process.env.WEBAUTHN_RPID || 'localhost';
-    const body = await req.json();
+    
     const username =
       typeof body.username === 'string'
         ? body.username.trim()
@@ -55,9 +72,13 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Username is required' }, { status: 400 });
     }
 
-    let user = await UserModel.findByUsername(username);
+    let user = await withDbRetry(() => UserModel.findByUsername(username), {
+      label: 'login.findByUsername',
+    });
     if (!user) {
-      user = await UserModel.findById(username);
+      user = await withDbRetry(() => UserModel.findById(username), {
+        label: 'login.findById',
+      });
     }
     if (!user) {
       return NextResponse.json({ error: 'Identity not found' }, { status: 404 });
@@ -88,7 +109,9 @@ export async function POST(req: Request) {
       );
     }
 
-    const passkey = await PasskeyModel.findByUserId(user.id);
+    const passkey = await withDbRetry(() => PasskeyModel.findByUserId(user.id), {
+      label: 'login.passkeyByUser',
+    });
     if (!passkey) {
       return NextResponse.json({ error: 'No fingerprint registered for this user' }, { status: 400 });
     }
@@ -103,7 +126,9 @@ export async function POST(req: Request) {
       ],
     });
 
-    await setChallenge(user.id, opts.challenge);
+    await withDbRetry(() => setChallenge(user.id, opts.challenge), {
+      label: 'login.setChallenge',
+    });
 
     return NextResponse.json({
       options: opts,
@@ -112,10 +137,6 @@ export async function POST(req: Request) {
       locationPath: user.location_path,
     });
   } catch (err) {
-    console.error('Login challenge error:', err);
-    return NextResponse.json(
-      { error: err instanceof Error ? err.message : 'Challenge failed' },
-      { status: 500 }
-    );
+    return authErrorResponse(err, 'Login challenge error');
   }
 }

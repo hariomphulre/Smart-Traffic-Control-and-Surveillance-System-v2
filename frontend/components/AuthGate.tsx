@@ -20,7 +20,7 @@ export default function AuthGate({ children }: { children: React.ReactNode }) {
       router.replace('/login')
     }
     if (isAuthenticated && pathname === '/login') {
-      router.replace('/sessions')
+      router.replace('/analytics')
     }
   }, [loading, isAuthenticated, isPublic, pathname, router])
 

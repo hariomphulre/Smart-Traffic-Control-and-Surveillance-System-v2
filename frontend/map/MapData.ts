@@ -66,7 +66,7 @@ export const MAP_SIGNALS: MapSignal[] = [
 
   { id: "KABN1", path: ["Karnataka", "Bengaluru", "BTM Layout", "KABN1"], lat: 12.9166, lng: 77.6101 },
   { id: "KABN2", path: ["Karnataka", "Bengaluru", "Electronic City", "KABN2"], lat: 12.8456, lng: 77.6603 },
-  { id: "KABN3", path: ["Karnataka", "Bengaluru", "Hebbal", "KABN3"], lat: 13.0358, lng: 77.5970 },
+  { id: "KABN3", path: ["Karnataka", "Bengaluru", "Hebbal", "KABN3"], lat: 13.0358, lng: 77.597 },
   { id: "KABN4", path: ["Karnataka", "Bengaluru", "KR Puram", "KABN4"], lat: 13.0077, lng: 77.6950 },
   { id: "KABN5", path: ["Karnataka", "Bengaluru", "Majestic", "KABN5"], lat: 12.9767, lng: 77.5713 },
   { id: "KABN6", path: ["Karnataka", "Bengaluru", "Marathahalli", "KABN6"], lat: 12.9591, lng: 77.6974 },

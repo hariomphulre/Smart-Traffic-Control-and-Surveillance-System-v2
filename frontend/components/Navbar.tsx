@@ -22,7 +22,7 @@ export default function Navbar() {
         <div className="flex min-h-13 justify-between">
           <div className="flex items-center">
             <div className="flex flex-col sm:flex-row sm:gap-3 gap-1 sm:mb-0 mb-1 text-[#5f6368] dark:text-[#9aa0a6] transition-colors">
-              <Link href="/sessions">
+              <Link href="/analytics">
                 <div className="hover:text-[#202124] dark:hover:text-[#e8eaed] transition-colors text-xl sm:mt-0 mt-2 font-medium min-w-21">
                   Signal-X
                 </div>

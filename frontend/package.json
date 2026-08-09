@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@marsidev/react-turnstile": "^1.5.5",
     "@simplewebauthn/browser": "^13.3.0",
     "@tailwindcss/postcss": "^4.2.0",
     "axios": "^1.13.5",

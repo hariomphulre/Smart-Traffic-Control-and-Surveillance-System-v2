@@ -9,6 +9,8 @@ export function isDbConnectionError(error: unknown): boolean {
     code === 'ECONNRESET' ||
     error.message.includes('getaddrinfo') ||
     error.message.includes('Connection terminated') ||
+    error.message.includes('connection timeout') ||
+    error.message.includes('Connection terminated unexpectedly') ||
     error.message.includes('DATABASE_URL')
   );
 }

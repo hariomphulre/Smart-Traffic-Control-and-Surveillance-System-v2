@@ -4,6 +4,9 @@ import { UserModel } from '@/src/models/user.model';
 import { PasskeyModel } from '@/src/models/passkey.model';
 import { getChallenge, clearChallenge } from '@/src/lib/challenge-store';
 import { createSession } from '@/src/services/session.service';
+import { withDbRetry } from '@/src/lib/db-retry';
+import { authErrorResponse } from '@/src/lib/auth-api-response';
+import { ensurePool } from '@/src/config/db';
 
 function getClientIp(req: Request): string | undefined {
   const forwarded = req.headers.get('x-forwarded-for');
@@ -21,6 +24,7 @@ function normalizeRoles(roles: string[] | null | undefined, role?: string | null
 
 export async function POST(req: Request) {
   try {
+    await ensurePool();
     const origin = process.env.WEBAUTHN_ORIGIN || 'http://localhost:3000';
     const rpid = process.env.WEBAUTHN_RPID || 'localhost';
     const { userId, cred } = await req.json();
@@ -29,17 +33,23 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'User id is required' }, { status: 400 });
     }
 
-    const user = await UserModel.findById(userId);
+    const user = await withDbRetry(() => UserModel.findById(userId), {
+      label: 'loginVerify.findUser',
+    });
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    const passkey = await PasskeyModel.findByUserId(userId);
+    const passkey = await withDbRetry(() => PasskeyModel.findByUserId(userId), {
+      label: 'loginVerify.findPasskey',
+    });
     if (!passkey) {
       return NextResponse.json({ error: 'No fingerprint registered' }, { status: 400 });
     }
 
-    const challenge = await getChallenge(userId);
+    const challenge = await withDbRetry(() => getChallenge(userId), {
+      label: 'loginVerify.getChallenge',
+    });
     if (!challenge) {
       return NextResponse.json({ error: 'Challenge expired' }, { status: 400 });
     }
@@ -57,21 +67,32 @@ export async function POST(req: Request) {
     }
 
     if (result.authenticationInfo?.newCounter !== undefined) {
-      await PasskeyModel.updateCounter(passkey.id, result.authenticationInfo.newCounter);
+      await withDbRetry(
+        () => PasskeyModel.updateCounter(passkey.id, result.authenticationInfo.newCounter),
+        { label: 'loginVerify.updateCounter' }
+      );
     }
 
-    const passkeyLabel = await PasskeyModel.findLabelByUserId(userId);
-    const roles = normalizeRoles(user.roles, user.role);
-    const session = await createSession({
-      userId,
-      username: user.username,
-      roles,
-      passkeyLabel,
-      ipAddress: getClientIp(req),
-      location: user.location_path || 'India',
+    const passkeyLabel = await withDbRetry(() => PasskeyModel.findLabelByUserId(userId), {
+      label: 'loginVerify.findPasskeyLabel',
     });
+    const roles = normalizeRoles(user.roles, user.role);
+    const session = await withDbRetry(
+      () =>
+        createSession({
+          userId,
+          username: user.username,
+          roles,
+          passkeyLabel,
+          ipAddress: getClientIp(req),
+          location: user.location_path || 'India',
+        }),
+      { label: 'loginVerify.createSession' }
+    );
 
-    await clearChallenge(userId);
+    await withDbRetry(() => clearChallenge(userId), {
+      label: 'loginVerify.clearChallenge',
+    });
 
     return NextResponse.json({
       success: true,
@@ -83,10 +104,6 @@ export async function POST(req: Request) {
       loginAt: session.loginAt,
     });
   } catch (err) {
-    console.error('Login verify error:', err);
-    return NextResponse.json(
-      { error: err instanceof Error ? err.message : 'Login failed' },
-      { status: 500 }
-    );
+    return authErrorResponse(err, 'Login verify error');
   }
 }

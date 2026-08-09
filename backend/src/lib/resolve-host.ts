@@ -64,8 +64,9 @@ export async function resolveHost(hostname: string): Promise<string> {
   const cached = ipCache.get(hostname);
   if (cached) return cached;
 
+  // Direct Neon hosts only — pooler hostnames must resolve themselves (stale IP breaks SNI).
   const manualIp = process.env.NEON_HOST_IP?.trim();
-  if (manualIp && net.isIPv4(manualIp)) {
+  if (manualIp && net.isIPv4(manualIp) && !hostname.includes('-pooler')) {
     ipCache.set(hostname, manualIp);
     return manualIp;
   }

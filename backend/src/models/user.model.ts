@@ -173,6 +173,32 @@ export class UserModel {
     return result.rows[0] ?? null;
   }
 
+  /** Idempotent guest user for Guest Login — single round trip. */
+  static async ensureGuest(): Promise<UserRow> {
+    const result = await pool.query<UserRow>(
+      `INSERT INTO users (
+         id, username, role, roles, country, location_scope,
+         state, city, area, square_id, location_path
+       ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+       ON CONFLICT (id) DO UPDATE SET username = EXCLUDED.username
+       RETURNING *`,
+      [
+        'user_guest',
+        'Guest',
+        'User',
+        ['User'],
+        'India',
+        'national',
+        null,
+        null,
+        null,
+        null,
+        'India',
+      ]
+    );
+    return result.rows[0];
+  }
+
   static async listIdentities(filter: LocationFilter = {}): Promise<IdentityResponse[]> {
     // Show current level + children only (never parent-scoped identities).
     // square → that square only

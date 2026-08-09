@@ -16,6 +16,21 @@ dns.setDefaultResultOrder('ipv4first');
 /** pg calls dns.lookup internally — use cached IP or resolve4 */
 const originalLookup = dns.lookup.bind(dns);
 
+function finishLookup(
+  options: dns.LookupOptions,
+  callback: (...args: never[]) => void,
+  ip: string
+): void {
+  // pg / Node often call lookup with { all: true }; must return LookupAddress[].
+  if (options.all) {
+    (callback as (err: null, addresses: dns.LookupAddress[]) => void)(null, [
+      { address: ip, family: 4 },
+    ]);
+    return;
+  }
+  (callback as (err: null, address: string, family: number) => void)(null, ip, 4);
+}
+
 function patchedLookup(
   hostname: string,
   optionsOrCallback:
@@ -24,13 +39,18 @@ function patchedLookup(
   callbackMaybe?: (err: NodeJS.ErrnoException | null, address: string, family: number) => void
 ): void {
   let options: dns.LookupOptions = {};
-  let callback: (err: NodeJS.ErrnoException | null, address: string, family: number) => void;
+  let callback: (...args: never[]) => void;
 
   if (typeof optionsOrCallback === 'function') {
-    callback = optionsOrCallback;
+    callback = optionsOrCallback as (...args: never[]) => void;
   } else {
     options = optionsOrCallback ?? {};
-    callback = callbackMaybe!;
+    callback = callbackMaybe as (...args: never[]) => void;
+  }
+
+  if (typeof callback !== 'function') {
+    originalLookup(hostname, optionsOrCallback as never, callbackMaybe as never);
+    return;
   }
 
   if (!hostname || net.isIP(hostname)) {
@@ -40,13 +60,13 @@ function patchedLookup(
 
   const cached = getCachedIp(hostname);
   if (cached) {
-    callback(null, cached, 4);
+    finishLookup(options, callback, cached);
     return;
   }
 
   dns.resolve4(hostname, (err, addresses) => {
     if (!err && addresses.length > 0) {
-      callback(null, addresses[0], 4);
+      finishLookup(options, callback, addresses[0]);
       return;
     }
     originalLookup(hostname, { ...options, family: 4 }, callback as never);
@@ -81,6 +101,46 @@ async function createPool(): Promise<Pool> {
   const url = new URL(normalized);
 
   const isNeon = url.hostname.includes('neon.tech');
+  const isNeonPooler = isNeon && url.hostname.includes('-pooler');
+
+  // Neon pooler: resolve hostname → IP, keep SNI via ssl.servername (do not use NEON_HOST_IP).
+  if (isNeonPooler) {
+    const ip = await resolveHost(url.hostname);
+    const poolerPool = new PgPool({
+      host: ip,
+      port: url.port ? Number(url.port) : 5432,
+      user: decodeURIComponent(url.username),
+      password: decodeURIComponent(url.password),
+      database: url.pathname.replace(/^\//, ''),
+      max: 10,
+      min: 0,
+      idleTimeoutMillis: 30_000,
+      connectionTimeoutMillis: 10_000,
+      allowExitOnIdle: true,
+      keepAlive: true,
+      keepAliveInitialDelayMillis: 10_000,
+      ssl: { rejectUnauthorized: false, servername: url.hostname },
+    });
+    poolerPool.on('connect', () => {
+      if (process.env.NODE_ENV === 'development') {
+        console.log('✅ Connected to PostgreSQL (Neon pooler)');
+      }
+    });
+    poolerPool.on('error', (err) => {
+      const msg = err.message ?? '';
+      if (
+        msg.includes('Connection terminated') ||
+        msg.includes('ECONNRESET') ||
+        msg.includes('socket hang up')
+      ) {
+        console.warn('⚠️ DB idle connection closed (Neon pooler) — will reconnect on next request');
+        return;
+      }
+      console.error('❌ DB pool error:', msg);
+    });
+    console.log(`🔗 Neon pooler: ${url.hostname} @ ${ip}`);
+    return poolerPool;
+  }
 
   // Docker/local Postgres: use connection string (avoids custom dns.lookup issues with host "postgres")
   if (!isNeon) {
@@ -116,21 +176,23 @@ async function createPool(): Promise<Pool> {
     database: url.pathname.replace(/^\//, ''),
     max: 10,
     min: 0,
-    idleTimeoutMillis: 20_000,
-    connectionTimeoutMillis: 15_000,
+    idleTimeoutMillis: 30_000,
+    connectionTimeoutMillis: 10_000,
     allowExitOnIdle: true,
     keepAlive: true,
     keepAliveInitialDelayMillis: 10_000,
     maxUses: 5_000,
+    statement_timeout: 20_000,
+    query_timeout: 20_000,
   };
 
   if (isNeon) {
     const manualIp = process.env.NEON_HOST_IP?.trim();
-    if (manualIp && net.isIPv4(manualIp)) {
+    if (manualIp && net.isIPv4(manualIp) && !isNeonPooler) {
       config.host = manualIp;
       config.options = `endpoint=${url.hostname.split('.')[0]}`;
       console.log(`🔗 Neon: using NEON_HOST_IP ${manualIp}`);
-    } else {
+    } else if (!isNeonPooler) {
       const ip = await resolveHost(url.hostname);
       const endpointId = url.hostname.split('.')[0];
       config.host = ip;
@@ -140,7 +202,10 @@ async function createPool(): Promise<Pool> {
   }
 
   if (needsSsl(connectionString)) {
-    config.ssl = { rejectUnauthorized: false };
+    config.ssl = { 
+      rejectUnauthorized: false,
+      servername: url.hostname
+    };
   }
 
   const newPool = new PgPool(config);
