@@ -93,6 +93,7 @@ jobs:
             NEXT_PUBLIC_EMERGENCY_SOCKET_URL=https://signal-x.hariomphulre.tech/emergency
             NEXT_PUBLIC_EMERGENCY_SOCKET_PATH=/emergency/socket.io
             NEXT_PUBLIC_EMERGENCY_SOCKET_TRANSPORTS=polling,websocket
+            NEXT_PUBLIC_TURNSTILE_SITE_KEY=${{ secrets.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}
 
   deploy-to-vps:
     needs: build-and-push

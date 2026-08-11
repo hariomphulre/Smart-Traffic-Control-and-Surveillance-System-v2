@@ -1,2 +1,16 @@
-{"timestamp":"00:00:00.590","source":"Server","level":"WARN","message":"⚠ The \"middleware\" file convention is deprecated. Please use \"proxy\" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy"}
-{"timestamp":"00:00:00.858","source":"Server","level":"LOG","message":""}
+{"timestamp":"00:00:00.891","source":"Server","level":"WARN","message":"⚠ The \"middleware\" file convention is deprecated. Please use \"proxy\" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy"}
+{"timestamp":"00:00:01.023","source":"Server","level":"LOG","message":""}
+{"timestamp":"00:00:48.043","source":"Server","level":"LOG","message":"[2026-08-10T07:23:32.584Z] POST /api/auth/guest-login"}
+{"timestamp":"00:00:48.853","source":"Server","level":"LOG","message":"🔗 Resolved ep-winter-king-aoyb9jyh-pooler.c-2.ap-southeast-1.aws.neon.tech → 13.251.17.193 (system DNS)"}
+{"timestamp":"00:00:48.856","source":"Server","level":"LOG","message":"🔗 Neon pooler: ep-winter-king-aoyb9jyh-pooler.c-2.ap-southeast-1.aws.neon.tech @ 13.251.17.193"}
+{"timestamp":"00:00:58.860","source":"Server","level":"WARN","message":"⚠️ DB retry 1/1 (guest.login): Connection terminated due to connection timeout"}
+{"timestamp":"00:01:09.552","source":"Server","level":"ERROR","message":"Guest login error: Error: Connection terminated due to connection timeout"}
+{"timestamp":"00:01:15.161","source":"Server","level":"LOG","message":"[2026-08-10T07:23:59.703Z] POST /api/auth/guest-login"}
+{"timestamp":"00:01:25.303","source":"Server","level":"WARN","message":"⚠️ DB retry 1/1 (guest.login): Connection terminated due to connection timeout"}
+{"timestamp":"00:01:35.903","source":"Server","level":"ERROR","message":"Guest login error: Error: Connection terminated due to connection timeout"}
+{"timestamp":"00:03:00.642","source":"Server","level":"LOG","message":"[2026-08-10T07:25:45.184Z] POST /api/auth/guest-login"}
+{"timestamp":"00:03:10.752","source":"Server","level":"WARN","message":"⚠️ DB retry 1/1 (guest.login): Connection terminated due to connection timeout"}
+{"timestamp":"00:03:21.332","source":"Server","level":"ERROR","message":"Guest login error: Error: Connection terminated due to connection timeout"}
+{"timestamp":"00:03:25.457","source":"Server","level":"LOG","message":"[2026-08-10T07:26:09.998Z] POST /api/auth/guest-login"}
+{"timestamp":"00:03:35.560","source":"Server","level":"WARN","message":"⚠️ DB retry 1/1 (guest.login): Connection terminated due to connection timeout"}
+{"timestamp":"00:03:46.135","source":"Server","level":"ERROR","message":"Guest login error: Error: Connection terminated due to connection timeout"}

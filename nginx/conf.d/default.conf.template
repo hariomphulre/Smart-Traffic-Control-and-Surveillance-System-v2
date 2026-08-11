@@ -29,6 +29,12 @@ server {
         proxy_set_header Host $host;
     }
 
+    location ^~ /api/turnstile/ {
+        proxy_pass http://frontend:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+    }
+
     # Backend REST API
     location /api/ {
         proxy_pass http://backend:3001;

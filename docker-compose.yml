@@ -141,6 +141,7 @@ services:
       NODE_ENV: production
       BACKEND_INTERNAL_URL: http://backend:3001
       ML_SERVICE_URL: http://ml-service:8000
+      TURNSTILE_SITE_KEY: ${NEXT_PUBLIC_TURNSTILE_SITE_KEY}
       NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${NEXT_PUBLIC_TURNSTILE_SITE_KEY}
     volumes:
       - ./frontend/data:/app/data

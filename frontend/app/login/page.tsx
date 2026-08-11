@@ -419,7 +419,7 @@ import {
 import { Turnstile, type TurnstileInstance } from '@marsidev/react-turnstile'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { RiFingerprintFill } from 'react-icons/ri'
 import { GoPasskeyFill } from 'react-icons/go'
 import { MdKey } from 'react-icons/md'
@@ -478,7 +478,25 @@ export default function LoginPage() {
 
   // Turnstile CAPTCHA state & ref
   const [captchaToken, setCaptchaToken] = useState<string | null>(null)
+  const [siteKey, setSiteKey] = useState('')
   const turnstileRef = useRef<TurnstileInstance | null>(null)
+
+  useEffect(() => {
+    let cancelled = false
+    fetch('/api/turnstile/site-key')
+      .then((res) => res.json())
+      .then((data: { siteKey?: string }) => {
+        if (!cancelled && typeof data.siteKey === 'string') {
+          setSiteKey(data.siteKey)
+        }
+      })
+      .catch(() => {
+        // Leave siteKey empty; Turnstile will not render until key is available.
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   const resetCaptcha = () => {
     setCaptchaToken(null)
@@ -717,19 +735,21 @@ export default function LoginPage() {
             </button>
 
             <div className="flex justify-center my-1">
-              <Turnstile
-                ref={turnstileRef}
-                siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''}
-                onSuccess={(token) => {
-                  setCaptchaToken(token)
-                  setError('')
-                }}
-                onExpire={() => setCaptchaToken(null)}
-                onError={() => setError('CAPTCHA verification failed')}
-                options={{
-                  theme: 'dark',
-                }}
-              />
+              {siteKey ? (
+                <Turnstile
+                  ref={turnstileRef}
+                  siteKey={siteKey}
+                  onSuccess={(token) => {
+                    setCaptchaToken(token)
+                    setError('')
+                  }}
+                  onExpire={() => setCaptchaToken(null)}
+                  onError={() => setError('CAPTCHA verification failed')}
+                  options={{
+                    theme: 'dark',
+                  }}
+                />
+              ) : null}
             </div>
 
             <div className="flex items-center gap-3">
@@ -745,7 +765,7 @@ export default function LoginPage() {
               className="w-full py-3 px-4 rounded-lg border border-[#3c4043] hover:border-[#669DF6] text-[#669DF6] group hover:text-[#AECBFA] font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               <MdKey className="h-5 w-5" />
-              {guestLoading ? 'Entering...' : 'Guest Passkey'}
+              {guestLoading ? 'Request Access' : 'Guest Passkey'}
             </button>
           </form>
         </div>
