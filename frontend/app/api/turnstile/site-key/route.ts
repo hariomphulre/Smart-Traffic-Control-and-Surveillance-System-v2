@@ -7,9 +7,12 @@ export const dynamic = 'force-dynamic'
  * can change without rebuilding the Next.js client bundle.
  */
 export async function GET() {
-  // Prefer TURNSTILE_SITE_KEY — NEXT_PUBLIC_* is inlined at build time and
-  // will be empty in prebuilt GHCR images unless passed as a Docker build-arg.
-  const siteKey = process.env.TURNSTILE_SITE_KEY || ''
+  // TURNSTILE_SITE_KEY: Docker/runtime (compose maps NEXT_PUBLIC_* → this).
+  // NEXT_PUBLIC_TURNSTILE_SITE_KEY: local `next dev` (.env.local).
+  const siteKey =
+    process.env.TURNSTILE_SITE_KEY ||
+    process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ||
+    ''
 
   return NextResponse.json(
     { siteKey },

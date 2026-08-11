@@ -478,15 +478,24 @@ export default function LoginPage() {
 
   // Turnstile CAPTCHA state & ref
   const [captchaToken, setCaptchaToken] = useState<string | null>(null)
-  const [siteKey, setSiteKey] = useState('')
+  const [siteKey, setSiteKey] = useState(
+    () => process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '',
+  )
   const turnstileRef = useRef<TurnstileInstance | null>(null)
 
   useEffect(() => {
+    // In next dev, NEXT_PUBLIC_* is already available client-side.
+    // Still fetch for Docker/runtime where the key is only on the server.
+    if (process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY) {
+      setSiteKey(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY)
+      return
+    }
+
     let cancelled = false
     fetch('/api/turnstile/site-key')
       .then((res) => res.json())
       .then((data: { siteKey?: string }) => {
-        if (!cancelled && typeof data.siteKey === 'string') {
+        if (!cancelled && typeof data.siteKey === 'string' && data.siteKey) {
           setSiteKey(data.siteKey)
         }
       })
