@@ -173,6 +173,15 @@ export class UserModel {
     return result.rows[0] ?? null;
   }
 
+  static async findByIds(ids: string[]): Promise<UserRow[]> {
+    if (ids.length === 0) return [];
+    const result = await pool.query<UserRow>(
+      `SELECT * FROM users WHERE id = ANY($1::varchar[])`,
+      [ids]
+    );
+    return result.rows;
+  }
+
   /** Idempotent guest user for Guest Login — single round trip. */
   static async ensureGuest(): Promise<UserRow> {
     const result = await pool.query<UserRow>(

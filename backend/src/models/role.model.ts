@@ -228,6 +228,15 @@ export class RoleModel {
     return result.rows[0] ?? null;
   }
 
+  static async findByIds(ids: string[]): Promise<RoleRow[]> {
+    if (ids.length === 0) return [];
+    const result = await pool.query<RoleRow>(
+      `SELECT * FROM iam_roles WHERE id = ANY($1::varchar[])`,
+      [ids]
+    );
+    return result.rows;
+  }
+
   static async create(input: {
     title: string;
     description?: string;

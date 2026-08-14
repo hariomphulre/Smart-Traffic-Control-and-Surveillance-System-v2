@@ -13,6 +13,7 @@ import {
   type TrafficSignal,
   type Hotspot,
 } from '@/lib/api'
+import { FaSignOutAlt } from 'react-icons/fa'
 
 const DRIVER_STORAGE_KEY = 'ambulance_driver'
 
@@ -202,7 +203,7 @@ export default function AmbulanceDriverPage() {
           onClick={handleSignOut}
           className="flex items-center gap-2 px-3 py-2 text-sm text-[#5f6368] dark:text-[#9aa0a6] hover:bg-[#f8f9fa] dark:hover:bg-[#35363a] rounded-lg transition-colors"
         >
-          <FiLogOut className="w-4 h-4" />
+          <FaSignOutAlt className="w-4 h-4" />
           Sign Out
         </button>
       </div>

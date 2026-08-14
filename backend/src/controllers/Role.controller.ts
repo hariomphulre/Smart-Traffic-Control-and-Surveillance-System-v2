@@ -3,6 +3,48 @@ import { getRedis } from '../config/redis';
 import { isDbSchemaError } from '../lib/db-errors';
 import { RoleModel } from '../models/role.model';
 import type { LocationScope, UserLocation } from '../models/user.model';
+import type { AuditChange } from '../models/audit.model';
+import { pushChange, recordAuditFromReq } from '../services/audit.service';
+
+function roleSnapshotChanges(
+  before: {
+    title?: string;
+    description?: string | null;
+    services?: string[] | null;
+    location_path?: string | null;
+  },
+  after: {
+    title?: string;
+    description?: string | null;
+    services?: string[] | null;
+    locationPath?: string | null;
+    location_path?: string | null;
+  } | null,
+  action: 'create' | 'update' | 'delete'
+): AuditChange[] {
+  const changes: AuditChange[] = [];
+  const afterOrigin = after?.locationPath ?? after?.location_path ?? null;
+  const afterServices = after?.services ?? null;
+  if (action === 'create') {
+    pushChange(changes, 'Title', null, after?.title ?? before.title);
+    pushChange(changes, 'Description', null, after?.description ?? before.description);
+    pushChange(changes, 'Services', null, afterServices ?? before.services);
+    pushChange(changes, 'Origin', null, afterOrigin ?? before.location_path);
+    return changes;
+  }
+  if (action === 'delete') {
+    pushChange(changes, 'Title', before.title, null);
+    pushChange(changes, 'Description', before.description, null);
+    pushChange(changes, 'Services', before.services, null);
+    pushChange(changes, 'Origin', before.location_path, null);
+    return changes;
+  }
+  pushChange(changes, 'Title', before.title, after?.title);
+  pushChange(changes, 'Description', before.description, after?.description);
+  pushChange(changes, 'Services', before.services, afterServices);
+  pushChange(changes, 'Origin', before.location_path, afterOrigin);
+  return changes;
+}
 
 const ROLES_CACHE_KEY = 'iam:roles:list';
 
@@ -141,6 +183,13 @@ export const createRole = async (
 
     const role = await RoleModel.create({ title, description, services, location });
     await invalidateRolesCache();
+    await recordAuditFromReq(req, {
+      action: 'create',
+      resourceType: 'role',
+      resourceId: role.id,
+      resourceLabel: role.title,
+      changes: roleSnapshotChanges({}, role, 'create'),
+    });
     res.status(201).json(role);
   } catch (err) {
     next(err);
@@ -187,12 +236,25 @@ export const updateRole = async (
       }
     }
 
+    const existing = await RoleModel.findById(id);
+    if (!existing) {
+      res.status(404).json({ error: 'Role not found' });
+      return;
+    }
+
     const updated = await RoleModel.update(id, fields);
     if (!updated) {
       res.status(404).json({ error: 'Role not found' });
       return;
     }
     await invalidateRolesCache();
+    await recordAuditFromReq(req, {
+      action: 'update',
+      resourceType: 'role',
+      resourceId: updated.id,
+      resourceLabel: updated.title,
+      changes: roleSnapshotChanges(existing, updated, 'update'),
+    });
     res.json(updated);
   } catch (err) {
     if (err instanceof Error && err.message.includes('Predefined')) {

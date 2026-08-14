@@ -104,7 +104,7 @@ export async function POST(req: Request) {
 
     if (!userMatchesFilter(user, filter)) {
       return NextResponse.json(
-        { error: 'Identity is not available at the selected location' },
+        { error: 'Invalid identity' },
         { status: 403 }
       );
     }

@@ -3,6 +3,38 @@ import { getRedis, CACHE_TTL } from '../config/redis';
 import { isDbSchemaError } from '../lib/db-errors';
 import { RoleModel } from '../models/role.model';
 import { UserModel, type LocationScope, type UserLocation } from '../models/user.model';
+import type { AuditChange } from '../models/audit.model';
+import { pushChange, recordAuditFromReq } from '../services/audit.service';
+
+function identityRoles(row: { roles?: string[] | null; role?: string | null }): string[] {
+  if (Array.isArray(row.roles) && row.roles.length > 0) return row.roles;
+  if (row.role) return [row.role];
+  return ['User'];
+}
+
+function identitySnapshotChanges(
+  before: { username: string; roles?: string[] | null; role?: string | null; location_path?: string | null },
+  after: { username: string; roles?: string[] | null; role?: string | null; location_path?: string | null } | null,
+  action: 'create' | 'update' | 'delete'
+): AuditChange[] {
+  const changes: AuditChange[] = [];
+  if (action === 'create') {
+    pushChange(changes, 'Username', null, after?.username ?? before.username);
+    pushChange(changes, 'Roles', null, identityRoles(after ?? before));
+    pushChange(changes, 'Origin', null, after?.location_path ?? before.location_path);
+    return changes;
+  }
+  if (action === 'delete') {
+    pushChange(changes, 'Username', before.username, null);
+    pushChange(changes, 'Roles', identityRoles(before), null);
+    pushChange(changes, 'Origin', before.location_path, null);
+    return changes;
+  }
+  pushChange(changes, 'Username', before.username, after?.username);
+  pushChange(changes, 'Roles', identityRoles(before), identityRoles(after ?? before));
+  pushChange(changes, 'Origin', before.location_path, after?.location_path);
+  return changes;
+}
 
 const IDENTITIES_CACHE_KEY = 'iam:identities:list';
 
@@ -129,8 +161,18 @@ export const deleteIdentities = async (
       return;
     }
 
+    const existing = await UserModel.findByIds(ids);
     const deleted = await UserModel.deleteByIds(ids);
     await invalidateIdentitiesCache();
+    for (const row of existing) {
+      await recordAuditFromReq(req, {
+        action: 'delete',
+        resourceType: 'identity',
+        resourceId: row.id,
+        resourceLabel: row.username,
+        changes: identitySnapshotChanges(row, null, 'delete'),
+      });
+    }
     res.json({ deleted, ids });
   } catch (err) {
     next(err);
@@ -211,6 +253,15 @@ export const updateIdentity = async (
         : existing.roles && existing.roles.length > 0
           ? existing.roles
           : [updated?.role ?? existing.role];
+    if (updated) {
+      await recordAuditFromReq(req, {
+        action: 'update',
+        resourceType: 'identity',
+        resourceId: updated.id,
+        resourceLabel: updated.username,
+        changes: identitySnapshotChanges(existing, updated, 'update'),
+      });
+    }
     res.json({
       id: updated?.id ?? id,
       username: updated?.username ?? existing.username,

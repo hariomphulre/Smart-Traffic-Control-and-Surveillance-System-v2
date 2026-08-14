@@ -2,19 +2,9 @@
 
 import Link from 'next/link'
 import { useAuth } from '@/context/AuthContext'
-import { useTheme } from '@/context/ThemeContext'
-import { useRouter } from 'next/navigation'
-import { FiLogOut, FiMoon, FiSun } from 'react-icons/fi'
 
 export default function Navbar() {
-  const { theme, toggleTheme } = useTheme()
-  const { session, isAuthenticated, logout } = useAuth()
-  const router = useRouter()
-
-  const handleLogout = async () => {
-    await logout()
-    router.replace('/login')
-  }
+  const { session, isAuthenticated } = useAuth()
 
   return (
     <nav className="bg-white dark:bg-[#131314] border-b border-[#dadce0] dark:border-[#3c4043] sticky top-0 z-60">
@@ -38,28 +28,6 @@ export default function Navbar() {
               <span className="hidden md:inline text-sm text-[#9aa0a6] mr-1">
                 {session.username}
               </span>
-            )}
-            <button
-              onClick={toggleTheme}
-              className="p-2 hover:bg-[#f8f9fa] dark:hover:bg-[#35363a] rounded-lg transition-colors"
-              aria-label="Toggle theme"
-            >
-              {theme === 'light' ? (
-                <FiMoon className="w-5 h-5 text-[#669DF6] dark:text-[#669DF6]" />
-              ) : (
-                <FiSun className="w-5 h-5 text-[#669DF6]" />
-              )}
-            </button>
-            {isAuthenticated && (
-              <button
-                type="button"
-                onClick={handleLogout}
-                className="p-2 hover:bg-[#f8f9fa] dark:hover:bg-[#35363a] rounded-lg transition-colors text-[#9aa0a6] hover:text-[#8AB4F8]"
-                aria-label="Sign out"
-                title="Sign out"
-              >
-                <FiLogOut className="w-5 h-5" />
-              </button>
             )}
           </div>
         </div>

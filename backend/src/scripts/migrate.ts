@@ -282,7 +282,26 @@ const migrate = async (): Promise<void> => {
         updated_at     TIMESTAMPTZ  DEFAULT CURRENT_TIMESTAMP
       );
     `);
-    console.log(' [11/11] iam_roles');
+    console.log(' [11/12] iam_roles');
+
+    // ── 12. Audit logs ────────────────────────────────────────────────────────
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS audit_logs (
+        id              VARCHAR(50)  PRIMARY KEY,
+        created_at      TIMESTAMPTZ  NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        user_id         VARCHAR(50),
+        username        VARCHAR(100) NOT NULL,
+        roles           TEXT[]       NOT NULL DEFAULT '{}',
+        origin          TEXT         NOT NULL DEFAULT '',
+        action          VARCHAR(40)  NOT NULL,
+        resource_type   VARCHAR(40)  NOT NULL,
+        resource_id     VARCHAR(100),
+        resource_label  VARCHAR(200),
+        changes         JSONB        NOT NULL DEFAULT '[]'::jsonb,
+        ip_address      VARCHAR(45)
+      );
+    `);
+    console.log(' [12/12] audit_logs');
 
     await client.query(`ALTER TABLE iam_roles ADD COLUMN IF NOT EXISTS country VARCHAR(100)`).catch(() => undefined);
     await client.query(`ALTER TABLE iam_roles ADD COLUMN IF NOT EXISTS location_scope VARCHAR(20)`).catch(() => undefined);
@@ -443,6 +462,21 @@ const migrate = async (): Promise<void> => {
     await client.query(`CREATE INDEX IF NOT EXISTS idx_user_sessions_active
       ON user_sessions(is_active, expires_at DESC) WHERE is_active = TRUE`);
     console.log('  ✓ idx_user_sessions_active');
+
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_audit_logs_created_at
+      ON audit_logs(created_at DESC)`);
+    console.log('  ✓ idx_audit_logs_created_at');
+
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_audit_logs_username ON audit_logs(username)`);
+    console.log('  ✓ idx_audit_logs_username');
+
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_audit_logs_origin ON audit_logs(origin)`);
+    console.log('  ✓ idx_audit_logs_origin');
+
+    await client.query(
+      `CREATE INDEX IF NOT EXISTS idx_audit_logs_resource ON audit_logs(resource_type, resource_id)`
+    );
+    console.log('  ✓ idx_audit_logs_resource');
 
     console.log('\n🎉 All migrations complete!\n');
   } catch (err) {

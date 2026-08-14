@@ -76,7 +76,7 @@ export const MAP_SIGNALS: MapSignal[] = [
   { id: "KABN10", path: ["Karnataka", "Bengaluru", "Banashankari", "KABN10"], lat: 12.9255, lng: 77.5468 },
 
   // Kerala
-  { id: "KEK1", path: ["Kerala", "Kochi", "Edappally", "KEK1"], lat: 10.0270, lng: 76.3089 },
+  { id: "KEK1", path: ["Kerala", "Kochi", "Edappally", "KEK1"], lat: 10.027, lng: 76.3089 },
   { id: "KEK2", path: ["Kerala", "Kochi", "Kaloor", "KEK2"], lat: 9.9983, lng: 76.2911 },
   { id: "KEK3", path: ["Kerala", "Kochi", "MG Road", "KEK3"], lat: 9.9726, lng: 76.2858 },
   { id: "KEK4", path: ["Kerala", "Kochi", "Palarivattom", "KEK4"], lat: 10.0088, lng: 76.3045 },

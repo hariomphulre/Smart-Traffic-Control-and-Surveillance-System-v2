@@ -1,66 +1,188 @@
-{"timestamp":"00:00:00.641","source":"Server","level":"WARN","message":"⚠ The \"middleware\" file convention is deprecated. Please use \"proxy\" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy"}
-{"timestamp":"00:00:00.868","source":"Server","level":"LOG","message":""}
-{"timestamp":"00:00:01.601","source":"Browser","level":"INFO","message":"%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"}
-{"timestamp":"00:06:25.493","source":"Server","level":"LOG","message":"[2026-08-11T18:27:49.346Z] POST /api/auth/guest-login"}
-{"timestamp":"00:06:26.356","source":"Server","level":"LOG","message":"🔗 Resolved ep-winter-king-aoyb9jyh-pooler.c-2.ap-southeast-1.aws.neon.tech → 3.0.167.45 (system DNS)"}
-{"timestamp":"00:06:26.357","source":"Server","level":"LOG","message":"🔗 Neon pooler: ep-winter-king-aoyb9jyh-pooler.c-2.ap-southeast-1.aws.neon.tech @ 3.0.167.45"}
-{"timestamp":"00:06:29.778","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
-{"timestamp":"00:06:30.198","source":"Server","level":"ERROR","message":"(node:1708137) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.\n(Use `node --trace-deprecation ...` to show where the warning was created)"}
-{"timestamp":"00:06:30.205","source":"Server","level":"WARN","message":"⚠️ Redis error: \"connect ECONNREFUSED 127.0.0.1:6379\""}
-{"timestamp":"00:06:30.603","source":"Server","level":"WARN","message":"⚠️ Redis error: \"connect ECONNREFUSED 127.0.0.1:6379\""}
-{"timestamp":"00:06:31.013","source":"Server","level":"WARN","message":"⚠️ Redis error: \"connect ECONNREFUSED 127.0.0.1:6379\""}
-{"timestamp":"00:06:31.623","source":"Server","level":"WARN","message":"⚠️ Redis error: \"connect ECONNREFUSED 127.0.0.1:6379\""}
-{"timestamp":"00:06:31.623","source":"Server","level":"WARN","message":"⚠️ Redis session write failed: \"Connection is closed.\""}
-{"timestamp":"00:06:31.994","source":"Server","level":"LOG","message":"[2026-08-11T18:27:55.847Z] GET /api/analytics/stats"}
-{"timestamp":"00:06:31.997","source":"Server","level":"LOG","message":"[2026-08-11T18:27:55.850Z] GET /api/analytics/violations"}
-{"timestamp":"00:06:32.012","source":"Server","level":"LOG","message":"[2026-08-11T18:27:55.865Z] GET /api/analytics/hourly-traffic"}
-{"timestamp":"00:06:32.016","source":"Server","level":"LOG","message":"[2026-08-11T18:27:55.869Z] GET /api/analytics/speed-distribution"}
-{"timestamp":"00:06:32.117","source":"Server","level":"LOG","message":"[2026-08-11T18:27:55.970Z] GET /api/analytics/vehicle-types"}
-{"timestamp":"00:06:32.659","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:06:32.662","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:06:32.662","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:06:32.662","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:06:32.663","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:06:33.061","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
-{"timestamp":"00:06:33.854","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
-{"timestamp":"00:06:33.854","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
-{"timestamp":"00:06:34.085","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
-{"timestamp":"00:06:34.088","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
-{"timestamp":"00:06:34.088","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
-{"timestamp":"00:06:34.090","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
-{"timestamp":"00:06:34.287","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
-{"timestamp":"00:06:34.289","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
-{"timestamp":"00:06:42.979","source":"Server","level":"LOG","message":"[2026-08-11T18:28:06.832Z] GET /api/signals/state"}
-{"timestamp":"00:06:43.450","source":"Server","level":"LOG","message":"[2026-08-11T18:28:07.304Z] GET /api/signals/state"}
-{"timestamp":"00:06:43.955","source":"Server","level":"LOG","message":"[2026-08-11T18:28:07.808Z] GET /api/signals/state"}
-{"timestamp":"00:06:44.451","source":"Server","level":"LOG","message":"[2026-08-11T18:28:08.304Z] GET /api/signals/state"}
-{"timestamp":"00:06:44.567","source":"Server","level":"LOG","message":"[2026-08-11T18:28:08.420Z] GET /api/analytics/stats"}
-{"timestamp":"00:06:44.572","source":"Server","level":"LOG","message":"[2026-08-11T18:28:08.425Z] GET /api/analytics/violations"}
-{"timestamp":"00:06:44.575","source":"Server","level":"LOG","message":"[2026-08-11T18:28:08.428Z] GET /api/analytics/vehicle-types"}
-{"timestamp":"00:06:44.577","source":"Server","level":"LOG","message":"[2026-08-11T18:28:08.430Z] GET /api/analytics/hourly-traffic"}
-{"timestamp":"00:06:44.580","source":"Server","level":"LOG","message":"[2026-08-11T18:28:08.433Z] GET /api/analytics/speed-distribution"}
-{"timestamp":"00:06:44.595","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:06:44.605","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:06:44.608","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:06:44.611","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:06:44.616","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
-{"timestamp":"00:06:44.814","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
-{"timestamp":"00:06:44.818","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
-{"timestamp":"00:06:44.820","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
-{"timestamp":"00:06:44.822","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
-{"timestamp":"00:06:44.826","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
-{"timestamp":"00:06:45.799","source":"Server","level":"LOG","message":"[2026-08-11T18:28:09.652Z] GET /api/signals/state"}
-{"timestamp":"00:06:46.238","source":"Server","level":"LOG","message":"[2026-08-11T18:28:10.092Z] GET /api/signals/state"}
-{"timestamp":"00:06:46.739","source":"Server","level":"LOG","message":"[2026-08-11T18:28:10.592Z] GET /api/signals/state"}
-{"timestamp":"00:06:47.238","source":"Server","level":"LOG","message":"[2026-08-11T18:28:11.091Z] GET /api/signals/state"}
-{"timestamp":"00:06:47.739","source":"Server","level":"LOG","message":"[2026-08-11T18:28:11.592Z] GET /api/signals/state"}
-{"timestamp":"00:06:48.238","source":"Server","level":"LOG","message":"[2026-08-11T18:28:12.091Z] GET /api/signals/state"}
-{"timestamp":"00:06:48.739","source":"Server","level":"LOG","message":"[2026-08-11T18:28:12.592Z] GET /api/signals/state"}
-{"timestamp":"00:06:49.238","source":"Server","level":"LOG","message":"[2026-08-11T18:28:13.091Z] GET /api/signals/state"}
-{"timestamp":"00:06:49.738","source":"Server","level":"LOG","message":"[2026-08-11T18:28:13.591Z] GET /api/signals/state"}
-{"timestamp":"00:06:50.237","source":"Server","level":"LOG","message":"[2026-08-11T18:28:14.091Z] GET /api/signals/state"}
-{"timestamp":"00:06:50.514","source":"Server","level":"LOG","message":"[2026-08-11T18:28:14.368Z] GET /api/sessions"}
-{"timestamp":"00:07:00.500","source":"Server","level":"LOG","message":"[2026-08-11T18:28:24.353Z] GET /api/sessions"}
-{"timestamp":"00:07:06.640","source":"Server","level":"LOG","message":"[2026-08-11T18:28:30.494Z] GET /api/iam/identities"}
-{"timestamp":"00:07:06.643","source":"Server","level":"LOG","message":"[2026-08-11T18:28:30.497Z] GET /api/iam/roles"}
-{"timestamp":"00:07:25.485","source":"Server","level":"LOG","message":"[2026-08-11T18:28:49.338Z] POST /api/auth/logout"}
+{"timestamp":"00:00:00.836","source":"Server","level":"WARN","message":"⚠ The \"middleware\" file convention is deprecated. Please use \"proxy\" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy"}
+{"timestamp":"00:00:00.969","source":"Server","level":"LOG","message":""}
+{"timestamp":"05:27:35.052","source":"Server","level":"LOG","message":"[2026-08-14T15:47:37.036Z] POST /api/auth/guest-login"}
+{"timestamp":"05:27:36.299","source":"Server","level":"LOG","message":"🔗 Resolved ep-winter-king-aoyb9jyh-pooler.c-2.ap-southeast-1.aws.neon.tech → 3.0.167.45 (system DNS)"}
+{"timestamp":"05:27:36.301","source":"Server","level":"LOG","message":"🔗 Neon pooler: ep-winter-king-aoyb9jyh-pooler.c-2.ap-southeast-1.aws.neon.tech @ 3.0.167.45"}
+{"timestamp":"05:27:39.739","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"05:27:40.257","source":"Server","level":"ERROR","message":"(node:609657) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.\n(Use `node --trace-deprecation ...` to show where the warning was created)"}
+{"timestamp":"05:27:40.264","source":"Server","level":"WARN","message":"⚠️ Redis error: \"connect ECONNREFUSED 127.0.0.1:6379\""}
+{"timestamp":"05:27:40.473","source":"Server","level":"WARN","message":"⚠️ Redis error: \"connect ECONNREFUSED 127.0.0.1:6379\""}
+{"timestamp":"05:27:40.879","source":"Server","level":"WARN","message":"⚠️ Redis error: \"connect ECONNREFUSED 127.0.0.1:6379\""}
+{"timestamp":"05:27:41.490","source":"Server","level":"WARN","message":"⚠️ Redis error: \"connect ECONNREFUSED 127.0.0.1:6379\""}
+{"timestamp":"05:27:41.490","source":"Server","level":"WARN","message":"⚠️ Redis session write failed: \"Connection is closed.\""}
+{"timestamp":"05:27:41.876","source":"Server","level":"LOG","message":"[2026-08-14T15:47:43.860Z] GET /api/analytics/stats"}
+{"timestamp":"05:27:41.888","source":"Server","level":"LOG","message":"[2026-08-14T15:47:43.873Z] GET /api/analytics/violations"}
+{"timestamp":"05:27:42.009","source":"Server","level":"LOG","message":"[2026-08-14T15:47:43.994Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"05:27:42.014","source":"Server","level":"LOG","message":"[2026-08-14T15:47:43.998Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"05:27:42.017","source":"Server","level":"LOG","message":"[2026-08-14T15:47:44.002Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"05:27:42.524","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"05:27:42.527","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"05:27:42.527","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"05:27:42.527","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"05:27:42.527","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"05:27:42.709","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"05:27:43.675","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"05:27:43.675","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"05:27:43.675","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"05:27:43.676","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"05:27:43.779","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"05:27:43.794","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"05:27:43.797","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"05:27:43.801","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"05:27:54.442","source":"Server","level":"LOG","message":"[2026-08-14T15:47:56.427Z] GET /api/sessions"}
+{"timestamp":"05:27:59.327","source":"Server","level":"LOG","message":"[2026-08-14T15:48:01.311Z] GET /api/iam/identities"}
+{"timestamp":"05:27:59.329","source":"Server","level":"LOG","message":"[2026-08-14T15:48:01.314Z] GET /api/iam/roles"}
+{"timestamp":"05:28:00.071","source":"Server","level":"LOG","message":"[2026-08-14T15:48:02.056Z] GET /api/sessions"}
+{"timestamp":"05:28:01.377","source":"Server","level":"LOG","message":"[2026-08-14T15:48:03.361Z] GET /api/iam/identities"}
+{"timestamp":"05:28:01.378","source":"Server","level":"LOG","message":"[2026-08-14T15:48:03.363Z] GET /api/iam/roles"}
+{"timestamp":"05:28:23.487","source":"Server","level":"LOG","message":"[2026-08-14T15:48:25.471Z] GET /api/sessions"}
+{"timestamp":"10:03:32.660","source":"Server","level":"LOG","message":"[2026-08-14T20:23:34.645Z] GET /api/analytics/stats"}
+{"timestamp":"10:03:32.668","source":"Server","level":"LOG","message":"[2026-08-14T20:23:34.653Z] GET /api/analytics/violations"}
+{"timestamp":"10:03:32.675","source":"Server","level":"LOG","message":"[2026-08-14T20:23:34.659Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"10:03:32.678","source":"Server","level":"LOG","message":"[2026-08-14T20:23:34.663Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"10:03:32.691","source":"Server","level":"LOG","message":"[2026-08-14T20:23:34.675Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"10:03:32.777","source":"Server","level":"WARN","message":"⚠️ Redis error: \"connect ECONNREFUSED 127.0.0.1:6379\""}
+{"timestamp":"10:03:32.983","source":"Server","level":"WARN","message":"⚠️ Redis error: \"connect ECONNREFUSED 127.0.0.1:6379\""}
+{"timestamp":"10:03:33.389","source":"Server","level":"WARN","message":"⚠️ Redis error: \"connect ECONNREFUSED 127.0.0.1:6379\""}
+{"timestamp":"10:03:33.996","source":"Server","level":"WARN","message":"⚠️ Redis error: \"connect ECONNREFUSED 127.0.0.1:6379\""}
+{"timestamp":"10:03:33.997","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"10:03:33.997","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"10:03:33.998","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"10:03:33.998","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"10:03:33.998","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"10:03:36.001","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"10:03:36.002","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"10:03:36.002","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"10:03:36.010","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"10:03:36.013","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"10:03:36.141","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"10:03:36.143","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"10:03:36.145","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"10:03:36.147","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"10:03:36.149","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"10:37:39.731","source":"Server","level":"LOG","message":"[2026-08-14T20:57:41.716Z] POST /api/auth/logout"}
+{"timestamp":"10:37:41.601","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"10:37:46.541","source":"Server","level":"LOG","message":"[2026-08-14T20:57:48.526Z] POST /api/auth/guest-login"}
+{"timestamp":"10:37:47.243","source":"Server","level":"WARN","message":"⚠️ Redis session write failed: \"Connection is closed.\""}
+{"timestamp":"10:37:47.370","source":"Server","level":"LOG","message":"[2026-08-14T20:57:49.355Z] GET /api/analytics/stats"}
+{"timestamp":"10:37:47.378","source":"Server","level":"LOG","message":"[2026-08-14T20:57:49.362Z] GET /api/analytics/violations"}
+{"timestamp":"10:37:47.382","source":"Server","level":"LOG","message":"[2026-08-14T20:57:49.367Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"10:37:47.388","source":"Server","level":"LOG","message":"[2026-08-14T20:57:49.372Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"10:37:47.402","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"10:37:47.406","source":"Server","level":"LOG","message":"[2026-08-14T20:57:49.390Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"10:37:47.419","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"10:37:47.428","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"10:37:47.439","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"10:37:47.446","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"10:37:47.521","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"10:37:47.981","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"10:37:48.079","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"10:37:48.266","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"10:37:48.293","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"10:37:48.346","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"10:37:48.427","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"10:37:48.442","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"10:37:48.489","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"10:39:37.237","source":"Server","level":"LOG","message":"[2026-08-14T20:59:39.222Z] GET /api/iam/identities"}
+{"timestamp":"10:39:37.240","source":"Server","level":"LOG","message":"[2026-08-14T20:59:39.225Z] GET /api/iam/roles"}
+{"timestamp":"10:39:38.662","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"10:39:38.662","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"10:39:53.521","source":"Server","level":"LOG","message":"[2026-08-14T20:59:55.506Z] GET /api/sessions"}
+{"timestamp":"10:39:59.109","source":"Server","level":"LOG","message":"[2026-08-14T21:00:01.093Z] GET /api/iam/identities"}
+{"timestamp":"10:39:59.110","source":"Server","level":"LOG","message":"[2026-08-14T21:00:01.095Z] GET /api/iam/roles"}
+{"timestamp":"10:40:44.052","source":"Server","level":"LOG","message":"[2026-08-14T21:00:46.037Z] POST /api/auth/logout"}
+{"timestamp":"10:40:45.440","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"10:40:53.436","source":"Server","level":"LOG","message":"[2026-08-14T21:00:55.421Z] POST /api/auth/guest-login"}
+{"timestamp":"10:40:54.191","source":"Server","level":"WARN","message":"⚠️ Redis session write failed: \"Connection is closed.\""}
+{"timestamp":"10:40:54.435","source":"Server","level":"LOG","message":"[2026-08-14T21:00:56.420Z] GET /api/analytics/stats"}
+{"timestamp":"10:40:54.441","source":"Server","level":"LOG","message":"[2026-08-14T21:00:56.425Z] GET /api/analytics/violations"}
+{"timestamp":"10:40:54.444","source":"Server","level":"LOG","message":"[2026-08-14T21:00:56.429Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"10:40:54.447","source":"Server","level":"LOG","message":"[2026-08-14T21:00:56.431Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"10:40:54.455","source":"Server","level":"LOG","message":"[2026-08-14T21:00:56.440Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"10:40:54.475","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"10:40:54.482","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"10:40:54.488","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"10:40:54.493","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"10:40:54.502","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"10:40:54.692","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"10:40:55.306","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"10:40:55.514","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"10:40:55.674","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"10:40:55.674","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"10:40:55.675","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"10:40:55.909","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"10:40:55.911","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"10:40:55.913","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"10:40:57.875","source":"Server","level":"LOG","message":"[2026-08-14T21:00:59.860Z] POST /api/auth/logout"}
+{"timestamp":"10:41:07.458","source":"Server","level":"LOG","message":"[2026-08-14T21:01:09.443Z] POST /api/auth/login-challenge"}
+{"timestamp":"10:41:16.336","source":"Server","level":"LOG","message":"[2026-08-14T21:01:18.321Z] POST /api/auth/login-challenge"}
+{"timestamp":"10:41:41.193","source":"Server","level":"LOG","message":"[2026-08-14T21:01:43.178Z] POST /api/auth/login-verify"}
+{"timestamp":"10:41:42.619","source":"Server","level":"WARN","message":"⚠️ Redis session write failed: \"Connection is closed.\""}
+{"timestamp":"10:41:42.745","source":"Server","level":"LOG","message":"[2026-08-14T21:01:44.730Z] GET /api/analytics/stats"}
+{"timestamp":"10:41:42.748","source":"Server","level":"LOG","message":"[2026-08-14T21:01:44.732Z] GET /api/analytics/violations"}
+{"timestamp":"10:41:42.750","source":"Server","level":"LOG","message":"[2026-08-14T21:01:44.734Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"10:41:42.751","source":"Server","level":"LOG","message":"[2026-08-14T21:01:44.736Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"10:41:42.753","source":"Server","level":"LOG","message":"[2026-08-14T21:01:44.737Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"10:41:42.773","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"10:41:42.777","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"10:41:42.783","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"10:41:42.789","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"10:41:42.793","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"10:41:43.029","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"10:41:43.845","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"10:41:43.845","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"10:41:44.052","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"10:41:44.055","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"10:41:44.056","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"10:41:44.057","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"10:41:44.254","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"10:41:44.255","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"10:41:56.548","source":"Server","level":"LOG","message":"[2026-08-14T21:01:58.533Z] POST /api/auth/logout"}
+{"timestamp":"10:42:05.482","source":"Server","level":"LOG","message":"[2026-08-14T21:02:07.466Z] POST /api/auth/login-challenge"}
+{"timestamp":"10:46:09.276","source":"Server","level":"LOG","message":"[2026-08-14T21:06:11.260Z] POST /api/auth/login-challenge"}
+{"timestamp":"10:46:10.712","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"10:46:16.472","source":"Server","level":"LOG","message":"[2026-08-14T21:06:18.457Z] POST /api/auth/guest-login"}
+{"timestamp":"10:46:16.996","source":"Server","level":"WARN","message":"⚠️ Redis session write failed: \"Connection is closed.\""}
+{"timestamp":"10:46:17.116","source":"Server","level":"LOG","message":"[2026-08-14T21:06:19.101Z] GET /api/analytics/stats"}
+{"timestamp":"10:46:17.125","source":"Server","level":"LOG","message":"[2026-08-14T21:06:19.110Z] GET /api/analytics/violations"}
+{"timestamp":"10:46:17.128","source":"Server","level":"LOG","message":"[2026-08-14T21:06:19.113Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"10:46:17.137","source":"Server","level":"LOG","message":"[2026-08-14T21:06:19.121Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"10:46:17.140","source":"Server","level":"LOG","message":"[2026-08-14T21:06:19.124Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"10:46:17.158","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"10:46:17.181","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"10:46:17.192","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"10:46:17.202","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"10:46:17.211","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"10:46:17.239","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"10:46:17.699","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"10:46:17.700","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"10:46:17.726","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"10:46:17.729","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"10:46:17.785","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"10:46:17.787","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"10:46:17.815","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"10:46:17.817","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"10:46:24.125","source":"Server","level":"LOG","message":"[2026-08-14T21:06:26.110Z] POST /api/auth/logout"}
+{"timestamp":"10:46:29.332","source":"Server","level":"LOG","message":"[2026-08-14T21:06:31.317Z] POST /api/auth/login-challenge"}
+{"timestamp":"11:01:43.018","source":"Server","level":"LOG","message":"[2026-08-14T21:21:45.003Z] POST /api/auth/guest-login"}
+{"timestamp":"11:01:45.809","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"11:01:46.258","source":"Server","level":"WARN","message":"⚠️ Redis session write failed: \"Connection is closed.\""}
+{"timestamp":"11:01:46.457","source":"Server","level":"LOG","message":"[2026-08-14T21:21:48.442Z] GET /api/analytics/stats"}
+{"timestamp":"11:01:46.465","source":"Server","level":"LOG","message":"[2026-08-14T21:21:48.449Z] GET /api/analytics/violations"}
+{"timestamp":"11:01:46.472","source":"Server","level":"LOG","message":"[2026-08-14T21:21:48.456Z] GET /api/analytics/vehicle-types"}
+{"timestamp":"11:01:46.477","source":"Server","level":"LOG","message":"[2026-08-14T21:21:48.461Z] GET /api/analytics/hourly-traffic"}
+{"timestamp":"11:01:46.481","source":"Server","level":"LOG","message":"[2026-08-14T21:21:48.466Z] GET /api/analytics/speed-distribution"}
+{"timestamp":"11:01:46.500","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"11:01:46.514","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"11:01:46.526","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"11:01:46.531","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"11:01:46.537","source":"Server","level":"WARN","message":"⚠️ Cache read error: \"Connection is closed.\""}
+{"timestamp":"11:01:46.671","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"11:01:47.015","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"11:01:47.071","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"11:01:47.071","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"11:01:47.073","source":"Server","level":"LOG","message":"✅ Connected to PostgreSQL (Neon pooler)"}
+{"timestamp":"11:01:47.090","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"11:01:47.151","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"11:01:47.153","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}
+{"timestamp":"11:01:47.160","source":"Server","level":"WARN","message":"⚠️ Cache write error: \"Connection is closed.\""}

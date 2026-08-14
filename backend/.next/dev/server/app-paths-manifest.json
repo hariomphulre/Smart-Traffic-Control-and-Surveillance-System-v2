@@ -1,10 +1,10 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
   "/api/analytics/[slug]/route": "app/api/analytics/[slug]/route.js",
   "/api/auth/guest-login/route": "app/api/auth/guest-login/route.js",
+  "/api/auth/login-challenge/route": "app/api/auth/login-challenge/route.js",
+  "/api/auth/login-verify/route": "app/api/auth/login-verify/route.js",
   "/api/auth/logout/route": "app/api/auth/logout/route.js",
   "/api/iam/identities/route": "app/api/iam/identities/route.js",
   "/api/iam/roles/route": "app/api/iam/roles/route.js",
-  "/api/sessions/route": "app/api/sessions/route.js",
-  "/api/signals/state/route": "app/api/signals/state/route.js"
+  "/api/sessions/route": "app/api/sessions/route.js"
 }
